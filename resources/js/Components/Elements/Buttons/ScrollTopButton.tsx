@@ -35,7 +35,7 @@ const ScrollTopButton = () => {
                 }`}
                 onClick={scrollToTop}
             >
-                <div className="bg-primary-800 w-10 sm:w-12 h-10 sm:h-12 flex justify-center items-center rounded-full animate-bounce hover:animate-none group">
+                <div className="bg-primary-500 w-10 sm:w-12 h-10 sm:h-12 flex justify-center items-center rounded-full animate-bounce hover:animate-none group">
                     <ArrowUp className="w-6 h-6 text-secondary font-extrabold " />
                 </div>
             </div>

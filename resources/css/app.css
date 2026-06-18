@@ -80,6 +80,7 @@
         --color-card: #f8fafc;
         --color-border: #e2e8f0;
         --color-muted: #64748b;
+        --color-bg-muted: #1e293b;
     }
 
     .dark {
@@ -98,6 +99,7 @@
         --color-card: #1e293b;
         --color-border: #334155;
         --color-muted: #94a3b8;
+        --color-bg-muted: #94a3b8;
     }
 }
 

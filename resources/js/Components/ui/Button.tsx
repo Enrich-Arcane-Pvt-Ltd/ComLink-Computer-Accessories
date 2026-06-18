@@ -49,6 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                     sizes[size],
                     fullWidth && "w-full",
                     className,
+                    "cursor-pointer",
                 )}
                 {...props}
             >
