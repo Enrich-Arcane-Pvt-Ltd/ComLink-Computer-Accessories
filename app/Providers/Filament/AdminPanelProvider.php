@@ -28,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->login(Login::class)
             ->profile(false)
             ->userMenuItems([
                 MenuItem::make()
