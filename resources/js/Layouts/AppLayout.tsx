@@ -7,7 +7,6 @@ import { WishlistProvider } from "@/contexts/WishlistContext";
 import { Head, usePage } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast, Toaster } from "sonner";
-import FlashAlerts from "../Components/Elements/Alerts/FlashAlerts";
 import ScrollTopButton from "../Components/Elements/Buttons/ScrollTopButton";
 import { PageProps } from "../types";
 
@@ -83,7 +82,7 @@ export default function AppLayout({
                             <Navbar />
                             <main className="flex-grow">{children}</main>
                             <Footer />
-                            <FlashAlerts flash={flash} />
+                            {/* <FlashAlerts flash={flash} /> */}
                             <ScrollTopButton />
                         </div>
                         <Toaster
