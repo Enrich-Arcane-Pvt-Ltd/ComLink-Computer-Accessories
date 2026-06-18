@@ -12,6 +12,8 @@
     --color-card: var(--color-card-base);
     --color-border: var(--color-border-base);
     --color-muted: var(--color-text-muted);
+    --color-link-main: var(--color-link);
+    --color-link-hover: var(--color-link-hover);
 
     /* --- Primary Colors (Midnight Navy) --- */
     --color-primary: #192341;
@@ -81,6 +83,8 @@
         --color-border: #e2e8f0;
         --color-muted: #64748b;
         --color-bg-muted: #1e293b;
+        --color-link: #192341;
+        --color-link-hover: #d82323;
     }
 
     .dark {
@@ -100,6 +104,8 @@
         --color-border: #334155;
         --color-muted: #94a3b8;
         --color-bg-muted: #94a3b8;
+        --color-link: #d82323;
+        --color-link-hover: #ff6e6e;
     }
 }
 

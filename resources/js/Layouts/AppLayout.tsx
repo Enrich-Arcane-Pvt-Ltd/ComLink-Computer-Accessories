@@ -5,7 +5,8 @@ import { CartProvider } from "@/contexts/CartContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
 import { Head, usePage } from "@inertiajs/react";
-import { Toaster } from "sonner";
+import { useEffect } from "react";
+import { toast, Toaster } from "sonner";
 import FlashAlerts from "../Components/Elements/Alerts/FlashAlerts";
 import ScrollTopButton from "../Components/Elements/Buttons/ScrollTopButton";
 import { PageProps } from "../types";
@@ -22,6 +23,12 @@ export default function AppLayout({
     const appName = import.meta.env.VITE_APP_NAME || "ThinkPath";
     const { flash, auth } = usePage<PageProps>().props;
     const { url } = usePage();
+
+    useEffect(() => {
+        if (flash?.success) {
+            toast.success(flash.success);
+        }
+    }, [flash]);
 
     function isActive(startWith?: string) {
         if (startWith == "/") {
@@ -45,9 +52,24 @@ export default function AppLayout({
                 <meta property="og:image" content="/assets/meta/meta.webp?aa" />
                 <link
                     rel="icon"
-                    type="image/svg+xml"
-                    href="/assets/favicon.ico?1212a"
+                    type="image/png"
+                    href="%PUBLIC_URL%/favicon-96x96.png"
+                    sizes="96x96"
                 />
+                <link
+                    rel="icon"
+                    type="image/svg+xml"
+                    href="%PUBLIC_URL%/favicon.svg"
+                />
+                <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="180x180"
+                    href="%PUBLIC_URL%/apple-touch-icon.png"
+                />
+                <meta name="apple-mobile-web-app-title" content="VickyStore" />
+                <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest" />
+
                 <meta name="google-site-verification" content="" />
             </Head>
 
