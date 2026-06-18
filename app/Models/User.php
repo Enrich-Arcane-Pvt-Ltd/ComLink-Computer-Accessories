@@ -67,7 +67,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     protected static function booted()
     {
         static::created(function ($user) {
-            $user->customer_id = 'WKCUS' . str_pad($user->id, 5, '0', STR_PAD_LEFT);
+            $user->customer_id = 'VCUS' . str_pad($user->id, 5, '0', STR_PAD_LEFT);
             $user->saveQuietly();
         });
     }
@@ -89,8 +89,25 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role === 'admin' && $this->status === 'active';
+        if ($this->status !== 'active') {
+            return false;
+        }
+
+        $role = $this->role;
+
+        return match ($panel->getId()) {
+            // Admin panel: only super-admin and admin
+            'admin' => in_array($role, ['super-admin', 'admin']),
+
+            default => false,
+        };
     }
+
+    public function getFilamentName(): string
+    {
+        return trim("{$this->first_name} {$this->last_name}") ?: $this->username ?: 'User';
+    }
+
 
     public function getActivitylogOptions(): LogOptions
     {

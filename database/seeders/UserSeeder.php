@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             [
                 'first_name' => 'Super',
                 'last_name' => 'Admin',
-                'role' => 'admin',
+                'role' => 'super-admin',
                 'status' => 'active',
                 'email_verified_at' => now(),
                 'password' => Hash::make('Enrich@1qaz'),
