@@ -6,6 +6,8 @@ import { Link, usePage } from "@inertiajs/react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
     Heart,
+    LayoutDashboard,
+    LogOut,
     Menu,
     Moon,
     Search,
@@ -143,10 +145,16 @@ export default function Navbar() {
                     </button>
 
                     {/* Logo */}
-                    <Link href="/" className="flex-shrink-0">
-                        <span className="font-display text-2xl md:text-3xl font-bold tracking-widest text-primary dark:text-fg">
-                            MILANA
-                        </span>
+                    <Link href="/" className="flex-shrink-0 -my-2">
+                        <img
+                            src={
+                                theme === "dark"
+                                    ? "/images/logo-white.png"
+                                    : "/images/logo.png"
+                            }
+                            alt="Vicky Store Logo"
+                            className="h-8 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                        />
                     </Link>
 
                     {/* Desktop Nav */}
@@ -157,7 +165,7 @@ export default function Navbar() {
                                 href={link.path}
                                 className={cn(
                                     "text-sm font-medium uppercase tracking-wider transition-colors hover:text-accent",
-                                    location.pathname === link.path
+                                    url === link.path
                                         ? "text-accent"
                                         : "text-fg",
                                 )}
@@ -167,7 +175,7 @@ export default function Navbar() {
                         ))}
                     </nav>
 
-                    {/* Icons */}
+                    {/* Icons & Auth */}
                     <div className="flex items-center gap-3 md:gap-5">
                         <button
                             onClick={toggleTheme}
@@ -189,15 +197,93 @@ export default function Navbar() {
                             <Search className="h-5 w-5" />
                         </button>
 
-                        <Link
-                            href="/account"
-                            className="p-1 text-fg hover:text-accent transition-colors hidden sm:block"
-                            aria-label="Account"
-                        >
-                            <User className="h-5 w-5" />
-                        </Link>
+                        {/* --- AUTHENTICATION AREA --- */}
+                        {user ? (
+                            /* ලොග් වී ඇති අය සඳහා Dropdown එක */
+                            <div className="relative" ref={userDropdownRef}>
+                                <button
+                                    onClick={() =>
+                                        setIsUserDropdownOpen(
+                                            !isUserDropdownOpen,
+                                        )
+                                    }
+                                    className="p-1 text-fg hover:text-accent transition-colors flex items-center gap-1 focus:outline-none"
+                                    aria-label="User Menu"
+                                >
+                                    <User className="h-5 w-5" />
+                                    <span className="text-xs font-semibold hidden md:inline max-w-[80px] truncate">
+                                        {user.first_name}
+                                    </span>
+                                </button>
 
-                        {/* Wishlist with dropdown */}
+                                <AnimatePresence>
+                                    {isUserDropdownOpen && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 8 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 8 }}
+                                            className="absolute right-0 mt-3 w-48 bg-bg border border-border shadow-xl z-50 py-2 font-sans"
+                                        >
+                                            <div className="px-4 py-2 border-b border-border mb-1">
+                                                <p className="text-xs text-muted">
+                                                    Signed in as
+                                                </p>
+                                                <p className="text-sm font-semibold text-fg truncate">
+                                                    {user.email}
+                                                </p>
+                                            </div>
+
+                                            {isAdmin && (
+                                                <a
+                                                    href={dashboardRoute}
+                                                    className="flex items-center gap-2 px-4 py-2 text-sm text-fg hover:bg-muted/10 transition-colors uppercase tracking-wider font-medium font-display"
+                                                >
+                                                    <LayoutDashboard className="h-4 w-4 text-accent" />
+                                                    Admin Panel
+                                                </a>
+                                            )}
+
+                                            <Link
+                                                href={profileRoute}
+                                                className="flex items-center gap-2 px-4 py-2 text-sm text-fg hover:bg-muted/10 transition-colors"
+                                            >
+                                                <User className="h-4 w-4" />
+                                                My Profile
+                                            </Link>
+
+                                            <Link
+                                                href="/logout"
+                                                method="post"
+                                                as="button"
+                                                className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors text-left"
+                                            >
+                                                <LogOut className="h-4 w-4" />
+                                                Logout
+                                            </Link>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        ) : (
+                            /* ලොග් වී නැති අය සඳහා බටන්ස් */
+                            <div className="hidden sm:flex items-center gap-2">
+                                <Link
+                                    href="/login"
+                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent px-2 py-1 transition-colors"
+                                >
+                                    Login
+                                </Link>
+                                <span className="text-border">|</span>
+                                <Link
+                                    href="/register"
+                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent px-2 py-1 transition-colors"
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                        )}
+
+                        {/* Wishlist Dropdown */}
                         <div
                             className="relative hidden sm:block"
                             onMouseEnter={() => openMenu("wishlist")}
@@ -223,49 +309,54 @@ export default function Navbar() {
                                         viewAllHref="/wishlist"
                                         viewAllLabel="View Wishlist"
                                     >
-                                        {wishlistItems.slice(0, 4).map((p) => (
-                                            <div
-                                                key={p.id}
-                                                className="flex items-center gap-3 py-3 border-b border-border last:border-0"
-                                            >
-                                                <Link
-                                                    href={`/product/${p.id}`}
-                                                    className="w-12 h-14 flex-shrink-0 bg-muted/10"
+                                        {wishlistItems
+                                            .slice(0, 4)
+                                            .map((p: any) => (
+                                                <div
+                                                    key={p.id}
+                                                    className="flex items-center gap-3 py-3 border-b border-border last:border-0"
                                                 >
-                                                    <img
-                                                        src={p.images[0]}
-                                                        alt={p.name}
-                                                        className="w-full h-full object-cover"
-                                                    />
-                                                </Link>
-                                                <div className="flex-grow min-w-0">
                                                     <Link
                                                         href={`/product/${p.id}`}
-                                                        className="text-sm font-medium text-fg line-clamp-1 hover:text-primary"
+                                                        className="w-12 h-14 flex-shrink-0 bg-muted/10"
                                                     >
-                                                        {p.name}
+                                                        <img
+                                                            src={p.images?.[0]}
+                                                            alt={p.name}
+                                                            className="w-full h-full object-cover"
+                                                        />
                                                     </Link>
-                                                    <p className="text-sm text-primary font-semibold">
-                                                        ${p.price.toFixed(2)}
-                                                    </p>
+                                                    <div className="flex-grow min-w-0">
+                                                        <Link
+                                                            href={`/product/${p.id}`}
+                                                            className="text-sm font-medium text-fg line-clamp-1 hover:text-primary"
+                                                        >
+                                                            {p.name}
+                                                        </Link>
+                                                        <p className="text-sm text-primary font-semibold">
+                                                            $
+                                                            {p.price.toFixed(2)}
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() =>
+                                                            removeFromWishlist(
+                                                                p.id,
+                                                            )
+                                                        }
+                                                        className="text-muted hover:text-accent p-1"
+                                                        aria-label="Remove"
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </button>
                                                 </div>
-                                                <button
-                                                    onClick={() =>
-                                                        removeFromWishlist(p.id)
-                                                    }
-                                                    className="text-muted hover:text-accent p-1"
-                                                    aria-label="Remove"
-                                                >
-                                                    <Trash2 className="h-4 w-4" />
-                                                </button>
-                                            </div>
-                                        ))}
+                                            ))}
                                     </MiniDropdown>
                                 )}
                             </AnimatePresence>
                         </div>
 
-                        {/* Cart with dropdown */}
+                        {/* Cart Dropdown */}
                         <div
                             className="relative"
                             onMouseEnter={() => openMenu("cart")}
@@ -314,44 +405,50 @@ export default function Navbar() {
                                             ) : undefined
                                         }
                                     >
-                                        {cartItems.slice(0, 4).map((item) => (
-                                            <div
-                                                key={item.id}
-                                                className="flex items-center gap-3 py-3 border-b border-border last:border-0"
-                                            >
-                                                <Link
-                                                    href={`/product/${item.productId}`}
-                                                    className="w-12 h-14 flex-shrink-0 bg-muted/10"
+                                        {cartItems
+                                            .slice(0, 4)
+                                            .map((item: any) => (
+                                                <div
+                                                    key={item.id}
+                                                    className="flex items-center gap-3 py-3 border-b border-border last:border-0"
                                                 >
-                                                    <img
-                                                        src={item.image}
-                                                        alt={item.name}
-                                                        className="w-full h-full object-cover"
-                                                    />
-                                                </Link>
-                                                <div className="flex-grow min-w-0">
                                                     <Link
                                                         href={`/product/${item.productId}`}
-                                                        className="text-sm font-medium text-fg line-clamp-1 hover:text-primary"
+                                                        className="w-12 h-14 flex-shrink-0 bg-muted/10"
                                                     >
-                                                        {item.name}
+                                                        <img
+                                                            src={item.image}
+                                                            alt={item.name}
+                                                            className="w-full h-full object-cover"
+                                                        />
                                                     </Link>
-                                                    <p className="text-xs text-muted">
-                                                        {item.quantity} × $
-                                                        {item.price.toFixed(2)}
-                                                    </p>
+                                                    <div className="flex-grow min-w-0">
+                                                        <Link
+                                                            href={`/product/${item.productId}`}
+                                                            className="text-sm font-medium text-fg line-clamp-1 hover:text-primary"
+                                                        >
+                                                            {item.name}
+                                                        </Link>
+                                                        <p className="text-xs text-muted">
+                                                            {item.quantity} × $
+                                                            {item.price.toFixed(
+                                                                2,
+                                                            )}
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() =>
+                                                            removeFromCart(
+                                                                item.id,
+                                                            )
+                                                        }
+                                                        className="text-muted hover:text-accent p-1"
+                                                        aria-label="Remove"
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </button>
                                                 </div>
-                                                <button
-                                                    onClick={() =>
-                                                        removeFromCart(item.id)
-                                                    }
-                                                    className="text-muted hover:text-accent p-1"
-                                                    aria-label="Remove"
-                                                >
-                                                    <Trash2 className="h-4 w-4" />
-                                                </button>
-                                            </div>
-                                        ))}
+                                            ))}
                                     </MiniDropdown>
                                 )}
                             </AnimatePresence>
@@ -373,7 +470,52 @@ export default function Navbar() {
                                 {link.name}
                             </Link>
                         ))}
-                        <div className="flex items-center gap-6 pt-4">
+
+                        {/* Mobile Auth Links */}
+                        {!user ? (
+                            <div className="flex gap-4 py-2 border-b border-border/50">
+                                <Link
+                                    href="/login"
+                                    className="text-base font-medium uppercase text-fg"
+                                >
+                                    Login
+                                </Link>
+                                <span className="text-muted">|</span>
+                                <Link
+                                    href="/register"
+                                    className="text-base font-medium uppercase text-fg"
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                        ) : (
+                            <>
+                                {isAdmin && (
+                                    <a
+                                        href="/admin"
+                                        className="text-base font-medium uppercase text-accent tracking-wider font-display py-2 border-b border-border/50"
+                                    >
+                                        Admin Panel
+                                    </a>
+                                )}
+                                <Link
+                                    href="/profile"
+                                    className="text-base font-medium uppercase text-fg py-2 border-b border-border/50"
+                                >
+                                    My Profile
+                                </Link>
+                                <Link
+                                    href="/logout"
+                                    method="post"
+                                    as="button"
+                                    className="text-base font-medium uppercase text-red-500 text-left py-2 border-b border-border/50"
+                                >
+                                    Logout
+                                </Link>
+                            </>
+                        )}
+
+                        <div className="flex items-center gap-6 pt-2">
                             <button
                                 onClick={toggleTheme}
                                 className="flex items-center gap-2 text-fg"
@@ -385,15 +527,6 @@ export default function Navbar() {
                                 )}
                                 <span className="text-sm uppercase">Theme</span>
                             </button>
-                            <Link
-                                href="/account"
-                                className="flex items-center gap-2 text-fg"
-                            >
-                                <User className="h-5 w-5" />
-                                <span className="text-sm uppercase">
-                                    Account
-                                </span>
-                            </Link>
                             <Link
                                 href="/wishlist"
                                 className="flex items-center gap-2 text-fg"
@@ -437,21 +570,10 @@ function MiniDropdown({
     const hasItems = Children.toArray(children).length > 0;
     return (
         <motion.div
-            initial={{
-                opacity: 0,
-                y: 8,
-            }}
-            animate={{
-                opacity: 1,
-                y: 0,
-            }}
-            exit={{
-                opacity: 0,
-                y: 8,
-            }}
-            transition={{
-                duration: 0.15,
-            }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.15 }}
             className="absolute right-0 top-full mt-3 w-80 bg-bg border border-border shadow-xl z-50 p-4"
         >
             <h4 className="font-display text-sm font-bold uppercase tracking-wider text-fg mb-2">

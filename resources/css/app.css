@@ -6,18 +6,17 @@
     --font-sans: "Plus Jakarta Sans", sans-serif;
     --font-display: "Oswald", sans-serif;
 
-    /* Base Theme Colors Mapping (React SPA එකේ විදිහටම) */
-    --color-bg: #ffffff;
-    --color-fg: #0f172a;
-    --color-card: #f8fafc;
-    --color-border: #e2e8f0;
-    --color-muted: #64748b;
+    /* --- Core Context Variables Mapping --- */
+    --color-bg: var(--color-bg-base);
+    --color-fg: var(--color-text-main);
+    --color-card: var(--color-card-base);
+    --color-border: var(--color-border-base);
+    --color-muted: var(--color-text-muted);
 
     /* --- Primary Colors (Midnight Navy) --- */
     --color-primary: #192341;
     --color-primary-fg: #ffffff;
 
-    /* Primary Palette Range */
     --color-primary-50: #f2f4f8;
     --color-primary-100: #e3e7f0;
     --color-primary-200: #c1cae0;
@@ -34,7 +33,6 @@
     --color-accent: #d82323;
     --color-accent-fg: #ffffff;
 
-    /* Accent Palette Range */
     --color-accent-50: #fff1f1;
     --color-accent-100: #ffe1e1;
     --color-accent-200: #ffc9c9;
@@ -50,7 +48,6 @@
     /* --- Dark Mode Backgrounds --- */
     --color-dark-bg: #0f172a;
     --color-dark-card: #1e293b;
-
     /* --- Tailwind v4 Animations --- */
     --animate-marquee: marquee 40s linear infinite;
 
@@ -65,24 +62,36 @@
     }
 }
 
-/* Global Elements Definition using v4 variables */
-body {
-    background-color: var(--color-bg);
-    color: var(--color-fg);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+/* --- THEME VARIATION CORES --- */
+@layer base {
+    :root {
+        /* Light Mode Colors */
+        --color-bg-base: #ffffff;
+        --color-text-main: #0f172a;
+        --color-card-base: #f8fafc;
+        --color-border-base: #e2e8f0;
+        --color-text-muted: #64748b;
+    }
 
-/* System or explicit dark mode trigger */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: var(--color-dark-bg);
-        color: #f8fafc;
+    .dark {
+        /* Dark Mode Colors */
+        --color-bg-base: #0f172a;
+        --color-text-main: #f8fafc;
+        --color-card-base: #1e293b;
+        --color-border-base: #334155;
+        --color-text-muted: #94a3b8;
     }
 }
 
-/* Target elements utilizing display font */
+body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-main);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s, color 0.2s;
+}
+
 h1,
 h2,
 h3,
@@ -95,7 +104,6 @@ h6,
     letter-spacing: 0.05em;
 }
 
-/* Hover to pause marquee execution */
 .animate-marquee:hover {
     animation-play-state: paused;
 }
@@ -106,11 +114,11 @@ h6,
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--color-bg);
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-border);
+    background: var(--color-border-base);
     border-radius: 4px;
 }
 
@@ -140,3 +148,5 @@ h6,
 .animate-pulse-slow {
     animation: pulse-slow 3s infinite;
 }
+
+/*  */
