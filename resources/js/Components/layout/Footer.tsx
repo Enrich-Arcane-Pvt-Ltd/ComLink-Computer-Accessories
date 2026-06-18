@@ -1,220 +1,159 @@
+import { useTheme } from "@/contexts/ThemeContext";
 import { Link } from "@inertiajs/react";
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
-import React from "react";
-
-// Function to handle scrolling with offset for anchor links (#)
-const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    href: string,
-) => {
-    if (href.startsWith("#")) {
-        e.preventDefault();
-        const targetId = href.substring(1);
-        const targetElement = document.getElementById(targetId);
-
-        if (window.location.pathname !== "/") {
-            window.location.href = `/${href}`;
-        } else if (targetElement) {
-            const targetPosition = targetElement.offsetTop - 50; // 50px offset
-            window.scrollTo({
-                top: targetPosition,
-                behavior: "smooth",
-            });
-        }
-    }
-};
+import {
+    Facebook,
+    Instagram,
+    Mail,
+    MapPin,
+    Phone,
+    Twitter,
+} from "lucide-react";
 
 export default function Footer() {
     const nowDate = new Date().getFullYear();
+    const { theme } = useTheme();
 
     return (
-        <footer className="bg-[var(--color-bg-alt)] border-t border-[var(--color-border)] pt-16 pb-8 transition-colors duration-200">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                    {/* Brand Column */}
-                    <div className="space-y-4">
-                        <Link href={"/"} className="flex items-center gap-2">
+        <footer className="bg-primary text-primary-fg pt-16 pb-8">
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-16">
+                    {/* Brand Info */}
+                    <div className="space-y-6">
+                        {/* Logo */}
+                        <Link href="/" className="inline-block ">
                             <img
-                                className="max-h-[160px] h-auto object-contain self-center -mb-8 -mt-4"
-                                src={"/images/logo-new.png"}
-                                alt="site logo"
+                                src={
+                                    theme === "dark"
+                                        ? "/images/logo-white.png"
+                                        : "/images/logo.png"
+                                }
+                                alt="Vicky Store Logo"
+                                className="h-8 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
                             />
                         </Link>
-                        <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">
-                            Learn Beyond Limits. A modern global learning
-                            platform designed to make quality education
-                            accessible, engaging, and future-ready.
+                        <p className="text-primary-fg/80 text-sm leading-relaxed max-w-xs">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Suspendisse tristique ullamcorper ex, vitae
+                            consequat nisl ultrices a.
                         </p>
-                        <div className="flex space-x-4 pt-2">
+                        <div className="flex items-center gap-4 pt-2">
                             <a
-                                href="https://www.facebook.com/"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-[var(--color-text-muted)] hover:text-primary transition-colors"
+                                href="#"
+                                className="text-white hover:text-accent transition-colors"
                             >
-                                <Facebook className="w-5 h-5" />
+                                <Facebook className="h-5 w-5" />
                             </a>
                             <a
-                                href="https://twitter.com/"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-[var(--color-text-muted)] hover:text-primary transition-colors"
+                                href="#"
+                                className="text-white hover:text-accent transition-colors"
                             >
-                                <Twitter className="w-5 h-5" />
+                                <Twitter className="h-5 w-5" />
                             </a>
                             <a
-                                href="https://www.instagram.com/"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-[var(--color-text-muted)] hover:text-primary transition-colors"
+                                href="#"
+                                className="text-white hover:text-accent transition-colors"
                             >
-                                <Instagram className="w-5 h-5" />
-                            </a>
-                            <a
-                                href="https://www.linkedin.com/"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-[var(--color-text-muted)] hover:text-primary transition-colors"
-                            >
-                                <Linkedin className="w-5 h-5" />
-                            </a>
-                            <a
-                                href="https://youtube.com/"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-[var(--color-text-muted)] hover:text-primary transition-colors"
-                            >
-                                <Youtube className="w-5 h-5" />
+                                <Instagram className="h-5 w-5" />
                             </a>
                         </div>
-
-                        {/* <div className="pt-4">
-                            <h4 className="text-sm font-semibold text-[var(--color-text-main)] mb-2">
-                                Subscribe to Newsletter
-                            </h4>
-                            <form
-                                className="flex gap-2"
-                                onSubmit={(e) => e.preventDefault()}
-                            >
-                                <input
-                                    type="email"
-                                    placeholder="Email address"
-                                    className="w-full px-3 py-2 bg-[var(--color-bg-base)] border border-[var(--color-border)] rounded-lg text-sm focus:outline-none focus:border-primary"
-                                />
-                                <button
-                                    type="submit"
-                                    className="px-3 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-blue-700"
-                                >
-                                    Join
-                                </button>
-                            </form>
-                        </div> */}
                     </div>
 
-                    {/* Explore */}
-                    <div>
-                        <h3 className="font-semibold text-[var(--color-text-main)] mb-4">
-                            Explore
-                        </h3>
-                        <ul className="space-y-3">
-                            <li>
-                                <Link
-                                    href={"/"}
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
-                                >
-                                    Course Catalog
-                                </Link>
+                    {/* Contact Us */}
+                    <div className="space-y-6">
+                        <h4 className="font-display text-lg font-semibold tracking-wider text-white">
+                            Contact Us
+                        </h4>
+                        <ul className="space-y-4 text-sm text-primary-fg/80">
+                            <li className="flex items-start gap-3">
+                                <MapPin className="h-5 w-5 shrink-0 mt-0.5" />
+                                <span>368 Ocean Ave, Seaside, CA 12345</span>
                             </li>
-                            <li>
-                                <Link
-                                    href={"/"}
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
-                                >
-                                    Top Instructors
-                                </Link>
+                            <li className="flex items-center gap-3">
+                                <Phone className="h-5 w-5 shrink-0" />
+                                <span>+ (555) - 123-6868</span>
                             </li>
-                            <li>
-                                <Link
-                                    href={"/"}
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
-                                >
-                                    Advertisements
-                                </Link>
+                            <li className="flex items-center gap-3">
+                                <Mail className="h-5 w-5 shrink-0" />
+                                <span>Milana@example.com</span>
                             </li>
-                            {/* <li>
-                                <a
-                                    href="#services"
-                                    onClick={(e) =>
-                                        handleNavClick(e, "#service")
-                                    }
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
-                                >
-                                    Our Services
-                                </a>
-                            </li> */}
                         </ul>
                     </div>
 
-                    {/* Company */}
-                    <div>
-                        <h3 className="font-semibold text-[var(--color-text-main)] mb-4">
-                            Company
-                        </h3>
-                        <ul className="space-y-3">
+                    {/* Categories */}
+                    <div className="space-y-6">
+                        <h4 className="font-display text-lg font-semibold tracking-wider text-white">
+                            Categories
+                        </h4>
+                        <ul className="space-y-3 text-sm text-primary-fg/80">
                             <li>
                                 <Link
-                                    href={"/"}
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
+                                    href="/shop?category=jackets"
+                                    className="hover:text-white transition-colors"
                                 >
-                                    About Us
+                                    Jackets
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/be_member"
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
+                                    href="/shop?category=pants"
+                                    className="hover:text-white transition-colors"
                                 >
-                                    Become an Instructor
+                                    Pants
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/shop?category=t-shirts"
+                                    className="hover:text-white transition-colors"
+                                >
+                                    T-Shirts
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/shop?category=accessories"
+                                    className="hover:text-white transition-colors"
+                                >
+                                    Bag & Shoes
                                 </Link>
                             </li>
                         </ul>
                     </div>
 
-                    {/* Support */}
-                    <div>
-                        <h3 className="font-semibold text-[var(--color-text-main)] mb-4">
-                            Support
-                        </h3>
-                        <ul className="space-y-3">
+                    {/* Policies */}
+                    <div className="space-y-6">
+                        <h4 className="font-display text-lg font-semibold tracking-wider text-white">
+                            Our Policies
+                        </h4>
+                        <ul className="space-y-3 text-sm text-primary-fg/80">
                             <li>
                                 <Link
-                                    href={"/"}
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
+                                    href="/shipping"
+                                    className="hover:text-white transition-colors"
                                 >
-                                    Contact Us
+                                    Shipping & Delivery
                                 </Link>
                             </li>
-                            {/* <li>
-                                <a
-                                    href="#faq"
-                                    onClick={(e) => handleNavClick(e, "#faq")}
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
-                                >
-                                    FAQs
-                                </a>
-                            </li> */}
                             <li>
                                 <Link
-                                    href={"/"}
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
+                                    href="/returns"
+                                    className="hover:text-white transition-colors"
+                                >
+                                    Returns, Refunds & Cancellations
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/terms"
+                                    className="hover:text-white transition-colors"
                                 >
                                     Terms & Conditions
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href={"/"}
-                                    className="text-[var(--color-text-muted)] hover:text-primary text-sm transition-colors"
+                                    href="/privacy"
+                                    className="hover:text-white transition-colors"
                                 >
                                     Privacy Policy
                                 </Link>
@@ -223,20 +162,48 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="border-t border-[var(--color-border)] pt-8 flex justify-center items-center">
-                    <p className="text-[var(--color-text-muted)] text-sm text-center">
-                        &copy; {nowDate} <strong>ThinkPath Learning</strong>.
-                        All rights reserved. Developed by{" "}
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href="https://www.enricharcane.com/"
-                            className="font-bold hover:text-primary text-[var(--color-text-main)] transition-colors inline-flex items-center gap-1"
-                        >
-                            Enrich Arcane
-                        </a>{" "}
-                        with ❤️ in Sri Lanka.
-                    </p>
+                {/* Bottom Bar */}
+                <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="">
+                        <p className="text-sm text-primary-fg/60">
+                            &copy; Copyright {nowDate}{" "}
+                            <strong className="hover:text-accent-500">
+                                Vicky Store
+                            </strong>
+                            . All Rights Reserved.
+                        </p>
+                        <p className="text-sm text-primary-fg/40">
+                            {" "}
+                            Developed by{" "}
+                            <a
+                                target="_blank"
+                                rel="noreferrer"
+                                href="https://www.enricharcane.com/"
+                                className="font-bold hover:text-accent-500 transition-colors inline-flex items-center gap-1"
+                            >
+                                Enrich Arcane
+                            </a>{" "}
+                            with ❤️ in Sri Lanka.
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="h-7 px-2.5 flex items-center bg-white rounded text-[#1434CB] text-[11px] font-bold italic tracking-tight">
+                            VISA
+                        </span>
+                        <span className="h-7 px-2 flex items-center bg-white rounded">
+                            <span className="relative flex items-center">
+                                <span className="h-4 w-4 rounded-full bg-[#EB001B]" />
+                                <span className="h-4 w-4 rounded-full bg-[#F79E1B] -ml-2 mix-blend-multiply" />
+                            </span>
+                        </span>
+                        <span className="h-7 px-2.5 flex items-center bg-white rounded text-[11px] font-bold">
+                            <span className="text-[#003087]">Pay</span>
+                            <span className="text-[#009CDE]">Pal</span>
+                        </span>
+                        <span className="h-7 px-2.5 flex items-center bg-white rounded text-[#016FD0] text-[10px] font-bold tracking-tight">
+                            AMEX
+                        </span>
+                    </div>
                 </div>
             </div>
         </footer>

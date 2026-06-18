@@ -71,6 +71,15 @@
         --color-card-base: #f8fafc;
         --color-border-base: #e2e8f0;
         --color-text-muted: #64748b;
+        --color-bg: #ffffff;
+        --color-fg: #0f172a;
+        --color-primary: #192341;
+        --color-primary-fg: #ffffff;
+        --color-accent: #d82323;
+        --color-accent-fg: #ffffff;
+        --color-card: #f8fafc;
+        --color-border: #e2e8f0;
+        --color-muted: #64748b;
     }
 
     .dark {
@@ -80,6 +89,15 @@
         --color-card-base: #1e293b;
         --color-border-base: #334155;
         --color-text-muted: #94a3b8;
+        --color-bg: #0f172a;
+        --color-fg: #f8fafc;
+        --color-primary: #1e293b;
+        --color-primary-fg: #ffffff;
+        --color-accent: #ef4444;
+        --color-accent-fg: #ffffff;
+        --color-card: #1e293b;
+        --color-border: #334155;
+        --color-muted: #94a3b8;
     }
 }
 
@@ -102,6 +120,10 @@ h6,
     font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+.animate-marquee {
+    animation: marquee 40s linear infinite;
 }
 
 .animate-marquee:hover {
