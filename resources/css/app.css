@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght=500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-    /* Fonts Replacement */
+    /* Fonts Mapping */
     --font-sans: "Plus Jakarta Sans", sans-serif;
-    --font-heading: "Oswald", sans-serif;
+    --font-display: "Oswald", sans-serif;
 
-    /* Base Theme Colors */
+    /* Base Theme Colors Mapping (React SPA එකේ විදිහටම) */
     --color-bg: #ffffff;
     --color-fg: #0f172a;
     --color-card: #f8fafc;
@@ -14,40 +14,38 @@
     --color-muted: #64748b;
 
     /* --- Primary Colors (Midnight Navy) --- */
-    /* Default Primary Color */
     --color-primary: #192341;
+    --color-primary-fg: #ffffff;
 
-    /* Primary Range */
+    /* Primary Palette Range */
     --color-primary-50: #f2f4f8;
     --color-primary-100: #e3e7f0;
     --color-primary-200: #c1cae0;
     --color-primary-300: #90a1ca;
     --color-primary-400: #5b73ae;
     --color-primary-500: #3c5491;
-    /* Main Brand Color */
     --color-primary-600: #2b3e73;
     --color-primary-700: #212f59;
     --color-primary-800: #192341;
     --color-primary-900: #141b31;
     --color-primary-950: #0d1120;
 
-    /* --- Secondary Colors (Red Accent) --- */
-    /* Default Secondary Color */
-    --color-secondary: #d82323;
+    /* --- Accent Colors (Red) --- */
+    --color-accent: #d82323;
+    --color-accent-fg: #ffffff;
 
-    /* Secondary Range */
-    --color-secondary-50: #fff1f1;
-    --color-secondary-100: #ffe1e1;
-    --color-secondary-200: #ffc9c9;
-    --color-secondary-300: #ffa3a3;
-    --color-secondary-400: #ff6e6e;
-    --color-secondary-500: #f83b3b;
-    /* Accent Red */
-    --color-secondary-600: #d82323;
-    --color-secondary-700: #b51a1a;
-    --color-secondary-800: #961919;
-    --color-secondary-900: #7d1a1a;
-    --color-secondary-950: #440a0a;
+    /* Accent Palette Range */
+    --color-accent-50: #fff1f1;
+    --color-accent-100: #ffe1e1;
+    --color-accent-200: #ffc9c9;
+    --color-accent-300: #ffa3a3;
+    --color-accent-400: #ff6e6e;
+    --color-accent-500: #f83b3b;
+    --color-accent-600: #d82323;
+    --color-accent-700: #b51a1a;
+    --color-accent-800: #961919;
+    --color-accent-900: #7d1a1a;
+    --color-accent-950: #440a0a;
 
     /* --- Dark Mode Backgrounds --- */
     --color-dark-bg: #0f172a;
@@ -67,7 +65,7 @@
     }
 }
 
-/* Custom global styles & typography rules */
+/* Global Elements Definition using v4 variables */
 body {
     background-color: var(--color-bg);
     color: var(--color-fg);
@@ -76,7 +74,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark Mode support using utility classes or system preference */
+/* System or explicit dark mode trigger */
 @media (prefers-color-scheme: dark) {
     body {
         background-color: var(--color-dark-bg);
@@ -84,6 +82,7 @@ body {
     }
 }
 
+/* Target elements utilizing display font */
 h1,
 h2,
 h3,
@@ -91,17 +90,17 @@ h4,
 h5,
 h6,
 .font-display {
-    font-family: var(--font-heading);
+    font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-/* Hover capability to pause the marquee */
+/* Hover to pause marquee execution */
 .animate-marquee:hover {
     animation-play-state: paused;
 }
 
-/* Premium Webkit Scrollbar */
+/* Custom Styled Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }

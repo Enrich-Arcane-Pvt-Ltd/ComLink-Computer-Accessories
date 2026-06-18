@@ -1,0 +1,172 @@
+import { Link } from "@inertiajs/react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/Button";
+const slides = [
+    {
+        id: 1,
+        image: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=2000",
+        title: "MAKING A STATEMENT THROUGH FASHION",
+        subtitle: "New Collection",
+        description:
+            "Elevate your everyday style with our premium collection of streetwear and essentials.",
+        cta: "Shop Collection",
+        link: "/",
+    },
+    {
+        id: 2,
+        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=2000",
+        title: "SUMMER ESSENTIALS",
+        subtitle: "Limited Edition",
+        description:
+            "Discover our exclusive summer collection designed for comfort and style.",
+        cta: "Explore Now",
+        link: "/?category=t-shirts",
+    },
+    {
+        id: 3,
+        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=2000",
+        title: "PREMIUM DENIM COLLECTION",
+        subtitle: "Timeless Classics",
+        description:
+            "Crafted with precision, designed for durability. The perfect fit for every occasion.",
+        cta: "Shop Denim",
+        link: "/?category=denim",
+    },
+];
+
+export function HeroCarousel() {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [direction, setDirection] = useState(0);
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setDirection(1);
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }, 6000);
+        return () => clearInterval(timer);
+    }, []);
+    const goToSlide = (index: number) => {
+        setDirection(index > currentSlide ? 1 : -1);
+        setCurrentSlide(index);
+    };
+    const nextSlide = () => {
+        setDirection(1);
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+    };
+    const prevSlide = () => {
+        setDirection(-1);
+        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    };
+    const variants = {
+        enter: (direction: number) => ({
+            opacity: 0,
+            scale: 1.1,
+        }),
+        center: {
+            opacity: 1,
+            scale: 1,
+        },
+        exit: (direction: number) => ({
+            opacity: 0,
+            scale: 0.95,
+        }),
+    };
+    return (
+        <section className="relative h-[80vh] min-h-[600px] w-full overflow-hidden bg-muted/20">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+                <motion.div
+                    key={currentSlide}
+                    custom={direction}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{
+                        opacity: {
+                            duration: 0.8,
+                        },
+                        scale: {
+                            duration: 1.2,
+                        },
+                    }}
+                    className="absolute inset-0"
+                >
+                    <img
+                        src={slides[currentSlide].image}
+                        alt={slides[currentSlide].title}
+                        className="w-full h-full object-cover"
+                    />
+
+                    <div className="absolute inset-0 bg-black/30" />
+                </motion.div>
+            </AnimatePresence>
+
+            <div className="relative h-full container mx-auto px-4 md:px-6 flex items-center">
+                <motion.div
+                    key={`content-${currentSlide}`}
+                    initial={{
+                        opacity: 0,
+                        y: 30,
+                    }}
+                    animate={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+                    transition={{
+                        duration: 0.8,
+                        delay: 0.3,
+                    }}
+                    className="max-w-2xl text-white"
+                >
+                    <span className="uppercase tracking-[0.2em] text-sm font-semibold mb-4 block">
+                        {slides[currentSlide].subtitle}
+                    </span>
+                    <h1 className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6">
+                        {slides[currentSlide].title}
+                    </h1>
+                    <p className="text-lg md:text-xl text-white/90 mb-8 max-w-lg">
+                        {slides[currentSlide].description}
+                    </p>
+                    <Button
+                        size="lg"
+                        className="bg-white text-primary hover:bg-white/90"
+                        asChild
+                    >
+                        <Link href={slides[currentSlide].link}>
+                            {slides[currentSlide].cta}
+                        </Link>
+                    </Button>
+                </motion.div>
+            </div>
+
+            {/* Navigation Arrows */}
+            <button
+                onClick={prevSlide}
+                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-colors z-10"
+                aria-label="Previous slide"
+            >
+                <ChevronLeft className="h-6 w-6 text-white" />
+            </button>
+            <button
+                onClick={nextSlide}
+                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-colors z-10"
+                aria-label="Next slide"
+            >
+                <ChevronRight className="h-6 w-6 text-white" />
+            </button>
+
+            {/* Dots */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                {slides.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className={`h-2 transition-all ${index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/50 hover:bg-white/70"}`}
+                        aria-label={`Go to slide ${index + 1}`}
+                    />
+                ))}
+            </div>
+        </section>
+    );
+}
