@@ -89,18 +89,17 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function canAccessPanel(Panel $panel): bool
     {
+        // active නැත්නම් කිසිම කෙනෙකුට බැහැ
         if ($this->status !== 'active') {
             return false;
         }
 
-        $role = $this->role;
+        // Admin panel එකට ඇතුල් විය හැක්කේ super-admin සහ admin ට පමණි
+        if ($panel->getId() === 'admin') {
+            return in_array($this->role, ['super-admin', 'admin']);
+        }
 
-        return match ($panel->getId()) {
-            // Admin panel: only super-admin and admin
-            'admin' => in_array($role, ['super-admin', 'admin']),
-
-            default => false,
-        };
+        return false;
     }
 
     public function getFilamentName(): string
