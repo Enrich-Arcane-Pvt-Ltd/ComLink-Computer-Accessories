@@ -133,7 +133,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between">
                     {/* Mobile Menu Toggle */}
                     <button
-                        className="md:hidden p-2 -ml-2 text-fg"
+                        className="md:hidden p-2 -ml-2 text-fg cursor-pointer"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         aria-label="Toggle menu"
                     >
@@ -179,7 +179,7 @@ export default function Navbar() {
                     <div className="flex items-center gap-3 md:gap-5">
                         <button
                             onClick={toggleTheme}
-                            className="p-1 text-fg hover:text-accent transition-colors hidden sm:block"
+                            className="p-1 text-fg hover:text-accent transition-colors hidden sm:block cursor-pointer"
                             aria-label="Toggle theme"
                         >
                             {theme === "dark" ? (
@@ -191,7 +191,7 @@ export default function Navbar() {
 
                         <button
                             onClick={handleSearchClick}
-                            className="p-1 text-fg hover:text-accent transition-colors"
+                            className="p-1 text-fg hover:text-accent transition-colors cursor-pointer"
                             aria-label="Search"
                         >
                             <Search className="h-5 w-5" />
@@ -207,7 +207,7 @@ export default function Navbar() {
                                             !isUserDropdownOpen,
                                         )
                                     }
-                                    className="p-1 text-fg hover:text-accent transition-colors flex items-center gap-1 focus:outline-none"
+                                    className="p-1 text-fg hover:text-accent transition-colors flex items-center gap-1 focus:outline-none cursor-pointer"
                                     aria-label="User Menu"
                                 >
                                     <User className="h-5 w-5" />
@@ -224,19 +224,60 @@ export default function Navbar() {
                                             exit={{ opacity: 0, y: 8 }}
                                             className="absolute right-0 mt-3 w-48 bg-bg border border-border shadow-xl z-50 py-2 font-sans"
                                         >
-                                            <div className="px-4 py-2 border-b border-border mb-1">
+                                            {/* <div className="px-4 py-2 border-b border-border mb-1">
                                                 <p className="text-xs text-muted">
                                                     Signed in as
                                                 </p>
                                                 <p className="text-sm font-semibold text-fg truncate">
                                                     {user.email}
                                                 </p>
+                                            </div> */}
+                                            {/* Signed in as section — dropdown top */}
+                                            <div className="px-4 py-3 border-b border-border">
+                                                <div className="flex items-center gap-3">
+                                                    <img
+                                                        src={
+                                                            auth.user.avatar_url
+                                                                ? `/storage/${auth.user.avatar_url}`
+                                                                : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                                                      (
+                                                                          auth
+                                                                              .user
+                                                                              .first_name +
+                                                                          " " +
+                                                                          auth
+                                                                              .user
+                                                                              .last_name
+                                                                      ).trim(),
+                                                                  )}&color=7F9CF5&background=EBF4FF`
+                                                        }
+                                                        alt={
+                                                            auth.user.first_name
+                                                        }
+                                                        className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                                                    />
+                                                    <div className="min-w-0">
+                                                        <p className="text-sm font-semibold text-fg truncate">
+                                                            {
+                                                                auth.user
+                                                                    .first_name
+                                                            }{" "}
+                                                            {
+                                                                auth.user
+                                                                    .last_name
+                                                            }
+                                                        </p>
+                                                        <p className="text-xs text-muted truncate">
+                                                            {auth.user.email}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             {isAdmin && (
                                                 <a
                                                     href={dashboardRoute}
-                                                    className="flex items-center gap-2 px-4 py-2 text-sm text-fg hover:bg-muted/10 transition-colors uppercase tracking-wider font-medium font-display"
+                                                    className="flex items-center gap-2 px-4 py-2 text-sm text-fg hover:bg-muted/10 transition-colors uppercase tracking-wider font-medium font-display cursor-pointer"
                                                 >
                                                     <LayoutDashboard className="h-4 w-4 text-accent" />
                                                     Admin Panel
@@ -245,7 +286,7 @@ export default function Navbar() {
 
                                             <Link
                                                 href={profileRoute}
-                                                className="flex items-center gap-2 px-4 py-2 text-sm text-fg hover:bg-muted/10 transition-colors"
+                                                className="flex items-center gap-2 px-4 py-2 text-sm text-fg hover:bg-muted/10 transition-colors cursor-pointer"
                                             >
                                                 <User className="h-4 w-4" />
                                                 My Profile
@@ -255,7 +296,7 @@ export default function Navbar() {
                                                 href="/logout"
                                                 method="post"
                                                 as="button"
-                                                className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors text-left"
+                                                className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors text-left cursor-pointer"
                                             >
                                                 <LogOut className="h-4 w-4" />
                                                 Logout
@@ -269,14 +310,14 @@ export default function Navbar() {
                             <div className="hidden sm:flex items-center gap-2">
                                 <Link
                                     href="/login"
-                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent px-2 py-1 transition-colors"
+                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent px-2 py-1 transition-colors cursor-pointer"
                                 >
                                     Login
                                 </Link>
                                 <span className="text-border">|</span>
                                 <Link
                                     href="/register"
-                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent px-2 py-1 transition-colors"
+                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent px-2 py-1 transition-colors cursor-pointer"
                                 >
                                     Register
                                 </Link>
@@ -291,7 +332,7 @@ export default function Navbar() {
                         >
                             <Link
                                 href="/wishlist"
-                                className="p-1 text-fg hover:text-accent transition-colors relative block"
+                                className="p-1 text-fg hover:text-accent transition-colors relative block cursor-pointer"
                                 aria-label="Wishlist"
                             >
                                 <Heart className="h-5 w-5" />
@@ -314,11 +355,11 @@ export default function Navbar() {
                                             .map((p: any) => (
                                                 <div
                                                     key={p.id}
-                                                    className="flex items-center gap-3 py-3 border-b border-border last:border-0"
+                                                    className="flex items-center gap-3 py-3 border-b border-border last:border-0 "
                                                 >
                                                     <Link
                                                         href={`/product/${p.id}`}
-                                                        className="w-12 h-14 flex-shrink-0 bg-muted/10"
+                                                        className="w-12 h-14 flex-shrink-0 bg-muted/10 cursor-pointer"
                                                     >
                                                         <img
                                                             src={p.images?.[0]}
@@ -344,7 +385,7 @@ export default function Navbar() {
                                                                 p.id,
                                                             )
                                                         }
-                                                        className="text-muted hover:text-accent p-1"
+                                                        className="text-muted hover:text-accent p-1 cursor-pointer"
                                                         aria-label="Remove"
                                                     >
                                                         <Trash2 className="h-4 w-4" />
@@ -364,7 +405,7 @@ export default function Navbar() {
                         >
                             <Link
                                 href="/cart"
-                                className="p-1 text-fg hover:text-accent transition-colors relative block"
+                                className="p-1 text-fg hover:text-accent transition-colors relative block cursor-pointer"
                                 aria-label="Cart"
                             >
                                 <ShoppingBag className="h-5 w-5" />
@@ -442,7 +483,7 @@ export default function Navbar() {
                                                                 item.id,
                                                             )
                                                         }
-                                                        className="text-muted hover:text-accent p-1"
+                                                        className="text-muted hover:text-accent p-1 cursor-pointer"
                                                         aria-label="Remove"
                                                     >
                                                         <Trash2 className="h-4 w-4" />
