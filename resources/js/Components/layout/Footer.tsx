@@ -111,10 +111,10 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href={route("blog")} // අපි දැනටමත් හදපු Blog page එකේ route එක
+                                    href={route("home")} // අපි දැනටමත් හදපු Blog page එකේ route එක
                                     className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
-                                    Our Blog
+                                    Customers Says
                                 </Link>
                             </li>
                         </ul>
