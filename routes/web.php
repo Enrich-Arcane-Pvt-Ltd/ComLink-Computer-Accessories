@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\AboutUsController;
 use App\Http\Controllers\Public\BlogController;
+use App\Http\Controllers\Public\FAQController;
 use App\Http\Controllers\Public\HomeController;
 use App\Models\User;
 use Filament\Notifications\Notification;
@@ -37,6 +38,9 @@ Route::middleware(['web'])->group(
 
         // AboutUs
         Route::get('/about', [AboutUsController::class, 'index'])->name('about');
+
+        // FAQs
+        Route::get('/faqs', [FAQController::class, 'index'])->name('faqs');
     }
 );
 

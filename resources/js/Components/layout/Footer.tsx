@@ -95,7 +95,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href={route("home")} // '/faqs' route එකක් හැදුවම ඒක මෙතනට දාන්න පුළුවන්
+                                    href={route("faqs")} // '/faqs' route එකක් හැදුවම ඒක මෙතනට දාන්න පුළුවන්
                                     className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
                                     FAQs
