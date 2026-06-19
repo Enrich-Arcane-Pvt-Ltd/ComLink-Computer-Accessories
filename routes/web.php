@@ -3,12 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\AboutUsController;
 use App\Http\Controllers\Public\BlogController;
+use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Public\FAQController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\TestimonialController;
-use App\Models\User;
-use Filament\Notifications\Notification;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -45,6 +43,10 @@ Route::middleware(['web'])->group(
 
         // Testimonials
         Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials');
+
+        // ContactUs
+        Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+        Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     }
 );
 

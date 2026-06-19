@@ -103,7 +103,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href={route("home")}
+                                    href={route("contact")}
                                     className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
                                     Contact Us

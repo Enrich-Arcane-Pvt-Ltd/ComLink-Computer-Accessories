@@ -21,6 +21,7 @@ export default forwardRef(function TextInput(
         error,
         id,
         isFocused = false,
+        required,
         ...props
     }: TextInputProps,
     ref,
@@ -49,6 +50,7 @@ export default forwardRef(function TextInput(
                     className="block text-sm font-medium text-fg mb-1.5"
                 >
                     {label}
+                    {required && <span className="text-red-500 ml-1">*</span>}
                 </label>
             )}
 
