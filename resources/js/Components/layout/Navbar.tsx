@@ -159,20 +159,33 @@ export default function Navbar() {
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.path}
-                                className={cn(
-                                    "text-sm font-medium uppercase tracking-wider transition-colors hover:text-accent",
-                                    url === link.path
-                                        ? "text-accent"
-                                        : "text-fg",
-                                )}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                        {navLinks.map((link) => {
+                            const basePath = link.path.split("?")[0];
+
+                            let isActive = false;
+
+                            if (basePath === "/") {
+                                isActive = url === "/";
+                            } else {
+                                const regex = new RegExp(
+                                    `^${basePath}(/|\\?|$)`,
+                                );
+                                isActive = regex.test(url);
+                            }
+
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.path}
+                                    className={cn(
+                                        "text-sm font-medium uppercase tracking-wider transition-colors hover:text-accent",
+                                        isActive ? "text-accent" : "text-fg",
+                                    )}
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
                     </nav>
 
                     {/* Icons & Auth */}

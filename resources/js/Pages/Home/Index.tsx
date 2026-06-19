@@ -93,10 +93,10 @@ export default function Home({
                         {/* Desktop: flex row | Tablet: 4-col grid | Mobile: 2x2 grid */}
                         <div
                             className="
-            grid grid-cols-2 gap-6
-            sm:grid-cols-4 sm:gap-8 sm:max-w-xl sm:mx-auto
-            lg:flex lg:justify-center lg:gap-24 lg:max-w-none
-        "
+                                grid grid-cols-2 gap-6
+                                sm:grid-cols-4 sm:gap-8 sm:max-w-xl sm:mx-auto
+                                lg:flex lg:justify-center lg:gap-24 lg:max-w-none
+                            "
                         >
                             {categories.map((category) => (
                                 <Link
@@ -106,11 +106,11 @@ export default function Home({
                                 >
                                     <div
                                         className="
-                        relative rounded-full overflow-hidden bg-muted/10
-                        w-[110px] h-[110px]
-                        sm:w-[100px] sm:h-[100px]
-                        lg:w-[140px] lg:h-[140px]
-                    "
+                                            relative rounded-full overflow-hidden bg-muted/10
+                                            w-[110px] h-[110px]
+                                            sm:w-[100px] sm:h-[100px]
+                                            lg:w-[140px] lg:h-[140px]
+                                        "
                                     >
                                         <img
                                             src={category.image}

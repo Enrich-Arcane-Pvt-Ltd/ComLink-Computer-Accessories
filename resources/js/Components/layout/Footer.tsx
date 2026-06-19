@@ -79,42 +79,42 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Categories */}
+                    {/* Company Links / Customer Support */}
                     <div className="space-y-6">
                         <h4 className="font-display text-lg font-semibold tracking-wider text-white">
-                            Categories
+                            Support & Company
                         </h4>
-                        <ul className="space-y-3 text-sm text-primary-fg/80">
+                        <ul className="space-y-4 text-sm text-primary-fg/80">
                             <li>
                                 <Link
-                                    href="/shop?category=jackets"
-                                    className="hover:text-white transition-colors"
+                                    href={route("about")}
+                                    className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
-                                    Jackets
+                                    About Us
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/shop?category=pants"
-                                    className="hover:text-white transition-colors"
+                                    href={route("home")} // '/faqs' route එකක් හැදුවම ඒක මෙතනට දාන්න පුළුවන්
+                                    className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
-                                    Pants
+                                    FAQs
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/shop?category=t-shirts"
-                                    className="hover:text-white transition-colors"
+                                    href={route("home")} // '/contact' route එකක් හැදුවම ඒක මෙතනට දාන්න පුළුවන්
+                                    className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
-                                    T-Shirts
+                                    Contact Us
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/shop?category=accessories"
-                                    className="hover:text-white transition-colors"
+                                    href={route("blog")} // අපි දැනටමත් හදපු Blog page එකේ route එක
+                                    className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
-                                    Bag & Shoes
+                                    Our Blog
                                 </Link>
                             </li>
                         </ul>

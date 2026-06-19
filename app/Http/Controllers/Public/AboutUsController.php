@@ -14,6 +14,8 @@ class AboutUsController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Public/About/Index');
+        return Inertia::render('About/Index', [
+            'title' => 'About Us',
+        ]);
     }
 }

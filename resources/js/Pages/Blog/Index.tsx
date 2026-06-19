@@ -38,7 +38,11 @@ export default function Blog({
                             {/* Featured Post */}
                             {featuredPost && (
                                 <article className="group cursor-pointer">
-                                    <Link href={`/blog/${featuredPost.slug}`}>
+                                    <Link
+                                        href={route("blog.show", {
+                                            slug: featuredPost.slug,
+                                        })}
+                                    >
                                         <div className="relative aspect-[16/9] overflow-hidden mb-6">
                                             <img
                                                 src={featuredPost.image}
@@ -80,7 +84,11 @@ export default function Blog({
                                         key={post.id}
                                         className="group cursor-pointer"
                                     >
-                                        <Link href={`/blog/${post.slug}`}>
+                                        <Link
+                                            href={route("blog.show", {
+                                                slug: featuredPost.slug,
+                                            })}
+                                        >
                                             <div className="relative aspect-[4/3] overflow-hidden mb-4">
                                                 <img
                                                     src={post.image}

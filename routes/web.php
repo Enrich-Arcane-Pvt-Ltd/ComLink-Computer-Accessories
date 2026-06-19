@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Public\AboutUsController;
 use App\Http\Controllers\Public\BlogController;
 use App\Http\Controllers\Public\HomeController;
 use App\Models\User;
@@ -32,6 +33,10 @@ Route::middleware(['web'])->group(
 
         // Blogs
         Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+        Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+        // AboutUs
+        Route::get('/about', [AboutUsController::class, 'index'])->name('about');
     }
 );
 
