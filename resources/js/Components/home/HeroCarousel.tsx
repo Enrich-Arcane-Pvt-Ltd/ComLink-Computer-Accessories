@@ -3,40 +3,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/Button";
-const slides = [
-    {
-        id: 1,
-        image: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=2000",
-        title: "MAKING A STATEMENT THROUGH FASHION",
-        subtitle: "New Collection",
-        description:
-            "Elevate your everyday style with our premium collection of streetwear and essentials.",
-        cta: "Shop Collection",
-        link: "/",
-    },
-    {
-        id: 2,
-        image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=2000",
-        title: "SUMMER ESSENTIALS",
-        subtitle: "Limited Edition",
-        description:
-            "Discover our exclusive summer collection designed for comfort and style.",
-        cta: "Explore Now",
-        link: "/?category=t-shirts",
-    },
-    {
-        id: 3,
-        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=2000",
-        title: "PREMIUM DENIM COLLECTION",
-        subtitle: "Timeless Classics",
-        description:
-            "Crafted with precision, designed for durability. The perfect fit for every occasion.",
-        cta: "Shop Denim",
-        link: "/?category=denim",
-    },
-];
 
-export function HeroCarousel() {
+interface Slide {
+    id: number;
+    image: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    cta: string;
+    link: string;
+}
+
+export function HeroCarousel({ slides = [] }: { slides: Slide[] }) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [direction, setDirection] = useState(0);
     useEffect(() => {
@@ -158,7 +136,7 @@ export function HeroCarousel() {
 
             {/* Dots */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                {slides.map((_, index) => (
+                {slides.map((slide: any, index: number) => (
                     <button
                         key={index}
                         onClick={() => goToSlide(index)}

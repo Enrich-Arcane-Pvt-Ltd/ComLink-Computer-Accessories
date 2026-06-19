@@ -4,23 +4,78 @@ import { InstagramGrid } from "@/Components/home/InstagramGrid";
 import { TestimonialsSection } from "@/Components/home/TestimonialsSection";
 import { ProductCard } from "@/Components/product/ProductCard";
 import { Button } from "@/Components/ui/Button";
-import { categories, products } from "@/data/products";
 import AppLayout from "@/Layouts/AppLayout";
 import { PageProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, RefreshCw, ShieldCheck, Truck } from "lucide-react";
 
-export default function Home({ auth }: PageProps<{}>) {
+interface CategoryProp {
+    name: string;
+    count: number;
+    image: string;
+}
+
+interface Product {
+    id: string;
+    name: string;
+    price: number;
+    originalPrice?: number;
+    images: string[];
+    category: string;
+    rating: number;
+    reviews: number;
+    isNew?: boolean;
+    isSale?: boolean;
+    colors: string[];
+    sizes: string[];
+    description: string;
+    brand: string;
+}
+
+interface Testimonial {
+    id: string;
+    name: string;
+    location: string;
+    avatar: string;
+    rating: number;
+    quote: string;
+}
+interface Slide {
+    id: number;
+    image: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    cta: string;
+    link: string;
+}
+interface HomeProps extends PageProps {
+    products: Product[];
+    categories: CategoryProp[];
+    testimonials: Testimonial[];
+    slides: Slide[];
+    instagramImages: string[];
+    title: string;
+}
+
+export default function Home({
+    auth,
+    products = [],
+    categories = [],
+    testimonials = [],
+    slides = [],
+    instagramImages = [],
+    title = "Home",
+}: HomeProps) {
     const newProducts = products.filter((p) => p.isNew).slice(0, 4);
-    const bestSellers = products.slice(0, 4);
 
     return (
         <AppLayout>
-            <Head title="Home" />
+            <Head title={title} />
             <div className="flex flex-col w-full">
                 {/* Hero Carousel */}
-                <HeroCarousel />
+                <HeroCarousel slides={slides} />
 
                 {/* Categories Showcase */}
                 <section className="py-20 bg-bg">
@@ -222,7 +277,7 @@ export default function Home({ auth }: PageProps<{}>) {
                 </section>
 
                 {/* Best Sellers Carousel */}
-                <BestSellersCarousel />
+                <BestSellersCarousel products={products} />
 
                 {/* Newsletter */}
                 <section className="py-20 relative overflow-hidden bg-primary">
@@ -261,10 +316,10 @@ export default function Home({ auth }: PageProps<{}>) {
                 </section>
 
                 {/* Testimonials */}
-                <TestimonialsSection />
+                <TestimonialsSection testimonials={testimonials} />
 
                 {/* Instagram Grid */}
-                <InstagramGrid />
+                <InstagramGrid instagramImages={instagramImages} />
             </div>
         </AppLayout>
     );

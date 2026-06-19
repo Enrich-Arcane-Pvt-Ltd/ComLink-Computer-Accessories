@@ -1,9 +1,22 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { testimonials } from "../../data/testimonials";
 
-export function TestimonialsSection() {
+interface Testimonial {
+    id: string;
+    name: string;
+    location: string;
+    avatar: string;
+    rating: number;
+    quote: string;
+}
+interface TestimonialsSectionProps {
+    testimonials: Testimonial[];
+}
+
+export function TestimonialsSection({
+    testimonials = [],
+}: TestimonialsSectionProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 

@@ -183,7 +183,7 @@ export default function Footer() {
                             >
                                 Enrich Arcane
                             </a>{" "}
-                            with ❤️ in Sri Lanka.
+                            with ❤️
                         </p>
                     </div>
                     <div className="flex items-center gap-2">

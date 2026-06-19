@@ -2,10 +2,30 @@ import { Link } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { products } from "../../data/products";
 import { ProductCard } from "../product/ProductCard";
 
-export function BestSellersCarousel() {
+interface Product {
+    id: string;
+    name: string;
+    price: number;
+    originalPrice?: number;
+    images: string[];
+    category: string;
+    rating: number;
+    reviews: number;
+    isNew?: boolean;
+    isSale?: boolean;
+    colors: string[];
+    sizes: string[];
+    description: string;
+    brand: string;
+}
+interface BestSellersCarouselProps {
+    products: Product[];
+}
+export function BestSellersCarousel({
+    products = [],
+}: BestSellersCarouselProps) {
     const bestSellers = products.slice(0, 8);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);

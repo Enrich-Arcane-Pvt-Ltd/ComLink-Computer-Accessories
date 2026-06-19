@@ -31,7 +31,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             accent: "bg-accent text-accent-fg hover:bg-accent/90 focus:ring-accent",
             secondary: "bg-fg text-bg hover:bg-fg/90 focus:ring-fg",
             outline:
-                "border-2 border-primary text-primary hover:bg-primary hover:text-primary-fg focus:ring-primary",
+                "border-2 border-primary text-fg hover:bg-primary hover:text-primary-fg focus:ring-primary",
             ghost: "text-fg hover:bg-muted/10 focus:ring-muted",
         };
         const sizes = {

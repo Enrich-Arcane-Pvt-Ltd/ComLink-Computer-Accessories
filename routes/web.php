@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Public\BlogController;
 use App\Http\Controllers\Public\HomeController;
 use App\Models\User;
 use Filament\Notifications\Notification;
@@ -26,13 +27,17 @@ Route::fallback(function () {
 
 Route::middleware(['web'])->group(
     function () {
+        // Home
         Route::get('/', [HomeController::class, 'index'])->name('home');
+
+        // Blogs
+        Route::get('/blog', [BlogController::class, 'index'])->name('blog');
     }
 );
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
