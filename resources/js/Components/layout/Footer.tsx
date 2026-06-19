@@ -95,7 +95,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href={route("faqs")} // '/faqs' route එකක් හැදුවම ඒක මෙතනට දාන්න පුළුවන්
+                                    href={route("faqs")}
                                     className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
                                     FAQs
@@ -103,7 +103,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href={route("home")} // '/contact' route එකක් හැදුවම ඒක මෙතනට දාන්න පුළුවන්
+                                    href={route("home")}
                                     className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
                                     Contact Us
@@ -111,7 +111,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href={route("home")} // අපි දැනටමත් හදපු Blog page එකේ route එක
+                                    href={route("testimonials")}
                                     className="hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
                                     Customers Says

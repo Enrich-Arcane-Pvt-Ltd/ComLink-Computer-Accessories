@@ -5,6 +5,7 @@ use App\Http\Controllers\Public\AboutUsController;
 use App\Http\Controllers\Public\BlogController;
 use App\Http\Controllers\Public\FAQController;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\TestimonialController;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Foundation\Application;
@@ -41,6 +42,9 @@ Route::middleware(['web'])->group(
 
         // FAQs
         Route::get('/faqs', [FAQController::class, 'index'])->name('faqs');
+
+        // Testimonials
+        Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials');
     }
 );
 
