@@ -128,7 +128,7 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm text-primary-fg/80">
                             <li>
                                 <Link
-                                    href="/shipping"
+                                    href={route("shipping.show")}
                                     className="hover:text-white transition-colors"
                                 >
                                     Shipping & Delivery
@@ -136,7 +136,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href="/returns"
+                                    href={route("refunds.show")}
                                     className="hover:text-white transition-colors"
                                 >
                                     Returns, Refunds & Cancellations
@@ -144,7 +144,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href="/terms"
+                                    href={route("terms.show")}
                                     className="hover:text-white transition-colors"
                                 >
                                     Terms & Conditions
@@ -152,7 +152,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href="/privacy"
+                                    href={route("privacy.show")}
                                     className="hover:text-white transition-colors"
                                 >
                                     Privacy Policy

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\AboutUsController;
 use App\Http\Controllers\Public\BlogController;
 use App\Http\Controllers\Public\ContactController;
+use App\Http\Controllers\Public\CustomPagesController;
 use App\Http\Controllers\Public\FAQController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\TestimonialController;
@@ -47,6 +48,11 @@ Route::middleware(['web'])->group(
         // ContactUs
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
         Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+        Route::get('/terms-of-service', [CustomPagesController::class, 'terms'])->name('terms.show');
+        Route::get('/privacy-policy', [CustomPagesController::class, 'privacy'])->name('privacy.show');
+        Route::get('/shipping-delivery', [CustomPagesController::class, 'shipping'])->name('shipping.show');
+        Route::get('/return-refund', [CustomPagesController::class, 'refunds'])->name('refunds.show');
     }
 );
 
