@@ -73,7 +73,7 @@ export function HeroCarousel() {
         }),
     };
     return (
-        <section className="relative h-[80vh] min-h-[600px] w-full overflow-hidden bg-muted/20">
+        <section className="relative h-[80vh] min-h-[600px] w-full overflow-hidden bg-bg/90">
             <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
                     key={currentSlide}
@@ -84,10 +84,10 @@ export function HeroCarousel() {
                     exit="exit"
                     transition={{
                         opacity: {
-                            duration: 0.8,
+                            duration: 0.5,
                         },
                         scale: {
-                            duration: 1.2,
+                            duration: 0.8,
                         },
                     }}
                     className="absolute inset-0"
@@ -98,7 +98,7 @@ export function HeroCarousel() {
                         className="w-full h-full object-cover"
                     />
 
-                    <div className="absolute inset-0 bg-black/30" />
+                    <div className="absolute inset-0 bg-overlay-shade " />
                 </motion.div>
             </AnimatePresence>
 
@@ -115,7 +115,7 @@ export function HeroCarousel() {
                     }}
                     transition={{
                         duration: 0.8,
-                        delay: 0.3,
+                        delay: 1.2,
                     }}
                     className="max-w-2xl text-white"
                 >
@@ -143,14 +143,14 @@ export function HeroCarousel() {
             {/* Navigation Arrows */}
             <button
                 onClick={prevSlide}
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-colors z-10"
+                className="hidden lg:flex absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-colors z-10"
                 aria-label="Previous slide"
             >
                 <ChevronLeft className="h-6 w-6 text-white" />
             </button>
             <button
                 onClick={nextSlide}
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-colors z-10"
+                className="hidden lg:flex absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-colors z-10"
                 aria-label="Next slide"
             >
                 <ChevronRight className="h-6 w-6 text-white" />

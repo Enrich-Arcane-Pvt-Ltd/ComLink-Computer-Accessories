@@ -1,20 +1,28 @@
 import { Link } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { products } from "../../data/products";
 import { ProductCard } from "../product/ProductCard";
+
 export function BestSellersCarousel() {
     const bestSellers = products.slice(0, 8);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
     const itemsPerPage = 3;
     const maxIndex = Math.max(0, bestSellers.length - itemsPerPage);
-    const next = () => {
-        setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
-    };
-    const prev = () => {
-        setCurrentIndex((prev) => Math.max(prev - 1, 0));
-    };
+
+    const next = () =>
+        setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    const prev = () =>
+        setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+
+    useEffect(() => {
+        if (isPaused) return;
+        const interval = setInterval(next, 4000);
+        return () => clearInterval(interval);
+    }, [isPaused, currentIndex]);
+
     return (
         <section className="py-20 bg-bg">
             <div className="container mx-auto px-4 md:px-6">
@@ -30,16 +38,14 @@ export function BestSellersCarousel() {
                     <div className="hidden md:flex items-center gap-4">
                         <button
                             onClick={prev}
-                            disabled={currentIndex === 0}
-                            className="w-10 h-10 flex items-center justify-center border border-border hover:border-primary disabled:opacity-30 disabled:hover:border-border transition-colors"
+                            className="w-10 h-10 flex items-center justify-center border border-border hover:border-primary transition-colors"
                             aria-label="Previous"
                         >
                             <ChevronLeft className="h-5 w-5" />
                         </button>
                         <button
                             onClick={next}
-                            disabled={currentIndex >= maxIndex}
-                            className="w-10 h-10 flex items-center justify-center border border-border hover:border-primary disabled:opacity-30 disabled:hover:border-border transition-colors"
+                            className="w-10 h-10 flex items-center justify-center border border-border hover:border-primary transition-colors"
                             aria-label="Next"
                         >
                             <ChevronRight className="h-5 w-5" />
@@ -47,7 +53,11 @@ export function BestSellersCarousel() {
                     </div>
                 </div>
 
-                <div className="relative overflow-hidden">
+                <div
+                    className="relative overflow-hidden"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                >
                     <motion.div
                         className="flex gap-6 md:gap-8"
                         animate={{
@@ -70,7 +80,23 @@ export function BestSellersCarousel() {
                     </motion.div>
                 </div>
 
-                <div className="mt-10 text-center">
+                {/* Progress dots */}
+                <div className="flex justify-center gap-2 mt-6">
+                    {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => setCurrentIndex(i)}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                                i === currentIndex
+                                    ? "w-6 bg-primary"
+                                    : "w-1.5 bg-border"
+                            }`}
+                            aria-label={`Go to slide ${i + 1}`}
+                        />
+                    ))}
+                </div>
+
+                <div className="mt-8 text-center">
                     <Link
                         href="#"
                         className="inline-flex items-center gap-2 text-primary font-semibold hover:text-accent transition-colors"

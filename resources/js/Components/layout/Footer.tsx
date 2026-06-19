@@ -163,16 +163,16 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="">
                         <p className="text-sm text-primary-fg/60">
-                            &copy; Copyright {nowDate}{" "}
+                            &copy; {nowDate}{" "}
                             <strong className="hover:text-accent-500">
                                 Vicky Store
                             </strong>
                             . All Rights Reserved.
                         </p>
-                        <p className="text-sm text-primary-fg/40">
+                        <p className="text-xs text-primary-fg/40">
                             {" "}
                             Developed by{" "}
                             <a

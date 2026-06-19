@@ -179,4 +179,31 @@ h6,
     animation: pulse-slow 3s infinite;
 }
 
+/* Custom Premium Overlay Style */
+.bg-overlay-shade {
+    /* Light mode එකේදී කළු පාට 30% opacity එකක් */
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+/* <html> එකට .dark ආපු වෙලාවට 50% opacity එකට මාරු වීම */
+.dark .bg-overlay-shade {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes marquee-px {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* .animate-marquee:hover~*,
+.animate-marquee:hover {
+    animation-play-state: paused;
+} */
+
 /*  */

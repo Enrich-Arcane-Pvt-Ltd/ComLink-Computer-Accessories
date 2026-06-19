@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Public\HomeController;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Foundation\Application;
@@ -22,14 +23,12 @@ Route::fallback(function () {
     ]);
 });
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+
+Route::middleware(['web'])->group(
+    function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+    }
+);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

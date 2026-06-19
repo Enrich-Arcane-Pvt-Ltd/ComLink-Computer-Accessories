@@ -104,19 +104,19 @@ export default function Navbar() {
         },
         {
             name: "Shop",
-            path: "/",
+            path: "/shop",
         },
         {
             name: "Men",
-            path: "/?category=men",
+            path: "/shop?category=men",
         },
         {
             name: "Women",
-            path: "/?category=women",
+            path: "/shop?category=women",
         },
         {
             name: "Blog",
-            path: "/",
+            path: "/blog",
         },
     ];
 
@@ -125,7 +125,7 @@ export default function Navbar() {
             className={cn(
                 "sticky top-0 z-40 w-full transition-all duration-300 border-b border-transparent",
                 isScrolled
-                    ? "bg-bg/95 backdrop-blur-md border-border shadow-sm py-3"
+                    ? "bg-white/10 backdrop-blur-lg border-border shadow-md py-3 border-0"
                     : "bg-bg py-5",
             )}
         >
