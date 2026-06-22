@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\FaqCategory;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -63,9 +66,35 @@ class FAQController extends Controller
                 'answer' => 'No, you can checkout as a guest. However, creating an account allows you to track orders easily, save shipping addresses, and manage your wishlist.'
             ]
         ];
+        $formattedFaqs = [];
+
+        try {
+            $categories = FaqCategory::where('is_active', true)
+                ->with(['faqs' => function ($query) {
+                    $query->where('is_active', true)->orderBy('sort_order', 'asc');
+                }])
+                ->orderBy('sort_order', 'asc')
+                ->get();
+
+            // Frontend එක බලාපොරොත්තු වන Flat Array ව්‍යුහයට දත්ත සකස් කිරීම
+            foreach ($categories as $category) {
+                foreach ($category->faqs as $faq) {
+                    $formattedFaqs[] = [
+                        'id' => (string) $faq->id,
+                        'category' => $category->name,
+                        'question' => $faq->question,
+                        'answer' => $faq->answer, // Filament RichEditor එකෙන් එන HTML මෙතනට එනවා
+                    ];
+                }
+            }
+        } catch (Exception $e) {
+            // සර්වර් එකේ දෝෂයක් ආවොත් crash නොවී log කර හිස් array එකක් යවයි
+            config('app.debug') ? dd($e->getMessage()) : Log::error('FAQ Load Error: ' . $e->getMessage());
+            $formattedFaqs = [];
+        }
 
         return Inertia::render('FAQ/Index', [
-            'faqs' => $faqs,
+            'faqs' => $formattedFaqs,
             'title' => 'Frequently Asked Questions'
         ]);
     }

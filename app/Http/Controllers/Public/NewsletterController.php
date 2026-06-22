@@ -27,7 +27,7 @@ class NewsletterController extends Controller
             'email' => [
                 'required',
                 'string',
-                'max:255',
+                'max:55',
                 'email:rfc,dns',
                 'unique:newsletter_subscribers,email'
             ]

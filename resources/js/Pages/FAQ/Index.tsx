@@ -8,7 +8,7 @@ interface FAQItem {
     id: string;
     question: string;
     answer: string;
-    category: "Orders" | "Shipping" | "Returns" | "Payments" | "Account";
+    category: any;
 }
 
 interface FAQsProps {
@@ -104,9 +104,12 @@ export default function FAQs({ faqs = [], title = "FAQs" }: FAQsProps) {
                                                         duration: 0.3,
                                                     }}
                                                 >
-                                                    <div className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 bg-muted/5">
-                                                        {faq.answer}
-                                                    </div>
+                                                    <div
+                                                        className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 bg-muted/5-prose prose-sm max-w-none"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: faq.answer,
+                                                        }}
+                                                    />
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
@@ -174,9 +177,12 @@ export default function FAQs({ faqs = [], title = "FAQs" }: FAQsProps) {
                                                                     duration: 0.3,
                                                                 }}
                                                             >
-                                                                <div className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 bg-muted/5">
-                                                                    {faq.answer}
-                                                                </div>
+                                                                <div
+                                                                    className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 bg-muted/5-prose prose-sm max-w-none"
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html: faq.answer,
+                                                                    }}
+                                                                />
                                                             </motion.div>
                                                         )}
                                                     </AnimatePresence>
