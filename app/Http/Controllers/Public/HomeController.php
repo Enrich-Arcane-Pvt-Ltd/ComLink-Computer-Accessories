@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Slide;
 use Illuminate\Support\Str;
 use App\Models\Testimonial;
 use Inertia\Inertia;
@@ -21,6 +22,7 @@ class HomeController extends Controller
         $categories = Category::where('is_visible', true)
             ->where('sort_order', 0)
             ->withCount('products')
+            ->limit(5)
             ->get()
             ->map(function ($category) {
                 return [
@@ -33,6 +35,7 @@ class HomeController extends Controller
         // 2. Dynamic Testimonials Data Fetching
         $testimonials = Testimonial::where('is_active', true)
             ->latest()
+            ->limit(10)
             ->get()
             ->map(function ($item) {
                 return [
@@ -44,6 +47,22 @@ class HomeController extends Controller
                     'quote' => Str::limit($item->quote, 50, '...'),
                 ];
             });
+
+        $allSlides =  Slide::where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        $heroSlides = $allSlides->where('location', 'hero')->values()->map(function ($slide) {
+            return [
+                'id' => $slide->id,
+                'image' => $slide->image_url,
+                'title' => $slide->title,
+                'subtitle' => $slide->subtitle,
+                'description' => $slide->description,
+                'cta' => $slide->button_text,
+                'link' => $slide->button_url,
+            ];
+        });
 
 
         //   Products Data
@@ -231,7 +250,7 @@ class HomeController extends Controller
             'categories' => $categories,
             'products' => $products,
             'testimonials' => $testimonials,
-            'slides' => $slides,
+            'slides' => $heroSlides,
             'instagramImages' => $instagramImages,
         ]);
     }
