@@ -50,6 +50,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect('/')->with('success', 'Your account has been created successfully! Welcome to Vicky Store.');
+        return redirect('/')->with('success', 'Your account has been created successfully! Welcome to Wiki Store.');
     }
 }

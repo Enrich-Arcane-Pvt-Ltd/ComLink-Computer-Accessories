@@ -27,7 +27,7 @@ export default function Footer() {
                                         ? "/images/logo-white.png"
                                         : "/images/logo.png"
                                 }
-                                alt="Vicky Store Logo"
+                                alt="Wiki Store Logo"
                                 className="h-8 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
                             />
                         </Link>
@@ -168,7 +168,7 @@ export default function Footer() {
                         <p className="text-sm text-primary-fg/60">
                             &copy; {nowDate}{" "}
                             <strong className="hover:text-accent-500">
-                                Vicky Store
+                                Wiki Store
                             </strong>
                             . All Rights Reserved.
                         </p>

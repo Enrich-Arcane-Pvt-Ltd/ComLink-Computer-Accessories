@@ -1,5 +1,5 @@
 <div class="flex items-center justify-start gap-3 overflow-hidden font-heading">
-    <img src="{{ asset('images/logo.png') }}" alt="Vicky-Store" class="h-9 w-auto shrink-0">
+    <img src="{{ asset('images/logo.png') }}" alt="Wiki-Store" class="h-9 w-auto shrink-0">
 
     <div class="flex flex-col leading-none whitespace-nowrap">
 

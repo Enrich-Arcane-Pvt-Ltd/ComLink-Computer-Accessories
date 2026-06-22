@@ -110,7 +110,7 @@ export default function Contact() {
                                             Email Address
                                         </h4>
                                         <p className="text-sm text-muted">
-                                            support@vickystore.com
+                                            support@wikistore.com
                                         </p>
                                     </div>
                                 </div>

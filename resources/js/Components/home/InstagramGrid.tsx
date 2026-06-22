@@ -16,7 +16,7 @@ export function InstagramGrid({ instagramImages = [] }: InstagramGridProps) {
                     <div className="inline-flex items-center gap-3 mb-2 text-fg">
                         <Instagram className="h-6 w-6" />
                         <h3 className="font-display text-2xl font-bold">
-                            @VickyStore
+                            @WikiStore
                         </h3>
                     </div>
                     <p className="text-muted">

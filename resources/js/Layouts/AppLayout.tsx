@@ -19,7 +19,7 @@ export default function AppLayout({
     product?: any;
     className?: any;
 }) {
-    const appName = import.meta.env.VITE_APP_NAME || "VickyStore";
+    const appName = import.meta.env.VITE_APP_NAME || "WikiStore";
     const { flash, auth } = usePage<PageProps>().props;
     const { url } = usePage();
 
@@ -44,7 +44,7 @@ export default function AppLayout({
                 <meta
                     head-key="description"
                     name="description"
-                    content="Welcome to Vicky-Store Online Shop."
+                    content="Welcome to Wiki-Store Online Shop."
                 />
                 <meta property="og:type" content="Website" />
                 <meta property="og:url" content={url} />
@@ -62,7 +62,7 @@ export default function AppLayout({
                     sizes="180x180"
                     href="/apple-touch-icon.png"
                 />
-                <meta name="apple-mobile-web-app-title" content="VickyStore" />
+                <meta name="apple-mobile-web-app-title" content="WikiStore" />
                 <link rel="manifest" href="/site.webmanifest" />
 
                 <meta name="google-site-verification" content="" />

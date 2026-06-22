@@ -152,7 +152,7 @@ export default function Navbar() {
                                     ? "/images/logo-white.png"
                                     : "/images/logo.png"
                             }
-                            alt="Vicky Store Logo"
+                            alt="Wiki Store Logo"
                             className="h-8 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
                         />
                     </Link>

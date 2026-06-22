@@ -1,6 +1,6 @@
 {
-    "name": "Vicky-Store",
-    "short_name": "VickyStore",
+    "name": "Wiki-Store",
+    "short_name": "WikiStore",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#0f0f0f",

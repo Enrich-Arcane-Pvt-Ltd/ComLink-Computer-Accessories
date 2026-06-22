@@ -35,7 +35,7 @@ class CustomPagesController extends Controller
                 <p>Occasionally there may be information on our site or in the Service that contains typographical errors, inaccuracies or omissions that may relate to product descriptions, pricing, promotions, offers, product shipping charges, transit times and availability. We reserve the right to correct any errors, inaccuracies or omissions, and to change or update information or cancel orders if any information in the Service or on any related website is inaccurate at any time without prior notice.</p>
 
                 <h2>6. Contact Information</h2>
-                <p>Questions about the Terms of Service should be sent to us at legal@vickystore.com.</p>
+                <p>Questions about the Terms of Service should be sent to us at legal@wikistore.com.</p>
             '
         ];
 
@@ -68,13 +68,13 @@ class CustomPagesController extends Controller
                 <p>We use cookies and similar tracking technologies to track activity on our website and hold certain information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.</p>
 
                 <h2>5. Your Rights</h2>
-                <p>Depending on your location, you may have the right to access, correct, or delete your personal information. If you wish to exercise these rights, please contact us at privacy@vickystore.com.</p>
+                <p>Depending on your location, you may have the right to access, correct, or delete your personal information. If you wish to exercise these rights, please contact us at privacy@wikistore.com.</p>
 
                 <h2>6. Changes to This Policy</h2>
                 <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.</p>
 
                 <h2>7. Contact Us</h2>
-                <p>If you have any questions about this Privacy Policy, please contact us at:<br>Email: privacy@vickystore.com<br>Address: 368 Ocean Ave, Seaside, CA 12345</p>
+                <p>If you have any questions about this Privacy Policy, please contact us at:<br>Email: privacy@wikistore.com<br>Address: 368 Ocean Ave, Seaside, CA 12345</p>
             '
         ];
 
