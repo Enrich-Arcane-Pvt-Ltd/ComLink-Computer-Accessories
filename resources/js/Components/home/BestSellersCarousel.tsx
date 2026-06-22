@@ -30,13 +30,19 @@ export function BestSellersCarousel({
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
     const itemsPerPage = 3;
-    const maxIndex = Math.max(0, bestSellers.length - itemsPerPage);
+    const maxIndex =
+        bestSellers.length > itemsPerPage
+            ? bestSellers.length - itemsPerPage
+            : 0;
 
     const next = () =>
         setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     const prev = () =>
         setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
 
+    if (bestSellers.length === 0) {
+        return null; // හෝ <section> No Products Found </section>
+    }
     useEffect(() => {
         if (isPaused) return;
         const interval = setInterval(next, 4000);

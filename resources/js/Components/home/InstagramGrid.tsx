@@ -5,6 +5,10 @@ interface InstagramGridProps {
 }
 
 export function InstagramGrid({ instagramImages = [] }: InstagramGridProps) {
+    if (!instagramImages || instagramImages.length === 0) {
+        return null;
+    }
+
     return (
         <section className="pt-12 bg-bg border-t border-border">
             <div className="container mx-auto px-4 md:px-6 mb-8">

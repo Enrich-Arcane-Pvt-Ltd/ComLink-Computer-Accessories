@@ -21,14 +21,22 @@ export function TestimonialsSection({
     const [isPaused, setIsPaused] = useState(false);
 
     const next = () => {
+        if (testimonials.length === 0) return;
         setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     };
 
     const prev = () => {
+        if (testimonials.length === 0) return;
         setCurrentIndex(
             (prev) => (prev - 1 + testimonials.length) % testimonials.length,
         );
     };
+
+    if (!testimonials || testimonials.length === 0) {
+        return null;
+    }
+
+    const currentTestimonial = testimonials[currentIndex];
 
     useEffect(() => {
         if (isPaused) return;
@@ -56,20 +64,16 @@ export function TestimonialsSection({
                             >
                                 <div className="flex items-center gap-4 mb-6">
                                     <img
-                                        src={testimonials[currentIndex].avatar}
-                                        alt={testimonials[currentIndex].name}
+                                        src={currentTestimonial?.avatar}
+                                        alt={currentTestimonial?.name}
                                         className="w-16 h-16 rounded-full object-cover"
                                     />
                                     <div>
                                         <h4 className="font-semibold text-fg text-lg">
-                                            {testimonials[currentIndex].name}
+                                            {currentTestimonial?.name}
                                         </h4>
                                         <p className="text-sm text-muted">
-                                            From{" "}
-                                            {
-                                                testimonials[currentIndex]
-                                                    .location
-                                            }
+                                            From {currentTestimonial?.location}
                                         </p>
                                     </div>
                                 </div>
@@ -79,9 +83,7 @@ export function TestimonialsSection({
                                         <Star
                                             key={i}
                                             className={`h-4 w-4 ${
-                                                i <
-                                                testimonials[currentIndex]
-                                                    .rating
+                                                i < currentTestimonial.rating
                                                     ? "fill-yellow-500 text-yellow-500"
                                                     : "text-muted"
                                             }`}
@@ -90,7 +92,7 @@ export function TestimonialsSection({
                                 </div>
 
                                 <p className="text-muted leading-relaxed text-lg italic">
-                                    "{testimonials[currentIndex].quote}"
+                                    "{currentTestimonial?.quote}"
                                 </p>
                             </motion.div>
                         </AnimatePresence>

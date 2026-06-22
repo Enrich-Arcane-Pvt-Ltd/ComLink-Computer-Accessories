@@ -98,36 +98,42 @@ export default function Home({
                                 lg:flex lg:justify-center lg:gap-24 lg:max-w-none
                             "
                         >
-                            {categories.map((category) => (
-                                <Link
-                                    key={category.name}
-                                    href={`/shop?category=${category.name.toLowerCase()}`}
-                                    className="group flex flex-col items-center text-center gap-3"
-                                >
-                                    <div
-                                        className="
+                            {categories.length > 0 ? (
+                                categories.map((category) => (
+                                    <Link
+                                        key={category.name}
+                                        href={`/shop?category=${category.name.toLowerCase()}`}
+                                        className="group flex flex-col items-center text-center gap-3"
+                                    >
+                                        <div
+                                            className="
                                             relative rounded-full overflow-hidden bg-muted/10
                                             w-[110px] h-[110px]
                                             sm:w-[100px] sm:h-[100px]
                                             lg:w-[140px] lg:h-[140px]
                                         "
-                                    >
-                                        <img
-                                            src={category.image}
-                                            alt={category.name}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                        />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-fg text-sm group-hover:text-primary transition-colors leading-tight">
-                                            {category.name}
-                                        </h3>
-                                        <p className="text-xs text-muted mt-0.5">
-                                            {category.count} Products
-                                        </p>
-                                    </div>
-                                </Link>
-                            ))}
+                                        >
+                                            <img
+                                                src={category.image}
+                                                alt={category.name}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-fg text-sm group-hover:text-primary transition-colors leading-tight">
+                                                {category.name}
+                                            </h3>
+                                            <p className="text-xs text-muted mt-0.5">
+                                                {category.count} Products
+                                            </p>
+                                        </div>
+                                    </Link>
+                                ))
+                            ) : (
+                                <p className="text-muted col-span-full text-center py-4">
+                                    No categories available at the moment.
+                                </p>
+                            )}
                         </div>
                     </div>
                 </section>

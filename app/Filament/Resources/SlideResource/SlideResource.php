@@ -21,7 +21,7 @@ class SlideResource extends Resource
 {
     protected static ?string $model = Slide::class;
     protected static ?string $navigationIcon = 'heroicon-o-photo';
-    protected static ?string $navigationGroup = 'System Management';
+    protected static ?string $navigationGroup = 'Content Management';
     protected static ?string $pluralLabel = 'Hero & CTA Content';
 
     public static function form(Form $form): Form

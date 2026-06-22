@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\GalleryItem;
 use App\Models\Slide;
 use Illuminate\Support\Str;
 use App\Models\Testimonial;
@@ -26,9 +27,9 @@ class HomeController extends Controller
             ->get()
             ->map(function ($category) {
                 return [
-                    'name' => $category->name,
+                    'name' => $category->name ?? 'Unknown Category',
                     'count' => $category->products_count > 0 ? $category->products_count : rand(25, 140),
-                    'image' => $category->image_url,
+                    'image' => $category->image_url ?? url('/images/placeholder.png'),
                 ];
             });
 
@@ -40,11 +41,11 @@ class HomeController extends Controller
             ->map(function ($item) {
                 return [
                     'id' => (string) $item->id,
-                    'name' => $item->name,
+                    'name' => $item->name ?? 'Anonymous',
                     'location' => $item->location ?? 'Verified Buyer',
                     'avatar' => $item->avatar_url,
-                    'rating' => $item->rating,
-                    'quote' => Str::limit($item->quote, 50, '...'),
+                    'rating' => (int) ($item->rating ?? 5),
+                    'quote' => Str::limit($item->quote ?? '', 50, '...'),
                 ];
             });
 
@@ -56,13 +57,25 @@ class HomeController extends Controller
             return [
                 'id' => $slide->id,
                 'image' => $slide->image_url,
-                'title' => $slide->title,
-                'subtitle' => $slide->subtitle,
-                'description' => $slide->description,
-                'cta' => $slide->button_text,
-                'link' => $slide->button_url,
+                'title' => $slide->title ?? 'Default Title',
+                'subtitle' => $slide->subtitle ?? '',
+                'description' => $slide->description ?? '',
+                'cta' => $slide->button_text ?? 'Shop Now',
+                'link' => $slide->button_url ?? '/',
             ];
         });
+
+        if ($heroSlides->isEmpty()) {
+            $heroSlides = collect([[
+                "id" => 1,
+                "image" => "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=2000",
+                "title" => "MAKING A STATEMENT THROUGH FASHION",
+                "subtitle" => "New Collection",
+                "description" => "Elevate your everyday style with our premium collection of streetwear and essentials.",
+                "cta" => "Shop Collection",
+                "link" => "/",
+            ]]);
+        }
 
 
         //   Products Data
@@ -204,46 +217,26 @@ class HomeController extends Controller
         ];
 
 
-        // 4. Slides Data (Full Code)
-        $slides = [
-            [
-                "id" => 1,
-                "image" => "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=2000",
-                "title" => "MAKING A STATEMENT THROUGH FASHION",
-                "subtitle" => "New Collection",
-                "description" => "Elevate your everyday style with our premium collection of streetwear and essentials.",
-                "cta" => "Shop Collection",
-                "link" => "/",
-            ],
-            [
-                "id" => 2,
-                "image" => "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=2000",
-                "title" => "DEFINING MODERN STREETWEAR UNIFORM",
-                "subtitle" => "Winter Drop",
-                "description" => "Discover our heavyweight boxy hoodies and vintage wash straight denim jeans.",
-                "cta" => "Explore Denim",
-                "link" => "/shop",
-            ],
-            [
-                "id" => 3,
-                "image" => "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=2000",
-                "title" => "MINIMALIST DESIGN PREMIUM ESSENTIALS",
-                "subtitle" => "Essentials Pack",
-                "description" => "Crafted from sustainable organic fabrics engineered for long-lasting comfort.",
-                "cta" => "Shop Basics",
-                "link" => "/shop",
-            ]
-        ];
 
-        // 5. Instagram Images Data (Full Code)
-        $instagramImages = [
-            "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400",
-            "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=400",
-            "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=400",
-            "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=80&w=400",
-            "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=400",
-            "https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&q=80&w=400"
-        ];
+        $instagramImages = GalleryItem::where('is_visible', true)
+            ->where('is_featured_home', true)
+            ->orderBy('sort_order', 'asc')
+            ->get()
+            ->map(function ($item) {
+                return $item->image_url;
+            })
+            ->toArray(); //
+
+        if (empty($instagramImages)) {
+            $instagramImages = [
+                "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400",
+                "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=400",
+                "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=400",
+                "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=80&w=400",
+                "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=400",
+                "https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&q=80&w=400"
+            ];
+        }
 
         return Inertia::render('Home/Index', [
             'title' => 'Home - Elevate Your Everyday Style',
