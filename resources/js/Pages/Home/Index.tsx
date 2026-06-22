@@ -6,9 +6,10 @@ import { ProductCard } from "@/Components/product/ProductCard";
 import { Button } from "@/Components/ui/Button";
 import AppLayout from "@/Layouts/AppLayout";
 import { PageProps } from "@/types";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, RefreshCw, ShieldCheck, Truck } from "lucide-react";
+import { useState } from "react";
 
 interface CategoryProp {
     name: string;
@@ -69,7 +70,45 @@ export default function Home({
     title = "Home",
 }: HomeProps) {
     const newProducts = products.filter((p) => p.isNew).slice(0, 4);
+    const { data, setData, post, processing, errors, reset } = useForm({
+        email: "",
+        username_hp: "",
+    });
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+    const handleNewsletterSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // අලුතින් submit කරන විට පරණ මැසේජ් clear කරන්න
+        setSuccessMessage(null);
+        setErrorMessage(null);
+
+        post(route("newsletter.subscribe"), {
+            preserveScroll: true,
+            onSuccess: (page) => {
+                reset("email");
+                setSuccessMessage(
+                    "Thank you for subscribing to our newsletter!",
+                );
+
+                // තත්පර 5කට (5000ms) පසු සක්සස් මැසේජ් එක අයින් කරන්න
+                setTimeout(() => {
+                    setSuccessMessage(null);
+                }, 5000);
+            },
+            onError: (errors) => {
+                if (errors.email) {
+                    setErrorMessage(errors.email);
+
+                    // තත්පර 5කට (5000ms) පසු एरර් මැසේජ් එක අයින් කරන්න
+                    setTimeout(() => {
+                        setErrorMessage(null);
+                    }, 5000);
+                }
+            },
+        });
+    };
     return (
         <AppLayout>
             <Head title={title} />
@@ -287,8 +326,6 @@ export default function Home({
 
                 {/* Newsletter */}
                 <section className="py-20 relative overflow-hidden bg-primary">
-                    {/* SVG vector bg — paste the SVG from the mockup here with opacity-[0.07] */}
-
                     <div className="container mx-auto px-4 md:px-6 max-w-xl text-center relative z-10">
                         <span className="font-display text-xs tracking-[0.2em] text-accent uppercase font-semibold mb-3 block">
                             Exclusive Offers
@@ -301,22 +338,69 @@ export default function Home({
                             Subscribe to get special offers, free giveaways, and
                             once-in-a-lifetime deals.
                         </p>
+
                         <form
-                            className="flex max-w-md mx-auto"
-                            onSubmit={(e) => e.preventDefault()}
+                            className="flex flex-col max-w-md mx-auto"
+                            onSubmit={handleNewsletterSubmit}
                         >
-                            <input
-                                type="email"
-                                placeholder="Enter your email address"
-                                className="flex-1 h-12 px-5 bg-white/7 border border-white/18 border-r-0 text-white placeholder:text-white/30 focus:outline-none focus:border-accent text-sm"
-                                required
-                            />
-                            <Button
-                                type="submit"
-                                className="h-12 sm:px-7 px-2 bg-accent hover:bg-accent-800 text-white font-display tracking-widest text-sm rounded-none"
-                            >
-                                Subscribe
-                            </Button>
+                            <div className="flex w-full">
+                                {/* Honeypot field - invisible to real users */}
+                                <div className="hidden" aria-hidden="true">
+                                    <input
+                                        type="text"
+                                        name="username_hp"
+                                        value={data.username_hp || ""}
+                                        onChange={(e) =>
+                                            setData(
+                                                "username_hp",
+                                                e.target.value,
+                                            )
+                                        }
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                    />
+                                </div>
+                                <input
+                                    type="email"
+                                    value={data.email}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
+                                    placeholder="Enter your email address"
+                                    className="flex-1 h-12 px-5 bg-white/5 border border-white/18 border-r-0 text-white placeholder:text-white/30 focus:outline-none focus:border-accent text-sm"
+                                    required
+                                    disabled={processing}
+                                />
+                                <Button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="h-12 sm:px-7 px-2 bg-accent hover:bg-accent-800 text-white font-display tracking-widest text-sm rounded-none whitespace-nowrap"
+                                >
+                                    {processing ? "Joining..." : "Subscribe"}
+                                </Button>
+                            </div>
+
+                            {/* Error Message - පින්තූරයේ පරිදි Input එකට යටින් පෙන්වයි (තත්පර 5කින් මැකී යයි) */}
+                            {errorMessage && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-red-500 text-xs text-left mt-2 font-medium"
+                                >
+                                    {errorMessage}
+                                </motion.div>
+                            )}
+
+                            {/* Success Message - Alert වෙනුවට කොළ පාටින් මෙතනම වැටේ (තත්පර 5කින් මැකී යයි) */}
+                            {successMessage && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-emerald-400 text-xs text-left mt-2 font-medium"
+                                >
+                                    {successMessage}
+                                </motion.div>
+                            )}
                         </form>
                     </div>
                 </section>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Public\CustomPagesController;
 use App\Http\Controllers\Public\FAQController;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\NewsletterController;
 use App\Http\Controllers\Public\TestimonialController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -49,10 +50,14 @@ Route::middleware(['web'])->group(
         Route::get('/contact', [ContactController::class, 'index'])->name('contact');
         Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+        // Legal Pages
         Route::get('/terms-of-service', [CustomPagesController::class, 'terms'])->name('terms.show');
         Route::get('/privacy-policy', [CustomPagesController::class, 'privacy'])->name('privacy.show');
         Route::get('/shipping-delivery', [CustomPagesController::class, 'shipping'])->name('shipping.show');
         Route::get('/return-refund', [CustomPagesController::class, 'refunds'])->name('refunds.show');
+
+        // Newsletter
+        Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.subscribe');
     }
 );
 
