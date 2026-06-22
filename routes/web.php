@@ -37,6 +37,12 @@ Route::middleware(['web'])->group(
         Route::get('/blog', [BlogController::class, 'index'])->name('blog');
         Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
+        // Protected Blogs Routes 
+        Route::middleware(['auth'])->group(function () {
+            Route::post('/blog/{id}/like', [BlogController::class, 'like'])->name('blog.like');
+            Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name('blog.comment');
+        });
+
         // AboutUs
         Route::get('/about', [AboutUsController::class, 'index'])->name('about');
 
