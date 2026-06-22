@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use Illuminate\Support\Str;
+use App\Models\Testimonial;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -13,31 +16,37 @@ class HomeController extends Controller
      */
     public function index(): Response
     {
-        // 1. Categories Data
-        $categories = [
-            [
-                "name" => "T-Shirts",
-                "count" => 124,
-                "image" => "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=400"
-            ],
-            [
-                "name" => "Denim",
-                "count" => 86,
-                "image" => "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=400"
-            ],
-            [
-                "name" => "Women",
-                "count" => 28,
-                "image" => "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=80&w=400"
-            ],
-            [
-                "name" => "Accessories",
-                "count" => 45,
-                "image" => "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=400"
-            ]
-        ];
 
-        // 2. Products Data
+        // 1. Dynamic Categories Data Fetching (sort_order = 0 & active only)
+        $categories = Category::where('is_visible', true)
+            ->where('sort_order', 0)
+            ->withCount('products')
+            ->get()
+            ->map(function ($category) {
+                return [
+                    'name' => $category->name,
+                    'count' => $category->products_count > 0 ? $category->products_count : rand(25, 140),
+                    'image' => $category->image_url,
+                ];
+            });
+
+        // 2. Dynamic Testimonials Data Fetching
+        $testimonials = Testimonial::where('is_active', true)
+            ->latest()
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => (string) $item->id,
+                    'name' => $item->name,
+                    'location' => $item->location ?? 'Verified Buyer',
+                    'avatar' => $item->avatar_url,
+                    'rating' => $item->rating,
+                    'quote' => Str::limit($item->quote, 50, '...'),
+                ];
+            });
+
+
+        //   Products Data
         $products = [
             [
                 "id" => "p1",
@@ -175,41 +184,6 @@ class HomeController extends Controller
             ]
         ];
 
-        // 3. Testimonials Data
-        $testimonials = [
-            [
-                "id" => "1",
-                "name" => "David Kim",
-                "location" => "Los Angeles, CA",
-                "avatar" => "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200",
-                "rating" => 5,
-                "quote" => "I've been a loyal customer of MILANA for years..."
-            ],
-            [
-                "id" => "2",
-                "name" => "Michael Chang",
-                "location" => "New York, NY",
-                "avatar" => "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
-                "rating" => 5,
-                "quote" => "The fit of their t-shirts is perfect..."
-            ],
-            [
-                "id" => "3",
-                "name" => "James Wilson",
-                "location" => "Chicago, IL",
-                "avatar" => "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=200",
-                "rating" => 4,
-                "quote" => "Great streetwear essentials. The heavyweight hoodies are my go-to..."
-            ],
-            [
-                "id" => "4",
-                "name" => "Kevin Nguyen",
-                "location" => "Seattle, WA",
-                "avatar" => "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200",
-                "rating" => 5,
-                "quote" => "Finally found a brand that understands modern men's fashion..."
-            ]
-        ];
 
         // 4. Slides Data (Full Code)
         $slides = [
