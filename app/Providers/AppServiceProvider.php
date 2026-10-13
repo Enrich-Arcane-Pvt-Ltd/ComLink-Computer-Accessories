@@ -32,10 +32,10 @@ class AppServiceProvider extends ServiceProvider
             // දැනට Log වෙන්නේ Admin Panel එකටද කියලා මෙහෙම බලන එක ෂුවර්
             $panel = Filament::getCurrentPanel();
 
-            if ($panel && $panel->getId() === 'admin') {
+            if ($panel && ($panel->getId() === 'admin')) {
                 Notification::make()
                     ->title('Welcome back, ' . $event->user->first_name . '!')
-                    ->body('Have a productive day at Vicky-Store.')
+                    ->body('Have a productive day at Wiki-Store.')
                     ->success()
                     ->send();
             }

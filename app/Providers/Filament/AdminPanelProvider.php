@@ -28,7 +28,8 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            // ->login()
+            // ->login(Login::class)
             ->profile(false)
             ->userMenuItems([
                 MenuItem::make()
@@ -36,32 +37,9 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-home')
                     ->url('/'),
             ])
-            // --- Branding ---
-            ->brandName('Vicky-Store')
             ->sidebarCollapsibleOnDesktop()
-            ->brandLogo(fn() => view('filament.components.brand')) // අර හදපු file එක link කරනවා
-            ->brandLogoHeight('3.5rem') // උස auto දෙනවා design එක කැඩෙන්නේ නැති වෙන්න
-            // Logo images public folder එකේ තිබිය යුතුය
-            // ->brandLogo(asset('images/logo.png'))
-            // ->darkModeBrandLogo(asset('images/logo.png'))
-            // ->brandLogoHeight('3rem')
-            ->favicon(asset('favicon.ico'))
-            ->login(Login::class)
-            // ->viteTheme('resources/css/app.css')
-            // ->viteTheme('resources/css/app.css')
+            ->collapsedSidebarWidth('4.5rem')
             ->globalSearchDebounce(500)
-            ->navigationGroups([
-                'User Management',
-                'Catalog Management',
-                'Marketing',
-                'System Management',
-            ])
-
-            // --- Fonts ---
-            ->font('Plus Jakarta Sans')
-
-            // --- Colors ---
-            // මෙතන අපි Tailwind එකේ දැම්ම පාටම Filament එකටත් දෙනවා
             ->colors([
                 'primary' => [
                     50 => '#f2f4f8',
@@ -91,25 +69,26 @@ class AdminPanelProvider extends PanelProvider
                 ],
                 'gray' => Color::Zinc,
             ])
-
-            // ->renderHook(
-            //     'panels::topbar.start',
-            //     fn() => view('filament.hooks.header-logo')
-            // )
-
-            // --- Sidebar Customization ---
-            ->sidebarCollapsibleOnDesktop()
-            ->collapsedSidebarWidth('4.5rem')
-
-            // --- Database Notifications ---
-            ->databaseNotifications()
-
-            // --- Resources & Pages ---
+            ->font('Plus Jakarta Sans')
+            ->brandName('Wiki-Store')
+            ->brandLogo(fn() => view('filament.components.brand'))
+            ->brandLogoHeight('3.5rem')
+            ->darkMode(true)
+            ->favicon(asset('favicon.ico'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                // Profile::class,
             ])
+            ->navigationGroups([
+                'User Management',
+                'Catalog Management',
+                'Marketing',
+                'System Management',
+            ])
+            ->databaseNotifications()
+
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
@@ -121,7 +100,8 @@ class AdminPanelProvider extends PanelProvider
                 StartSession::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
+
+                // VerifyCsrfToken::class,
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,

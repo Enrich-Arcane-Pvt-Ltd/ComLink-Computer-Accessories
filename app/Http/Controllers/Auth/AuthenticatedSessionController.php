@@ -27,19 +27,18 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request): \Symfony\Component\HttpFoundation\Response
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return $this->redirectByRole();
     }
 
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         Auth::guard('web')->logout();
 
@@ -48,5 +47,21 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    private function redirectByRole(): \Symfony\Component\HttpFoundation\Response
+    {
+        $role = Auth::user()->role ?? null;
+
+        $destination = match (true) {
+            in_array($role, ['super-admin', 'admin'])    => '/admin', // requires AdminPanelProvider
+            in_array($role, ['user'])                 => '/',
+            default                                      => '/login',
+        };
+
+        // Inertia::location() sends a 409 + X-Inertia-Location header.
+        // The Inertia JS client then does window.location = url (full page load).
+        // This completely exits the Inertia SPA — Filament loads fresh.
+        return Inertia::location($destination);
     }
 }

@@ -1,58 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght=500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-    /* Fonts Replacement */
+    /* Fonts Mapping */
     --font-sans: "Plus Jakarta Sans", sans-serif;
-    --font-heading: "Oswald", sans-serif;
+    --font-display: "Oswald", sans-serif;
 
-    /* Base Theme Colors */
-    --color-bg: #ffffff;
-    --color-fg: #0f172a;
-    --color-card: #f8fafc;
-    --color-border: #e2e8f0;
-    --color-muted: #64748b;
+    /* --- Core Context Variables Mapping --- */
+    --color-bg: var(--color-bg-base);
+    --color-fg: var(--color-text-main);
+    --color-card: var(--color-card-base);
+    --color-border: var(--color-border-base);
+    --color-muted: var(--color-text-muted);
+    --color-link-main: var(--color-link);
+    --color-link-hover: var(--color-link-hover);
 
     /* --- Primary Colors (Midnight Navy) --- */
-    /* Default Primary Color */
     --color-primary: #192341;
+    --color-primary-fg: #ffffff;
 
-    /* Primary Range */
     --color-primary-50: #f2f4f8;
     --color-primary-100: #e3e7f0;
     --color-primary-200: #c1cae0;
     --color-primary-300: #90a1ca;
     --color-primary-400: #5b73ae;
     --color-primary-500: #3c5491;
-    /* Main Brand Color */
     --color-primary-600: #2b3e73;
     --color-primary-700: #212f59;
     --color-primary-800: #192341;
     --color-primary-900: #141b31;
     --color-primary-950: #0d1120;
 
-    /* --- Secondary Colors (Red Accent) --- */
-    /* Default Secondary Color */
-    --color-secondary: #d82323;
+    /* --- Accent Colors (Red) --- */
+    --color-accent: #d82323;
+    --color-accent-fg: #ffffff;
 
-    /* Secondary Range */
-    --color-secondary-50: #fff1f1;
-    --color-secondary-100: #ffe1e1;
-    --color-secondary-200: #ffc9c9;
-    --color-secondary-300: #ffa3a3;
-    --color-secondary-400: #ff6e6e;
-    --color-secondary-500: #f83b3b;
-    /* Accent Red */
-    --color-secondary-600: #d82323;
-    --color-secondary-700: #b51a1a;
-    --color-secondary-800: #961919;
-    --color-secondary-900: #7d1a1a;
-    --color-secondary-950: #440a0a;
+    --color-accent-50: #fff1f1;
+    --color-accent-100: #ffe1e1;
+    --color-accent-200: #ffc9c9;
+    --color-accent-300: #ffa3a3;
+    --color-accent-400: #ff6e6e;
+    --color-accent-500: #f83b3b;
+    --color-accent-600: #d82323;
+    --color-accent-700: #b51a1a;
+    --color-accent-800: #961919;
+    --color-accent-900: #7d1a1a;
+    --color-accent-950: #440a0a;
 
     /* --- Dark Mode Backgrounds --- */
     --color-dark-bg: #0f172a;
     --color-dark-card: #1e293b;
-
     /* --- Tailwind v4 Animations --- */
     --animate-marquee: marquee 40s linear infinite;
 
@@ -67,21 +64,58 @@
     }
 }
 
-/* Custom global styles & typography rules */
+/* --- THEME VARIATION CORES --- */
+@layer base {
+    :root {
+        /* Light Mode Colors */
+        --color-bg-base: #ffffff;
+        --color-text-main: #0f172a;
+        --color-card-base: #f8fafc;
+        --color-border-base: #e2e8f0;
+        --color-text-muted: #64748b;
+        --color-bg: #ffffff;
+        --color-fg: #0f172a;
+        --color-primary: #192341;
+        --color-primary-fg: #ffffff;
+        --color-accent: #d82323;
+        --color-accent-fg: #ffffff;
+        --color-card: #f8fafc;
+        --color-border: #e2e8f0;
+        --color-muted: #64748b;
+        --color-bg-muted: #1e293b;
+        --color-link: #192341;
+        --color-link-hover: #d82323;
+    }
+
+    .dark {
+        /* Dark Mode Colors */
+        --color-bg-base: #0f172a;
+        --color-text-main: #f8fafc;
+        --color-card-base: #1e293b;
+        --color-border-base: #334155;
+        --color-text-muted: #94a3b8;
+        --color-bg: #0f172a;
+        --color-fg: #f8fafc;
+        --color-primary: #1e293b;
+        --color-primary-fg: #ffffff;
+        --color-accent: #ef4444;
+        --color-accent-fg: #ffffff;
+        --color-card: #1e293b;
+        --color-border: #334155;
+        --color-muted: #94a3b8;
+        --color-bg-muted: #94a3b8;
+        --color-link: #d82323;
+        --color-link-hover: #ff6e6e;
+    }
+}
+
 body {
-    background-color: var(--color-bg);
-    color: var(--color-fg);
+    background-color: var(--color-bg-base);
+    color: var(--color-text-main);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-/* Dark Mode support using utility classes or system preference */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: var(--color-dark-bg);
-        color: #f8fafc;
-    }
+    transition: background-color 0.2s, color 0.2s;
 }
 
 h1,
@@ -91,27 +125,30 @@ h4,
 h5,
 h6,
 .font-display {
-    font-family: var(--font-heading);
+    font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-/* Hover capability to pause the marquee */
+.animate-marquee {
+    animation: marquee 40s linear infinite;
+}
+
 .animate-marquee:hover {
     animation-play-state: paused;
 }
 
-/* Premium Webkit Scrollbar */
+/* Custom Styled Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--color-bg);
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-border);
+    background: var(--color-border-base);
     border-radius: 4px;
 }
 
@@ -141,3 +178,32 @@ h6,
 .animate-pulse-slow {
     animation: pulse-slow 3s infinite;
 }
+
+/* Custom Premium Overlay Style */
+.bg-overlay-shade {
+    /* Light mode එකේදී කළු පාට 30% opacity එකක් */
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+/* <html> එකට .dark ආපු වෙලාවට 50% opacity එකට මාරු වීම */
+.dark .bg-overlay-shade {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes marquee-px {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* .animate-marquee:hover~*,
+.animate-marquee:hover {
+    animation-play-state: paused;
+} */
+
+/*  */

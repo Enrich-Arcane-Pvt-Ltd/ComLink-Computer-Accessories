@@ -9,10 +9,10 @@
     <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="VickyStore" />
+    <meta name="apple-mobile-web-app-title" content="WikiStore" />
     <link rel="manifest" href="%PUBLIC_URL%/site.webmanifest" />
 
-    <title inertia>{{ config('app.name', 'VickyStore') }}</title>
+    <title inertia>{{ config('app.name', 'WikiStore') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

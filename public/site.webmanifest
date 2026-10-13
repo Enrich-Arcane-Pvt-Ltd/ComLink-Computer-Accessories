@@ -1,6 +1,6 @@
 {
-  "name": "Vicky-Store",
-  "short_name": "VickyStore",
+  "name": "Wiki-Store",
+  "short_name": "WikiStore",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

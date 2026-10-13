@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /nova
 Disallow: /storage
 
-Sitemap: https://vicky-store.com/sitemap.xml
+Sitemap: https://wiki-store.com/sitemap.xml

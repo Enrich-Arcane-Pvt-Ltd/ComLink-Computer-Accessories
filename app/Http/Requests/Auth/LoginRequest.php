@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+            'remember'   => ['boolean'],
         ];
     }
 
@@ -40,12 +42,38 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+        $user = User::where('email', $this->input('email'))
+            ->first();
+
+        // Account not found
+        if (! $user) {
+            RateLimiter::hit($this->throttleKey());
+            throw ValidationException::withMessages([
+                'email' => __('Invalid credentials or account does not exist.'),
+            ]);
+        }
+
+        // // Soft-deleted account
+        // if ($user->trashed()) {
+        //     throw ValidationException::withMessages([
+        //         'email' => __('Your account has been deleted. Please contact support.'),
+        //     ]);
+        // }
+
+
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
+            ]);
+        }
+
+        if ($user->status !== 'active') {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'identifier' => __('Your account is inactive. Please contact support.'),
             ]);
         }
 
@@ -80,6 +108,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }
