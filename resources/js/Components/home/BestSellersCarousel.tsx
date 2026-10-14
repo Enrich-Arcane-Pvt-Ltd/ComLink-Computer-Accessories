@@ -207,7 +207,7 @@ export function BestSellersCarousel({
 
                 {/* Carousel Track */}
                 <div
-                    className="relative overflow-hidden"
+                    className="relative overflow-hidden py-3 -my-3"
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
                 >
