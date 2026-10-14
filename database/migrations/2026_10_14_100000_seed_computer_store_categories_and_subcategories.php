@@ -16,7 +16,7 @@ return new class extends Migration
             [
                 'name' => 'Laptops',
                 'slug' => 'laptops',
-                'image' => 'images/categories/laptops.svg',
+                'image' => 'images/categories/laptops.png',
                 'description' => 'High-performance gaming, business, and ultrabook laptops.',
                 'sort_order' => 1,
                 'subcategories' => [],
@@ -24,7 +24,7 @@ return new class extends Migration
             [
                 'name' => 'PC Components',
                 'slug' => 'pc-components',
-                'image' => 'images/categories/pc-components.svg',
+                'image' => 'images/categories/PCComponents.png',
                 'description' => 'Core hardware, processors, graphics cards, motherboards and internal components.',
                 'sort_order' => 2,
                 'subcategories' => [
@@ -42,7 +42,7 @@ return new class extends Migration
             [
                 'name' => 'Peripherals',
                 'slug' => 'peripherals',
-                'image' => 'images/categories/peripherals.svg',
+                'image' => 'images/categories/Peripherals.png',
                 'description' => 'Gaming and office peripherals, keyboards, mice, headsets, and creator accessories.',
                 'sort_order' => 3,
                 'subcategories' => [
@@ -60,7 +60,7 @@ return new class extends Migration
             [
                 'name' => 'Monitors & Displays',
                 'slug' => 'monitors-displays',
-                'image' => 'images/categories/monitors-displays.svg',
+                'image' => 'images/categories/displays.png',
                 'description' => 'High-refresh rate gaming monitors, 4K displays, and dual-monitor accessories.',
                 'sort_order' => 4,
                 'subcategories' => [],
@@ -68,7 +68,7 @@ return new class extends Migration
             [
                 'name' => 'Gaming',
                 'slug' => 'gaming',
-                'image' => 'images/categories/gaming.svg',
+                'image' => 'images/categories/gaming.png',
                 'description' => 'Dedicated gaming equipment, consoles, controllers, and battle station essentials.',
                 'sort_order' => 5,
                 'subcategories' => [
@@ -80,7 +80,7 @@ return new class extends Migration
             [
                 'name' => 'Products',
                 'slug' => 'products',
-                'image' => 'images/categories/products.svg',
+                'image' => 'images/categories/products.png',
                 'description' => 'Complete desktop computers, power backup systems, ergonomic desks, and office equipment.',
                 'sort_order' => 6,
                 'subcategories' => [
@@ -98,7 +98,7 @@ return new class extends Migration
             [
                 'name' => 'Software',
                 'slug' => 'software',
-                'image' => 'images/categories/software.svg',
+                'image' => 'images/categories/software.png',
                 'description' => 'Operating systems, antivirus security, and creative productivity software suites.',
                 'sort_order' => 7,
                 'subcategories' => [],

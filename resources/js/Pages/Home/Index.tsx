@@ -1,6 +1,7 @@
 import { BestSellersCarousel } from "@/Components/home/BestSellersCarousel";
 import { HeroCarousel } from "@/Components/home/HeroCarousel";
 import { InstagramGrid } from "@/Components/home/InstagramGrid";
+import { NewProductsCarousel } from "@/Components/home/NewProductsCarousel";
 import { TestimonialsSection } from "@/Components/home/TestimonialsSection";
 import { ProductCard } from "@/Components/product/ProductCard";
 import { Button } from "@/Components/ui/Button";
@@ -177,42 +178,11 @@ export default function Home({
                     </div>
                 </section>
 
-                {/* New Products */}
-                <section className="py-20 bg-card">
-                    <div className="container mx-auto px-4 md:px-6">
-                        <div className="flex items-end justify-between mb-10">
-                            <div>
-                                <span className="text-accent font-semibold tracking-wider uppercase text-sm mb-2 block">
-                                    Just Landed
-                                </span>
-                                <h2 className="font-display text-3xl md:text-4xl font-bold text-fg">
-                                    OUR NEWEST PRODUCTS
-                                </h2>
-                            </div>
-                            <Link
-                                href="/shop"
-                                className="hidden md:flex items-center gap-2 text-link-main font-semibold hover:text-link-hover transition-colors"
-                            >
-                                View All <ArrowRight className="h-4 w-4" />
-                            </Link>
-                        </div>
+                {/* New Products Carousel */}
+                <NewProductsCarousel />
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                            {newProducts.map((product) => (
-                                <ProductCard
-                                    key={product.id}
-                                    product={product}
-                                />
-                            ))}
-                        </div>
-
-                        <div className="mt-10 text-center md:hidden">
-                            <Button variant="outline" fullWidth asChild>
-                                <Link href="/shop">View All Products</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </section>
+                {/* Best Sellers Carousel */}
+                <BestSellersCarousel />
 
                 {/* Sale Banner */}
                 <section className="py-24 relative overflow-hidden bg-primary text-primary-fg">
@@ -320,10 +290,6 @@ export default function Home({
                         </div>
                     </div>
                 </section>
-
-                {/* Best Sellers Carousel */}
-                <BestSellersCarousel products={products} />
-
                 {/* Newsletter */}
                 <section className="py-20 relative overflow-hidden bg-primary">
                     <div className="container mx-auto px-4 md:px-6 max-w-xl text-center relative z-10">
