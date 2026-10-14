@@ -3,6 +3,7 @@ import { HeroCarousel } from "@/Components/home/HeroCarousel";
 import { InstagramGrid } from "@/Components/home/InstagramGrid";
 import { NewProductsCarousel } from "@/Components/home/NewProductsCarousel";
 import { TestimonialsSection } from "@/Components/home/TestimonialsSection";
+import BannerRow from "@/Components/home/BannerRow";
 import { ProductCard } from "@/Components/product/ProductCard";
 import { Button } from "@/Components/ui/Button";
 import AppLayout from "@/Layouts/AppLayout";
@@ -185,7 +186,7 @@ export default function Home({
                 <BestSellersCarousel />
 
                 {/* Sale Banner */}
-                <section className="py-24 relative overflow-hidden bg-primary text-primary-fg">
+                {/* <section className="py-24 relative overflow-hidden bg-primary text-primary-fg">
                     <div className="absolute inset-0 opacity-20">
                         <img
                             src="https://images.unsplash.com/photo-1550639525-c97d455acf70?auhref=format&fit=crop&q=80&w=2000"
@@ -225,10 +226,12 @@ export default function Home({
                             </Button>
                         </motion.div>
                     </div>
-                </section>
+                </section> */}
+
+                <BannerRow />
 
                 {/* Feature Strip */}
-                <section className="py-12 border-y border-border bg-bg">
+                {/* <section className="py-12 border-y border-border bg-bg">
                     <div className="container mx-auto px-4 md:px-6">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                             <div className="flex flex-col items-center justify-center space-y-3">
@@ -289,7 +292,8 @@ export default function Home({
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> */}
+                
                 {/* Newsletter */}
                 <section className="py-20 relative overflow-hidden bg-primary">
                     <div className="container mx-auto px-4 md:px-6 max-w-xl text-center relative z-10">
@@ -375,7 +379,7 @@ export default function Home({
                 <TestimonialsSection testimonials={testimonials} />
 
                 {/* Instagram Grid */}
-                <InstagramGrid instagramImages={instagramImages} />
+                {/* <InstagramGrid instagramImages={instagramImages} /> */}
             </div>
         </AppLayout>
     );
