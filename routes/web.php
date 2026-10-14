@@ -8,6 +8,7 @@ use App\Http\Controllers\Public\CustomPagesController;
 use App\Http\Controllers\Public\FAQController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\NewsletterController;
+use App\Http\Controllers\Public\ShopController;
 use App\Http\Controllers\Public\TestimonialController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,6 +33,11 @@ Route::middleware(['web'])->group(
     function () {
         // Home
         Route::get('/', [HomeController::class, 'index'])->name('home');
+
+        // Shop & Category Pages
+        Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+        Route::get('/category/{category}', [ShopController::class, 'category'])->name('category.show');
+        Route::get('/category/{category}/{subcategory}', [ShopController::class, 'subcategory'])->name('category.subcategory');
 
         // Blogs
         Route::get('/blog', [BlogController::class, 'index'])->name('blog');

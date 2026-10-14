@@ -26,8 +26,10 @@ class HomeController extends Controller
             ->get()
             ->map(function ($category) {
                 return [
+                    'id' => $category->id,
                     'name' => $category->name ?? 'Unknown Category',
-                    'count' => 0,
+                    'slug' => $category->slug,
+                    'count' => $category->products()->count(),
                     'image' => $category->image_url ?? url('/images/placeholder.png'),
                 ];
             });

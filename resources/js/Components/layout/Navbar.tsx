@@ -52,6 +52,7 @@ const defaultNavItems: NavItem[] = [
             { name: "Graphic Cards", path: cat("graphic-cards") },
             { name: "Power Supply", path: cat("power-supply") },
             { name: "Thermal Paste", path: cat("thermal-paste") },
+            { name: "PC Cases", path: cat("pc-cases") },
         ],
     },
     {

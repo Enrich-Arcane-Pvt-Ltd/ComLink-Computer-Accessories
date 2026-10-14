@@ -37,6 +37,7 @@ class CategorySeeder extends Seeder
                     ['name' => 'Graphic Cards', 'slug' => 'graphic-cards', 'image' => 'images/categories/graphic-cards.svg'],
                     ['name' => 'Power Supply', 'slug' => 'power-supply', 'image' => 'images/categories/power-supply.svg'],
                     ['name' => 'Thermal Paste', 'slug' => 'thermal-paste', 'image' => 'images/categories/thermal-paste.svg'],
+                    ['name' => 'PC Cases', 'slug' => 'pc-cases', 'image' => 'images/categories/pc-cases.svg'],
                 ],
             ],
             [

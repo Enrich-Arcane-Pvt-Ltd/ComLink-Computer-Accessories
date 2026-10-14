@@ -16,7 +16,9 @@ import { ArrowRight, Clock, RefreshCw, ShieldCheck, Truck } from "lucide-react";
 import { useState } from "react";
 
 interface CategoryProp {
+    id?: number;
     name: string;
+    slug?: string;
     count: number;
     image: string;
 }
@@ -142,12 +144,14 @@ export default function Home({
                             "
                         >
                             {categories.length > 0 ? (
-                                categories.map((category) => (
-                                    <Link
-                                        key={category.name}
-                                        href={`/shop?category=${category.name.toLowerCase()}`}
-                                        className="group flex flex-col items-center text-center gap-3"
-                                    >
+                                categories.map((category) => {
+                                    const catSlug = category.slug || category.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+                                    return (
+                                        <Link
+                                            key={category.slug || category.name}
+                                            href={`/shop?category=${catSlug}`}
+                                            className="group flex flex-col items-center text-center gap-3"
+                                        >
                                         <div
                                             className="
                                             relative rounded-full overflow-hidden bg-muted/10
@@ -171,7 +175,8 @@ export default function Home({
                                             </p>
                                         </div>
                                     </Link>
-                                ))
+                                    );
+                                })
                             ) : (
                                 <p className="text-muted col-span-full text-center py-4">
                                     No categories available at the moment.
