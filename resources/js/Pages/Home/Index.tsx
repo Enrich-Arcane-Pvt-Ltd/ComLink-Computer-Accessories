@@ -2,8 +2,9 @@ import { BestSellersCarousel } from "@/Components/home/BestSellersCarousel";
 import { HeroCarousel } from "@/Components/home/HeroCarousel";
 import { InstagramGrid } from "@/Components/home/InstagramGrid";
 import { NewProductsCarousel } from "@/Components/home/NewProductsCarousel";
-import { TestimonialsSection } from "@/Components/home/TestimonialsSection";
+import TestimonialsSection from "@/Components/home/TestimonialsSection";
 import BannerRow from "@/Components/home/BannerRow";
+import LegacyBanner from "@/Components/home/LegacyBanner";
 import { ProductCard } from "@/Components/product/ProductCard";
 import { Button } from "@/Components/ui/Button";
 import AppLayout from "@/Layouts/AppLayout";
@@ -181,6 +182,8 @@ export default function Home({
 
                 {/* New Products Carousel */}
                 <NewProductsCarousel />
+
+                <LegacyBanner />
 
                 {/* Best Sellers Carousel */}
                 <BestSellersCarousel />
@@ -376,7 +379,9 @@ export default function Home({
                 </section>
 
                 {/* Testimonials */}
-                <TestimonialsSection testimonials={testimonials} />
+                {/* <TestimonialsSection testimonials={testimonials} /> */}
+
+                <TestimonialsSection />
 
                 {/* Instagram Grid */}
                 {/* <InstagramGrid instagramImages={instagramImages} /> */}
