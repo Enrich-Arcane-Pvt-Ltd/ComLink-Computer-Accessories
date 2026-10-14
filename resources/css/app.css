@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght=500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -15,41 +15,48 @@
     --color-link-main: var(--color-link);
     --color-link-hover: var(--color-link-hover);
 
-    /* --- Primary Colors (Midnight Navy) --- */
-    --color-primary: #192341;
+    /* --- Primary Colors (Graphite Navy) --- */
+    --color-primary: #131a26;
     --color-primary-fg: #ffffff;
 
-    --color-primary-50: #f2f4f8;
-    --color-primary-100: #e3e7f0;
-    --color-primary-200: #c1cae0;
-    --color-primary-300: #90a1ca;
-    --color-primary-400: #5b73ae;
-    --color-primary-500: #3c5491;
-    --color-primary-600: #2b3e73;
-    --color-primary-700: #212f59;
-    --color-primary-800: #192341;
-    --color-primary-900: #141b31;
-    --color-primary-950: #0d1120;
+    --color-primary-50: #f4f6f8;
+    --color-primary-100: #e6eaef;
+    --color-primary-200: #c9d2dc;
+    --color-primary-300: #9aa8b9;
+    --color-primary-400: #67788f;
+    --color-primary-500: #4a5a70;
+    --color-primary-600: #38455a;
+    --color-primary-700: #2b3547;
+    --color-primary-800: #1c2433;
+    --color-primary-900: #131a26;
+    --color-primary-950: #0b1018;
 
-    /* --- Accent Colors (Red) --- */
-    --color-accent: #d82323;
+    /* --- Accent Colors (Electric Cyan) --- */
+    /* Light mode default is cyan-600 so white text passes contrast.
+       Dark mode switches to the brighter cyan-400 (see .dark below). */
+    --color-accent: #0891b2;
     --color-accent-fg: #ffffff;
 
-    --color-accent-50: #fff1f1;
-    --color-accent-100: #ffe1e1;
-    --color-accent-200: #ffc9c9;
-    --color-accent-300: #ffa3a3;
-    --color-accent-400: #ff6e6e;
-    --color-accent-500: #f83b3b;
-    --color-accent-600: #d82323;
-    --color-accent-700: #b51a1a;
-    --color-accent-800: #961919;
-    --color-accent-900: #7d1a1a;
-    --color-accent-950: #440a0a;
+    --color-accent-50: #ecfeff;
+    --color-accent-100: #cffafe;
+    --color-accent-200: #a5f3fc;
+    --color-accent-300: #67e8f9;
+    --color-accent-400: #22d3ee;
+    --color-accent-500: #06b6d4;
+    --color-accent-600: #0891b2;
+    --color-accent-700: #0e7490;
+    --color-accent-800: #155e75;
+    --color-accent-900: #164e63;
+    --color-accent-950: #083344;
+
+    /* --- Semantic: Sale / Error (red is kept only for this) --- */
+    --color-sale: #ef4444;
+    --color-sale-fg: #ffffff;
 
     /* --- Dark Mode Backgrounds --- */
-    --color-dark-bg: #0f172a;
-    --color-dark-card: #1e293b;
+    --color-dark-bg: #0b1018;
+    --color-dark-card: #151d2b;
+
     /* --- Tailwind v4 Animations --- */
     --animate-marquee: marquee 40s linear infinite;
 
@@ -70,42 +77,42 @@
         /* Light Mode Colors */
         --color-bg-base: #ffffff;
         --color-text-main: #0f172a;
-        --color-card-base: #f8fafc;
-        --color-border-base: #e2e8f0;
+        --color-card-base: #f6f8fa;
+        --color-border-base: #e3e8ee;
         --color-text-muted: #64748b;
         --color-bg: #ffffff;
         --color-fg: #0f172a;
-        --color-primary: #192341;
+        --color-primary: #131a26;
         --color-primary-fg: #ffffff;
-        --color-accent: #d82323;
+        --color-accent: #0891b2;
         --color-accent-fg: #ffffff;
-        --color-card: #f8fafc;
-        --color-border: #e2e8f0;
+        --color-card: #f6f8fa;
+        --color-border: #e3e8ee;
         --color-muted: #64748b;
-        --color-bg-muted: #1e293b;
-        --color-link: #192341;
-        --color-link-hover: #d82323;
+        --color-bg-muted: #1c2433;
+        --color-link: #131a26;
+        --color-link-hover: #0e7490;
     }
 
     .dark {
         /* Dark Mode Colors */
-        --color-bg-base: #0f172a;
+        --color-bg-base: #0b1018;
         --color-text-main: #f8fafc;
-        --color-card-base: #1e293b;
-        --color-border-base: #334155;
+        --color-card-base: #151d2b;
+        --color-border-base: #26324a;
         --color-text-muted: #94a3b8;
-        --color-bg: #0f172a;
+        --color-bg: #0b1018;
         --color-fg: #f8fafc;
-        --color-primary: #1e293b;
+        --color-primary: #1c2433;
         --color-primary-fg: #ffffff;
-        --color-accent: #ef4444;
-        --color-accent-fg: #ffffff;
-        --color-card: #1e293b;
-        --color-border: #334155;
+        --color-accent: #22d3ee;
+        --color-accent-fg: #04202b;
+        --color-card: #151d2b;
+        --color-border: #26324a;
         --color-muted: #94a3b8;
         --color-bg-muted: #94a3b8;
-        --color-link: #d82323;
-        --color-link-hover: #ff6e6e;
+        --color-link: #22d3ee;
+        --color-link-hover: #67e8f9;
     }
 }
 
@@ -205,5 +212,3 @@ h6,
 .animate-marquee:hover {
     animation-play-state: paused;
 } */
-
-/*  */

@@ -5,6 +5,8 @@ import { cn } from "@/utils/cn";
 import { Link, usePage } from "@inertiajs/react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+    ChevronDown,
+    Cpu,
     Heart,
     LayoutDashboard,
     LogOut,
@@ -21,6 +23,87 @@ import React, { Children, useEffect, useRef, useState } from "react";
 import { SearchModal } from "../search/SearchModal";
 import { Button } from "../ui/Button";
 
+/* -------------------------------------------------------------------------- */
+/*  Category navigation data                                                  */
+/* -------------------------------------------------------------------------- */
+
+type NavChild = { name: string; path: string };
+type NavItem = { name: string; path: string; children?: NavChild[] };
+
+const cat = (slug: string) => `/shop?category=${slug}`;
+
+const navItems: NavItem[] = [
+    { name: "Laptops", path: cat("laptops") },
+    {
+        name: "PC Components",
+        path: cat("pc-components"),
+        children: [
+            { name: "Processors", path: cat("processors") },
+            { name: "Motherboards", path: cat("motherboards") },
+            { name: "Coolers", path: cat("coolers") },
+            { name: "Memory Cards", path: cat("memory") },
+            { name: "SSD", path: cat("ssd") },
+            { name: "Hard Disk", path: cat("hard-disk") },
+            { name: "Graphic Cards", path: cat("graphic-cards") },
+            { name: "Power Supply", path: cat("power-supply") },
+            { name: "Thermal Paste", path: cat("thermal-paste") },
+        ],
+    },
+    {
+        name: "Peripherals",
+        path: cat("peripherals"),
+        children: [
+            { name: "Headsets", path: cat("headsets") },
+            { name: "Keyboards", path: cat("keyboards") },
+            { name: "Mouse", path: cat("mouse") },
+            { name: "Mouse Pad", path: cat("mouse-pad") },
+            { name: "Speakers", path: cat("speakers") },
+            { name: "Webcam", path: cat("webcam") },
+            { name: "Converters", path: cat("converters") },
+            { name: "Adapters", path: cat("adapters") },
+            {
+                name: "Video & Creator Equipments",
+                path: cat("video-creator-equipments"),
+            },
+        ],
+    },
+    { name: "Monitors & Displays", path: cat("monitors-displays") },
+    {
+        name: "Gaming",
+        path: cat("gaming"),
+        children: [
+            { name: "Laptops", path: cat("gaming-laptops") },
+            { name: "Consoles", path: cat("consoles") },
+            { name: "Controllers", path: cat("controllers") },
+        ],
+    },
+    {
+        name: "Products",
+        path: cat("products"),
+        children: [
+            { name: "Computers", path: cat("computers") },
+            { name: "UPS", path: cat("ups") },
+            { name: "Chairs", path: cat("chairs") },
+            { name: "Tables", path: cat("tables") },
+            { name: "Power Banks", path: cat("power-banks") },
+            { name: "Extension Cards", path: cat("extension-cards") },
+            { name: "Printers", path: cat("printers") },
+            {
+                name: "Toners and Cartridges",
+                path: cat("toners-cartridges"),
+            },
+            { name: "Scanners", path: cat("scanners") },
+        ],
+    },
+    { name: "Software", path: cat("software") },
+];
+
+const BUILD_PC_ROUTE = "/build-my-pc";
+
+/* -------------------------------------------------------------------------- */
+/*  Navbar                                                                    */
+/* -------------------------------------------------------------------------- */
+
 export default function Navbar() {
     const { auth } = usePage().props as any;
     const user = auth?.user ?? null;
@@ -34,11 +117,11 @@ export default function Navbar() {
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [mobileOpenGroup, setMobileOpenGroup] = useState<string | null>(null);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-    const [openDropdown, setOpenDropdown] = useState<
-        "cart" | "wishlist" | null
-    >(null);
+    // "cart" | "wishlist" | "nav:<Item name>" | null
+    const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
     const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const userDropdownRef = useRef<HTMLDivElement>(null);
@@ -64,6 +147,7 @@ export default function Navbar() {
 
     useEffect(() => {
         setIsMobileMenuOpen(false);
+        setMobileOpenGroup(null);
         setOpenDropdown(null);
         setIsUserDropdownOpen(false);
     }, [url]);
@@ -82,7 +166,7 @@ export default function Navbar() {
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const openMenu = (menu: "cart" | "wishlist") => {
+    const openMenu = (menu: string) => {
         if (closeTimer.current) clearTimeout(closeTimer.current);
         setOpenDropdown(menu);
     };
@@ -97,43 +181,30 @@ export default function Navbar() {
         setIsSearchOpen(true);
     };
 
-    const navLinks = [
-        {
-            name: "Home",
-            path: "/",
-        },
-        {
-            name: "Shop",
-            path: "/shop",
-        },
-        {
-            name: "Men",
-            path: "/shop?category=men",
-        },
-        {
-            name: "Women",
-            path: "/shop?category=women",
-        },
-        {
-            name: "Blog",
-            path: "/blog",
-        },
-    ];
+    const isActive = (path: string) => url === path || url.startsWith(path + "&");
 
     return (
         <header
             className={cn(
-                "sticky top-0 z-40 w-full transition-all duration-300 border-b border-transparent",
+                "sticky top-0 z-40 w-full transition-all duration-300 border-b",
                 isScrolled
-                    ? "bg-white/10 backdrop-blur-lg border-border shadow-md py-3 border-0"
-                    : "bg-bg py-5",
+                    ? "bg-bg/90 backdrop-blur-lg border-border shadow-md"
+                    : "bg-bg border-transparent",
             )}
         >
+            {/* ------------------------------------------------------------ */}
+            {/*  TOP ROW: Logo | Search | Theme | Auth | Wishlist | Cart      */}
+            {/* ------------------------------------------------------------ */}
             <div className="container mx-auto px-4 md:px-6">
-                <div className="flex items-center justify-between">
+                <div
+                    className={cn(
+                        "flex items-center justify-between gap-4 md:gap-8 transition-all duration-300",
+                        isScrolled ? "py-2" : "py-4",
+                    )}
+                >
                     {/* Mobile Menu Toggle */}
                     <button
-                        className="md:hidden p-2 -ml-2 text-fg cursor-pointer"
+                        className="lg:hidden p-2 -ml-2 text-fg cursor-pointer"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         aria-label="Toggle menu"
                     >
@@ -152,44 +223,36 @@ export default function Navbar() {
                                     ? "/images/logo-white.png"
                                     : "/images/logo.png"
                             }
-                            alt="Wiki Store Logo"
+                            alt="ComLink Logo"
                             className="h-8 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
                         />
                     </Link>
 
-                    {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-8">
-                        {navLinks.map((link) => {
-                            const basePath = link.path.split("?")[0];
-
-                            let isActive = false;
-
-                            if (basePath === "/") {
-                                isActive = url === "/";
-                            } else {
-                                const regex = new RegExp(
-                                    `^${basePath}(/|\\?|$)`,
-                                );
-                                isActive = regex.test(url);
-                            }
-
-                            return (
-                                <Link
-                                    key={link.name}
-                                    href={link.path}
-                                    className={cn(
-                                        "text-sm font-medium uppercase tracking-wider transition-colors hover:text-accent",
-                                        isActive ? "text-accent" : "text-fg",
-                                    )}
-                                >
-                                    {link.name}
-                                </Link>
-                            );
-                        })}
-                    </nav>
+                    {/* Search box (desktop / tablet) */}
+                    <button
+                        type="button"
+                        onClick={handleSearchClick}
+                        className="hidden md:flex flex-1 max-w-xl items-center gap-3 rounded-md border border-border bg-card px-4 py-2.5 text-left text-sm text-muted transition-colors hover:border-accent focus:outline-none focus-visible:border-accent cursor-pointer"
+                        aria-label="Search products"
+                    >
+                        <Search className="h-4 w-4 flex-shrink-0" />
+                        <span className="truncate">
+                            Search laptops, graphic cards, keyboards...
+                        </span>
+                    </button>
 
                     {/* Icons & Auth */}
                     <div className="flex items-center gap-3 md:gap-5">
+                        {/* Search icon (mobile only) */}
+                        <button
+                            onClick={handleSearchClick}
+                            className="md:hidden p-1 text-fg hover:text-accent transition-colors cursor-pointer"
+                            aria-label="Search"
+                        >
+                            <Search className="h-5 w-5" />
+                        </button>
+
+                        {/* Dark / light toggle */}
                         <button
                             onClick={toggleTheme}
                             className="p-1 text-fg hover:text-accent transition-colors hidden sm:block cursor-pointer"
@@ -202,17 +265,8 @@ export default function Navbar() {
                             )}
                         </button>
 
-                        <button
-                            onClick={handleSearchClick}
-                            className="p-1 text-fg hover:text-accent transition-colors cursor-pointer"
-                            aria-label="Search"
-                        >
-                            <Search className="h-5 w-5" />
-                        </button>
-
                         {/* --- AUTHENTICATION AREA --- */}
                         {user ? (
-                            /* ලොග් වී ඇති අය සඳහා Dropdown එක */
                             <div className="relative" ref={userDropdownRef}>
                                 <button
                                     onClick={() =>
@@ -235,53 +289,33 @@ export default function Navbar() {
                                             initial={{ opacity: 0, y: 8 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: 8 }}
-                                            className="absolute right-0 mt-3 w-48 bg-bg border border-border shadow-xl z-50 py-2 font-sans"
+                                            className="absolute right-0 mt-3 w-56 bg-bg border border-border shadow-xl z-50 py-2 font-sans"
                                         >
-                                            {/* <div className="px-4 py-2 border-b border-border mb-1">
-                                                <p className="text-xs text-muted">
-                                                    Signed in as
-                                                </p>
-                                                <p className="text-sm font-semibold text-fg truncate">
-                                                    {user.email}
-                                                </p>
-                                            </div> */}
-                                            {/* Signed in as section — dropdown top */}
+                                            {/* Signed in as */}
                                             <div className="px-4 py-3 border-b border-border">
                                                 <div className="flex items-center gap-3">
                                                     <img
                                                         src={
-                                                            auth.user.avatar_url
-                                                                ? `/storage/${auth.user.avatar_url}`
+                                                            user.avatar_url
+                                                                ? `/storage/${user.avatar_url}`
                                                                 : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                                                                       (
-                                                                          auth
-                                                                              .user
-                                                                              .first_name +
+                                                                          user.first_name +
                                                                           " " +
-                                                                          auth
-                                                                              .user
-                                                                              .last_name
+                                                                          user.last_name
                                                                       ).trim(),
-                                                                  )}&color=7F9CF5&background=EBF4FF`
+                                                                  )}&color=04202b&background=22d3ee`
                                                         }
-                                                        alt={
-                                                            auth.user.first_name
-                                                        }
+                                                        alt={user.first_name}
                                                         className="w-10 h-10 rounded-full object-cover flex-shrink-0"
                                                     />
                                                     <div className="min-w-0">
                                                         <p className="text-sm font-semibold text-fg truncate">
-                                                            {
-                                                                auth.user
-                                                                    .first_name
-                                                            }{" "}
-                                                            {
-                                                                auth.user
-                                                                    .last_name
-                                                            }
+                                                            {user.first_name}{" "}
+                                                            {user.last_name}
                                                         </p>
                                                         <p className="text-xs text-muted truncate">
-                                                            {auth.user.email}
+                                                            {user.email}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -319,23 +353,33 @@ export default function Navbar() {
                                 </AnimatePresence>
                             </div>
                         ) : (
-                            /* ලොග් වී නැති අය සඳහා බටන්ස් */
+                            /* Guests: user icon + Login | Register */
                             <div className="hidden sm:flex items-center gap-2">
+                                <User className="h-5 w-5 text-fg" />
                                 <Link
                                     href="/login"
-                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent px-2 py-1 transition-colors cursor-pointer"
+                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent py-1 transition-colors cursor-pointer"
                                 >
                                     Login
                                 </Link>
                                 <span className="text-border">|</span>
                                 <Link
                                     href="/register"
-                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent px-2 py-1 transition-colors cursor-pointer"
+                                    className="text-xs uppercase tracking-wider font-semibold text-fg hover:text-accent py-1 transition-colors cursor-pointer"
                                 >
                                     Register
                                 </Link>
                             </div>
                         )}
+
+                        {/* Build My PC button */}
+                        <Link
+                            href={BUILD_PC_ROUTE}
+                            className="hidden lg:inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-xs font-bold uppercase tracking-wider text-accent-fg whitespace-nowrap transition-opacity hover:opacity-90"
+                        >
+                            <Cpu className="h-4 w-4" />
+                            Build My PC
+                        </Link>
 
                         {/* Wishlist Dropdown */}
                         <div
@@ -350,7 +394,7 @@ export default function Navbar() {
                             >
                                 <Heart className="h-5 w-5" />
                                 {wishlistCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white">
+                                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-fg">
                                         {wishlistCount}
                                     </span>
                                 )}
@@ -368,7 +412,7 @@ export default function Navbar() {
                                             .map((p: any) => (
                                                 <div
                                                     key={p.id}
-                                                    className="flex items-center gap-3 py-3 border-b border-border last:border-0 "
+                                                    className="flex items-center gap-3 py-3 border-b border-border last:border-0"
                                                 >
                                                     <Link
                                                         href={`/product/${p.id}`}
@@ -383,11 +427,11 @@ export default function Navbar() {
                                                     <div className="flex-grow min-w-0">
                                                         <Link
                                                             href={`/product/${p.id}`}
-                                                            className="text-sm font-medium text-fg line-clamp-1 hover:text-primary"
+                                                            className="text-sm font-medium text-fg line-clamp-1 hover:text-accent"
                                                         >
                                                             {p.name}
                                                         </Link>
-                                                        <p className="text-sm text-primary font-semibold">
+                                                        <p className="text-sm text-fg font-semibold">
                                                             $
                                                             {p.price.toFixed(2)}
                                                         </p>
@@ -423,7 +467,7 @@ export default function Navbar() {
                             >
                                 <ShoppingBag className="h-5 w-5" />
                                 {totalItems > 0 && (
-                                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white">
+                                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-fg">
                                         {totalItems}
                                     </span>
                                 )}
@@ -479,7 +523,7 @@ export default function Navbar() {
                                                     <div className="flex-grow min-w-0">
                                                         <Link
                                                             href={`/product/${item.productId}`}
-                                                            className="text-sm font-medium text-fg line-clamp-1 hover:text-primary"
+                                                            className="text-sm font-medium text-fg line-clamp-1 hover:text-accent"
                                                         >
                                                             {item.name}
                                                         </Link>
@@ -511,23 +555,191 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
+            {/* ------------------------------------------------------------ */}
+            {/*  BOTTOM NAV (desktop): categories + Build My PC               */}
+            {/* ------------------------------------------------------------ */}
+            <div className="hidden lg:block bg-primary text-primary-fg">
+                <div className="container mx-auto px-4 md:px-6">
+                    <div className="flex items-center justify-between">
+                        <nav
+                            className="flex items-center"
+                            aria-label="Product categories"
+                        >
+                            {navItems.map((item) => {
+                                const key = `nav:${item.name}`;
+                                const hasChildren = !!item.children?.length;
+                                const active =
+                                    isActive(item.path) ||
+                                    !!item.children?.some((c) =>
+                                        isActive(c.path),
+                                    );
+
+                                return (
+                                    <div
+                                        key={item.name}
+                                        className="relative"
+                                        onMouseEnter={() =>
+                                            hasChildren
+                                                ? openMenu(key)
+                                                : scheduleClose()
+                                        }
+                                        onMouseLeave={scheduleClose}
+                                    >
+                                        <Link
+                                            href={item.path}
+                                            className={cn(
+                                                "flex items-center gap-1 px-4 py-3 text-xs xl:text-sm font-medium uppercase tracking-wider whitespace-nowrap transition-colors hover:text-accent-300",
+                                                active
+                                                    ? "text-accent-300"
+                                                    : "text-primary-fg",
+                                            )}
+                                        >
+                                            {item.name}
+                                            {hasChildren && (
+                                                <ChevronDown
+                                                    className={cn(
+                                                        "h-3.5 w-3.5 transition-transform duration-200",
+                                                        openDropdown === key &&
+                                                            "rotate-180",
+                                                    )}
+                                                />
+                                            )}
+                                        </Link>
+
+                                        <AnimatePresence>
+                                            {hasChildren &&
+                                                openDropdown === key && (
+                                                    <motion.div
+                                                        initial={{
+                                                            opacity: 0,
+                                                            y: 8,
+                                                        }}
+                                                        animate={{
+                                                            opacity: 1,
+                                                            y: 0,
+                                                        }}
+                                                        exit={{
+                                                            opacity: 0,
+                                                            y: 8,
+                                                        }}
+                                                        transition={{
+                                                            duration: 0.15,
+                                                        }}
+                                                        className={cn(
+                                                            "absolute left-0 top-full z-50 bg-bg border border-border shadow-xl py-2",
+                                                            item.children!
+                                                                .length > 6
+                                                                ? "w-[26rem] grid grid-cols-2"
+                                                                : "w-56",
+                                                        )}
+                                                    >
+                                                        {item.children!.map(
+                                                            (child) => (
+                                                                <Link
+                                                                    key={
+                                                                        child.name
+                                                                    }
+                                                                    href={
+                                                                        child.path
+                                                                    }
+                                                                    className={cn(
+                                                                        "block px-4 py-2 text-sm transition-colors hover:bg-muted/10 hover:text-accent",
+                                                                        isActive(
+                                                                            child.path,
+                                                                        )
+                                                                            ? "text-accent font-medium"
+                                                                            : "text-fg",
+                                                                    )}
+                                                                >
+                                                                    {child.name}
+                                                                </Link>
+                                                            ),
+                                                        )}
+                                                    </motion.div>
+                                                )}
+                                        </AnimatePresence>
+                                    </div>
+                                );
+                            })}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            {/* ------------------------------------------------------------ */}
+            {/*  MOBILE MENU                                                  */}
+            {/* ------------------------------------------------------------ */}
             {isMobileMenuOpen && (
-                <div className="absolute top-full left-0 w-full bg-bg border-b border-border shadow-lg md:hidden">
-                    <nav className="flex flex-col px-4 py-6 gap-4">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.path}
-                                className="text-lg font-medium uppercase tracking-wider text-fg py-2 border-b border-border/50"
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                <div className="absolute top-full left-0 w-full max-h-[80vh] overflow-y-auto bg-bg border-b border-border shadow-lg lg:hidden">
+                    <nav className="flex flex-col px-4 py-6 gap-1">
+                        {navItems.map((item) => {
+                            const hasChildren = !!item.children?.length;
+                            const isOpen = mobileOpenGroup === item.name;
+
+                            return (
+                                <div
+                                    key={item.name}
+                                    className="border-b border-border/50"
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <Link
+                                            href={item.path}
+                                            className="flex-1 text-base font-medium uppercase tracking-wider text-fg py-3"
+                                        >
+                                            {item.name}
+                                        </Link>
+                                        {hasChildren && (
+                                            <button
+                                                onClick={() =>
+                                                    setMobileOpenGroup(
+                                                        isOpen
+                                                            ? null
+                                                            : item.name,
+                                                    )
+                                                }
+                                                className="p-2 text-fg cursor-pointer"
+                                                aria-label={`Toggle ${item.name}`}
+                                                aria-expanded={isOpen}
+                                            >
+                                                <ChevronDown
+                                                    className={cn(
+                                                        "h-5 w-5 transition-transform duration-200",
+                                                        isOpen && "rotate-180",
+                                                    )}
+                                                />
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {hasChildren && isOpen && (
+                                        <div className="flex flex-col pb-3 pl-4">
+                                            {item.children!.map((child) => (
+                                                <Link
+                                                    key={child.name}
+                                                    href={child.path}
+                                                    className="py-2 text-sm text-muted hover:text-accent transition-colors"
+                                                >
+                                                    {child.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+
+                        {/* Build My PC */}
+                        <Link
+                            href={BUILD_PC_ROUTE}
+                            className="mt-4 inline-flex items-center justify-center gap-2 rounded-md bg-accent px-4 py-3 text-sm font-bold uppercase tracking-wider text-accent-fg"
+                        >
+                            <Cpu className="h-4 w-4" />
+                            Build My PC
+                        </Link>
 
                         {/* Mobile Auth Links */}
                         {!user ? (
-                            <div className="flex gap-4 py-2 border-b border-border/50">
+                            <div className="flex gap-4 py-4 border-b border-border/50">
                                 <Link
                                     href="/login"
                                     className="text-base font-medium uppercase text-fg"
@@ -547,14 +759,14 @@ export default function Navbar() {
                                 {isAdmin && (
                                     <a
                                         href="/admin"
-                                        className="text-base font-medium uppercase text-accent tracking-wider font-display py-2 border-b border-border/50"
+                                        className="text-base font-medium uppercase text-accent tracking-wider font-display py-3 border-b border-border/50"
                                     >
                                         Admin Panel
                                     </a>
                                 )}
                                 <Link
                                     href="/profile"
-                                    className="text-base font-medium uppercase text-fg py-2 border-b border-border/50"
+                                    className="text-base font-medium uppercase text-fg py-3 border-b border-border/50"
                                 >
                                     My Profile
                                 </Link>
@@ -562,14 +774,14 @@ export default function Navbar() {
                                     href="/logout"
                                     method="post"
                                     as="button"
-                                    className="text-base font-medium uppercase text-red-500 text-left py-2 border-b border-border/50"
+                                    className="text-base font-medium uppercase text-red-500 text-left py-3 border-b border-border/50"
                                 >
                                     Logout
                                 </Link>
                             </>
                         )}
 
-                        <div className="flex items-center gap-6 pt-2">
+                        <div className="flex items-center gap-6 pt-4">
                             <button
                                 onClick={toggleTheme}
                                 className="flex items-center gap-2 text-fg"
@@ -602,6 +814,10 @@ export default function Navbar() {
         </header>
     );
 }
+
+/* -------------------------------------------------------------------------- */
+/*  MiniDropdown (cart / wishlist)                                            */
+/* -------------------------------------------------------------------------- */
 
 interface MiniDropdownProps {
     title: string;

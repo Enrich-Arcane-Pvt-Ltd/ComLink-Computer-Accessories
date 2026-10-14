@@ -33,5 +33,8 @@
         "lucide-react": "^0.522.0",
         "sonner": "^2.0.1",
         "tailwind-merge": "latest"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-win32-x64-msvc": "^4.64.5"
     }
 }
