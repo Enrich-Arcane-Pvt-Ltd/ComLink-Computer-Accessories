@@ -19,16 +19,15 @@ class HomeController extends Controller
     public function index(): Response
     {
 
-        // 1. Dynamic Categories Data Fetching (sort_order = 0 & active only)
-        $categories = Category::where('is_visible', true)
-            ->where('sort_order', 0)
-            ->withCount('products')
-            ->limit(5)
+        // 1. Dynamic Categories Data Fetching (Main visible categories ordered by sort_order)
+        $categories = Category::main()
+            ->visible()
+            ->orderBy('sort_order', 'asc')
             ->get()
             ->map(function ($category) {
                 return [
                     'name' => $category->name ?? 'Unknown Category',
-                    'count' => $category->products_count > 0 ? $category->products_count : rand(25, 140),
+                    'count' => 0,
                     'image' => $category->image_url ?? url('/images/placeholder.png'),
                 ];
             });

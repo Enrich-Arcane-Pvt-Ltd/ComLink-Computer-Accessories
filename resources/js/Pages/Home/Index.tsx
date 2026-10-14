@@ -124,8 +124,8 @@ export default function Home({
                                 SHOP BY CATEGORY
                             </h2>
                             <p className="text-muted max-w-2xl mx-auto">
-                                Discover our wide range of premium clothing
-                                designed for the modern lifestyle.
+                                Explore our wide range of laptops, PC components, and accessories
+                                built for gaming, work, and everyday performance.
                             </p>
                         </div>
 

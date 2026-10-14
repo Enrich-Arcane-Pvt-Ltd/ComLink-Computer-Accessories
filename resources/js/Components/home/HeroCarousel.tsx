@@ -400,7 +400,7 @@ export function HeroCarousel({
                 {/* Subtle Cyber Grid Lines Overlay */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(34,211,238,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(34,211,238,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-10" />
 
-                Missing Frames Notification Toast (Only displays if user hasn't unzipped yet)
+                {/* Missing Frames Notification Toast (Only displays if user hasn't unzipped yet) */}
                 {hasMissingFrames && (
                     <div className="absolute top-24 left-1/2 -translate-x-1/2 z-40 max-w-lg w-[92%] bg-black/85 border border-cyan-500/40 rounded-xl p-4 shadow-[0_0_30px_rgba(6,182,212,0.3)] backdrop-blur-md">
                         <div className="flex items-start gap-3">

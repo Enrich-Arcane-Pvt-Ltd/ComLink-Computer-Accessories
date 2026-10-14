@@ -50,6 +50,37 @@ class HandleInertiaRequests extends Middleware
                     'error' => $request->session()->get('error'),
                 ];
             },
+            'navCategories' => function () {
+                try {
+                    return \App\Models\Category::main()
+                        ->visible()
+                        ->orderBy('sort_order', 'asc')
+                        ->with(['children' => function ($q) {
+                            $q->visible()->orderBy('sort_order', 'asc');
+                        }])
+                        ->get()
+                        ->map(function ($cat) {
+                            return [
+                                'id' => $cat->id,
+                                'name' => $cat->name,
+                                'slug' => $cat->slug,
+                                'path' => '/shop?category=' . $cat->slug,
+                                'image' => $cat->image_url,
+                                'children' => $cat->children->map(function ($child) {
+                                    return [
+                                        'id' => $child->id,
+                                        'name' => $child->name,
+                                        'slug' => $child->slug,
+                                        'path' => '/shop?category=' . $child->slug,
+                                        'image' => $child->image_url,
+                                    ];
+                                })->values()->all(),
+                            ];
+                        })->values()->all();
+                } catch (\Throwable $e) {
+                    return [];
+                }
+            },
         ];
     }
 }

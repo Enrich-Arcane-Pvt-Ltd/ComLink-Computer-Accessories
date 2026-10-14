@@ -44,10 +44,22 @@ class CategoryTable
                     ->trueLabel('Visible Only')
                     ->falseLabel('Hidden Only'),
 
-                // Main Categories විතරක් බලන්න Filter එකක්
+                // Main Categories Filter
                 Tables\Filters\Filter::make('main_categories')
                     ->label('Main Categories Only')
                     ->query(fn($query) => $query->whereNull('parent_id')),
+
+                // Subcategories Filter
+                Tables\Filters\Filter::make('sub_categories')
+                    ->label('Subcategories Only')
+                    ->query(fn($query) => $query->whereNotNull('parent_id')),
+
+                // Filter by Parent Category
+                Tables\Filters\SelectFilter::make('parent_id')
+                    ->label('Filter by Parent')
+                    ->relationship('parent', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

@@ -24,12 +24,12 @@ class CategoryForm
                                     'parent',
                                     'name',
                                     modifyQueryUsing: fn(Builder $query, ?Category $record) =>
-                                    // තමන්වම Parent විදියට තෝරාගැනීම වළක්වයි
-                                    $record ? $query->where('id', '!=', $record->id) : $query
+                                    $record ? $query->where('id', '!=', $record->id)->whereNull('parent_id') : $query->whereNull('parent_id')
                                 )
                                 ->searchable()
                                 ->preload()
-                                ->placeholder('Select a parent category (Optional)'),
+                                ->placeholder('Leave empty for Main Category')
+                                ->helperText('Select a parent to make this a Subcategory.'),
 
                             Forms\Components\TextInput::make('name')
                                 ->required()

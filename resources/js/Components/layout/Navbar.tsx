@@ -19,7 +19,7 @@ import {
     User,
     X,
 } from "lucide-react";
-import React, { Children, useEffect, useRef, useState } from "react";
+import React, { Children, useEffect, useMemo, useRef, useState } from "react";
 import { SearchModal } from "../search/SearchModal";
 import { Button } from "../ui/Button";
 
@@ -27,12 +27,17 @@ import { Button } from "../ui/Button";
 /*  Category navigation data                                                  */
 /* -------------------------------------------------------------------------- */
 
-type NavChild = { name: string; path: string };
-type NavItem = { name: string; path: string; children?: NavChild[] };
+type NavChild = { name: string; path: string; image?: string };
+type NavItem = {
+    name: string;
+    path: string;
+    image?: string;
+    children?: NavChild[];
+};
 
 const cat = (slug: string) => `/shop?category=${slug}`;
 
-const navItems: NavItem[] = [
+const defaultNavItems: NavItem[] = [
     { name: "Laptops", path: cat("laptops") },
     {
         name: "PC Components",
@@ -105,8 +110,29 @@ const BUILD_PC_ROUTE = "/build-my-pc";
 /* -------------------------------------------------------------------------- */
 
 export default function Navbar() {
-    const { auth } = usePage().props as any;
+    const { auth, navCategories } = usePage().props as any;
     const user = auth?.user ?? null;
+
+    // Dynamically populated categories from Admin database, with fallback
+    const navItems: NavItem[] = useMemo(() => {
+        if (
+            navCategories &&
+            Array.isArray(navCategories) &&
+            navCategories.length > 0
+        ) {
+            return navCategories.map((item: any) => ({
+                name: item.name,
+                path: item.path || `/shop?category=${item.slug}`,
+                image: item.image,
+                children: item.children?.map((child: any) => ({
+                    name: child.name,
+                    path: child.path || `/shop?category=${child.slug}`,
+                    image: child.image,
+                })),
+            }));
+        }
+        return defaultNavItems;
+    }, [navCategories]);
 
     const { url } = usePage();
 
@@ -643,7 +669,7 @@ export default function Navbar() {
                                                                         child.path
                                                                     }
                                                                     className={cn(
-                                                                        "block px-4 py-2 text-sm transition-colors hover:bg-muted/10 hover:text-accent",
+                                                                        "group flex items-center gap-2.5 px-4 py-2 text-sm transition-colors hover:bg-muted/10 hover:text-accent",
                                                                         isActive(
                                                                             child.path,
                                                                         )
@@ -651,7 +677,20 @@ export default function Navbar() {
                                                                             : "text-fg",
                                                                     )}
                                                                 >
-                                                                    {child.name}
+                                                                    {child.image && (
+                                                                        <img
+                                                                            src={
+                                                                                child.image
+                                                                            }
+                                                                            alt={
+                                                                                child.name
+                                                                            }
+                                                                            className="w-5 h-5 rounded-sm object-cover flex-shrink-0 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"
+                                                                        />
+                                                                    )}
+                                                                    <span className="truncate">
+                                                                        {child.name}
+                                                                    </span>
                                                                 </Link>
                                                             ),
                                                         )}
@@ -717,9 +756,16 @@ export default function Navbar() {
                                                 <Link
                                                     key={child.name}
                                                     href={child.path}
-                                                    className="py-2 text-sm text-muted hover:text-accent transition-colors"
+                                                    className="flex items-center gap-2.5 py-2 text-sm text-muted hover:text-accent transition-colors"
                                                 >
-                                                    {child.name}
+                                                    {child.image && (
+                                                        <img
+                                                            src={child.image}
+                                                            alt={child.name}
+                                                            className="w-4 h-4 rounded-sm object-cover opacity-80"
+                                                        />
+                                                    )}
+                                                    <span>{child.name}</span>
                                                 </Link>
                                             ))}
                                         </div>
