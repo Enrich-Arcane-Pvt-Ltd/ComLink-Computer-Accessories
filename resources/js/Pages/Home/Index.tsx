@@ -5,6 +5,7 @@ import { NewProductsCarousel } from "@/Components/home/NewProductsCarousel";
 import TestimonialsSection from "@/Components/home/TestimonialsSection";
 import BannerRow from "@/Components/home/BannerRow";
 import LegacyBanner from "@/Components/home/LegacyBanner";
+import FeatureSection from "@/Components/home/FeatureSection";
 import { ProductCard } from "@/Components/product/ProductCard";
 import { Button } from "@/Components/ui/Button";
 import AppLayout from "@/Layouts/AppLayout";
@@ -187,6 +188,8 @@ export default function Home({
 
                 {/* Best Sellers Carousel */}
                 <BestSellersCarousel />
+
+                <FeatureSection />
 
                 {/* Sale Banner */}
                 {/* <section className="py-24 relative overflow-hidden bg-primary text-primary-fg">
