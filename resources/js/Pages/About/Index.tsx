@@ -1,3 +1,4 @@
+import AppLayout from "@/Layouts/AppLayout";
 import { cn } from "@/utils/cn";
 import { Head, Link } from "@inertiajs/react";
 import {
@@ -941,7 +942,7 @@ function ConnectCTA() {
 
 export default function About() {
     return (
-        <>
+        <AppLayout>
             <Head title="About Us | ComLink" />
             <AboutHero />
             <WhoWeAre />
@@ -951,6 +952,6 @@ export default function About() {
             <WhyChooseUs />
             <Journey />
             <ConnectCTA />
-        </>
+        </AppLayout>
     );
 }
