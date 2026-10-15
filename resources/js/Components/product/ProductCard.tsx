@@ -233,7 +233,7 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
             product.images?.[0] ??
             "/images/products/sample-keyboard.jpg",
         category: product.category ?? "PC Hardware",
-        subCategory: product.subCategory ?? product.category ?? "Accessories",
+        subCategory: product.subCategory || undefined,
         brand: product.brand ?? (product.name?.split(" ")[0] || "ComLink"),
         rating: Number(product.rating ?? 4.8),
         reviewCount: Number(product.reviewCount ?? product.reviews ?? 24),
@@ -380,11 +380,15 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
                         <span className="rounded bg-primary-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary-700 dark:bg-primary-800 dark:text-primary-100">
                             {normalized.category}
                         </span>
-                        {normalized.subCategory && (
-                            <span className="rounded bg-accent-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-accent-800 dark:bg-accent-950 dark:text-accent-300">
-                                {normalized.subCategory}
-                            </span>
-                        )}
+                        {Boolean(normalized.subCategory) &&
+                            normalized.subCategory?.toLowerCase().trim() !== normalized.category?.toLowerCase().trim() &&
+                            !["laptops", "monitors & displays", "software"].includes(
+                                (normalized.category || "").toLowerCase().trim(),
+                            ) && (
+                                <span className="rounded bg-accent-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-accent-800 dark:bg-accent-950 dark:text-accent-300">
+                                    {normalized.subCategory}
+                                </span>
+                            )}
                     </div>
 
                     {/* Rating badge */}
