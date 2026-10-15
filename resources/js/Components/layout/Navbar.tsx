@@ -13,6 +13,7 @@ import {
     LogOut,
     Menu,
     Moon,
+    Package,
     Search,
     ShoppingBag,
     Sun,
@@ -365,6 +366,14 @@ export default function Navbar() {
                                             >
                                                 <User className="h-4 w-4" />
                                                 My Profile
+                                            </Link>
+
+                                            <Link
+                                                href="/orders"
+                                                className="flex items-center gap-2 px-4 py-2 text-sm text-fg hover:bg-muted/10 transition-colors cursor-pointer"
+                                            >
+                                                <Package className="h-4 w-4 text-accent" />
+                                                My Orders
                                             </Link>
 
                                             <Link
@@ -846,6 +855,13 @@ export default function Navbar() {
                                     className="text-base font-medium uppercase text-fg py-3 border-b border-border/50"
                                 >
                                     My Profile
+                                </Link>
+                                <Link
+                                    href="/orders"
+                                    className="text-base font-medium uppercase text-fg py-3 border-b border-border/50 flex items-center justify-between"
+                                >
+                                    <span>My Orders</span>
+                                    <Package className="h-4 w-4 text-accent" />
                                 </Link>
                                 <Link
                                     href="/logout"
