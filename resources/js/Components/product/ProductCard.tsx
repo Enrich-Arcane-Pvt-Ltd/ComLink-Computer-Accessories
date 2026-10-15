@@ -1,5 +1,9 @@
+import { useCart } from "@/contexts/CartContext";
+import { useWishlist } from "@/contexts/WishlistContext";
+import { PageProps } from "@/types";
 import { cn } from "@/utils/cn";
-import { Link } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
+import { toast } from "sonner";
 import {
     Heart,
     ShoppingCart,
@@ -225,7 +229,9 @@ export interface ProductCardProps {
 }
 
 export function ProductCard({ product = sampleProduct }: ProductCardProps) {
-    const [isWishlisted, setIsWishlisted] = useState(false);
+    const { auth } = usePage<PageProps>().props;
+    const { addToCart } = useCart();
+    const { toggleWishlist, isInWishlist } = useWishlist();
     const [isAdded, setIsAdded] = useState(false);
 
     // Normalization to support both ProductCardData and legacy product props
@@ -257,6 +263,7 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
         condition: product.condition ?? "Brand New",
     };
 
+    const isWishlisted = isInWishlist(String(normalized.id));
     const hasDiscount = normalized.discountPercent > 0;
     const latestPrice = getLatestPrice(
         normalized.originalPrice,
@@ -266,7 +273,24 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.preventDefault();
+        e.stopPropagation();
+
+        if (!auth?.user) {
+            toast.error("Please login or register to add items to your cart.");
+            router.visit("/login");
+            return;
+        }
+
         if (!normalized.inStock) return;
+
+        addToCart({
+            productId: String(normalized.id),
+            name: normalized.name,
+            price: latestPrice,
+            image: normalized.image,
+            quantity: 1,
+        });
+
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 1800);
     };
@@ -274,7 +298,27 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
     const handleToggleWishlist = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        setIsWishlisted((prev) => !prev);
+
+        if (!auth?.user) {
+            toast.error("Please login or register to manage your wishlist.");
+            router.visit("/login");
+            return;
+        }
+
+        toggleWishlist({
+            id: String(normalized.id),
+            name: normalized.name,
+            price: latestPrice,
+            originalPrice: normalized.originalPrice,
+            images: [normalized.image],
+            category: normalized.category,
+            rating: normalized.rating,
+            reviews: normalized.reviewCount,
+            colors: [],
+            sizes: [],
+            description: "",
+            brand: normalized.brand || "ComLink",
+        });
     };
 
     return (

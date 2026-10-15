@@ -74,8 +74,10 @@ export default function AppLayout({
                         <div
                             className={`min-h-screen flex flex-col bg-bg text-fg transition-colors duration-300 ${className}`}
                         >
-                            <AnnouncementBar />
-                            <Navbar />
+                            <div className="sticky top-0 z-40 w-full">
+                                <AnnouncementBar />
+                                <Navbar />
+                            </div>
                             <main className="flex-grow">{children}</main>
                             <Footer />
                             {/* <FlashAlerts flash={flash} /> */}

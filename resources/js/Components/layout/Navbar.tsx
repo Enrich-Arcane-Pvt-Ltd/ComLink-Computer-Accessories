@@ -2,7 +2,8 @@ import { useCart } from "@/contexts/CartContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { cn } from "@/utils/cn";
-import { Link, usePage } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
+import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
 import {
     ChevronDown,
@@ -213,9 +214,9 @@ export default function Navbar() {
     return (
         <header
             className={cn(
-                "sticky top-0 z-40 w-full transition-all duration-300 border-b",
+                "w-full transition-all duration-300 border-b",
                 isScrolled
-                    ? "bg-bg/90 backdrop-blur-lg border-border shadow-md"
+                    ? "bg-bg/95 backdrop-blur-lg border-border shadow-md"
                     : "bg-bg border-transparent",
             )}
         >
@@ -402,6 +403,13 @@ export default function Navbar() {
                         {/* Build My PC button */}
                         <Link
                             href={BUILD_PC_ROUTE}
+                            onClick={(e) => {
+                                if (!user) {
+                                    e.preventDefault();
+                                    toast.info("Please login or register to use Build My PC.");
+                                    router.visit("/login");
+                                }
+                            }}
                             className="hidden lg:inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-xs font-bold uppercase tracking-wider text-accent-fg whitespace-nowrap transition-opacity hover:opacity-90"
                         >
                             <Cpu className="h-4 w-4" />
@@ -411,23 +419,32 @@ export default function Navbar() {
                         {/* Wishlist Dropdown */}
                         <div
                             className="relative hidden sm:block"
-                            onMouseEnter={() => openMenu("wishlist")}
+                            onMouseEnter={() => {
+                                if (user) openMenu("wishlist");
+                            }}
                             onMouseLeave={scheduleClose}
                         >
                             <Link
                                 href="/wishlist"
+                                onClick={(e) => {
+                                    if (!user) {
+                                        e.preventDefault();
+                                        toast.info("Please login or register to access your wishlist.");
+                                        router.visit("/login");
+                                    }
+                                }}
                                 className="p-1 text-fg hover:text-accent transition-colors relative block cursor-pointer"
                                 aria-label="Wishlist"
                             >
                                 <Heart className="h-5 w-5" />
-                                {wishlistCount > 0 && (
+                                {user && wishlistCount > 0 && (
                                     <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-fg">
                                         {wishlistCount}
                                     </span>
                                 )}
                             </Link>
                             <AnimatePresence>
-                                {openDropdown === "wishlist" && (
+                                {user && openDropdown === "wishlist" && (
                                     <MiniDropdown
                                         title="Wishlist"
                                         emptyLabel="Your wishlist is empty"
@@ -483,23 +500,32 @@ export default function Navbar() {
                         {/* Cart Dropdown */}
                         <div
                             className="relative"
-                            onMouseEnter={() => openMenu("cart")}
+                            onMouseEnter={() => {
+                                if (user) openMenu("cart");
+                            }}
                             onMouseLeave={scheduleClose}
                         >
                             <Link
                                 href="/cart"
+                                onClick={(e) => {
+                                    if (!user) {
+                                        e.preventDefault();
+                                        toast.info("Please login or register to access your shopping cart.");
+                                        router.visit("/login");
+                                    }
+                                }}
                                 className="p-1 text-fg hover:text-accent transition-colors relative block cursor-pointer"
                                 aria-label="Cart"
                             >
                                 <ShoppingBag className="h-5 w-5" />
-                                {totalItems > 0 && (
+                                {user && totalItems > 0 && (
                                     <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-fg">
                                         {totalItems}
                                     </span>
                                 )}
                             </Link>
                             <AnimatePresence>
-                                {openDropdown === "cart" && (
+                                {user && openDropdown === "cart" && (
                                     <MiniDropdown
                                         title="Shopping Cart"
                                         emptyLabel="Your cart is empty"
@@ -774,6 +800,14 @@ export default function Navbar() {
                         {/* Build My PC */}
                         <Link
                             href={BUILD_PC_ROUTE}
+                            onClick={(e) => {
+                                if (!user) {
+                                    e.preventDefault();
+                                    setIsMobileMenuOpen(false);
+                                    toast.info("Please login or register to use Build My PC.");
+                                    router.visit("/login");
+                                }
+                            }}
                             className="mt-4 inline-flex items-center justify-center gap-2 rounded-md bg-accent px-4 py-3 text-sm font-bold uppercase tracking-wider text-accent-fg"
                         >
                             <Cpu className="h-4 w-4" />
@@ -838,6 +872,14 @@ export default function Navbar() {
                             </button>
                             <Link
                                 href="/wishlist"
+                                onClick={(e) => {
+                                    if (!user) {
+                                        e.preventDefault();
+                                        setIsMobileMenuOpen(false);
+                                        toast.info("Please login or register to access your wishlist.");
+                                        router.visit("/login");
+                                    }
+                                }}
                                 className="flex items-center gap-2 text-fg"
                             >
                                 <Heart className="h-5 w-5" />

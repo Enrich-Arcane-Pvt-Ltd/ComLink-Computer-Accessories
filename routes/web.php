@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\AboutUsController;
 use App\Http\Controllers\Public\BlogController;
 use App\Http\Controllers\Public\BuildPcController;
+use App\Http\Controllers\Public\CartController;
 use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Public\CustomPagesController;
 use App\Http\Controllers\Public\FAQController;
@@ -32,8 +33,12 @@ Route::get('/category/{category}', [ShopController::class, 'category'])->name('c
 Route::get('/category/{category}/{subcategory}', [ShopController::class, 'subcategory'])->name('category.subcategory');
 Route::get('/product/{product}', [ShopController::class, 'showProduct'])->name('product.show');
 
-// Build My PC
-Route::get('/build-my-pc', [BuildPcController::class, 'index'])->name('build-pc');
+// Authenticated Customer Routes (Requires login)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/build-my-pc', [BuildPcController::class, 'index'])->name('build-pc');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::get('/checkout', [CartController::class, 'index'])->name('checkout');
+});
 
 // Blogs
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');

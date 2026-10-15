@@ -4,8 +4,9 @@ import BrandMarquee from "@/Components/BrandMarquee";
 import AppLayout from "@/Layouts/AppLayout";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
+import { PageProps } from "@/types";
 import { cn } from "@/utils/cn";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import {
     Check,
     ChevronDown,
@@ -126,6 +127,7 @@ function ProductViewContent({
     relatedProducts = [],
     categories = [],
 }: ProductShowProps) {
+    const { auth } = usePage<PageProps>().props;
     const { addToCart } = useCart();
     const { toggleWishlist, isInWishlist } = useWishlist();
 
@@ -229,6 +231,12 @@ function ProductViewContent({
 
     // Add to cart action
     const handleAddToCart = () => {
+        if (!auth?.user) {
+            toast.error("Please login or register to add items to your cart.");
+            router.visit("/login");
+            return;
+        }
+
         if (!product.inStock) {
             toast.error("This item is currently out of stock.");
             return;
@@ -248,6 +256,12 @@ function ProductViewContent({
 
     // Wishlist action
     const handleToggleWishlist = () => {
+        if (!auth?.user) {
+            toast.error("Please login or register to manage your wishlist.");
+            router.visit("/login");
+            return;
+        }
+
         toggleWishlist({
             id: String(product.id),
             name: product.name,

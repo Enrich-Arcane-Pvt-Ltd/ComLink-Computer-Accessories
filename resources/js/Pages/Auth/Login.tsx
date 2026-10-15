@@ -132,7 +132,7 @@ export default function Login({
                         </form>
 
                         {/* Social Login Dividers */}
-                        <div className="relative py-2">
+                        {/* <div className="relative py-2">
                             <div className="absolute inset-0 flex items-center">
                                 <span className="w-full border-t border-border" />
                             </div>
@@ -141,10 +141,10 @@ export default function Login({
                                     Or continue with
                                 </span>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Social Buttons */}
-                        <div className="grid grid-cols-2 gap-4">
+                        {/* <div className="grid grid-cols-2 gap-4">
                             <Button
                                 variant="outline"
                                 className="w-full text-sm font-medium border-border text-fg bg-bg hover:bg-muted/10"
@@ -157,7 +157,7 @@ export default function Login({
                             >
                                 Apple
                             </Button>
-                        </div>
+                        </div> */}
 
                         {/* Switch to Register */}
                         <p className="text-center text-sm text-muted">
