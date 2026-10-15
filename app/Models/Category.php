@@ -137,10 +137,12 @@ class Category extends Model
             return Storage::url($this->image);
         }
 
-        // Check if there is an SVG with matching slug in images/categories
-        $slugSvg = "images/categories/{$this->slug}.svg";
-        if (file_exists(public_path($slugSvg))) {
-            return url($slugSvg);
+        // Check if there is an image with matching slug in images/categories
+        foreach (['webp', 'png', 'jpg', 'jpeg'] as $ext) {
+            $slugImg = "images/categories/{$this->slug}.{$ext}";
+            if (file_exists(public_path($slugImg))) {
+                return url($slugImg);
+            }
         }
 
         return url('/images/placeholder.png');
