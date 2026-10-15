@@ -103,7 +103,11 @@ interface ProductShowProps {
 /*  Helper Formatters                                                         */
 /* -------------------------------------------------------------------------- */
 
-const formatPrice = (val: number) => `$${Number(val || 0).toFixed(2)}`;
+const formatPrice = (val: number) =>
+    `Rs. ${Number(val || 0).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })}`;
 
 /* -------------------------------------------------------------------------- */
 /*  Product Show Component                                                    */

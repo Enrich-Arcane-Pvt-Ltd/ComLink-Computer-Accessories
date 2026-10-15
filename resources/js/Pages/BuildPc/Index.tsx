@@ -866,9 +866,9 @@ function BuildPcContent({
                                             <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-fg">
                                                 Build My PC
                                             </h1>
-                                            <span className="rounded-md bg-cyan-500/15 border border-cyan-500/30 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
+                                            {/* <span className="rounded-md bg-cyan-500/15 border border-cyan-500/30 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
                                                 v1.0 beta
-                                            </span>
+                                            </span> */}
                                         </div>
                                         <p className="text-xs text-muted mt-0.5">
                                             by ComLink Computer Accessories
@@ -876,7 +876,7 @@ function BuildPcContent({
                                     </div>
 
                                     {/* Pre-Built Templates Button */}
-                                    <button
+                                    {/* <button
                                         type="button"
                                         onClick={() =>
                                             setIsTemplatesModalOpen(true)
@@ -885,7 +885,7 @@ function BuildPcContent({
                                     >
                                         <Sparkles className="h-4 w-4 text-amber-400" />
                                         <span>Pre Built PC Templates</span>
-                                    </button>
+                                    </button> */}
                                 </div>
 
                                 {/* Auto-advance switch */}

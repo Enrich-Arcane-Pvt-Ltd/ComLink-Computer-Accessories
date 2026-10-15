@@ -120,7 +120,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                                     {product.category}
                                                 </p>
                                                 <p className="text-sm font-semibold text-primary mt-1">
-                                                    ${product.price.toFixed(2)}
+                                                    Rs. {Number(product.price || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                 </p>
                                             </div>
                                         </Link>

@@ -459,8 +459,7 @@ export default function Navbar() {
                                                             {p.name}
                                                         </Link>
                                                         <p className="text-sm text-fg font-semibold">
-                                                            $
-                                                            {p.price.toFixed(2)}
+                                                            Rs. {Number(p.price || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                         </p>
                                                     </div>
                                                     <button
@@ -511,7 +510,7 @@ export default function Navbar() {
                                                 <div className="flex items-center justify-between text-sm font-semibold text-fg pt-3">
                                                     <span>Subtotal</span>
                                                     <span>
-                                                        ${totalPrice.toFixed(2)}
+                                                        Rs. {totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                     </span>
                                                 </div>
                                             ) : undefined
@@ -555,10 +554,7 @@ export default function Navbar() {
                                                             {item.name}
                                                         </Link>
                                                         <p className="text-xs text-muted">
-                                                            {item.quantity} × $
-                                                            {item.price.toFixed(
-                                                                2,
-                                                            )}
+                                                            {item.quantity} × Rs. {Number(item.price || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                         </p>
                                                     </div>
                                                     <button

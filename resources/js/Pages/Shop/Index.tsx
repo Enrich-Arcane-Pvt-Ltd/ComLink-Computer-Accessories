@@ -423,17 +423,17 @@ function PriceBarSlider({
 
             {/* Price values text along bar */}
             <div className="flex items-center justify-between text-[11px] text-muted font-medium px-0.5">
-                <span>$0</span>
+                <span>Rs. 0</span>
                 <span className="text-accent font-semibold">
-                    ${parsedMin.toLocaleString()} - ${parsedMax.toLocaleString()}
+                    Rs. {parsedMin.toLocaleString()} - Rs. {parsedMax.toLocaleString()}
                 </span>
-                <span>$3,000+</span>
+                <span>Rs. 500,000+</span>
             </div>
 
             {/* Input boxes */}
             <div className="grid grid-cols-2 gap-2">
                 <div>
-                    <span className="text-[10px] text-muted block mb-1 font-medium">Min Price ($)</span>
+                    <span className="text-[10px] text-muted block mb-1 font-medium">Min Price (Rs.)</span>
                     <input
                         type="number"
                         placeholder="0"
@@ -443,10 +443,10 @@ function PriceBarSlider({
                     />
                 </div>
                 <div>
-                    <span className="text-[10px] text-muted block mb-1 font-medium">Max Price ($)</span>
+                    <span className="text-[10px] text-muted block mb-1 font-medium">Max Price (Rs.)</span>
                     <input
                         type="number"
-                        placeholder="3000+"
+                        placeholder="500000+"
                         value={maxPrice}
                         onChange={(e) => onMaxChange(e.target.value)}
                         className="w-full bg-bg border border-border rounded-lg px-2.5 py-1.5 text-xs text-fg focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
@@ -457,11 +457,11 @@ function PriceBarSlider({
             {/* Quick Price Ranges */}
             <div className="flex flex-wrap gap-1.5 pt-0.5">
                 {[
-                    { label: "< $50", min: "0", max: "50" },
-                    { label: "$50 - $200", min: "50", max: "200" },
-                    { label: "$200 - $500", min: "200", max: "500" },
-                    { label: "$500 - $1500", min: "500", max: "1500" },
-                    { label: "$1500+", min: "1500", max: "3000" },
+                    { label: "< Rs. 10,000", min: "0", max: "10000" },
+                    { label: "Rs. 10k - 50k", min: "10000", max: "50000" },
+                    { label: "Rs. 50k - 150k", min: "50000", max: "150000" },
+                    { label: "Rs. 150k - 300k", min: "150000", max: "300000" },
+                    { label: "Rs. 300k+", min: "300000", max: "1000000" },
                 ].map((preset) => (
                     <button
                         key={preset.label}
@@ -686,7 +686,7 @@ export default function ShopIndex({
         if (minPrice || maxPrice) {
             pills.push({
                 key: "price_range",
-                label: `Price: $${minPrice || "0"} - $${maxPrice || "Max"}`,
+                label: `Price: Rs. ${minPrice || "0"} - Rs. ${maxPrice || "Max"}`,
                 onRemove: () => {
                     setMinPrice("");
                     setMaxPrice("");

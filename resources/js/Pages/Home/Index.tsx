@@ -275,7 +275,7 @@ export default function Home({
                                         Free Shipping
                                     </h4>
                                     <p className="text-sm text-muted">
-                                        On orders over $100
+                                        On orders over Rs. 25,000
                                     </p>
                                 </div>
                             </div>

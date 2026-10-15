@@ -207,7 +207,11 @@ export const sample10Products: ProductCardData[] = [
 /*  Helpers                                                                   */
 /* -------------------------------------------------------------------------- */
 
-const formatPrice = (value: number) => `$${value.toFixed(2)}`;
+const formatPrice = (value: number) =>
+    `Rs. ${Number(value || 0).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })}`;
 
 const getLatestPrice = (original: number, discountPercent: number) =>
     original - (original * discountPercent) / 100;
