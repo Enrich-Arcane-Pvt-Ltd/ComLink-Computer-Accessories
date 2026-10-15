@@ -4,13 +4,8 @@ import { cn } from "@/utils/cn";
 import { Head, Link } from "@inertiajs/react";
 import {
     AlertTriangle,
-    Armchair,
-    ArrowRight,
     Box,
-    Camera,
     Check,
-    CheckCircle2,
-    ChevronDown,
     ChevronRight,
     CircuitBoard,
     Copy,
@@ -18,33 +13,23 @@ import {
     Database,
     Disc,
     Download,
-    Eye,
     Fan,
-    FileText,
     HardDrive,
     Headphones,
-    HelpCircle,
-    Info,
     Keyboard,
     Layers,
-    LayoutGrid,
     Lightbulb,
-    Lock,
     Monitor,
     MonitorPlay,
     Mouse,
     Plus,
-    RefreshCw,
     Search,
     Share2,
     ShieldAlert,
     ShieldCheck,
-    ShoppingBag,
     ShoppingCart,
-    SlidersHorizontal,
     Sparkles,
     Trash2,
-    Volume2,
     Wind,
     X,
     Zap,
@@ -232,6 +217,130 @@ const formatLkr = (num: number) => {
         maximumFractionDigits: 2,
     })}`;
 };
+
+/* -------------------------------------------------------------------------- */
+/*  3D Auto-Rotating Build Preview                                            */
+/* -------------------------------------------------------------------------- */
+
+function BuildPreview3D({ count, total }: { count: number; total: number }) {
+    const LAYERS = 16; // more layers = smoother depth
+    const GAP = 5; // px between slices
+    const progress = Math.min(100, Math.round((count / total) * 100));
+    const isComplete = count >= total;
+
+    return (
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-xs animate-build-in">
+            <style>{`
+                @keyframes pc-spin {
+                    from { transform: rotateY(0deg); }
+                    to   { transform: rotateY(360deg); }
+                }
+                @keyframes pc-spot {
+                    0%, 100% { opacity: .75; }
+                    50%      { opacity: 1; }
+                }
+                @keyframes build-in {
+                    from { opacity: 0; transform: translateY(12px) scale(.98); }
+                    to   { opacity: 1; transform: translateY(0) scale(1); }
+                }
+                @keyframes dots {
+                    0%   { content: ""; }
+                    25%  { content: "."; }
+                    50%  { content: ".."; }
+                    75%  { content: "..."; }
+                }
+                .animate-build-in { animation: build-in .5s ease-out both; }
+                .pc-spin { animation: pc-spin 16s linear infinite; }
+                .pc-spot { animation: pc-spot 3s ease-in-out infinite; }
+                .building-dots::after { content: ""; animation: dots 1.4s steps(1) infinite; }
+                @media (prefers-reduced-motion: reduce) {
+                    .pc-spin, .pc-spot { animation: none; }
+                }
+            `}</style>
+
+            {/* Dark stage background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
+
+            {/* SPOTLIGHT cone from the top */}
+            <div
+                className="pc-spot pointer-events-none absolute left-1/2 top-0 h-full w-[70%] -translate-x-1/2"
+                style={{
+                    clipPath: "polygon(42% 0, 58% 0, 100% 100%, 0 100%)",
+                    background:
+                        "linear-gradient(to bottom, rgba(103,232,249,.45), rgba(34,211,238,.12) 55%, transparent 100%)",
+                    filter: "blur(10px)",
+                }}
+            />
+            {/* Spotlight source glow */}
+            <div className="pointer-events-none absolute left-1/2 top-0 h-10 w-40 -translate-x-1/2 rounded-full bg-cyan-200/70 blur-2xl" />
+
+            {/* "BUILDING" label on top of the model */}
+            <div className="absolute left-1/2 top-4 z-20 -translate-x-1/2 text-center">
+                <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-slate-950/70 px-4 py-1.5 backdrop-blur-md">
+                    <span
+                        className={cn(
+                            "h-2 w-2 rounded-full",
+                            isComplete
+                                ? "bg-emerald-400"
+                                : "bg-cyan-400 animate-pulse",
+                        )}
+                    />
+                    <span className="font-display text-xs font-bold uppercase tracking-[0.25em] text-cyan-100">
+                        {isComplete ? (
+                            "Build Complete"
+                        ) : (
+                            <span className="building-dots">Building</span>
+                        )}
+                    </span>
+                    <span className="text-[11px] font-semibold text-cyan-300/80">
+                        {progress}%
+                    </span>
+                </div>
+            </div>
+
+            {/* 3D TURNTABLE (no pointer interaction) */}
+            <div
+                className="pointer-events-none relative z-10 mx-auto flex h-[340px] w-full select-none items-center justify-center sm:h-[400px]"
+                style={{ perspective: "1400px" }}
+                aria-hidden="true"
+            >
+                <div
+                    className="pc-spin relative h-[260px] w-[340px] sm:h-[300px] sm:w-[400px]"
+                    style={{ transformStyle: "preserve-3d" }}
+                >
+                    {Array.from({ length: LAYERS }).map((_, i) => (
+                        <img
+                            key={i}
+                            src="/images/pc-build.png"
+                            alt=""
+                            draggable={false}
+                            className="absolute inset-0 h-full w-full object-contain"
+                            style={{
+                                transform: `translateZ(${(i - (LAYERS - 1) / 2) * GAP}px)`,
+                                filter:
+                                    i === 0 || i === LAYERS - 1
+                                        ? "none"
+                                        : "brightness(.85)",
+                            }}
+                        />
+                    ))}
+                </div>
+            </div>
+
+            {/* Floor glow / reflection */}
+            <div className="pointer-events-none absolute bottom-6 left-1/2 z-0 h-8 w-[55%] -translate-x-1/2 rounded-[50%] bg-cyan-400/30 blur-xl" />
+            <div className="pointer-events-none absolute bottom-8 left-1/2 z-0 h-px w-[60%] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent" />
+
+            {/* Progress bar */}
+            <div className="absolute inset-x-0 bottom-0 z-20 h-1 bg-white/5">
+                <div
+                    className="h-full bg-gradient-to-r from-cyan-500 to-emerald-400 transition-all duration-500"
+                    style={{ width: `${progress}%` }}
+                />
+            </div>
+        </div>
+    );
+}
 
 /* -------------------------------------------------------------------------- */
 /*  Main Page Component                                                       */
@@ -1014,6 +1123,14 @@ function BuildPcContent({
                                     </div>
                                 </div>
                             </div>
+
+                            {/* ---------------- 3D BUILD PREVIEW (appears after first selection) ---------------- */}
+                            {selectedCount > 0 && (
+                                <BuildPreview3D
+                                    count={selectedCount}
+                                    total={ESSENTIALS_SLOTS.length}
+                                />
+                            )}
 
                             {/* ---------------- ACTIVE SLOT PRODUCT PICKER ---------------- */}
                             <div className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-xs">
