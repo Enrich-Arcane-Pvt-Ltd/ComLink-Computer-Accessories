@@ -998,20 +998,18 @@ export default function ShopIndex({
                     <div className="container mx-auto px-4 md:px-6">
                         {/* Breadcrumbs */}
                         <nav className="flex items-center gap-2 text-xs md:text-sm text-muted mb-4 flex-wrap">
-                            <Link href="/" className="hover:text-accent transition-colors">
-                                Home
-                            </Link>
-                            <ChevronRight className="w-3.5 h-3.5 opacity-50" />
-                            <Link
-                                href="/shop"
-                                className={`hover:text-accent transition-colors ${
-                                    !activeCategory ? "text-accent font-semibold" : "text-muted"
-                                }`}
-                            >
-                                Shop
-                            </Link>
-                            {activeCategory && (
+                            {!activeCategory ? (
+                                <span className="text-accent font-semibold">
+                                    Shop
+                                </span>
+                            ) : (
                                 <>
+                                    <Link
+                                        href="/shop"
+                                        className="hover:text-accent transition-colors text-muted"
+                                    >
+                                        Shop
+                                    </Link>
                                     <ChevronRight className="w-3.5 h-3.5 opacity-50" />
                                     <Link
                                         href={`/shop?category=${activeCategory.slug}`}
@@ -1021,14 +1019,14 @@ export default function ShopIndex({
                                     >
                                         {activeCategory.name}
                                     </Link>
-                                </>
-                            )}
-                            {activeSubCategory && (
-                                <>
-                                    <ChevronRight className="w-3.5 h-3.5 opacity-50" />
-                                    <span className="text-accent font-semibold">
-                                        {activeSubCategory.name}
-                                    </span>
+                                    {activeSubCategory && (
+                                        <>
+                                            <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+                                            <span className="text-accent font-semibold">
+                                                {activeSubCategory.name}
+                                            </span>
+                                        </>
+                                    )}
                                 </>
                             )}
                         </nav>

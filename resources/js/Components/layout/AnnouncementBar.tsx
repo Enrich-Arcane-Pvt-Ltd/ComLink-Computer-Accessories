@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@inertiajs/react';
 
 const CONTACT = {
   email: 'info@comlink.lk',
@@ -7,6 +8,7 @@ const CONTACT = {
 
 const LINKS = [
   { label: 'Home', href: '/' },
+  { label: 'Shop', href: '/shop' },
   { label: 'About Us', href: '/about' },
   { label: 'Contact Us', href: '/contact' },
 ];
@@ -41,12 +43,12 @@ export function AnnouncementBar() {
           {LINKS.map((link, i) => (
             <React.Fragment key={link.href}>
               {i > 0 && <Divider />}
-              <a
+              <Link
                 href={link.href}
                 className="transition-colors hover:text-accent-300"
               >
                 {link.label}
-              </a>
+              </Link>
             </React.Fragment>
           ))}
         </nav>
