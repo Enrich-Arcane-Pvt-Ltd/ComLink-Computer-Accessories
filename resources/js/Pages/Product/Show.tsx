@@ -1,5 +1,6 @@
 import { ProductCard, ProductCardData } from "@/Components/product/ProductCard";
 import { ImageLightbox } from "@/Components/product/ImageLightbox";
+import BrandMarquee from "@/Components/BrandMarquee";
 import AppLayout from "@/Layouts/AppLayout";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
@@ -316,7 +317,7 @@ function ProductViewContent({
                 />
             )}
 
-            <div className="bg-bg min-h-screen pb-24">
+            <div className="bg-bg min-h-screen">
                 {/* ---------------- Breadcrumb Navigation ---------------- */}
                 <div className="border-b border-border/40 bg-card/40 backdrop-blur-sm">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
@@ -536,11 +537,11 @@ function ProductViewContent({
                                     </span>
                                 )}
 
-                                {product.sku && (
+                                {/* {product.sku && (
                                     <span className="text-[11px] font-mono text-muted ml-auto">
                                         SKU: {product.sku}
                                     </span>
-                                )}
+                                )} */}
                             </div>
 
                             {/* 2. Product Name */}
@@ -1299,6 +1300,11 @@ function ProductViewContent({
                         </div>
                     )}
                 </div>
+
+                {/* ========================================================== */}
+                {/* BRAND MARQUEE SECTION                                      */}
+                {/* ========================================================== */}
+                <BrandMarquee className="mt-20 sm:mt-24 border-t border-border/40" />
             </div>
         </>
     );
