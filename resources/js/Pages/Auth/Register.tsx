@@ -33,7 +33,7 @@ export default function Register() {
                 <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center border-r border-border/40 overflow-hidden">
                     {/* Background battlestation image */}
                     <img
-                        src="/images/login-bg.png"
+                        src="/images/register-bg.jpg"
                         alt="ComLink Gaming Setup"
                         className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
                     />
@@ -69,7 +69,7 @@ export default function Register() {
                     </span>
 
                     {/* Center content: Large, prominent, centered heading */}
-                    <div className="relative z-10 w-full max-w-xl px-8 text-center flex flex-col items-center justify-center">
+                    <div className="relative z-30 w-full max-w-xl px-8 text-center flex flex-col items-center justify-center">
                         <h2 className="font-display font-black uppercase leading-none tracking-tight text-white drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)]">
                             <span className="block text-3xl sm:text-4xl xl:text-5xl font-semibold tracking-wider text-white/80">
                                 Your Next

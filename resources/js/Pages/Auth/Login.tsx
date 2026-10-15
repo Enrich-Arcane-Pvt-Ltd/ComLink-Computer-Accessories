@@ -242,19 +242,19 @@ export default function Login({
                     </span>
 
                     {/* Center content: Large, prominent, centered heading */}
-                    <div className="relative z-10 w-full max-w-xl px-8 text-center flex flex-col items-center justify-center">
+                    <div className="relative z-30 w-full max-w-xl px-8 text-center flex flex-col items-center justify-center">
                         <h2 className="font-display font-black uppercase leading-none tracking-tight text-white drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)]">
                             <span className="block text-3xl sm:text-4xl xl:text-5xl font-semibold tracking-wider text-white/80">
-                                Your Next
+                                Ready To
                             </span>
                             <span className="block text-6xl sm:text-7xl xl:text-8xl my-3 tracking-tight">
-                                PC{" "}
+                                Level{" "}
                                 <span className="bg-gradient-to-r from-cyan-400 via-cyan-300 to-cyan-500 bg-clip-text text-transparent">
-                                    Build
+                                    Up
                                 </span>
                             </span>
                             <span className="block text-4xl sm:text-5xl xl:text-6xl text-white tracking-wide">
-                                Starts Here
+                                Your Rig?
                             </span>
                         </h2>
 
