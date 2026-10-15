@@ -14,6 +14,9 @@
 
     <title inertia>{{ config('app.name', 'WikiStore') }}</title>
 
+    <!-- Preload Hero Frame 1 for Instant Paint on Refresh -->
+    <link rel="preload" as="image" href="/images/hero-frames/frame-0001.jpg" fetchpriority="high">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />

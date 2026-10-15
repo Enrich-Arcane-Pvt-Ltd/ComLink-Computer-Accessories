@@ -22,6 +22,7 @@ class HomeController extends Controller
         // 1. Dynamic Categories Data Fetching (Main visible categories ordered by sort_order)
         $categories = Category::main()
             ->visible()
+            ->withCount('products')
             ->orderBy('sort_order', 'asc')
             ->get()
             ->map(function ($category) {
@@ -29,7 +30,7 @@ class HomeController extends Controller
                     'id' => $category->id,
                     'name' => $category->name ?? 'Unknown Category',
                     'slug' => $category->slug,
-                    'count' => $category->products()->count(),
+                    'count' => $category->products_count ?? 0,
                     'image' => $category->image_url ?? url('/images/placeholder.png'),
                 ];
             });

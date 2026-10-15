@@ -29,6 +29,11 @@ interface HeroCarouselProps {
     framesFolder?: string;
 }
 
+// Module-level persistent cache across page navigation (prevents re-fetching 192 frames)
+const GLOBAL_FRAME_CACHE = new Map<number, HTMLImageElement>();
+let globalActiveLoads = 0;
+const MAX_CONCURRENT_BG_LOADS = 2; // Keep low to avoid starving PHP/network
+
 export function HeroCarousel({
     slides = [],
     totalFrames = 192,
@@ -38,8 +43,7 @@ export function HeroCarousel({
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     // Frame cache & loading status
-    const imagesCache = useRef<Map<number, HTMLImageElement>>(new Map());
-    const [loadedCount, setLoadedCount] = useState<number>(0);
+    const [loadedCount, setLoadedCount] = useState<number>(GLOBAL_FRAME_CACHE.size);
     const [hasMissingFrames, setHasMissingFrames] = useState<boolean>(false);
     const [currentFrameDisplay, setCurrentFrameDisplay] = useState<number>(1);
     const [scrollPercentDisplay, setScrollPercentDisplay] =
@@ -48,12 +52,31 @@ export function HeroCarousel({
     // Animation loop state
     const currentFrameFloat = useRef<number>(1);
     const targetFrame = useRef<number>(1);
+    const lastDrawnFrame = useRef<number>(-1);
     const animationFrameId = useRef<number | null>(null);
 
     // Helper: format frame number e.g. 1 -> "0001"
     const getFramePath = (index: number) => {
         const padded = String(index).padStart(4, "0");
         return `${framesFolder}/frame-${padded}.jpg`;
+    };
+
+    // Helper: load a single frame into global cache
+    const loadSingleFrame = (index: number, priority: boolean = false) => {
+        if (GLOBAL_FRAME_CACHE.has(index)) return Promise.resolve(GLOBAL_FRAME_CACHE.get(index)!);
+
+        return new Promise<HTMLImageElement | null>((resolve) => {
+            const img = new Image();
+            img.src = getFramePath(index);
+            img.onload = () => {
+                GLOBAL_FRAME_CACHE.set(index, img);
+                setLoadedCount(GLOBAL_FRAME_CACHE.size);
+                resolve(img);
+            };
+            img.onerror = () => {
+                resolve(null);
+            };
+        });
     };
 
     // Draw frame on canvas with "object-fit: cover" aspect ratio
@@ -80,145 +103,71 @@ export function HeroCarousel({
             const shiftY = (height - drawH) / 2;
 
             ctx.drawImage(img, 0, 0, imgW, imgH, shiftX, shiftY, drawW, drawH);
-        } else {
-            // High-tech procedural placeholder while frames load or if zip isn't extracted yet
-            renderTechPlaceholder(ctx, width, height);
         }
     };
 
-    // Procedural sci-fi placeholder fallback
-    const renderTechPlaceholder = (
-        ctx: CanvasRenderingContext2D,
-        w: number,
-        h: number,
-    ) => {
-        // Deep cyber backdrop
-        const grad = ctx.createRadialGradient(
-            w / 2,
-            h / 2,
-            50,
-            w / 2,
-            h / 2,
-            Math.max(w, h) * 0.7,
-        );
-        grad.addColorStop(0, "#132338");
-        grad.addColorStop(0.5, "#0b121c");
-        grad.addColorStop(1, "#05080e");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, w, h);
-
-        // Grid lines
-        ctx.strokeStyle = "rgba(34, 211, 238, 0.08)";
-        ctx.lineWidth = 1;
-        const gridSize = 60;
-        for (let x = 0; x < w; x += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, h);
-            ctx.stroke();
-        }
-        for (let y = 0; y < h; y += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(w, y);
-            ctx.stroke();
-        }
-
-        // Concentric circles representing PC internal core / fan assembly
-        const cx = w / 2;
-        const cy = h / 2;
-        const p = (targetFrame.current - 1) / (totalFrames - 1);
-
-        ctx.strokeStyle = `rgba(34, 211, 238, ${0.15 + p * 0.2})`;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(cx, cy, 140 + p * 80, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.strokeStyle = `rgba(14, 165, 233, ${0.2 + p * 0.3})`;
-        ctx.setLineDash([12, 12]);
-        ctx.beginPath();
-        ctx.arc(cx, cy, 90 + p * 50, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // Core icon representation
-        ctx.fillStyle = "rgba(34, 211, 238, 0.35)";
-        ctx.beginPath();
-        ctx.arc(cx, cy, 30, 0, Math.PI * 2);
-        ctx.fill();
-    };
-
-    // Preload frames progressively
+    // Preload frames progressively without choking the network
     useEffect(() => {
         let isMounted = true;
-        const cache = imagesCache.current;
-        let loaded = 0;
 
-        // 1. Immediately load frame 1 for instant display
-        const firstImg = new Image();
-        firstImg.src = getFramePath(1);
-        firstImg.onload = () => {
-            if (!isMounted) return;
-            cache.set(1, firstImg);
-            loaded++;
-            setLoadedCount(loaded);
-            renderFrame(firstImg);
-        };
-        firstImg.onerror = () => {
-            if (!isMounted) return;
-            // Frames not found in public folder yet
-            setHasMissingFrames(true);
-            renderFrame(null);
-        };
-
-        // 2. Preload strategic keyframes first (every 8 frames) for rapid scrub response
-        const keyframeIndices: number[] = [];
-        for (let i = 2; i <= totalFrames; i += 8) {
-            keyframeIndices.push(i);
+        // 1. Instantly display Frame 1 if already cached, or load only Frame 1 immediately
+        if (GLOBAL_FRAME_CACHE.has(1)) {
+            renderFrame(GLOBAL_FRAME_CACHE.get(1)!);
+        } else {
+            loadSingleFrame(1).then((img) => {
+                if (!isMounted) return;
+                if (img) {
+                    renderFrame(img);
+                } else {
+                    setHasMissingFrames(true);
+                    renderFrame(null);
+                }
+            });
         }
 
-        // 3. Followed by remaining intermediate frames
-        const remainingIndices: number[] = [];
-        for (let i = 2; i <= totalFrames; i++) {
-            if (!keyframeIndices.includes(i)) {
-                remainingIndices.push(i);
-            }
-        }
-
-        const loadOrder = [...keyframeIndices, ...remainingIndices];
-        let indexInQueue = 0;
-        const maxConcurrent = 6;
-        let activeLoads = 0;
-
-        const loadNext = () => {
+        // 2. Delayed background preloading (starts only after page stabilizes)
+        const timer = setTimeout(() => {
             if (!isMounted) return;
-            while (activeLoads < maxConcurrent && indexInQueue < loadOrder.length) {
-                const frameIndex = loadOrder[indexInQueue++];
-                activeLoads++;
 
-                const img = new Image();
-                img.src = getFramePath(frameIndex);
-                img.onload = () => {
-                    if (!isMounted) return;
-                    cache.set(frameIndex, img);
-                    loaded++;
-                    setLoadedCount(loaded);
-                    activeLoads--;
-                    loadNext();
-                };
-                img.onerror = () => {
-                    if (!isMounted) return;
-                    activeLoads--;
-                    loadNext();
-                };
+            // Preload every 6th frame first for rapid scrub responsiveness (~32 frames)
+            const keyframes: number[] = [];
+            for (let i = 2; i <= totalFrames; i += 6) {
+                if (!GLOBAL_FRAME_CACHE.has(i)) keyframes.push(i);
             }
-        };
 
-        loadNext();
+            // Intermediate frames loaded later
+            const remaining: number[] = [];
+            for (let i = 2; i <= totalFrames; i++) {
+                if (!GLOBAL_FRAME_CACHE.has(i) && !keyframes.includes(i)) {
+                    remaining.push(i);
+                }
+            }
+
+            const queue = [...keyframes, ...remaining];
+            let qIdx = 0;
+
+            const processQueue = () => {
+                if (!isMounted || qIdx >= queue.length) return;
+
+                while (globalActiveLoads < MAX_CONCURRENT_BG_LOADS && qIdx < queue.length) {
+                    const idx = queue[qIdx++];
+                    if (GLOBAL_FRAME_CACHE.has(idx)) continue;
+
+                    globalActiveLoads++;
+                    loadSingleFrame(idx).then(() => {
+                        globalActiveLoads--;
+                        // Small polite pause to let browser handle user requests smoothly
+                        setTimeout(processQueue, 25);
+                    });
+                }
+            };
+
+            processQueue();
+        }, 800);
 
         return () => {
             isMounted = false;
+            clearTimeout(timer);
         };
     }, [totalFrames, framesFolder]);
 
@@ -234,7 +183,7 @@ export function HeroCarousel({
 
             // Draw current active frame
             const activeIndex = Math.round(currentFrameFloat.current);
-            const img = imagesCache.current.get(activeIndex) || null;
+            const img = GLOBAL_FRAME_CACHE.get(activeIndex) || null;
             renderFrame(img);
         };
 
@@ -243,16 +192,15 @@ export function HeroCarousel({
         return () => window.removeEventListener("resize", updateCanvasSize);
     }, []);
 
-    // Smooth physics-based render loop using linear interpolation (LERP)
-    useEffect(() => {
-        let isRunning = true;
+    // Function to wake up loop when scrolling
+    const startRenderLoop = () => {
+        if (animationFrameId.current) return;
 
         const loop = () => {
-            if (!isRunning) return;
-
-            // LERP for smooth cinematic frame scrubbing
             const diff = targetFrame.current - currentFrameFloat.current;
-            if (Math.abs(diff) > 0.01) {
+            const isSettled = Math.abs(diff) < 0.01;
+
+            if (!isSettled) {
                 currentFrameFloat.current += diff * 0.18;
             } else {
                 currentFrameFloat.current = targetFrame.current;
@@ -263,45 +211,43 @@ export function HeroCarousel({
                 Math.max(1, Math.round(currentFrameFloat.current)),
             );
 
-            // Display updates
-            setCurrentFrameDisplay(frameToDraw);
-            const pct = Math.round(
-                ((frameToDraw - 1) / (totalFrames - 1)) * 100,
-            );
-            setScrollPercentDisplay(pct);
+            // Update only when integer frame changes to eliminate 60fps React re-renders!
+            if (frameToDraw !== lastDrawnFrame.current) {
+                lastDrawnFrame.current = frameToDraw;
+                setCurrentFrameDisplay(frameToDraw);
 
-            // Find closest available cached frame if current one is still downloading
-            let imgToDraw = imagesCache.current.get(frameToDraw);
-            if (!imgToDraw) {
-                // Look for closest loaded frame
-                for (let offset = 1; offset < 20; offset++) {
-                    const before = imagesCache.current.get(frameToDraw - offset);
-                    if (before) {
-                        imgToDraw = before;
-                        break;
-                    }
-                    const after = imagesCache.current.get(frameToDraw + offset);
-                    if (after) {
-                        imgToDraw = after;
-                        break;
+                const pct = Math.round(
+                    ((frameToDraw - 1) / (totalFrames - 1)) * 100,
+                );
+                setScrollPercentDisplay(pct);
+
+                // Find frame or closest loaded frame
+                let imgToDraw = GLOBAL_FRAME_CACHE.get(frameToDraw);
+                if (!imgToDraw) {
+                    // Try to load this target frame on demand
+                    loadSingleFrame(frameToDraw);
+                    for (let offset = 1; offset < 24; offset++) {
+                        const before = GLOBAL_FRAME_CACHE.get(frameToDraw - offset);
+                        if (before) { imgToDraw = before; break; }
+                        const after = GLOBAL_FRAME_CACHE.get(frameToDraw + offset);
+                        if (after) { imgToDraw = after; break; }
                     }
                 }
+
+                renderFrame(imgToDraw || null);
             }
 
-            renderFrame(imgToDraw || null);
+            // Stop loop when settled to save 100% CPU
+            if (isSettled) {
+                animationFrameId.current = null;
+                return;
+            }
 
             animationFrameId.current = requestAnimationFrame(loop);
         };
 
         animationFrameId.current = requestAnimationFrame(loop);
-
-        return () => {
-            isRunning = false;
-            if (animationFrameId.current) {
-                cancelAnimationFrame(animationFrameId.current);
-            }
-        };
-    }, [totalFrames]);
+    };
 
     // Track scroll position of the tall section
     useEffect(() => {
@@ -323,12 +269,21 @@ export function HeroCarousel({
             // Map progress to frames: 0 -> 1 (stable), 1 -> totalFrames (exploded view)
             const target = 1 + progress * (totalFrames - 1);
             targetFrame.current = target;
+
+            // Wake up loop on scroll
+            startRenderLoop();
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
         handleScroll(); // initialize
 
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (animationFrameId.current) {
+                cancelAnimationFrame(animationFrameId.current);
+                animationFrameId.current = null;
+            }
+        };
     }, [totalFrames]);
 
     // Dynamic HUD Phase description based on scroll percent
@@ -381,24 +336,29 @@ export function HeroCarousel({
         >
             {/* Sticky 100vh Viewport: Pinned on screen while scrubbing */}
             <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between select-none">
-                {/* Background Canvas: Renders frame 0001 to 0192 */}
+                {/* Instant Poster Image: Displays frame-0001.jpg immediately from HTML preload without any delay */}
+                <img
+                    src={getFramePath(1)}
+                    alt="ComLink Gaming Rig"
+                    fetchPriority="high"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none transition-opacity duration-300"
+                    style={{
+                        opacity: scrollPercentDisplay > 3 ? 0 : 1,
+                    }}
+                />
+
+                {/* Background Canvas: Renders interactive frames 0001 to 0192 */}
                 <canvas
                     ref={canvasRef}
                     className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
                 />
 
-                {/* Cyber Cinematic Atmospheric Gradients */}
-                {/* Top Navbar Blend */}
-                <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#070b12]/90 via-[#070b12]/50 to-transparent pointer-events-none z-10" />
+                {/* Clean Top Navbar Shadow Blend */}
+                <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#070b12]/80 via-[#070b12]/30 to-transparent pointer-events-none z-10" />
 
-                {/* Bottom Section Blend */}
-                <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#070b12] via-[#070b12]/70 to-transparent pointer-events-none z-10" />
-
-                {/* Radial Cyber Vignette for high focus & contrast */}
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(7,11,18,0.75)_100%)] pointer-events-none z-10" />
-
-                {/* Subtle Cyber Grid Lines Overlay */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(34,211,238,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(34,211,238,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-10" />
+                {/* Clean Bottom Section Transition Blend */}
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#070b12] to-transparent pointer-events-none z-10" />
 
                 {/* Missing Frames Notification Toast (Only displays if user hasn't unzipped yet) */}
                 {hasMissingFrames && (
