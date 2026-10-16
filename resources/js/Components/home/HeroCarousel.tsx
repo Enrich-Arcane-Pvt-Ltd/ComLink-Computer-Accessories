@@ -341,7 +341,7 @@ export function HeroCarousel({
                 <img
                     src={getFramePath(1)}
                     alt="ComLink Gaming Rig"
-                    fetchPriority="high"
+                    {...{ fetchpriority: "high" }}
                     decoding="async"
                     className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none transition-opacity duration-300"
                     style={{
