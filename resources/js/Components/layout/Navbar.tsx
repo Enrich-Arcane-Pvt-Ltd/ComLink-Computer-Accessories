@@ -326,13 +326,16 @@ export default function Navbar() {
                                                     <img
                                                         src={
                                                             user.avatar_url
-                                                                ? `/storage/${user.avatar_url}`
+                                                                ? user.avatar_url.startsWith("http") ||
+                                                                  user.avatar_url.startsWith("/storage/")
+                                                                    ? user.avatar_url
+                                                                    : `/storage/${user.avatar_url}`
                                                                 : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                                                                       (
-                                                                          user.first_name +
+                                                                          (user.first_name || "") +
                                                                           " " +
-                                                                          user.last_name
-                                                                      ).trim(),
+                                                                          (user.last_name || "")
+                                                                      ).trim() || "User",
                                                                   )}&color=04202b&background=22d3ee`
                                                         }
                                                         alt={user.first_name}

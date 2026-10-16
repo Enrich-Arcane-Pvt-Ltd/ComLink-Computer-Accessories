@@ -19,7 +19,7 @@ use Inertia\Inertia;
 
 // Redirects
 Route::redirect('admin/login', '/login');
-Route::redirect('/dashboard', '/admin');
+Route::redirect('/dashboard', '/admin')->name('dashboard');
 Route::redirect('admin/dashboard', '/admin');
 
 
@@ -81,6 +81,8 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->na
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar.update');
+    Route::delete('/profile/avatar', [ProfileController::class, 'destroyAvatar'])->name('profile.avatar.destroy');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

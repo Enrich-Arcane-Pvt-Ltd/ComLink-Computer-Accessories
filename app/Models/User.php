@@ -64,6 +64,15 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         ];
     }
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'name',
+    ];
+
     protected static function booted()
     {
         static::created(function ($user) {
@@ -74,7 +83,14 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function getNameAttribute()
     {
-        return "{$this->first_name} {$this->last_name}";
+        return trim("{$this->first_name} {$this->last_name}");
+    }
+
+    public function setNameAttribute($value)
+    {
+        $parts = explode(' ', trim((string) $value), 2);
+        $this->attributes['first_name'] = $parts[0] ?? '';
+        $this->attributes['last_name'] = $parts[1] ?? '';
     }
 
     public function getFilamentAvatarUrl(): ?string
