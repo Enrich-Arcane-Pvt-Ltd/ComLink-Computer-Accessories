@@ -1,5 +1,6 @@
 import { ProductCard, ProductCardData } from "@/Components/product/ProductCard";
 import AppLayout from "@/Layouts/AppLayout";
+import { formatPrice, CURRENCY_SYMBOL } from "@/utils/currency";
 import { Head, Link, router } from "@inertiajs/react";
 import {
     ChevronDown,
@@ -423,17 +424,17 @@ function PriceBarSlider({
 
             {/* Price values text along bar */}
             <div className="flex items-center justify-between text-[11px] text-muted font-medium px-0.5">
-                <span>Rs. 0</span>
+                <span>{formatPrice(0, 0)}</span>
                 <span className="text-accent font-semibold">
-                    Rs. {parsedMin.toLocaleString()} - Rs. {parsedMax.toLocaleString()}
+                    {formatPrice(parsedMin, 0)} - {formatPrice(parsedMax, 0)}
                 </span>
-                <span>Rs. 500,000+</span>
+                <span>{formatPrice(500000, 0)}+</span>
             </div>
 
             {/* Input boxes */}
             <div className="grid grid-cols-2 gap-2">
                 <div>
-                    <span className="text-[10px] text-muted block mb-1 font-medium">Min Price (Rs.)</span>
+                    <span className="text-[10px] text-muted block mb-1 font-medium">Min Price ({CURRENCY_SYMBOL.trim()})</span>
                     <input
                         type="number"
                         placeholder="0"
@@ -443,7 +444,7 @@ function PriceBarSlider({
                     />
                 </div>
                 <div>
-                    <span className="text-[10px] text-muted block mb-1 font-medium">Max Price (Rs.)</span>
+                    <span className="text-[10px] text-muted block mb-1 font-medium">Max Price ({CURRENCY_SYMBOL.trim()})</span>
                     <input
                         type="number"
                         placeholder="500000+"
@@ -457,11 +458,11 @@ function PriceBarSlider({
             {/* Quick Price Ranges */}
             <div className="flex flex-wrap gap-1.5 pt-0.5">
                 {[
-                    { label: "< Rs. 10,000", min: "0", max: "10000" },
-                    { label: "Rs. 10k - 50k", min: "10000", max: "50000" },
-                    { label: "Rs. 50k - 150k", min: "50000", max: "150000" },
-                    { label: "Rs. 150k - 300k", min: "150000", max: "300000" },
-                    { label: "Rs. 300k+", min: "300000", max: "1000000" },
+                    { label: `< ${formatPrice(10000, 0)}`, min: "0", max: "10000" },
+                    { label: `${CURRENCY_SYMBOL}10k - 50k`, min: "10000", max: "50000" },
+                    { label: `${CURRENCY_SYMBOL}50k - 150k`, min: "50000", max: "150000" },
+                    { label: `${CURRENCY_SYMBOL}150k - 300k`, min: "150000", max: "300000" },
+                    { label: `${CURRENCY_SYMBOL}300k+`, min: "300000", max: "1000000" },
                 ].map((preset) => (
                     <button
                         key={preset.label}
@@ -686,7 +687,7 @@ export default function ShopIndex({
         if (minPrice || maxPrice) {
             pills.push({
                 key: "price_range",
-                label: `Price: Rs. ${minPrice || "0"} - Rs. ${maxPrice || "Max"}`,
+                label: `Price: ${CURRENCY_SYMBOL}${minPrice || "0"} - ${CURRENCY_SYMBOL}${maxPrice || "Max"}`,
                 onRemove: () => {
                     setMinPrice("");
                     setMaxPrice("");

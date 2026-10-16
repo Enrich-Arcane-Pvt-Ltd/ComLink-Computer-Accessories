@@ -123,4 +123,16 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Currency Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Global currency code and display symbol for products, orders, and cart.
+    |
+    */
+
+    'currency_code' => env('CURRENCY_CODE', 'LKR'),
+    'currency_symbol' => env('CURRENCY_SYMBOL', 'Rs. '),
+
 ];

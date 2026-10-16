@@ -2,6 +2,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { cn } from "@/utils/cn";
+import { formatPrice } from "@/utils/currency";
 import { Link, router, usePage } from "@inertiajs/react";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
@@ -488,7 +489,7 @@ export default function Navbar() {
                                                             {p.name}
                                                         </Link>
                                                         <p className="text-sm text-fg font-semibold">
-                                                            Rs. {Number(p.price || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                            {formatPrice(p.price)}
                                                         </p>
                                                     </div>
                                                     <button
@@ -548,7 +549,7 @@ export default function Navbar() {
                                                 <div className="flex items-center justify-between text-sm font-semibold text-fg pt-3">
                                                     <span>Subtotal</span>
                                                     <span>
-                                                        Rs. {totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                        {formatPrice(totalPrice)}
                                                     </span>
                                                 </div>
                                             ) : undefined
@@ -592,7 +593,7 @@ export default function Navbar() {
                                                             {item.name}
                                                         </Link>
                                                         <p className="text-xs text-muted">
-                                                            {item.quantity} × Rs. {Number(item.price || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                            {item.quantity} × {formatPrice(item.price)}
                                                         </p>
                                                     </div>
                                                     <button

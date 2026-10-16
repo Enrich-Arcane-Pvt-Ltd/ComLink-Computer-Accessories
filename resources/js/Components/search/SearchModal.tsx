@@ -1,4 +1,5 @@
 import { Link } from "@inertiajs/react";
+import { formatPrice } from "@/utils/currency";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -120,7 +121,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                                     {product.category}
                                                 </p>
                                                 <p className="text-sm font-semibold text-primary mt-1">
-                                                    Rs. {Number(product.price || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                    {formatPrice(product.price)}
                                                 </p>
                                             </div>
                                         </Link>

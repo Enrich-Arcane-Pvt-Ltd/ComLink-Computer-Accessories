@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { Head, Link } from "@inertiajs/react";
 import AppLayout from "@/Layouts/AppLayout";
+import { formatPrice } from "@/utils/currency";
 import {
     Package,
     Clock,
@@ -80,12 +81,6 @@ export default function OrdersIndex({ orders = [] }: OrdersPageProps) {
 function OrdersContent({ orders }: OrdersPageProps) {
     const [activeTab, setActiveTab] = useState<string>("All");
     const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(null);
-
-    const formatPrice = (val: number) =>
-        `Rs. ${Number(val || 0).toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        })}`;
 
     // Filter orders based on active tab
     const filteredOrders = useMemo(() => {

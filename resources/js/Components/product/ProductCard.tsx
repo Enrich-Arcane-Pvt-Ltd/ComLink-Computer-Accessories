@@ -2,6 +2,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { PageProps } from "@/types";
 import { cn } from "@/utils/cn";
+import { formatPrice } from "@/utils/currency";
 import { Link, router, usePage } from "@inertiajs/react";
 import { toast } from "sonner";
 import {
@@ -210,12 +211,6 @@ export const sample10Products: ProductCardData[] = [
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
 /* -------------------------------------------------------------------------- */
-
-const formatPrice = (value: number) =>
-    `Rs. ${Number(value || 0).toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    })}`;
 
 const getLatestPrice = (original: number, discountPercent: number) =>
     original - (original * discountPercent) / 100;

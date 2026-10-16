@@ -1,6 +1,7 @@
 import AppLayout from "@/Layouts/AppLayout";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/utils/cn";
+import { formatPrice } from "@/utils/currency";
 import { Head, Link } from "@inertiajs/react";
 import {
     AlertTriangle,
@@ -212,10 +213,7 @@ const ACCESSORIES_SLOTS: SlotDefinition[] = [
 /* -------------------------------------------------------------------------- */
 
 const formatLkr = (num: number) => {
-    return `Rs. ${num.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    })}`;
+    return formatPrice(num);
 };
 
 /* -------------------------------------------------------------------------- */

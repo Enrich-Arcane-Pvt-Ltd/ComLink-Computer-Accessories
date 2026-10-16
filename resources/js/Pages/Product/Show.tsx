@@ -6,6 +6,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { PageProps } from "@/types";
 import { cn } from "@/utils/cn";
+import { formatPrice } from "@/utils/currency";
 import { Head, Link, router, usePage } from "@inertiajs/react";
 import {
     Check,
@@ -103,12 +104,6 @@ interface ProductShowProps {
 /* -------------------------------------------------------------------------- */
 /*  Helper Formatters                                                         */
 /* -------------------------------------------------------------------------- */
-
-const formatPrice = (val: number) =>
-    `Rs. ${Number(val || 0).toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    })}`;
 
 /* -------------------------------------------------------------------------- */
 /*  Product Show Component                                                    */

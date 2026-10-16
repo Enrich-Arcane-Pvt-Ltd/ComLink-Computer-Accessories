@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Head, Link } from "@inertiajs/react";
 import AppLayout from "@/Layouts/AppLayout";
 import { useCart } from "@/contexts/CartContext";
+import { formatPrice } from "@/utils/currency";
 import {
     ShoppingBag,
     Trash2,
@@ -32,12 +33,6 @@ function CartContent() {
     const [couponCode, setCouponCode] = useState("");
     const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
     const [discountAmount, setDiscountAmount] = useState(0);
-
-    const formatPrice = (val: number) =>
-        `Rs. ${Number(val || 0).toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        })}`;
 
     const handleApplyCoupon = (e: React.FormEvent) => {
         e.preventDefault();
