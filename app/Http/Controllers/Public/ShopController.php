@@ -1065,7 +1065,6 @@ class ShopController extends Controller
             [
                 'group' => 'General Specifications',
                 'items' => [
-                    ['label' => 'Brand', 'value' => $brand],
                     ['label' => 'Model / Series', 'value' => $name],
                     ['label' => 'Category Segment', 'value' => $segmentName],
                     ['label' => 'Condition', 'value' => '100% Brand New (Original Factory Sealed)'],

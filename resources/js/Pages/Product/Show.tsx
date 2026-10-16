@@ -7,6 +7,7 @@ import { useWishlist } from "@/contexts/WishlistContext";
 import { PageProps } from "@/types";
 import { cn } from "@/utils/cn";
 import { formatPrice } from "@/utils/currency";
+import { getMainSpecifications } from "@/utils/productSpecs";
 import { Head, Link, router, usePage } from "@inertiajs/react";
 import {
     Check,
@@ -149,6 +150,27 @@ function ProductViewContent({
     // Quantity state
     const [quantity, setQuantity] = useState(1);
     const [isAddedToCart, setIsAddedToCart] = useState(false);
+
+    // Main specifications for this product's category/subcategory
+    const mainSpecsData = useMemo(() => {
+        return getMainSpecifications(product);
+    }, [product]);
+
+    // Filter out Brand from General Specifications in Technical Specifications
+    const filteredSpecifications = useMemo(() => {
+        if (!product.specifications) return [];
+        return product.specifications.map((group) => {
+            if (group.group?.toLowerCase().includes("general")) {
+                return {
+                    ...group,
+                    items: group.items.filter(
+                        (item) => item.label?.toLowerCase() !== "brand",
+                    ),
+                };
+            }
+            return group;
+        });
+    }, [product.specifications]);
 
     // Active detail tab
     const [activeTab, setActiveTab] = useState<"spec" | "warranty" | "reviews">("spec");
@@ -862,55 +884,94 @@ function ProductViewContent({
                         <div className="p-6 sm:p-8 lg:p-10">
                             {/* 1. Specification Tab */}
                             {activeTab === "spec" && (
-                                <div className="space-y-8 animate-fade-in">
-                                    <div>
-                                        <h3 className="text-lg font-bold text-fg mb-1">
-                                            Technical Specifications
-                                        </h3>
-                                        <p className="text-xs text-muted mb-6">
-                                            Verified hardware specifications and performance metrics for{" "}
-                                            {product.name}.
-                                        </p>
-                                    </div>
-
-                                    {product.specifications && product.specifications.length > 0 ? (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            {product.specifications.map((group, gIdx) => (
-                                                <div
-                                                    key={`spec-group-${gIdx}`}
-                                                    className="rounded-xl border border-border/70 overflow-hidden bg-bg/50"
-                                                >
-                                                    <div className="bg-muted/30 px-4 py-2.5 border-b border-border/70">
-                                                        <h4 className="text-xs font-bold uppercase tracking-wider text-fg">
-                                                            {group.group}
-                                                        </h4>
-                                                    </div>
-                                                    <div className="divide-y divide-border/40">
-                                                        {group.items.map((item, iIdx) => (
-                                                            <div
-                                                                key={`spec-item-${iIdx}`}
-                                                                className="grid grid-cols-1 sm:grid-cols-3 px-4 py-3 text-xs gap-1"
-                                                            >
-                                                                <span className="font-semibold text-muted">
-                                                                    {item.label}
-                                                                </span>
-                                                                <span className="sm:col-span-2 text-fg font-medium">
-                                                                    {item.value}
-                                                                </span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ) : (
-                                        <div className="rounded-xl border border-border/70 p-6 bg-bg/50">
-                                            <p className="text-sm text-muted">
-                                                Standard hardware specifications apply. Contact our technical team
-                                                for detailed datasheet or pinout inquiries.
+                                <div className="space-y-10 animate-fade-in">
+                                    {/* Section 1: Main Specifications */}
+                                    <div className="space-y-4">
+                                        <div>
+                                            <h3 className="text-lg font-bold text-fg mb-1">
+                                                Main Specifications
+                                            </h3>
+                                            <p className="text-xs text-muted mb-6">
+                                                Essential highlights and core configuration for{" "}
+                                                {product.name}.
                                             </p>
                                         </div>
-                                    )}
+
+                                        <div className="rounded-xl border border-border/70 overflow-hidden bg-bg/50">
+                                            <div className="bg-muted/30 px-4 py-2.5 border-b border-border/70">
+                                                <h4 className="text-xs font-bold uppercase tracking-wider text-fg">
+                                                    {mainSpecsData.categoryTitle} Specifications
+                                                </h4>
+                                            </div>
+                                            <div className="divide-y divide-border/40">
+                                                {mainSpecsData.items.map((item, iIdx) => (
+                                                    <div
+                                                        key={`main-spec-${iIdx}`}
+                                                        className="grid grid-cols-1 sm:grid-cols-3 px-4 py-3 text-xs gap-1"
+                                                    >
+                                                        <span className="font-semibold text-muted">
+                                                            {item.label}
+                                                        </span>
+                                                        <span className="sm:col-span-2 text-fg font-medium">
+                                                            {item.value}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Section 2: Technical Specifications */}
+                                    <div className="space-y-4 pt-4 border-t border-border/40">
+                                        <div>
+                                            <h3 className="text-lg font-bold text-fg mb-1">
+                                                Technical Specifications
+                                            </h3>
+                                            <p className="text-xs text-muted mb-6">
+                                                Verified hardware specifications and performance metrics for{" "}
+                                                {product.name}.
+                                            </p>
+                                        </div>
+
+                                        {filteredSpecifications && filteredSpecifications.length > 0 ? (
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                {filteredSpecifications.map((group, gIdx) => (
+                                                    <div
+                                                        key={`spec-group-${gIdx}`}
+                                                        className="rounded-xl border border-border/70 overflow-hidden bg-bg/50"
+                                                    >
+                                                        <div className="bg-muted/30 px-4 py-2.5 border-b border-border/70">
+                                                            <h4 className="text-xs font-bold uppercase tracking-wider text-fg">
+                                                                {group.group}
+                                                            </h4>
+                                                        </div>
+                                                        <div className="divide-y divide-border/40">
+                                                            {group.items.map((item, iIdx) => (
+                                                                <div
+                                                                    key={`spec-item-${iIdx}`}
+                                                                    className="grid grid-cols-1 sm:grid-cols-3 px-4 py-3 text-xs gap-1"
+                                                                >
+                                                                    <span className="font-semibold text-muted">
+                                                                        {item.label}
+                                                                    </span>
+                                                                    <span className="sm:col-span-2 text-fg font-medium">
+                                                                        {item.value}
+                                                                    </span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="rounded-xl border border-border/70 p-6 bg-bg/50">
+                                                <p className="text-sm text-muted">
+                                                    Standard hardware specifications apply. Contact our technical team
+                                                    for detailed datasheet or pinout inquiries.
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             )}
 
