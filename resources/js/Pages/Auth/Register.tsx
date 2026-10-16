@@ -3,9 +3,22 @@ import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/Button";
 import AppLayout from "@/Layouts/AppLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
+import { FormEventHandler, MouseEvent, useRef, useState } from "react";
 
 export default function Register() {
+    // Spotlight hero ref and hover state
+    const heroRef = useRef<HTMLDivElement>(null);
+    const [isHovering, setIsHovering] = useState(false);
+
+    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+        if (!heroRef.current) return;
+        const rect = heroRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        heroRef.current.style.setProperty("--mouse-x", `${x}px`);
+        heroRef.current.style.setProperty("--mouse-y", `${y}px`);
+    };
+
     // 1. User මොඩල් එකට ගැළපෙන විදිහට attributes වෙන් කිරීම
     const { data, setData, post, processing, errors, reset } = useForm({
         first_name: "",
@@ -29,9 +42,15 @@ export default function Register() {
             <Head title="Create Account" />
 
             <div className="min-h-[calc(100vh-80px)] flex bg-bg">
-                {/* ───────── LEFT: Master hero panel with battlestation background ───────── */}
-                <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center border-r border-border/40 overflow-hidden">
-                    {/* Background battlestation image */}
+                {/* ───────── LEFT: Master hero panel with battlestation background & interactive spotlight ───────── */}
+                <div
+                    ref={heroRef}
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                    onMouseMove={handleMouseMove}
+                    className="hidden lg:flex lg:w-1/2 relative items-center justify-center border-r border-border/40 overflow-hidden"
+                >
+                    {/* Background battlestation image (cinematic dark base) */}
                     <img
                         src="/images/register-bg.jpg"
                         alt="ComLink Gaming Setup"
@@ -42,6 +61,35 @@ export default function Register() {
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-bg/75" />
                     <div className="absolute inset-0 bg-gradient-to-l from-bg/90 via-transparent to-black/50" />
+
+                    {/* Interactive Spotlight Reveal: Clears away darkness in a focused radius under the cursor */}
+                    <div
+                        aria-hidden="true"
+                        className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
+                            isHovering ? "opacity-100" : "opacity-0"
+                        }`}
+                        style={{
+                            maskImage:
+                                "radial-gradient(circle 140px at var(--mouse-x, -999px) var(--mouse-y, -999px), black 25%, rgba(0,0,0,0.5) 65%, transparent 100%)",
+                            WebkitMaskImage:
+                                "radial-gradient(circle 140px at var(--mouse-x, -999px) var(--mouse-y, -999px), black 25%, rgba(0,0,0,0.5) 65%, transparent 100%)",
+                        }}
+                    >
+                        {/* Bright, high-clarity original image */}
+                        <img
+                            src="/images/register-bg.jpg"
+                            alt="ComLink Gaming Setup - Clear Spotlight"
+                            className="w-full h-full object-cover select-none brightness-110 contrast-105"
+                        />
+                        {/* Subtle cyber cyan illumination gradient over the revealed circle */}
+                        <div
+                            className="absolute inset-0"
+                            style={{
+                                background:
+                                    "radial-gradient(circle 140px at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(34,211,238,0.1) 0%, transparent 100%)",
+                            }}
+                        />
+                    </div>
 
                     {/* Ambient cyan glow */}
                     <div
@@ -69,7 +117,7 @@ export default function Register() {
                     </span>
 
                     {/* Center content: Large, prominent, centered heading */}
-                    <div className="relative z-30 w-full max-w-xl px-8 text-center flex flex-col items-center justify-center">
+                    <div className="relative z-30 w-full max-w-xl px-8 text-center flex flex-col items-center justify-center pointer-events-none">
                         <h2 className="font-display font-black uppercase leading-none tracking-tight text-white drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)]">
                             <span className="block text-3xl sm:text-4xl xl:text-5xl font-semibold tracking-wider text-white/80">
                                 Your Next

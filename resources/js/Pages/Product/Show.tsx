@@ -1116,11 +1116,11 @@ function ProductViewContent({
                                                                 <span className="font-bold text-fg text-sm">
                                                                     {rev.author}
                                                                 </span>
-                                                                {rev.verified && (
+                                                                {/* {rev.verified && (
                                                                     <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 px-2 py-0.2 text-[10px] font-bold">
                                                                         <Check className="h-3 w-3" /> Verified Buyer
                                                                     </span>
-                                                                )}
+                                                                )} */}
                                                             </div>
                                                             <div className="flex items-center gap-1 mt-1">
                                                                 {[1, 2, 3, 4, 5].map((s) => (
