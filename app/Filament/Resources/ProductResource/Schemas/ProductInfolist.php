@@ -20,12 +20,12 @@ class ProductInfolist
                     ->schema([
                         // Product Images (Gallery)
                         Infolists\Components\ImageEntry::make('images')
-                            ->label('Product Gallery')
+                            ->label('Product Gallery (4 Photos)')
+                            ->disk('public')
                             ->circular(false)
                             ->height(100)
-                            ->stacked()
-                            ->limit(3)
-                            ->extraImgAttributes(['style' => 'object-fit: contain; background: #fff; border: 1px solid #eee;']),
+                            ->limit(4)
+                            ->extraImgAttributes(['style' => 'object-fit: contain; background: #fff; border: 1px solid #eee; border-radius: 6px;']),
                         // Infolists\Components\ViewEntry::make('images')
                         //     ->label('Product Gallery')
                         //     ->view('filament.components.gallery') // අපි හදපු Blade File එක
@@ -56,25 +56,28 @@ class ProductInfolist
                                             $min = $record->variants->min('price');
                                             $max = $record->variants->max('price');
 
-                                            if (!$min) return 'N/A';
-
-                                            if ($min == $max) {
-                                                return $currency . ' ' . number_format($min, 2);
+                                            if (! $min) {
+                                                return 'N/A';
                                             }
 
-                                            return $currency . ' ' . number_format($min, 2) . ' - ' . number_format($max, 2);
+                                            if ($min == $max) {
+                                                return $currency.' '.number_format($min, 2);
+                                            }
+
+                                            return $currency.' '.number_format($min, 2).' - '.number_format($max, 2);
                                         }
 
-                                        return $currency . ' ' . number_format($record->price, 2);
+                                        return $currency.' '.number_format($record->price, 2);
                                     }),
                                 Infolists\Components\TextEntry::make('quantity')
                                     ->label('Total Stock')
                                     ->badge()
-                                    ->color(fn($state) => $state <= 0 ? 'danger' : ($state <= 10 ? 'warning' : 'success'))
+                                    ->color(fn ($state) => $state <= 0 ? 'danger' : ($state <= 10 ? 'warning' : 'success'))
                                     ->formatStateUsing(function ($record) {
                                         if ($record->type === 'variable') {
                                             return $record->variants->sum('stock');
                                         }
+
                                         return $record->quantity;
                                     }),
                             ])->columns(2),
@@ -130,12 +133,14 @@ class ProductInfolist
                                                             $formatted[] = "{$item['name']}: {$item['value']}";
                                                         } else {
                                                             return collect($state)
-                                                                ->map(fn($val, $key) => "$key: $val")
+                                                                ->map(fn ($val, $key) => "$key: $val")
                                                                 ->join(' | ');
                                                         }
                                                     }
+
                                                     return implode(' | ', $formatted);
                                                 }
+
                                                 return '';
                                             }),
 
@@ -145,12 +150,12 @@ class ProductInfolist
                                         Infolists\Components\TextEntry::make('stock')
                                             ->label('Stock')
                                             ->badge()
-                                            ->color(fn($state) => $state > 0 ? 'success' : 'danger'),
+                                            ->color(fn ($state) => $state > 0 ? 'success' : 'danger'),
                                     ]),
                             ])
                             ->grid(1), // මෙතන තිබුණු ->containable(false) පේළිය අයින් කළා.
                     ])
-                    ->hidden(fn($record) => $record->type === 'simple'),
+                    ->hidden(fn ($record) => $record->type === 'simple'),
             ]);
     }
 }

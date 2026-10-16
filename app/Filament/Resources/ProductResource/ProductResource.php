@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\ProductResource;
 
-use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\Schemas\ProductForm;
 use App\Filament\Resources\ProductResource\Schemas\ProductInfolist;
 use App\Filament\Resources\ProductResource\Tables\ProductTable;
@@ -15,13 +14,16 @@ use Filament\Tables\Table;
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
-    protected static ?string $navigationIcon = 'heroicon-o-bolt'; // Icon එක
-    protected static ?string $navigationGroup = 'Catalog Management';
-    protected static ?int $navigationSort = 5;
+
+    protected static ?string $navigationIcon = 'heroicon-o-bolt';
+
+    protected static ?string $navigationGroup = 'Product Catalog';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
-        return $form->schema(ProductForm::schema())->columns(3);
+        return $form->schema(ProductForm::schema())->columns(1);
     }
 
     public static function infolist(Infolist $infolist): Infolist

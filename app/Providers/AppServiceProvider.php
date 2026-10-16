@@ -26,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (app()->isLocal()) {
+            ini_set('max_execution_time', '120');
+            set_time_limit(120);
+        }
+
         Vite::prefetch(concurrency: 3);
 
         Event::listen(function (Login $event) {

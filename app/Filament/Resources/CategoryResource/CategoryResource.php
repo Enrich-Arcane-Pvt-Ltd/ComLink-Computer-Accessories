@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\CategoryResource;
 
-use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\Schemas\CategoryForm;
 use App\Filament\Resources\CategoryResource\Schemas\CategoryInfolist;
 use App\Filament\Resources\CategoryResource\Tables\CategoryTable;
@@ -15,20 +14,22 @@ use Filament\Tables\Table;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack'; // Stack icon
-    protected static ?string $navigationGroup = 'Catalog Management';
-    protected static ?int $navigationSort = 2; // Brand එකට පස්සේ
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Product Catalog';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
-        return $form->schema(CategoryForm::schema())->columns(3);
+        return $form->schema(CategoryForm::schema())->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return CategoryTable::table($table)
-            // Performance: Parent category එක N+1 නැතුව Load කරගන්නවා
-            ->modifyQueryUsing(fn($query) => $query->with('parent'));
+            ->modifyQueryUsing(fn ($query) => $query->whereNull('parent_id'));
     }
 
     public static function infolist(Infolist $infolist): Infolist

@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Product extends Model
 {
@@ -29,14 +29,20 @@ class Product extends Model
         'is_visible',
         'is_featured',
         'type',
+        'condition',
+        'main_specifications',
+        'technical_specifications',
         'published_at',
     ];
 
     protected $casts = [
-        'images' => 'array', // JSON එක Array එකක් විදියට ගන්නවා
+        'images' => 'array',
+        'main_specifications' => 'array',
+        'technical_specifications' => 'array',
         'is_visible' => 'boolean',
         'is_featured' => 'boolean',
         'price' => 'decimal:2',
+        'sale_price' => 'decimal:2',
         'published_at' => 'date',
     ];
 

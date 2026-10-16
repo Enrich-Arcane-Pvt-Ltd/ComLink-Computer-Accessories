@@ -15,9 +15,10 @@ use Filament\Tables\Table;
 class ProductCollectionResource extends Resource
 {
     protected static ?string $model = ProductCollection::class;
-    protected static ?string $navigationIcon = 'heroicon-o-squares-2x2'; // Collection Icon
+    protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
     protected static ?string $navigationGroup = 'Catalog Management';
-    protected static ?int $navigationSort = 3; // Category එකට පස්සේ
+    protected static ?int $navigationSort = 3;
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {

@@ -12,35 +12,27 @@ class BrandTable
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
+                    ->label('Brand Image')
                     ->circular()
-                    ->defaultImageUrl(url('/images/placeholder.png'))
-                    ->extraImgAttributes(['style' => 'background-color: white; padding: 1px;']),
+                    ->defaultImageUrl(url('/images/placeholder.png')),
 
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Brand Name')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
-                Tables\Columns\ColorColumn::make('primary_hex')
-                    ->label('Color'),
-
-                Tables\Columns\IconColumn::make('is_visible')
-                    ->boolean()
-                    ->sortable()
-                    ->label('Visibility'),
-
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->date()
-                    ->sortable()
-                    ->label('Last Updated'),
+                Tables\Columns\ToggleColumn::make('is_visible')
+                    ->label('Visibility')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->tooltip('Control whether brand displays on the web')
+                    ->sortable(),
             ])
-            ->defaultSort('sort_order', 'desc')
+            ->defaultSort('name', 'asc')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_visible')
-                    ->label('Visibility')
-                    ->boolean()
-                    ->trueLabel('Visible Brands')
-                    ->falseLabel('Hidden Brands'),
+                    ->label('Visibility Status'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

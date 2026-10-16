@@ -67,7 +67,7 @@ class ShopController extends Controller
                     \Illuminate\Support\Str::slug($item['name']) === $product;
             });
 
-            if (!$found && !empty($allMock)) {
+            if (! $found && ! empty($allMock)) {
                 $found = $allMock[0];
             }
 
@@ -177,11 +177,11 @@ class ShopController extends Controller
         }
 
         $search = $request->query('q');
-        if (!empty($search)) {
+        if (! empty($search)) {
             $dbProductsQuery->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('sku', 'like', "%{$search}%");
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%");
             });
         }
 
@@ -213,17 +213,23 @@ class ShopController extends Controller
         $dbProducts = $dbProductsQuery->get()->map(function ($p) {
             $catName = $p->categories->first()?->name ?? 'Accessories';
             $isMainCatWithoutSubs = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
-            $hasSubCat = $p->categories->count() > 1 && !$isMainCatWithoutSubs;
+            $hasSubCat = $p->categories->count() > 1 && ! $isMainCatWithoutSubs;
             $subCatName = $hasSubCat ? $p->categories->last()?->name : null;
+
+            $rawImg = ! empty($p->images) && is_array($p->images) ? $p->images[0] : null;
+            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/' . $rawImg)) : '/images/products/sample-keyboard.jpg';
+
             return [
                 'id' => $p->id,
                 'name' => $p->name,
-                'image' => !empty($p->images) && is_array($p->images) ? $p->images[0] : '/images/products/sample-keyboard.jpg',
+                'image' => $image,
                 'category' => $catName,
                 'subCategory' => $subCatName,
                 'originalPrice' => (float) $p->price,
-                'discountPercent' => $p->sale_price ? max(0, round((($p->price - $p->sale_price) / $p->price) * 100)) : 0,
+                'latestPrice' => $p->sale_price !== null ? (float) $p->sale_price : (float) $p->price,
+                'discountPercent' => ($p->sale_price && $p->price > 0) ? max(0, round((($p->price - $p->sale_price) / $p->price) * 100)) : 0,
                 'inStock' => ($p->quantity ?? 0) > 0,
+                'condition' => $p->condition ?? 'Brand New',
                 'brand' => $p->brand?->name ?? 'Generic',
                 'rating' => 4.8,
                 'reviews' => 24,
@@ -698,7 +704,7 @@ class ShopController extends Controller
         }
 
         // Filter by search query
-        if (!empty($search)) {
+        if (! empty($search)) {
             $s = strtolower($search);
             $all = array_filter($all, function ($item) use ($s) {
                 return str_contains(strtolower($item['name']), $s) ||
@@ -709,10 +715,10 @@ class ShopController extends Controller
 
         // Filter by price range
         if ($minPrice !== null && is_numeric($minPrice)) {
-            $all = array_filter($all, fn($item) => $item['originalPrice'] >= (float)$minPrice);
+            $all = array_filter($all, fn ($item) => $item['originalPrice'] >= (float) $minPrice);
         }
         if ($maxPrice !== null && is_numeric($maxPrice)) {
-            $all = array_filter($all, fn($item) => $item['originalPrice'] <= (float)$maxPrice);
+            $all = array_filter($all, fn ($item) => $item['originalPrice'] <= (float) $maxPrice);
         }
 
         // Sorting
@@ -726,6 +732,7 @@ class ShopController extends Controller
             if ($sort === 'newest') {
                 return $b['id'] <=> $a['id'];
             }
+
             return ($b['discountPercent'] ?? 0) <=> ($a['discountPercent'] ?? 0);
         });
 
@@ -749,24 +756,35 @@ class ShopController extends Controller
         $targetSlug = $subCategorySlug ?: $categorySlug;
         $originalPrice = (float) ($item['originalPrice'] ?? 99.99);
         $discountPercent = (int) ($item['discountPercent'] ?? 0);
-        $latestPrice = $discountPercent > 0 ? round($originalPrice - ($originalPrice * $discountPercent / 100), 2) : $originalPrice;
+        $latestPrice = isset($item['latestPrice'])
+            ? (float) $item['latestPrice']
+            : ($discountPercent > 0 ? round($originalPrice - ($originalPrice * $discountPercent / 100), 2) : $originalPrice);
         $inStock = isset($item['inStock']) ? (bool) $item['inStock'] : true;
         $stockCount = $inStock ? ($item['stockCount'] ?? (($id % 15) + 6)) : 0;
         $rating = (float) ($item['rating'] ?? 4.9);
         $reviews = (int) ($item['reviews'] ?? 36);
 
-        // Curate 4 distinct images
-        $images = $this->resolve4ProductImages($targetSlug, $item['image'] ?? null);
+        // Curate 4 distinct images - preserve real uploaded product images if present
+        $images = ! empty($item['images']) && is_array($item['images'])
+            ? $item['images']
+            : $this->resolve4ProductImages($targetSlug, $item['image'] ?? null);
 
         // Warranty based on category
         $warrantyYears = in_array($targetSlug, ['processors', 'motherboards', 'graphic-cards', 'power-supply']) ? '3 Years' : (in_array($targetSlug, ['laptops', 'gaming-laptops', 'gaming-monitors', 'monitors-displays', 'ups', 'chairs']) ? '2 Years' : '1 Year');
 
         $skuPrefix = strtoupper(substr($targetSlug, 0, 3));
+        $condition = $item['condition'] ?? 'Brand New';
+        $description = ! empty($item['description'])
+            ? $item['description']
+            : "Experience elite performance and premium build quality with the {$name}. Engineered specifically for gamers, power users, and PC enthusiasts who demand maximum reliability, thermal efficiency, and longevity. Featuring cutting-edge technology and certified manufacturer testing, this component seamlessly integrates into modern high-performance setups.";
+        $specifications = ! empty($item['specifications'])
+            ? $item['specifications']
+            : $this->generateSpecifications($targetSlug, $brand, $name);
 
         return [
             'id' => $id,
             'name' => $name,
-            'sku' => 'CL-' . $skuPrefix . '-' . $id,
+            'sku' => $item['sku'] ?? ('CL-'.$skuPrefix.'-'.$id),
             'brand' => $brand,
             'category' => $category,
             'categorySlug' => $categorySlug,
@@ -779,11 +797,13 @@ class ShopController extends Controller
             'stockCount' => $stockCount,
             'rating' => $rating,
             'reviews' => $reviews,
-            'condition' => 'Brand New',
+            'condition' => $condition,
             'image' => $images[0],
             'images' => $images,
-            'description' => "Experience elite performance and premium build quality with the {$name}. Engineered specifically for gamers, power users, and PC enthusiasts who demand maximum reliability, thermal efficiency, and longevity. Featuring cutting-edge technology and certified manufacturer testing, this component seamlessly integrates into modern high-performance setups.",
-            'specifications' => $this->generateSpecifications($targetSlug, $brand, $name),
+            'description' => $description,
+            'specifications' => $specifications,
+            'main_specifications' => $item['main_specifications'] ?? null,
+            'technical_specifications' => $item['technical_specifications'] ?? null,
             'warranty' => [
                 'duration' => "{$warrantyYears} Official ComLink Warranty",
                 'type' => 'Manufacturer Replacement & Hardware Warranty',
@@ -810,7 +830,7 @@ class ShopController extends Controller
                     'date' => '3 days ago',
                     'verified' => true,
                     'title' => 'Exceptional build quality & performance',
-                    'comment' => "Upgraded my rig with this and the difference is night and day. Packaging was secure, ComLink warranty sticker attached, and performance surpassed benchmarks.",
+                    'comment' => 'Upgraded my rig with this and the difference is night and day. Packaging was secure, ComLink warranty sticker attached, and performance surpassed benchmarks.',
                 ],
                 [
                     'id' => 2,
@@ -839,17 +859,17 @@ class ShopController extends Controller
      */
     protected function formatDatabaseProduct(Product $p): array
     {
-        $cat = $p->categories->first();
+        $cat = $p->categories->firstWhere('parent_id', null) ?? $p->categories->first();
         $catName = $cat?->name ?? 'PC Components';
         $catSlug = $cat?->slug ?? 'pc-components';
         $isStandaloneCategory = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
-        $subCat = !$isStandaloneCategory && $p->categories->count() > 1 ? $p->categories->last() : null;
+        $subCat = ! $isStandaloneCategory ? ($p->categories->firstWhere('parent_id', '!=', null) ?? ($p->categories->count() > 1 ? $p->categories->last() : null)) : null;
 
         $subCatName = $subCat?->name;
         $subCatSlug = $subCat?->slug;
 
         $originalPrice = (float) $p->price;
-        $salePrice = $p->sale_price ? (float) $p->sale_price : $originalPrice;
+        $salePrice = $p->sale_price !== null ? (float) $p->sale_price : $originalPrice;
         $discountPercent = ($salePrice < $originalPrice && $originalPrice > 0)
             ? (int) round((($originalPrice - $salePrice) / $originalPrice) * 100)
             : 0;
@@ -858,25 +878,79 @@ class ShopController extends Controller
         $inStock = $stock > 0;
 
         $targetSlug = $subCatSlug ?: $catSlug;
-        $images = is_array($p->images) && count($p->images) >= 4
-            ? $p->images
-            : $this->resolve4ProductImages($targetSlug, is_array($p->images) ? ($p->images[0] ?? null) : null);
+
+        // Process all uploaded images from database
+        $rawImages = is_array($p->images) ? array_values(array_filter($p->images)) : [];
+        $images = [];
+        foreach ($rawImages as $img) {
+            if (empty($img)) {
+                continue;
+            }
+            $images[] = (str_starts_with($img, 'http') || str_starts_with($img, '/')) ? $img : asset('storage/' . $img);
+        }
+        if (empty($images)) {
+            $images = $this->resolve4ProductImages($targetSlug, null);
+        }
+
+        // Build specifications from database technical_specifications if available
+        $tech = is_array($p->technical_specifications) ? array_filter($p->technical_specifications) : [];
+        if (! empty($tech)) {
+            $specifications = [
+                [
+                    'group' => 'General Specifications',
+                    'items' => array_values(array_filter([
+                        ! empty($tech['model_series']) ? ['label' => 'Model / Series', 'value' => $tech['model_series']] : null,
+                        ! empty($tech['category_segment']) ? ['label' => 'Category Segment', 'value' => $tech['category_segment']] : null,
+                        ! empty($tech['condition']) ? ['label' => 'Condition', 'value' => $tech['condition']] : null,
+                    ])),
+                ],
+                [
+                    'group' => 'Technical Performance',
+                    'items' => array_values(array_filter([
+                        ! empty($tech['interface_connection']) ? ['label' => 'Interface / Connection', 'value' => $tech['interface_connection']] : null,
+                        ! empty($tech['architecture']) ? ['label' => 'Architecture', 'value' => $tech['architecture']] : null,
+                        ! empty($tech['thermal_efficiency']) ? ['label' => 'Thermal Efficiency', 'value' => $tech['thermal_efficiency']] : null,
+                        ! empty($tech['power_consumption']) ? ['label' => 'Power Consumption', 'value' => $tech['power_consumption']] : null,
+                    ])),
+                ],
+                [
+                    'group' => 'Compatibility & Standards',
+                    'items' => array_values(array_filter([
+                        ! empty($tech['operating_systems']) ? ['label' => 'Operating Systems', 'value' => $tech['operating_systems']] : null,
+                        ! empty($tech['certification']) ? ['label' => 'Certification', 'value' => $tech['certification']] : null,
+                        ! empty($tech['dimensions_weight']) ? ['label' => 'Dimensions & Weight', 'value' => $tech['dimensions_weight']] : null,
+                        ! empty($tech['included_in_box']) ? ['label' => 'Included in Box', 'value' => $tech['included_in_box']] : null,
+                    ])),
+                ],
+            ];
+            $specifications = array_values(array_filter($specifications, fn ($grp) => ! empty($grp['items'])));
+        } else {
+            $specifications = $this->generateSpecifications($targetSlug, $p->brand?->name ?? 'Generic', $p->name);
+        }
 
         $base = [
             'id' => $p->id,
             'name' => $p->name,
+            'sku' => $p->sku,
             'brand' => $p->brand?->name ?? 'Generic',
             'category' => $catName,
             'categorySlug' => $catSlug,
             'subCategory' => $subCatName,
             'subCategorySlug' => $subCatSlug,
             'originalPrice' => $originalPrice,
+            'latestPrice' => $salePrice,
             'discountPercent' => $discountPercent,
             'inStock' => $inStock,
             'stockCount' => $stock,
+            'condition' => $p->condition ?? 'Brand New',
             'rating' => 4.9,
             'reviews' => 28,
             'image' => $images[0],
+            'images' => $images,
+            'description' => $p->description,
+            'specifications' => $specifications,
+            'main_specifications' => $p->main_specifications,
+            'technical_specifications' => $p->technical_specifications,
         ];
 
         return $this->enrichProductDetails($base);
@@ -891,11 +965,11 @@ class ShopController extends Controller
         $dbQuery = Product::where('is_visible', true)
             ->where('id', '!=', $currentProductId);
 
-        if (!empty($subCategorySlug)) {
+        if (! empty($subCategorySlug)) {
             $dbQuery->whereHas('categories', function ($q) use ($subCategorySlug) {
                 $q->where('slug', $subCategorySlug);
             });
-        } elseif (!empty($categorySlug)) {
+        } elseif (! empty($categorySlug)) {
             $dbQuery->whereHas('categories', function ($q) use ($categorySlug) {
                 $q->where('slug', $categorySlug);
             });
@@ -907,11 +981,12 @@ class ShopController extends Controller
             return $dbRelated->map(function ($p) {
                 $catName = $p->categories->first()?->name ?? 'Accessories';
                 $isMainWithoutSub = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
-                $subCatName = !$isMainWithoutSub && $p->categories->count() > 1 ? $p->categories->last()?->name : null;
+                $subCatName = ! $isMainWithoutSub && $p->categories->count() > 1 ? $p->categories->last()?->name : null;
+
                 return [
                     'id' => $p->id,
                     'name' => $p->name,
-                    'image' => !empty($p->images) && is_array($p->images) ? $p->images[0] : '/images/products/sample-keyboard.jpg',
+                    'image' => ! empty($p->images) && is_array($p->images) ? $p->images[0] : '/images/products/sample-keyboard.jpg',
                     'category' => $catName,
                     'subCategory' => $subCatName,
                     'originalPrice' => (float) $p->price,
@@ -928,7 +1003,7 @@ class ShopController extends Controller
         $allMock = $this->getMockCatalogProducts(null, null, null, 'featured', null, null);
 
         // Filter same subcategory, or same category if no subcategory exists
-        if (!empty($subCategorySlug)) {
+        if (! empty($subCategorySlug)) {
             $sameSub = array_filter($allMock, function ($item) use ($currentProductId, $subCategorySlug) {
                 return (string) $item['id'] !== (string) $currentProductId &&
                     (($item['subCategorySlug'] ?? '') === $subCategorySlug);
@@ -944,8 +1019,9 @@ class ShopController extends Controller
         if (count($sameSub) < 4) {
             $sameCat = array_filter($allMock, function ($item) use ($currentProductId, $categorySlug, $sameSub) {
                 $alreadyIncluded = collect($sameSub)->pluck('id')->all();
+
                 return (string) $item['id'] !== (string) $currentProductId &&
-                    !in_array($item['id'], $alreadyIncluded) &&
+                    ! in_array($item['id'], $alreadyIncluded) &&
                     (($item['categorySlug'] ?? '') === $categorySlug);
             });
             $sameSub = array_merge($sameSub, $sameCat);
@@ -955,7 +1031,7 @@ class ShopController extends Controller
         if (count($sameSub) < 4) {
             $alreadyIncluded = collect($sameSub)->pluck('id')->all();
             $alreadyIncluded[] = $currentProductId;
-            $others = array_filter($allMock, fn($item) => !in_array($item['id'], $alreadyIncluded));
+            $others = array_filter($allMock, fn ($item) => ! in_array($item['id'], $alreadyIncluded));
             $sameSub = array_merge($sameSub, array_slice($others, 0, 8 - count($sameSub)));
         }
 
@@ -1047,6 +1123,7 @@ class ShopController extends Controller
         }
 
         $base = $primaryImage ?: '/images/products/sample-keyboard.jpg';
+
         return [
             $base,
             'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=900',

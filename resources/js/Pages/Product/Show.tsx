@@ -90,8 +90,9 @@ export interface DetailedProduct {
     condition?: string;
     image: string;
     images: string[];
-    description: string;
     specifications?: ProductSpecGroup[];
+    main_specifications?: Record<string, any>;
+    technical_specifications?: Record<string, any>;
     warranty?: ProductWarrantyInfo;
     reviewsList?: ProductReviewItem[];
 }

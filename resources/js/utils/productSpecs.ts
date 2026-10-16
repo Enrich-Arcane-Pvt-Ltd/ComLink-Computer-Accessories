@@ -27,6 +27,8 @@ interface ProductLike {
         group: string;
         items: Array<{ label: string; value: string }>;
     }>;
+    main_specifications?: Record<string, any>;
+    technical_specifications?: Record<string, any>;
 }
 
 /**
@@ -53,11 +55,33 @@ export function getMainSpecifications(product: ProductLike): MainSpecsResult {
 
     // Helper to check existing specifications table if already provided by backend/admin
     const findExisting = (labelName: string): string | null => {
-        if (!product.specifications) return null;
-        for (const grp of product.specifications) {
-            for (const itm of grp.items) {
-                if (itm.label.toLowerCase() === labelName.toLowerCase()) {
-                    return itm.value;
+        // 1. Check direct main_specifications object from admin
+        if (product.main_specifications && typeof product.main_specifications === "object") {
+            const normalized = labelName.toLowerCase().replace(/[\s\(\)\/\-_]+/g, "");
+            for (const [k, v] of Object.entries(product.main_specifications)) {
+                const normK = k.toLowerCase().replace(/[\s\(\)\/\-_]+/g, "");
+                if ((normK === normalized || normK.includes(normalized) || normalized.includes(normK)) && v) {
+                    return String(v);
+                }
+            }
+        }
+        // 2. Check technical_specifications
+        if (product.technical_specifications && typeof product.technical_specifications === "object") {
+            const normalized = labelName.toLowerCase().replace(/[\s\(\)\/\-_]+/g, "");
+            for (const [k, v] of Object.entries(product.technical_specifications)) {
+                const normK = k.toLowerCase().replace(/[\s\(\)\/\-_]+/g, "");
+                if ((normK === normalized || normK.includes(normalized) || normalized.includes(normK)) && v) {
+                    return String(v);
+                }
+            }
+        }
+        // 3. Check existing specifications table
+        if (product.specifications) {
+            for (const grp of product.specifications) {
+                for (const itm of grp.items) {
+                    if (itm.label.toLowerCase() === labelName.toLowerCase() && itm.value) {
+                        return itm.value;
+                    }
                 }
             }
         }
@@ -596,11 +620,22 @@ export function getMainSpecifications(product: ProductLike): MainSpecsResult {
     }
 
     // General Fallback
+    const fallbackItems: MainSpecItem[] = [
+        { label: "Condition", value: condition },
+        { label: "Brand", value: brand },
+    ];
+    if (product.main_specifications && typeof product.main_specifications === "object") {
+        for (const [k, v] of Object.entries(product.main_specifications)) {
+            if (v && typeof v === "string" && v.trim().length > 0) {
+                const label = k.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+                if (!fallbackItems.some((fi) => fi.label.toLowerCase() === label.toLowerCase())) {
+                    fallbackItems.push({ label, value: String(v) });
+                }
+            }
+        }
+    }
     return {
         categoryTitle: product.subCategory || product.category || "Hardware",
-        items: [
-            { label: "Condition", value: condition },
-            { label: "Brand", value: brand },
-        ],
+        items: fallbackItems,
     };
 }

@@ -12,54 +12,27 @@ class CategoryTable
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Image')
+                    ->label('Category Image')
                     ->circular()
-                    ->defaultImageUrl(url('/images/placeholder.png'))
-                    ->extraImgAttributes(['style' => 'background-color: white; padding: 2px;']),
+                    ->defaultImageUrl(url('/images/placeholder.png')),
 
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Category Name')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
-                // Parent Category එක පෙන්නන Column එක
-                Tables\Columns\TextColumn::make('parent.name')
-                    ->label('Parent Category')
-                    ->badge()
-                    ->color('gray')
-                    ->sortable(),
-
-                Tables\Columns\IconColumn::make('is_visible')
+                Tables\Columns\ToggleColumn::make('is_visible')
                     ->label('Visibility')
-                    ->boolean()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('sort_order')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->tooltip('Toggle category visibility on the storefront')
                     ->sortable(),
             ])
-            ->defaultSort('sort_order', 'desc')
+            ->defaultSort('sort_order', 'asc')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_visible')
-                    ->label('Visibility')
-                    ->trueLabel('Visible Only')
-                    ->falseLabel('Hidden Only'),
-
-                // Main Categories Filter
-                Tables\Filters\Filter::make('main_categories')
-                    ->label('Main Categories Only')
-                    ->query(fn($query) => $query->whereNull('parent_id')),
-
-                // Subcategories Filter
-                Tables\Filters\Filter::make('sub_categories')
-                    ->label('Subcategories Only')
-                    ->query(fn($query) => $query->whereNotNull('parent_id')),
-
-                // Filter by Parent Category
-                Tables\Filters\SelectFilter::make('parent_id')
-                    ->label('Filter by Parent')
-                    ->relationship('parent', 'name')
-                    ->searchable()
-                    ->preload(),
+                    ->label('Visibility Status'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

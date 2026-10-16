@@ -15,9 +15,10 @@ use Filament\Tables\Table;
 class AttributeResource extends Resource
 {
     protected static ?string $model = Attribute::class;
-    protected static ?string $navigationIcon = 'heroicon-o-swatch'; // Swatch Icon
+    protected static ?string $navigationIcon = 'heroicon-o-swatch';
     protected static ?string $navigationGroup = 'Catalog Management';
-    protected static ?int $navigationSort = 4; // Collection එකට පස්සේ
+    protected static ?int $navigationSort = 4;
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {

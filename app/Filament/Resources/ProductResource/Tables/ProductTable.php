@@ -2,109 +2,63 @@
 
 namespace App\Filament\Resources\ProductResource\Tables;
 
-use App\Models\SystemSetting;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Illuminate\Database\Eloquent\Model;
 
 class ProductTable
 {
     public static function table(Table $table): Table
     {
-        $currency = SystemSetting::first()->currency_symbol ?? 'LKR';
-
         return $table
             ->columns([
-                // Image එක (JSON නිසා පළමු පින්තූරය ගන්නවා)
-                Tables\Columns\ImageColumn::make('images')
-                    ->circular()
-                    ->getStateUsing(fn($record) => is_array($record->images) ? ($record->images[0] ?? null) : null)
-                    ->defaultImageUrl(url('/images/placeholder.png'))
-                    ->extraImgAttributes(['style' => 'background-color: white; padding: 2px; border: 1px solid #e5e7eb;']),
+                Tables\Columns\TextColumn::make('index')
+                    ->label('No')
+                    ->rowIndex(),
 
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable()
-                    ->sortable()
-                    ->weight('bold')
-                    ->description(fn($record) => $record->sku ?? 'No SKU'),
-
-                Tables\Columns\TextColumn::make('brand.name')
-                    ->label('Brand')
-                    ->searchable()
-                    ->sortable()
-                    ->badge()
-                    ->color('gray'),
-
-                Tables\Columns\TextColumn::make('price')
-                    ->label('Price')
-                    ->sortable()
-                    ->formatStateUsing(function (Model $record) use ($currency) {
-                        if ($record->type === 'variable') {
-                            $min = $record->variants->min('price');
-                            $max = $record->variants->max('price');
-
-                            if (!$min) return 'N/A';
-
-                            if ($min == $max) {
-                                return $currency . ' ' . number_format($min, 2);
-                            }
-
-                            return $currency . ' ' . number_format($min, 2) . ' - ' . number_format($max, 2);
-                        }
-
-                        return $currency . ' ' . number_format($record->price, 2);
-                    }),
+                Tables\Columns\ViewColumn::make('product_info')
+                    ->label('Product')
+                    ->view('filament.tables.columns.product-info')
+                    ->searchable(query: fn ($query, $search) => $query->where('name', 'like', "%{$search}%")),
 
                 Tables\Columns\TextColumn::make('quantity')
-                    ->label('Stock')
-                    ->badge()
+                    ->label('Product Count')
                     ->sortable()
-                    ->getStateUsing(function ($record) {
-                        if ($record->type === 'variable') {
-                            return $record->variants()->sum('stock');
-                        }
-                        return $record->quantity;
-                    })
-                    ->color(fn($state): string => match (true) {
+                    ->badge()
+                    ->color(fn ($state): string => match (true) {
                         $state <= 0 => 'danger',
                         $state < 10 => 'warning',
                         default => 'success',
                     }),
 
-                Tables\Columns\TextColumn::make('type')
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'variable' => 'purple',
-                        'simple' => 'info',
-                    }),
+                Tables\Columns\ViewColumn::make('price')
+                    ->label('Latest Price')
+                    ->view('filament.tables.columns.product-price')
+                    ->sortable(query: fn ($query, $direction) => $query->orderBy('price', $direction)),
 
-                Tables\Columns\IconColumn::make('is_visible')
-                    ->label('Visible')
-                    ->boolean()
+                Tables\Columns\ToggleColumn::make('is_visible')
+                    ->label('Availability')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->tooltip('Control product display on the storefront')
                     ->sortable(),
-
-                Tables\Columns\IconColumn::make('is_featured')
-                    ->label('Featured')
-                    ->boolean()
-                    ->color('warning'),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('brand')
-                    ->relationship('brand', 'name'),
+                Tables\Filters\SelectFilter::make('brand')
+                    ->relationship('brand', 'name')
+                    ->preload(),
 
-                SelectFilter::make('type')
+                Tables\Filters\SelectFilter::make('condition')
                     ->options([
-                        'simple' => 'Simple Product',
-                        'variable' => 'Variable Product',
+                        'Brand New' => 'Brand New',
+                        'Used' => 'Used',
                     ]),
 
-                TernaryFilter::make('is_visible')
-                    ->label('Visibility')
-                    ->trueLabel('Visible Only')
-                    ->falseLabel('Hidden Only'),
+                Tables\Filters\TernaryFilter::make('is_visible')
+                    ->label('Storefront Availability'),
+
+                Tables\Filters\TernaryFilter::make('is_featured')
+                    ->label('Best Seller Only'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

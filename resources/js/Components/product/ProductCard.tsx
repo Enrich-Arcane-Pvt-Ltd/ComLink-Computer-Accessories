@@ -30,6 +30,7 @@ export interface ProductCardData {
     reviewCount?: number;
     reviews?: number;
     originalPrice: number;
+    latestPrice?: number;
     discountPercent: number; // 0 = no discount
     inStock: boolean;
     condition?: "Brand New" | "Used" | string;
@@ -243,6 +244,12 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
         rating: Number(product.rating ?? 4.8),
         reviewCount: Number(product.reviewCount ?? product.reviews ?? 24),
         originalPrice: Number(product.originalPrice ?? product.price ?? 99.99),
+        latestPrice:
+            product.latestPrice !== undefined
+                ? Number(product.latestPrice)
+                : product.sale_price !== undefined
+                  ? Number(product.sale_price)
+                  : undefined,
         discountPercent:
             product.discountPercent !== undefined
                 ? Number(product.discountPercent)
@@ -260,10 +267,13 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
 
     const isWishlisted = isInWishlist(String(normalized.id));
     const hasDiscount = normalized.discountPercent > 0;
-    const latestPrice = getLatestPrice(
-        normalized.originalPrice,
-        normalized.discountPercent,
-    );
+    const latestPrice =
+        normalized.latestPrice !== undefined && normalized.latestPrice > 0
+            ? normalized.latestPrice
+            : getLatestPrice(
+                  normalized.originalPrice,
+                  normalized.discountPercent,
+              );
     const savings = normalized.originalPrice - latestPrice;
 
     const handleAddToCart = (e: React.MouseEvent) => {

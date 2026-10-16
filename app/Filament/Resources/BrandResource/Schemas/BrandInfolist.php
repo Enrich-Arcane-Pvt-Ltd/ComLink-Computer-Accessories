@@ -25,7 +25,7 @@ class BrandInfolist
 
                         Infolists\Components\TextEntry::make('url')
                             ->label('Website')
-                            ->url(fn($state) => $state)
+                            ->url(fn ($state) => $state)
                             ->openUrlInNewTab()
                             ->color('primary'),
 
