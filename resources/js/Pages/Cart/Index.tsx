@@ -306,7 +306,7 @@ function CartContent() {
                                     </div>
 
                                     {/* Promo Code Form */}
-                                    <form onSubmit={handleApplyCoupon} className="pt-2 pb-4">
+                                    {/* <form onSubmit={handleApplyCoupon} className="pt-2 pb-4">
                                         <label className="block text-xs font-semibold uppercase tracking-wider text-muted mb-2">
                                             Promo or Coupon Code
                                         </label>
@@ -334,19 +334,16 @@ function CartContent() {
                                                 Active coupon: {appliedCoupon}
                                             </p>
                                         )}
-                                    </form>
+                                    </form> */}
 
                                     {/* Checkout Button */}
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            toast.success("Proceeding to checkout! (Order processing ready)");
-                                        }}
+                                    <Link
+                                        href="/checkout"
                                         className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-accent text-accent-fg font-bold uppercase tracking-wider text-sm transition-all hover:opacity-90 active:scale-[0.99] shadow-md cursor-pointer"
                                     >
                                         <span>Proceed to Checkout</span>
                                         <ArrowRight className="w-4 h-4" />
-                                    </button>
+                                    </Link>
 
                                     {/* Secure Guarantee Badges */}
                                     <div className="mt-6 pt-5 border-t border-border/60 space-y-2.5">

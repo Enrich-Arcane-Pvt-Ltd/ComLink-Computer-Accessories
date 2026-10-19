@@ -5,6 +5,7 @@ use App\Http\Controllers\Public\AboutUsController;
 use App\Http\Controllers\Public\BlogController;
 use App\Http\Controllers\Public\BuildPcController;
 use App\Http\Controllers\Public\CartController;
+use App\Http\Controllers\Public\CheckoutController;
 use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Public\CustomPagesController;
 use App\Http\Controllers\Public\FAQController;
@@ -38,7 +39,9 @@ Route::get('/product/{product}', [ShopController::class, 'showProduct'])->name('
 Route::middleware(['auth'])->group(function () {
     Route::get('/build-my-pc', [BuildPcController::class, 'index'])->name('build-pc');
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
-    Route::get('/checkout', [CartController::class, 'index'])->name('checkout');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout/payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.payment-intent');
+    Route::post('/checkout/process-order', [CheckoutController::class, 'processOrder'])->name('checkout.process-order');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 });
 

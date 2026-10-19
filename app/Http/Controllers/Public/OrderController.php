@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -10,284 +11,70 @@ use Inertia\Response;
 class OrderController extends Controller
 {
     /**
-     * Display the user's orders list.
+     * Display the user's orders list from the database.
      */
     public function index(Request $request): Response
     {
         $user = $request->user();
 
-        // Orders showcasing multiple products with multiple quantities
-        // across all four status stages: Processing, Packaging, Shipping, Delivered
-        $orders = [
-            [
-                'id' => 'CLK-98421',
-                'orderNumber' => 'CLK-98421',
-                'createdAt' => 'Oct 15, 2026 at 11:20 AM',
-                'status' => 'Processing',
-                'statusLabel' => 'Payment Confirmed & Order Verification in Progress',
-                'estimatedDelivery' => 'Estimated Oct 18 - Oct 20, 2026',
-                'paymentMethod' => 'Card Payment (Mastercard •••• 4242)',
-                'paymentStatus' => 'Paid',
-                'subtotal' => 1462.45,
-                'shippingFee' => 0.00,
-                'discount' => 50.00,
-                'total' => 1412.45,
+        $query = Order::query()->with('items');
+
+        if ($user) {
+            $query->where(function ($q) use ($user) {
+                $q->where('user_id', $user->id)
+                    ->orWhere('customer_email', $user->email);
+            });
+        } else {
+            // Guest or non-logged-in
+            $query->whereRaw('1 = 0');
+        }
+
+        $dbOrders = $query->latest('id')->get();
+
+        $orders = $dbOrders->map(function (Order $o) {
+            return [
+                'id' => (string) $o->id,
+                'orderNumber' => $o->order_number,
+                'createdAt' => $o->created_at ? $o->created_at->format('M d, Y \a\t h:i A') : '',
+                'status' => $o->status ?? 'Processing',
+                'statusLabel' => match ($o->status) {
+                    'Processing' => 'Payment Confirmed & Order Verification in Progress',
+                    'Packaging' => 'Items Picked, Quality Inspected & Securely Packaged',
+                    'Shipping' => 'Dispatched with Courier - On the Way',
+                    'Delivered' => 'Package Successfully Delivered to Customer',
+                    default => 'Order in Progress',
+                },
+                'estimatedDelivery' => 'Estimated 2 - 4 business days',
+                'paymentMethod' => $o->payment_method ?: 'Stripe Card Payment',
+                'paymentStatus' => $o->payment_status ?: 'Paid',
+                'subtotal' => (float) $o->subtotal,
+                'shippingFee' => (float) $o->shipping_fee,
+                'discount' => (float) $o->discount_amount,
+                'total' => (float) $o->total_amount,
                 'shippingAddress' => [
-                    'recipient' => ($user->first_name ?? 'Customer') . ' ' . ($user->last_name ?? ''),
-                    'address' => 'No. 45, Galle Road, Bambalapitiya',
-                    'city' => 'Colombo 04',
-                    'phone' => '+94 77 123 4567',
+                    'recipient' => $o->customer_name,
+                    'address' => trim($o->shipping_address_line_1 . ($o->shipping_address_line_2 ? ', ' . $o->shipping_address_line_2 : '')),
+                    'city' => trim($o->shipping_city . ($o->shipping_postal_code ? ', ' . $o->shipping_postal_code : '')),
+                    'phone' => $o->customer_phone . ($o->customer_secondary_phone ? " / {$o->customer_secondary_phone}" : ''),
                 ],
                 'courier' => [
-                    'name' => 'Pronto Courier Service',
-                    'trackingNumber' => 'PRN-LK-984210',
+                    'name' => $o->courier_name ?: 'Pronto Courier Service',
+                    'trackingNumber' => $o->tracking_number ?: ('PRN-LK-' . $o->id),
                 ],
-                'items' => [
-                    [
-                        'id' => 101,
-                        'productId' => '4',
-                        'name' => 'AMD Ryzen 7 7800X3D 8-Core 16-Thread Desktop Processor',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'PC Components',
-                        'subCategory' => 'Processors',
-                        'quantity' => 1,
-                        'unitPrice' => 449.00,
-                        'totalPrice' => 449.00,
-                    ],
-                    [
-                        'id' => 102,
-                        'productId' => '10',
-                        'name' => 'MSI MPG B650 Carbon WiFi AM5 DDR5 ATX Motherboard',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'PC Components',
-                        'subCategory' => 'Motherboards',
-                        'quantity' => 1,
-                        'unitPrice' => 299.99,
-                        'totalPrice' => 299.99,
-                    ],
-                    [
-                        'id' => 103,
-                        'productId' => '5',
-                        'name' => 'Corsair Vengeance RGB DDR5 32GB (2x16GB) 6000MHz CL30 Memory Kit',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'PC Components',
-                        'subCategory' => 'Memory Cards',
-                        'quantity' => 2,
-                        'unitPrice' => 139.99,
-                        'totalPrice' => 279.98,
-                    ],
-                    [
-                        'id' => 104,
-                        'productId' => '5',
-                        'name' => 'Samsung 990 PRO 2TB PCIe 4.0 M.2 NVMe Internal SSD',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'PC Components',
-                        'subCategory' => 'SSD',
-                        'quantity' => 2,
-                        'unitPrice' => 179.99,
-                        'totalPrice' => 359.98,
-                    ],
-                    [
-                        'id' => 105,
-                        'productId' => '8',
-                        'name' => 'Thermal Grizzly Kryonaut Extreme High-Performance Thermal Paste 2g',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'PC Components',
-                        'subCategory' => 'Thermal Paste',
-                        'quantity' => 3,
-                        'unitPrice' => 24.50,
-                        'totalPrice' => 73.50,
-                    ],
-                ],
-            ],
-            [
-                'id' => 'CLK-98310',
-                'orderNumber' => 'CLK-98310',
-                'createdAt' => 'Oct 14, 2026 at 04:45 PM',
-                'status' => 'Packaging',
-                'statusLabel' => 'Quality Inspection Passed & Protective Packaging in Progress',
-                'estimatedDelivery' => 'Estimated Oct 17 - Oct 19, 2026',
-                'paymentMethod' => 'Direct Bank Transfer (Slip Verified)',
-                'paymentStatus' => 'Paid',
-                'subtotal' => 887.48,
-                'shippingFee' => 0.00,
-                'discount' => 0.00,
-                'total' => 887.48,
-                'shippingAddress' => [
-                    'recipient' => ($user->first_name ?? 'Customer') . ' ' . ($user->last_name ?? ''),
-                    'address' => 'No. 45, Galle Road, Bambalapitiya',
-                    'city' => 'Colombo 04',
-                    'phone' => '+94 77 123 4567',
-                ],
-                'courier' => [
-                    'name' => 'Koombiyo Delivery Logistics',
-                    'trackingNumber' => 'KMB-884102-LK',
-                ],
-                'items' => [
-                    [
-                        'id' => 201,
-                        'productId' => '110',
-                        'name' => 'Corsair RM850x 850W 80 PLUS Gold Fully Modular Power Supply',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'PC Components',
-                        'subCategory' => 'Power Supply',
-                        'quantity' => 2,
-                        'unitPrice' => 149.99,
-                        'totalPrice' => 299.98,
-                    ],
-                    [
-                        'id' => 202,
-                        'productId' => '3',
-                        'name' => 'NZXT Kraken Elite 360 RGB AIO Liquid CPU Cooler with LCD Display',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'PC Components',
-                        'subCategory' => 'Coolers',
-                        'quantity' => 1,
-                        'unitPrice' => 289.00,
-                        'totalPrice' => 289.00,
-                    ],
-                    [
-                        'id' => 203,
-                        'productId' => '7',
-                        'name' => 'Lian Li UNI Fan SL-INFINITY 120 RGB Modular Case Fan (Triple Pack)',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'PC Components',
-                        'subCategory' => 'PC Cases',
-                        'quantity' => 3,
-                        'unitPrice' => 99.50,
-                        'totalPrice' => 298.50,
-                    ],
-                ],
-            ],
-            [
-                'id' => 'CLK-97805',
-                'orderNumber' => 'CLK-97805',
-                'createdAt' => 'Oct 12, 2026 at 02:15 PM',
-                'status' => 'Shipping',
-                'statusLabel' => 'In Transit with Citypak Courier Express',
-                'estimatedDelivery' => 'Arriving Tomorrow by 05:00 PM',
-                'paymentMethod' => 'Visa Card (•••• 1088)',
-                'paymentStatus' => 'Paid',
-                'subtotal' => 558.94,
-                'shippingFee' => 0.00,
-                'discount' => 25.00,
-                'total' => 533.94,
-                'shippingAddress' => [
-                    'recipient' => ($user->first_name ?? 'Customer') . ' ' . ($user->last_name ?? ''),
-                    'address' => 'No. 45, Galle Road, Bambalapitiya',
-                    'city' => 'Colombo 04',
-                    'phone' => '+94 77 123 4567',
-                ],
-                'courier' => [
-                    'name' => 'Citypak Express Logistics',
-                    'trackingNumber' => 'CPK-97805-COL',
-                ],
-                'items' => [
-                    [
-                        'id' => 301,
-                        'productId' => '1',
-                        'name' => 'Redragon K552 Kumara RGB Mechanical Gaming Keyboard',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'Peripherals',
-                        'subCategory' => 'Keyboards',
-                        'quantity' => 2,
-                        'unitPrice' => 89.99,
-                        'totalPrice' => 179.98,
-                    ],
-                    [
-                        'id' => 302,
-                        'productId' => '3',
-                        'name' => 'Logitech G502 HERO High Performance Gaming Mouse',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'Peripherals',
-                        'subCategory' => 'Mouse',
-                        'quantity' => 3,
-                        'unitPrice' => 49.99,
-                        'totalPrice' => 149.97,
-                    ],
-                    [
-                        'id' => 303,
-                        'productId' => '2',
-                        'name' => 'HyperX Cloud III Wireless DTS Spatial Audio Gaming Headset',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'Peripherals',
-                        'subCategory' => 'Headsets',
-                        'quantity' => 1,
-                        'unitPrice' => 159.99,
-                        'totalPrice' => 159.99,
-                    ],
-                    [
-                        'id' => 304,
-                        'productId' => '9',
-                        'name' => 'SteelSeries QcK Heavy XXL Thick Cloth Gaming Mouse Pad',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'Peripherals',
-                        'subCategory' => 'Mouse Pad',
-                        'quantity' => 2,
-                        'unitPrice' => 34.50,
-                        'totalPrice' => 69.00,
-                    ],
-                ],
-            ],
-            [
-                'id' => 'CLK-96200',
-                'orderNumber' => 'CLK-96200',
-                'createdAt' => 'Oct 05, 2026 at 09:30 AM',
-                'status' => 'Delivered',
-                'statusLabel' => 'Package Successfully Handed Over to Recipient',
-                'estimatedDelivery' => 'Delivered on Oct 07, 2026 with Warranty Card',
-                'paymentMethod' => 'Online Bank Gateway',
-                'paymentStatus' => 'Paid',
-                'subtotal' => 1959.92,
-                'shippingFee' => 0.00,
-                'discount' => 80.00,
-                'total' => 1879.92,
-                'shippingAddress' => [
-                    'recipient' => ($user->first_name ?? 'Customer') . ' ' . ($user->last_name ?? ''),
-                    'address' => 'No. 45, Galle Road, Bambalapitiya',
-                    'city' => 'Colombo 04',
-                    'phone' => '+94 77 123 4567',
-                ],
-                'courier' => [
-                    'name' => 'Pronto Courier Service',
-                    'trackingNumber' => 'PRN-LK-962001',
-                ],
-                'items' => [
-                    [
-                        'id' => 401,
-                        'productId' => '6',
-                        'name' => 'ASUS ROG Swift 27" 240Hz Fast IPS Esports Gaming Monitor',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'Monitors & Displays',
-                        'subCategory' => 'Gaming Monitors',
-                        'quantity' => 2,
-                        'unitPrice' => 599.99,
-                        'totalPrice' => 1199.98,
-                    ],
-                    [
-                        'id' => 402,
-                        'productId' => '12',
-                        'name' => 'Logitech C920 HD Pro Webcam with Stereo Audio 1080p',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'Peripherals',
-                        'subCategory' => 'Webcam',
-                        'quantity' => 2,
-                        'unitPrice' => 79.99,
-                        'totalPrice' => 159.98,
-                    ],
-                    [
-                        'id' => 403,
-                        'productId' => '1',
-                        'name' => 'Microsoft Windows 11 Pro 64-Bit Lifetime License Retail Box',
-                        'image' => '/images/products/sample-keyboard.jpg',
-                        'category' => 'Software',
-                        'quantity' => 4,
-                        'unitPrice' => 149.99,
-                        'totalPrice' => 599.96,
-                    ],
-                ],
-            ],
-        ];
+                'items' => $o->items->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'productId' => (string) ($item->product_id ?? $item->id),
+                        'name' => $item->product_name,
+                        'image' => $item->product_image ?: '/images/placeholder.png',
+                        'category' => $item->category_name ?: 'Hardware',
+                        'quantity' => (int) $item->quantity,
+                        'unitPrice' => (float) $item->unit_price,
+                        'totalPrice' => (float) $item->total_price,
+                    ];
+                })->values()->all(),
+            ];
+        })->values()->all();
 
         return Inertia::render('Orders/Index', [
             'orders' => $orders,
