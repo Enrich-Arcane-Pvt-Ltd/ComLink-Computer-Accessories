@@ -66,12 +66,12 @@ class HandleInertiaRequests extends Middleware
                                 'slug' => $cat->slug,
                                 'path' => '/shop?category=' . $cat->slug,
                                 'image' => $cat->image_url,
-                                'children' => $cat->children->map(function ($child) {
+                                'children' => $cat->children->map(function ($child) use ($cat) {
                                     return [
                                         'id' => $child->id,
                                         'name' => $child->name,
                                         'slug' => $child->slug,
-                                        'path' => '/shop?category=' . $child->slug,
+                                        'path' => '/shop?category=' . $cat->slug . '&subcategory=' . $child->slug,
                                         'image' => $child->image_url,
                                     ];
                                 })->values()->all(),

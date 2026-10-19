@@ -15,8 +15,11 @@ interface NewProductsCarouselProps {
 }
 
 export function NewProductsCarousel({
-    products = sample10Products,
+    products = [],
 }: NewProductsCarouselProps) {
+    if (!products || products.length === 0) {
+        return null;
+    }
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
     const [visibleCards, setVisibleCards] = useState(4);

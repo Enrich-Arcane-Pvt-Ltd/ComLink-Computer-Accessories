@@ -59,22 +59,7 @@ class ShopController extends Controller
             $categorySlug = $formattedProduct['categorySlug'] ?? '';
             $related = $this->getRelatedProducts($dbProduct->id, $subCategorySlug, $categorySlug);
         } else {
-            // 2. Fallback to mock catalog products
-            $allMock = $this->getMockCatalogProducts(null, null, null, 'featured', null, null);
-            $found = collect($allMock)->first(function ($item) use ($product) {
-                return (string) $item['id'] === (string) $product ||
-                    ($item['slug'] ?? '') === $product ||
-                    \Illuminate\Support\Str::slug($item['name']) === $product;
-            });
-
-            if (! $found && ! empty($allMock)) {
-                $found = $allMock[0];
-            }
-
-            $formattedProduct = $this->enrichProductDetails($found);
-            $subCategorySlug = $formattedProduct['subCategorySlug'] ?? null;
-            $categorySlug = $formattedProduct['categorySlug'] ?? '';
-            $related = $this->getRelatedProducts($formattedProduct['id'], $subCategorySlug, $categorySlug);
+            abort(404, 'Product not found');
         }
 
         return Inertia::render('Product/Show', [
@@ -176,6 +161,7 @@ class ShopController extends Controller
             });
         }
 
+        // 3. Filter by search query
         $search = $request->query('q');
         if (! empty($search)) {
             $dbProductsQuery->where(function ($q) use ($search) {
@@ -185,6 +171,7 @@ class ShopController extends Controller
             });
         }
 
+        // 4. Filter by price
         $minPrice = $request->query('min_price');
         $maxPrice = $request->query('max_price');
         if ($minPrice !== null && is_numeric($minPrice)) {
@@ -194,6 +181,138 @@ class ShopController extends Controller
             $dbProductsQuery->where('price', '<=', (float) $maxPrice);
         }
 
+        // 5. Filter by condition (All / Brandnew / Used)
+        $condition = $request->query('condition', 'all');
+        if ($condition && $condition !== 'all') {
+            if (in_array(strtolower($condition), ['brandnew', 'brand new', 'brand_new'])) {
+                $dbProductsQuery->where(function ($q) {
+                    $q->where('condition', 'like', '%Brand%')
+                        ->orWhere('condition', 'like', '%New%');
+                });
+            } elseif (strtolower($condition) === 'used') {
+                $dbProductsQuery->where('condition', 'like', '%Used%');
+            }
+        }
+
+        // 6. Filter by availability (In Stock / Out of Stock)
+        if ($request->boolean('in_stock')) {
+            $dbProductsQuery->where('quantity', '>', 0);
+        }
+        if ($request->boolean('out_of_stock')) {
+            $dbProductsQuery->where('quantity', '<=', 0);
+        }
+
+        // 7. Dynamic Specification Attributes & Facets for Category/Subcategory
+        $dynamicFacets = [];
+        if ($activeCategory) {
+            $catId = $activeCategory['id'];
+            $subId = $activeSubCategory['id'] ?? null;
+
+            $specQuery = \App\Models\ProductSpecification::where('category_id', $catId)
+                ->where('specification_type', 'main');
+
+            if ($subId) {
+                $specQuery->where(function ($q) use ($subId) {
+                    $q->where('sub_category_id', $subId)
+                        ->orWhereNull('sub_category_id');
+                });
+            }
+
+            $specAttributes = $specQuery->orderBy('sort_order')->orderBy('id')->get();
+
+            // Fetch products in this category/subcategory to extract actual values
+            $baseCategoryProducts = Product::where('is_visible', true)
+                ->whereHas('categories', function ($q) use ($subId, $catId, $activeCategory) {
+                    if ($subId) {
+                        $q->where('categories.id', $subId);
+                    } else {
+                        $targetIds = array_merge([$catId], collect($activeCategory['subcategories'] ?? [])->pluck('id')->all());
+                        $q->whereIn('categories.id', $targetIds);
+                    }
+                })
+                ->with('brand')
+                ->get();
+
+            foreach ($specAttributes as $spec) {
+                $key = \Illuminate\Support\Str::slug($spec->title, '_');
+                $isBrand = strtolower(trim($spec->title)) === 'brand';
+                $values = [];
+
+                foreach ($baseCategoryProducts as $bp) {
+                    if ($isBrand) {
+                        if ($bp->brand?->name) {
+                            $values[] = trim($bp->brand->name);
+                        }
+                    } else {
+                        $rawVal = $bp->main_specifications[$key] ?? null;
+                        if ($rawVal !== null && trim((string) $rawVal) !== '') {
+                            $values[] = trim((string) $rawVal);
+                        }
+                    }
+                }
+
+                $values = array_values(array_unique(array_filter($values)));
+
+                // If no products in DB yet, load standard options
+                if (empty($values)) {
+                    $knownOptions = match (strtolower(trim($spec->title))) {
+                        'brand' => ['Intel', 'AMD', 'ASUS', 'MSI', 'Gigabyte', 'Corsair', 'Lenovo', 'HP', 'Dell', 'EZIVIZ'],
+                        'generation' => ['Intel 14th Gen', 'Intel 13th Gen', 'Intel 12th Gen', 'AMD Ryzen 7000 Series', 'AMD Ryzen 5000 Series'],
+                        'cores' => ['4 Cores', '6 Cores', '8 Cores', '12 Cores', '14 Cores', '16 Cores', '24 Cores'],
+                        'threads' => ['8 Threads', '12 Threads', '16 Threads', '20 Threads', '24 Threads', '32 Threads'],
+                        'memory' => ['8GB', '16GB', '32GB', '64GB'],
+                        'storage' => ['512GB SSD', '1TB SSD', '2TB SSD'],
+                        'display size' => ['13.3"', '14.0"', '15.6"', '16.0"', '17.3"'],
+                        'graphic cards' => ['NVIDIA RTX 4090', 'NVIDIA RTX 4080', 'NVIDIA RTX 4070', 'NVIDIA RTX 4060', 'AMD Radeon'],
+                        'cooling type' => ['AIO Liquid Cooler', 'Air Cooler', 'Custom Loop'],
+                        'form factor' => ['Desktop UDIMM', 'Laptop SODIMM', 'ATX', 'Micro-ATX'],
+                        'cpu soket', 'cpu socket' => ['LGA 1700', 'AM5', 'AM4', 'LGA 1851'],
+                        'chipset model' => ['Intel Z790', 'Intel B760', 'AMD B650', 'AMD X670E'],
+                        'mb platform' => ['Intel Platform', 'AMD Platform'],
+                        'ssd type' => ['M.2 NVMe PCIe 4.0', 'M.2 NVMe PCIe 5.0', '2.5" SATA III'],
+                        'ram capacity' => ['8GB', '16GB', '32GB (2x16GB)', '64GB (2x32GB)'],
+                        'memory speed' => ['3200MHz', '3600MHz', '5200MHz', '5600MHz', '6000MHz'],
+                        'type' => ['Gaming Laptop', 'Ultrabook', 'Business Laptop', '2-in-1 Convertible'],
+                        default => [],
+                    };
+                    if (! empty($knownOptions)) {
+                        $values = $knownOptions;
+                    }
+                }
+
+                if (! empty($values)) {
+                    $dynamicFacets[] = [
+                        'id' => $key,
+                        'label' => $spec->title,
+                        'options' => $values,
+                    ];
+                }
+
+                // Check and apply filter from query params
+                $filterVal = $request->query($key) ?? $request->input("specs.{$key}");
+                if ($filterVal) {
+                    $selectedOptions = is_array($filterVal) ? $filterVal : explode(',', (string) $filterVal);
+                    $selectedOptions = array_filter(array_map('trim', $selectedOptions));
+
+                    if (! empty($selectedOptions)) {
+                        if ($isBrand) {
+                            $dbProductsQuery->whereHas('brand', function ($bq) use ($selectedOptions) {
+                                $bq->whereIn('name', $selectedOptions);
+                            });
+                        } else {
+                            $dbProductsQuery->where(function ($sq) use ($key, $selectedOptions) {
+                                foreach ($selectedOptions as $opt) {
+                                    $sq->orWhere("main_specifications->{$key}", $opt)
+                                        ->orWhere("main_specifications->{$key}", 'like', "%{$opt}%");
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        // 8. Sorting
         $sort = $request->query('sort', 'featured');
         switch ($sort) {
             case 'price_asc':
@@ -211,20 +330,24 @@ class ShopController extends Controller
         }
 
         $dbProducts = $dbProductsQuery->get()->map(function ($p) {
-            $catName = $p->categories->first()?->name ?? 'Accessories';
+            $cat = $p->categories->firstWhere('parent_id', null) ?? $p->categories->first();
+            $catName = $cat?->name ?? 'Accessories';
             $isMainCatWithoutSubs = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
             $hasSubCat = $p->categories->count() > 1 && ! $isMainCatWithoutSubs;
-            $subCatName = $hasSubCat ? $p->categories->last()?->name : null;
+            $subCat = $hasSubCat ? $p->categories->last() : null;
+            $subCatName = $subCat?->name;
 
             $rawImg = ! empty($p->images) && is_array($p->images) ? $p->images[0] : null;
-            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/' . $rawImg)) : '/images/products/sample-keyboard.jpg';
+            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/' . $rawImg)) : '/images/placeholder.png';
 
             return [
                 'id' => $p->id,
                 'name' => $p->name,
                 'image' => $image,
                 'category' => $catName,
+                'categorySlug' => $cat?->slug ?? '',
                 'subCategory' => $subCatName,
+                'subCategorySlug' => $subCat?->slug ?? '',
                 'originalPrice' => (float) $p->price,
                 'latestPrice' => $p->sale_price !== null ? (float) $p->sale_price : (float) $p->price,
                 'discountPercent' => ($p->sale_price && $p->price > 0) ? max(0, round((($p->price - $p->sale_price) / $p->price) * 100)) : 0,
@@ -233,23 +356,22 @@ class ShopController extends Controller
                 'brand' => $p->brand?->name ?? 'Generic',
                 'rating' => 4.8,
                 'reviews' => 24,
+                'main_specifications' => $p->main_specifications ?? [],
+                'technical_specifications' => $p->technical_specifications ?? [],
             ];
         });
 
-        // If no products in database yet, load high quality mock catalog items
-        $condition = $request->query('condition', 'all');
         $brand = $request->query('brand');
         $allQueryParams = $request->all();
 
-        $products = $dbProducts->isNotEmpty()
-            ? $dbProducts->values()->all()
-            : $this->getMockCatalogProducts($activeCategory, $activeSubCategory, $search, $sort, $minPrice, $maxPrice, $condition, $brand);
+        $products = $dbProducts->values()->all();
 
         return Inertia::render('Shop/Index', [
             'categories' => $categories,
             'activeCategory' => $activeCategory,
             'activeSubCategory' => $activeSubCategory,
             'products' => $products,
+            'dynamicFacets' => $dynamicFacets,
             'filters' => array_merge([
                 'category' => $activeCategory['slug'] ?? null,
                 'subcategory' => $activeSubCategory['slug'] ?? null,
@@ -258,6 +380,7 @@ class ShopController extends Controller
                 'min_price' => $minPrice,
                 'max_price' => $maxPrice,
                 'in_stock' => $request->boolean('in_stock', false),
+                'out_of_stock' => $request->boolean('out_of_stock', false),
                 'condition' => $condition,
             ], $allQueryParams),
         ]);
@@ -893,39 +1016,57 @@ class ShopController extends Controller
         }
 
         // Build specifications from database technical_specifications if available
-        $tech = is_array($p->technical_specifications) ? array_filter($p->technical_specifications) : [];
+        $rawTech = is_array($p->technical_specifications) ? $p->technical_specifications : [];
+        $tech = array_filter($rawTech, fn ($v) => ! is_null($v) && trim((string) $v) !== '');
+
         if (! empty($tech)) {
-            $specifications = [
-                [
-                    'group' => 'General Specifications',
-                    'items' => array_values(array_filter([
-                        ! empty($tech['model_series']) ? ['label' => 'Model / Series', 'value' => $tech['model_series']] : null,
-                        ! empty($tech['category_segment']) ? ['label' => 'Category Segment', 'value' => $tech['category_segment']] : null,
-                        ! empty($tech['condition']) ? ['label' => 'Condition', 'value' => $tech['condition']] : null,
-                    ])),
-                ],
-                [
-                    'group' => 'Technical Performance',
-                    'items' => array_values(array_filter([
-                        ! empty($tech['interface_connection']) ? ['label' => 'Interface / Connection', 'value' => $tech['interface_connection']] : null,
-                        ! empty($tech['architecture']) ? ['label' => 'Architecture', 'value' => $tech['architecture']] : null,
-                        ! empty($tech['thermal_efficiency']) ? ['label' => 'Thermal Efficiency', 'value' => $tech['thermal_efficiency']] : null,
-                        ! empty($tech['power_consumption']) ? ['label' => 'Power Consumption', 'value' => $tech['power_consumption']] : null,
-                    ])),
-                ],
-                [
-                    'group' => 'Compatibility & Standards',
-                    'items' => array_values(array_filter([
-                        ! empty($tech['operating_systems']) ? ['label' => 'Operating Systems', 'value' => $tech['operating_systems']] : null,
-                        ! empty($tech['certification']) ? ['label' => 'Certification', 'value' => $tech['certification']] : null,
-                        ! empty($tech['dimensions_weight']) ? ['label' => 'Dimensions & Weight', 'value' => $tech['dimensions_weight']] : null,
-                        ! empty($tech['included_in_box']) ? ['label' => 'Included in Box', 'value' => $tech['included_in_box']] : null,
-                    ])),
-                ],
+            $catId = $cat?->id;
+            $dbSpecs = \App\Models\ProductSpecification::where('specification_type', 'technical')
+                ->when($catId, fn ($q) => $q->where('category_id', $catId))
+                ->get()
+                ->keyBy(fn ($s) => \Illuminate\Support\Str::slug($s->title, '_'));
+
+            $groupedItems = [
+                'General Specifications' => [],
+                'Technical Performance' => [],
+                'Compatibility & Standards' => [],
             ];
-            $specifications = array_values(array_filter($specifications, fn ($grp) => ! empty($grp['items'])));
+
+            foreach ($tech as $key => $value) {
+                if (is_null($value) || trim((string) $value) === '') {
+                    continue;
+                }
+
+                $matchedSpec = $dbSpecs->get($key);
+                $title = $matchedSpec ? $matchedSpec->title : ucwords(str_replace('_', ' ', $key));
+                $groupName = match ($matchedSpec?->sub_section) {
+                    'general' => 'General Specifications',
+                    'performance' => 'Technical Performance',
+                    'compatibility' => 'Compatibility & Standards',
+                    default => match (true) {
+                        in_array($key, ['interface_connection', 'architecture', 'thermal_efficiency', 'power_consumption']) => 'Technical Performance',
+                        in_array($key, ['operating_systems', 'certification', 'dimensions_weight', 'included_in_box']) => 'Compatibility & Standards',
+                        default => 'General Specifications',
+                    },
+                };
+
+                $groupedItems[$groupName][] = [
+                    'label' => $title,
+                    'value' => (string) $value,
+                ];
+            }
+
+            $specifications = [];
+            foreach ($groupedItems as $groupName => $items) {
+                if (! empty($items)) {
+                    $specifications[] = [
+                        'group' => $groupName,
+                        'items' => $items,
+                    ];
+                }
+            }
         } else {
-            $specifications = $this->generateSpecifications($targetSlug, $p->brand?->name ?? 'Generic', $p->name);
+            $specifications = [];
         }
 
         $base = [
@@ -977,65 +1118,30 @@ class ShopController extends Controller
 
         $dbRelated = $dbQuery->with(['brand', 'categories'])->take(8)->get();
 
-        if ($dbRelated->count() >= 3) {
-            return $dbRelated->map(function ($p) {
-                $catName = $p->categories->first()?->name ?? 'Accessories';
-                $isMainWithoutSub = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
-                $subCatName = ! $isMainWithoutSub && $p->categories->count() > 1 ? $p->categories->last()?->name : null;
+        return $dbRelated->map(function ($p) {
+            $cat = $p->categories->firstWhere('parent_id', null) ?? $p->categories->first();
+            $catName = $cat?->name ?? 'Accessories';
+            $isMainWithoutSub = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
+            $subCatName = ! $isMainWithoutSub && $p->categories->count() > 1 ? $p->categories->last()?->name : null;
 
-                return [
-                    'id' => $p->id,
-                    'name' => $p->name,
-                    'image' => ! empty($p->images) && is_array($p->images) ? $p->images[0] : '/images/products/sample-keyboard.jpg',
-                    'category' => $catName,
-                    'subCategory' => $subCatName,
-                    'originalPrice' => (float) $p->price,
-                    'discountPercent' => $p->sale_price ? max(0, round((($p->price - $p->sale_price) / $p->price) * 100)) : 0,
-                    'inStock' => ($p->quantity ?? 0) > 0,
-                    'brand' => $p->brand?->name ?? 'ComLink',
-                    'rating' => 4.8,
-                    'reviews' => 24,
-                ];
-            })->all();
-        }
+            $rawImg = ! empty($p->images) && is_array($p->images) ? $p->images[0] : null;
+            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/' . $rawImg)) : '/images/placeholder.png';
 
-        // 2. Mock catalog matching
-        $allMock = $this->getMockCatalogProducts(null, null, null, 'featured', null, null);
-
-        // Filter same subcategory, or same category if no subcategory exists
-        if (! empty($subCategorySlug)) {
-            $sameSub = array_filter($allMock, function ($item) use ($currentProductId, $subCategorySlug) {
-                return (string) $item['id'] !== (string) $currentProductId &&
-                    (($item['subCategorySlug'] ?? '') === $subCategorySlug);
-            });
-        } else {
-            $sameSub = array_filter($allMock, function ($item) use ($currentProductId, $categorySlug) {
-                return (string) $item['id'] !== (string) $currentProductId &&
-                    (($item['categorySlug'] ?? '') === $categorySlug);
-            });
-        }
-
-        // If fewer than 4 items, include items from the same main category
-        if (count($sameSub) < 4) {
-            $sameCat = array_filter($allMock, function ($item) use ($currentProductId, $categorySlug, $sameSub) {
-                $alreadyIncluded = collect($sameSub)->pluck('id')->all();
-
-                return (string) $item['id'] !== (string) $currentProductId &&
-                    ! in_array($item['id'], $alreadyIncluded) &&
-                    (($item['categorySlug'] ?? '') === $categorySlug);
-            });
-            $sameSub = array_merge($sameSub, $sameCat);
-        }
-
-        // If still fewer than 4 items, backfill with top products from any category
-        if (count($sameSub) < 4) {
-            $alreadyIncluded = collect($sameSub)->pluck('id')->all();
-            $alreadyIncluded[] = $currentProductId;
-            $others = array_filter($allMock, fn ($item) => ! in_array($item['id'], $alreadyIncluded));
-            $sameSub = array_merge($sameSub, array_slice($others, 0, 8 - count($sameSub)));
-        }
-
-        return array_values(array_slice($sameSub, 0, 10));
+            return [
+                'id' => $p->id,
+                'name' => $p->name,
+                'image' => $image,
+                'category' => $catName,
+                'subCategory' => $subCatName,
+                'originalPrice' => (float) $p->price,
+                'latestPrice' => $p->sale_price !== null ? (float) $p->sale_price : (float) $p->price,
+                'discountPercent' => $p->sale_price ? max(0, round((($p->price - $p->sale_price) / $p->price) * 100)) : 0,
+                'inStock' => ($p->quantity ?? 0) > 0,
+                'brand' => $p->brand?->name ?? 'ComLink',
+                'rating' => 4.8,
+                'reviews' => 24,
+            ];
+        })->all();
     }
 
     /**

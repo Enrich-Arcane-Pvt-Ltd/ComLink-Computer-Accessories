@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ProductResource\Schemas;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductSpecification;
 use Filament\Forms;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -230,257 +231,80 @@ class ProductForm
 
             // 5. Dynamic Specifications
             Forms\Components\Section::make('Product Specifications')
-                ->description('Hardware specifications tailored to this specific component or device.')
+                ->description('Hardware specifications tailored to this specific category and component. Managed dynamically from Product Specifications catalog.')
                 ->schema([
                     Forms\Components\Tabs::make('Specifications')
                         ->tabs([
-                            // Tab 1: Main Specifications (Reactive depending on Category)
+                            // Tab 1: Main Specifications (Dynamically loaded based on selected Category and Sub Category)
                             Forms\Components\Tabs\Tab::make('Main Specifications')
                                 ->icon('heroicon-m-cpu-chip')
                                 ->schema([
-                                    // A. Laptops / Gaming Laptops
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.display_size')
-                                            ->label('Display Size')
-                                            ->placeholder('e.g. 16.0" QHD+ (2560x1600) 240Hz OLED'),
-                                        Forms\Components\TextInput::make('main_specifications.graphic_cards')
-                                            ->label('Graphic Cards')
-                                            ->placeholder('e.g. NVIDIA GeForce RTX 4080 12GB GDDR6'),
-                                        Forms\Components\TextInput::make('main_specifications.memory')
-                                            ->label('Memory')
-                                            ->placeholder('e.g. 32GB DDR5 5600MHz'),
-                                        Forms\Components\TextInput::make('main_specifications.processor')
-                                            ->label('Processor')
-                                            ->placeholder('e.g. Intel Core Ultra 9 185H / AMD Ryzen 9'),
-                                        Forms\Components\TextInput::make('main_specifications.storage')
-                                            ->label('Storage')
-                                            ->placeholder('e.g. 1TB PCIe 4.0 NVMe SSD'),
-                                        Forms\Components\TextInput::make('main_specifications.type')
-                                            ->label('Type')
-                                            ->placeholder('e.g. Gaming Laptop / Ultrabook'),
-                                    ])
-                                        ->columns(2)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['laptop'])),
+                                    Forms\Components\Group::make()
+                                        ->schema(function (Get $get) {
+                                            $catId = $get('category_id');
+                                            $subId = $get('sub_category_id');
 
-                                    // B. Processors
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.generation')
-                                            ->label('Generation')
-                                            ->placeholder('e.g. AMD Ryzen 7000 Series / Intel 14th Gen'),
-                                        Forms\Components\TextInput::make('main_specifications.cores')
-                                            ->label('CORES')
-                                            ->placeholder('e.g. 8 Cores / 24 Cores'),
-                                        Forms\Components\TextInput::make('main_specifications.threads')
-                                            ->label('THREADS')
-                                            ->placeholder('e.g. 16 Threads / 32 Threads'),
-                                    ])
-                                        ->columns(3)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['processor'])),
+                                            if (! $catId) {
+                                                return [
+                                                    Forms\Components\Placeholder::make('main_spec_notice')
+                                                        ->label('Classification Required')
+                                                        ->content('Please select a Category and Sub Category above to display the applicable Main Specifications.'),
+                                                ];
+                                            }
 
-                                    // C. Motherboards
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.performance_level')
-                                            ->label('Performance Level')
-                                            ->placeholder('e.g. High-End Enthusiast / Mainstream Gaming'),
-                                        Forms\Components\TextInput::make('main_specifications.cpu_socket')
-                                            ->label('CPU Soket')
-                                            ->placeholder('e.g. AM5, LGA 1700, LGA 1851'),
-                                        Forms\Components\TextInput::make('main_specifications.chipset_model')
-                                            ->label('Chipset Model')
-                                            ->placeholder('e.g. AMD B650, Intel Z790, AMD X670E'),
-                                        Forms\Components\Select::make('main_specifications.mb_platform')
-                                            ->label('MB Platform')
-                                            ->options([
-                                                'AMD Platform' => 'AMD Platform',
-                                                'Intel Platform' => 'Intel Platform',
-                                            ]),
-                                    ])
-                                        ->columns(2)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['motherboard'])),
+                                            $query = ProductSpecification::where('category_id', $catId)
+                                                ->where('specification_type', 'main');
 
-                                    // D. Coolers
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.fans_size')
-                                            ->label('Fans Size')
-                                            ->placeholder('e.g. 120mm / 140mm'),
-                                        Forms\Components\TextInput::make('main_specifications.radiator_size')
-                                            ->label('Radiator Size')
-                                            ->placeholder('e.g. 360mm / 240mm / 280mm'),
-                                        Forms\Components\Select::make('main_specifications.cooling_type')
-                                            ->label('Cooling Type')
-                                            ->options([
-                                                'AIO Liquid Cooler' => 'AIO Liquid Cooler',
-                                                'Air Cooler' => 'Air Cooler',
-                                                'Custom Loop' => 'Custom Loop',
-                                            ]),
-                                    ])
-                                        ->columns(3)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['cooler'])),
+                                            if ($subId) {
+                                                $query->where(function ($q) use ($subId) {
+                                                    $q->where('sub_category_id', $subId)
+                                                        ->orWhereNull('sub_category_id');
+                                                });
+                                            } else {
+                                                $query->whereNull('sub_category_id');
+                                            }
 
-                                    // E. Memory (RAM)
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.ram_capacity')
-                                            ->label('RAM Capacity')
-                                            ->placeholder('e.g. 32GB (2x16GB)'),
-                                        Forms\Components\TextInput::make('main_specifications.memory_speed')
-                                            ->label('Memory Speed')
-                                            ->placeholder('e.g. 6000MHz / 3600MHz'),
-                                        Forms\Components\Select::make('main_specifications.form_factor')
-                                            ->label('Form Factor')
-                                            ->options([
-                                                'Desktop UDIMM' => 'Desktop UDIMM',
-                                                'Laptop SODIMM' => 'Laptop SODIMM',
-                                            ]),
-                                        Forms\Components\Select::make('main_specifications.memory_gen')
-                                            ->label('Memory Gen')
-                                            ->options([
-                                                'DDR5' => 'DDR5',
-                                                'DDR4' => 'DDR4',
-                                            ]),
-                                    ])
-                                        ->columns(2)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['memory', 'ram'])),
+                                            $specs = $query->orderBy('sort_order')->orderBy('id')->get();
 
-                                    // F. SSD
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.generation')
-                                            ->label('Generation')
-                                            ->placeholder('e.g. PCIe Gen 4.0 x4'),
-                                        Forms\Components\TextInput::make('main_specifications.storage_capacity')
-                                            ->label('Storage Capacity')
-                                            ->placeholder('e.g. 1TB / 2TB / 4TB'),
-                                        Forms\Components\Select::make('main_specifications.ssd_type')
-                                            ->label('SSD Type')
-                                            ->options([
-                                                'M.2 NVMe' => 'M.2 NVMe',
-                                                '2.5" SATA III' => '2.5" SATA III',
-                                            ]),
-                                    ])
-                                        ->columns(3)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['ssd'])),
+                                            if ($specs->isEmpty()) {
+                                                return [
+                                                    Forms\Components\Placeholder::make('no_main_specs')
+                                                        ->label('Main Specifications Notice')
+                                                        ->content('No custom main specification attributes have been added for this category yet. Brand and Condition are automatically applied from General Information. You can add new attributes from "Product Specification Attributes" in the Product Catalog navigation.'),
+                                                ];
+                                            }
 
-                                    // G. Hard Disk
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.hdd_color_type')
-                                            ->label('HDD Color Type')
-                                            ->placeholder('e.g. WD Blue, WD Black, Seagate Barracuda'),
-                                        Forms\Components\TextInput::make('main_specifications.storage_capacity')
-                                            ->label('Storage Capacity')
-                                            ->placeholder('e.g. 2TB / 4TB / 8TB'),
-                                        Forms\Components\TextInput::make('main_specifications.storage_type')
-                                            ->label('Storage Type')
-                                            ->placeholder('e.g. Internal 3.5" SATA (7200 RPM)'),
-                                    ])
-                                        ->columns(3)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['hard-disk', 'hdd'])),
+                                            $components = [];
+                                            foreach ($specs as $spec) {
+                                                $key = Str::slug($spec->title, '_');
 
-                                    // H. Graphic Cards
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.gpu_series')
-                                            ->label('GPU Series')
-                                            ->placeholder('e.g. GeForce RTX 40 Series / Radeon RX 7000'),
-                                        Forms\Components\TextInput::make('main_specifications.vram')
-                                            ->label('Memory (VRAM)')
-                                            ->placeholder('e.g. 16GB GDDR6X'),
-                                        Forms\Components\TextInput::make('main_specifications.accessory_type')
-                                            ->label('Accessory Type')
-                                            ->placeholder('e.g. Desktop GPU (Triple Fan)'),
-                                        Forms\Components\TextInput::make('main_specifications.psu_requirement')
-                                            ->label('Power Supply Requirement')
-                                            ->placeholder('e.g. 750W or higher'),
-                                    ])
-                                        ->columns(2)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['graphic-card', 'gpu', 'graphics-card'])),
+                                                // Common datalist suggestions for standard attributes
+                                                $datalist = match (strtolower(trim($spec->title))) {
+                                                    'cooling type' => ['AIO Liquid Cooler', 'Air Cooler', 'Custom Loop'],
+                                                    'modular' => ['Fully Modular', 'Semi-Modular', 'Non-Modular'],
+                                                    'power rating' => ['80 PLUS Titanium', '80 PLUS Platinum', '80 PLUS Gold', '80 PLUS Silver', '80 PLUS Bronze'],
+                                                    'mb platform' => ['AMD Platform', 'Intel Platform'],
+                                                    'ssd type' => ['M.2 NVMe PCIe 4.0', 'M.2 NVMe PCIe 5.0', '2.5" SATA III'],
+                                                    'form factor' => ['Desktop UDIMM', 'Laptop SODIMM', 'ATX', 'Micro-ATX', 'Mini-ITX'],
+                                                    'memory gen' => ['DDR5', 'DDR4', 'DDR3'],
+                                                    'panel' => ['Fast IPS', 'OLED', 'QD-OLED', 'VA', 'TN'],
+                                                    default => null,
+                                                };
 
-                                    // I. Power Supply
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.power_output')
-                                            ->label('Power Output')
-                                            ->placeholder('e.g. 850W / 1000W'),
-                                        Forms\Components\Select::make('main_specifications.modular')
-                                            ->label('Modular')
-                                            ->options([
-                                                'Fully Modular' => 'Fully Modular',
-                                                'Semi-Modular' => 'Semi-Modular',
-                                                'Non-Modular' => 'Non-Modular',
-                                            ]),
-                                        Forms\Components\Select::make('main_specifications.power_rating')
-                                            ->label('Power Rating')
-                                            ->options([
-                                                '80 PLUS Gold' => '80 PLUS Gold',
-                                                '80 PLUS Platinum' => '80 PLUS Platinum',
-                                                '80 PLUS Titanium' => '80 PLUS Titanium',
-                                                '80 PLUS Bronze' => '80 PLUS Bronze',
-                                            ]),
-                                    ])
-                                        ->columns(3)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['power-supply', 'psu'])),
+                                                $input = Forms\Components\TextInput::make("main_specifications.{$key}")
+                                                    ->label($spec->title)
+                                                    ->placeholder("Enter {$spec->title}...");
 
-                                    // J. PC Cases
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.accessory_type')
-                                            ->label('Accessory Type')
-                                            ->placeholder('e.g. ARGB Fan Kit / Dual-Chamber Chassis'),
-                                        Forms\Components\TextInput::make('main_specifications.cooler_size')
-                                            ->label('Cooler Size')
-                                            ->placeholder('e.g. Up to 360mm Radiator Support'),
-                                        Forms\Components\TextInput::make('main_specifications.mb_size')
-                                            ->label('MB Size')
-                                            ->placeholder('e.g. ATX, Micro-ATX, Mini-ITX, E-ATX'),
-                                    ])
-                                        ->columns(3)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['pc-case', 'case', 'chassis'])),
+                                                if ($datalist) {
+                                                    $input->datalist($datalist);
+                                                }
 
-                                    // K. Monitors & Displays
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.panel')
-                                            ->label('Panel')
-                                            ->placeholder('e.g. Fast IPS / OLED / VA'),
-                                        Forms\Components\TextInput::make('main_specifications.screen_size')
-                                            ->label('Screen Size')
-                                            ->placeholder('e.g. 27 Inch / 34 Inch Curved'),
-                                    ])
-                                        ->columns(2)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['monitor', 'display'])),
+                                                $components[] = $input;
+                                            }
 
-                                    // L. Computers
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.computer_type')
-                                            ->label('Computer Type')
-                                            ->placeholder('e.g. Custom Gaming PC / Workstation'),
-                                        Forms\Components\TextInput::make('main_specifications.processor')
-                                            ->label('Processor')
-                                            ->placeholder('e.g. Intel Core i7 / AMD Ryzen 7'),
-                                        Forms\Components\TextInput::make('main_specifications.graphics_card')
-                                            ->label('Graphics Card')
-                                            ->placeholder('e.g. RTX 4070 Super 12GB'),
-                                        Forms\Components\TextInput::make('main_specifications.memory_ram')
-                                            ->label('Memory (RAM)')
-                                            ->placeholder('e.g. 32GB DDR5 6000MHz'),
-                                        Forms\Components\TextInput::make('main_specifications.storage')
-                                            ->label('Storage')
-                                            ->placeholder('e.g. 1TB NVMe Gen4 SSD'),
-                                        Forms\Components\TextInput::make('main_specifications.warranty')
-                                            ->label('Warranty')
-                                            ->placeholder('e.g. 3 Years Official ComLink Warranty'),
-                                    ])
-                                        ->columns(3)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['computer'])),
-
-                                    // M. Toners and Cartridges
-                                    Forms\Components\Group::make([
-                                        Forms\Components\TextInput::make('main_specifications.type')
-                                            ->label('Type')
-                                            ->placeholder('e.g. Ink Bottle / Laser Toner Cartridge'),
-                                    ])
-                                        ->columns(1)
-                                        ->visible(fn (Get $get) => self::matchesCategory($get, ['toner', 'cartridge'])),
-
-                                    // Notice for Brand & Condition only items
-                                    Forms\Components\Placeholder::make('standard_specs_notice')
-                                        ->label('Main Specifications Included')
-                                        ->content('Brand and Condition are automatically applied from the classification and details above.')
-                                        ->visible(fn (Get $get) => ! self::matchesAnyDetailedCategory($get)),
+                                            return $components;
+                                        })
+                                        ->columns(2),
                                 ]),
 
                             // Tab 2: Technical Specifications
@@ -488,49 +312,27 @@ class ProductForm
                                 ->icon('heroicon-m-wrench-screwdriver')
                                 ->schema([
                                     Forms\Components\Section::make('General Specifications')
-                                        ->schema([
-                                            Forms\Components\TextInput::make('technical_specifications.model_series')
-                                                ->label('Model / Series')
-                                                ->placeholder('e.g. ASUS ROG Zephyrus G16 (2024)'),
-                                            Forms\Components\TextInput::make('technical_specifications.category_segment')
-                                                ->label('Category Segment')
-                                                ->placeholder('e.g. Processors, Laptops, Keyboards'),
-                                            Forms\Components\TextInput::make('technical_specifications.condition')
-                                                ->label('Condition')
-                                                ->default('100% Brand New (Original Factory Sealed)'),
-                                        ])->columns(3),
+                                        ->schema(fn (Get $get) => self::buildTechSpecsFields($get, 'general', [
+                                            ['title' => 'Model / Series', 'placeholder' => 'e.g. ASUS ROG Zephyrus G16 (2024)'],
+                                            ['title' => 'Category Segment', 'placeholder' => 'e.g. Processors, Laptops, Keyboards'],
+                                            ['title' => 'Condition', 'placeholder' => 'e.g. 100% Brand New (Original Factory Sealed)'],
+                                        ]))->columns(3),
 
                                     Forms\Components\Section::make('Technical Performance')
-                                        ->schema([
-                                            Forms\Components\TextInput::make('technical_specifications.interface_connection')
-                                                ->label('Interface / Connection')
-                                                ->placeholder('e.g. High-Speed PCIe Gen 4 / USB 3.2 / AM5'),
-                                            Forms\Components\TextInput::make('technical_specifications.architecture')
-                                                ->label('Architecture')
-                                                ->placeholder('e.g. Optimized Next-Gen Microarchitecture with Low Latency'),
-                                            Forms\Components\TextInput::make('technical_specifications.thermal_efficiency')
-                                                ->label('Thermal Efficiency')
-                                                ->placeholder('e.g. Advanced cooling profile with heat dissipation fins'),
-                                            Forms\Components\TextInput::make('technical_specifications.power_consumption')
-                                                ->label('Power Consumption')
-                                                ->placeholder('e.g. Eco-efficient power curve with dynamic voltage scaling'),
-                                        ])->columns(2),
+                                        ->schema(fn (Get $get) => self::buildTechSpecsFields($get, 'performance', [
+                                            ['title' => 'Interface / Connection', 'placeholder' => 'e.g. High-Speed PCIe Gen 4 / USB 3.2 / AM5'],
+                                            ['title' => 'Architecture', 'placeholder' => 'e.g. Optimized Next-Gen Microarchitecture with Low Latency'],
+                                            ['title' => 'Thermal Efficiency', 'placeholder' => 'e.g. Advanced cooling profile with heat dissipation fins'],
+                                            ['title' => 'Power Consumption', 'placeholder' => 'e.g. Eco-efficient power curve with dynamic voltage scaling'],
+                                        ]))->columns(2),
 
                                     Forms\Components\Section::make('Compatibility & Standards')
-                                        ->schema([
-                                            Forms\Components\TextInput::make('technical_specifications.operating_systems')
-                                                ->label('Operating Systems')
-                                                ->placeholder('e.g. Windows 11 / Windows 10 (64-bit), Linux Kernel 5.4+'),
-                                            Forms\Components\TextInput::make('technical_specifications.certification')
-                                                ->label('Certification')
-                                                ->placeholder('e.g. CE, FCC, RoHS, EnergyStar Certified'),
-                                            Forms\Components\TextInput::make('technical_specifications.dimensions_weight')
-                                                ->label('Dimensions & Weight')
-                                                ->placeholder('e.g. Standard Form Factor (~450g packaged)'),
-                                            Forms\Components\TextInput::make('technical_specifications.included_in_box')
-                                                ->label('Included in Box')
-                                                ->placeholder('e.g. 1x Hardware Unit, Quick Manual, Safety Guide, Warranty Certificate'),
-                                        ])->columns(2),
+                                        ->schema(fn (Get $get) => self::buildTechSpecsFields($get, 'compatibility', [
+                                            ['title' => 'Operating Systems', 'placeholder' => 'e.g. Windows 11 / Windows 10 (64-bit), Linux Kernel 5.4+'],
+                                            ['title' => 'Certification', 'placeholder' => 'e.g. CE, FCC, RoHS, EnergyStar Certified'],
+                                            ['title' => 'Dimensions & Weight', 'placeholder' => 'e.g. Standard Form Factor (~450g packaged)'],
+                                            ['title' => 'Included in Box', 'placeholder' => 'e.g. 1x Hardware Unit, Quick Manual, Safety Guide, Warranty Certificate'],
+                                        ]))->columns(2),
                                 ]),
                         ]),
                 ]),
@@ -538,46 +340,46 @@ class ProductForm
     }
 
     /**
-     * Check if active category/subcategory matches any of the given keywords
+     * Build dynamic technical specification input fields for a specific technical group.
      */
-    protected static function matchesCategory(Get $get, array $keywords): bool
+    protected static function buildTechSpecsFields(Get $get, string $subSection, array $fallbacks): array
     {
-        $subId = $get('sub_category_id');
-        if ($subId) {
-            $sub = Category::find($subId);
-            if ($sub) {
-                $subSlug = Str::slug($sub->name);
-                foreach ($keywords as $kw) {
-                    if (str_contains($subSlug, $kw)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
         $catId = $get('category_id');
+        $subId = $get('sub_category_id');
+
+        $specs = collect();
         if ($catId) {
-            $cat = Category::find($catId);
-            if ($cat) {
-                $catSlug = Str::slug($cat->name);
-                foreach ($keywords as $kw) {
-                    if (str_contains($catSlug, $kw)) {
-                        return true;
-                    }
-                }
+            $query = ProductSpecification::where('category_id', $catId)
+                ->where('specification_type', 'technical')
+                ->where('sub_section', $subSection);
+
+            if ($subId) {
+                $query->where(function ($q) use ($subId) {
+                    $q->where('sub_category_id', $subId)
+                        ->orWhereNull('sub_category_id');
+                });
+            } else {
+                $query->whereNull('sub_category_id');
             }
+
+            $specs = $query->orderBy('sort_order')->orderBy('id')->get();
         }
 
-        return false;
-    }
+        if ($specs->isEmpty()) {
+            $specs = collect($fallbacks)->map(fn ($item) => (object) [
+                'title' => $item['title'],
+                'placeholder' => $item['placeholder'] ?? '',
+            ]);
+        }
 
-    protected static function matchesAnyDetailedCategory(Get $get): bool
-    {
-        return self::matchesCategory($get, [
-            'laptop', 'processor', 'motherboard', 'cooler', 'memory',
-            'ram', 'ssd', 'hard-disk', 'hdd', 'graphic', 'gpu',
-            'power-supply', 'psu', 'case', 'chassis', 'monitor',
-            'display', 'computer', 'toner', 'cartridge',
-        ]);
+        $components = [];
+        foreach ($specs as $spec) {
+            $key = Str::slug($spec->title, '_');
+            $components[] = Forms\Components\TextInput::make("technical_specifications.{$key}")
+                ->label($spec->title)
+                ->placeholder($spec->placeholder ?? "Enter {$spec->title}...");
+        }
+
+        return $components;
     }
 }

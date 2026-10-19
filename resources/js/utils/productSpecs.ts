@@ -53,6 +53,52 @@ export function getMainSpecifications(product: ProductLike): MainSpecsResult {
     const subName = (product.subCategory || "").toLowerCase();
     const catName = (product.category || "").toLowerCase();
 
+    // 0. If product has explicit main_specifications from admin, render only filled, non-empty fields
+    if (
+        product.main_specifications &&
+        typeof product.main_specifications === "object" &&
+        Object.keys(product.main_specifications).length > 0
+    ) {
+        const dynamicItems: MainSpecItem[] = [];
+
+        // Condition
+        if (condition && condition.trim().length > 0) {
+            dynamicItems.push({ label: "Condition", value: condition.trim() });
+        }
+        // Brand
+        if (brand && brand.trim().length > 0) {
+            dynamicItems.push({ label: "Brand", value: brand.trim() });
+        }
+
+        for (const [k, v] of Object.entries(product.main_specifications)) {
+            if (v !== null && v !== undefined && String(v).trim().length > 0) {
+                let label = k
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, (c) => c.toUpperCase());
+
+                if (label.toLowerCase() === "cores") label = "CORES";
+                if (label.toLowerCase() === "threads") label = "THREADS";
+                if (label.toLowerCase() === "ssd type") label = "SSD Type";
+                if (label.toLowerCase() === "hdd color type") label = "HDD Color Type";
+                if (label.toLowerCase() === "cpu soket" || label.toLowerCase() === "cpu socket") label = "CPU Soket";
+                if (label.toLowerCase() === "mb platform") label = "MB Platform";
+                if (label.toLowerCase() === "mb size") label = "MB Size";
+                if (label.toLowerCase() === "ram capacity") label = "RAM Capacity";
+                if (label.toLowerCase() === "vram" || label.toLowerCase() === "memory vram") label = "Memory (VRAM)";
+                if (label.toLowerCase() === "gpu series") label = "GPU Series";
+
+                if (!dynamicItems.some((di) => di.label.toLowerCase() === label.toLowerCase())) {
+                    dynamicItems.push({ label, value: String(v).trim() });
+                }
+            }
+        }
+
+        return {
+            categoryTitle: product.subCategory || product.category || "Hardware",
+            items: dynamicItems.filter((i) => i.value && i.value.trim().length > 0),
+        };
+    }
+
     // Helper to check existing specifications table if already provided by backend/admin
     const findExisting = (labelName: string): string | null => {
         // 1. Check direct main_specifications object from admin

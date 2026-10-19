@@ -88,6 +88,7 @@ export interface DetailedProduct {
     rating: number;
     reviews: number;
     condition?: string;
+    description?: string;
     image: string;
     images: string[];
     specifications?: ProductSpecGroup[];
@@ -152,25 +153,39 @@ function ProductViewContent({
     const [quantity, setQuantity] = useState(1);
     const [isAddedToCart, setIsAddedToCart] = useState(false);
 
-    // Main specifications for this product's category/subcategory
+    // Main specifications for this product's category/subcategory (strictly non-empty)
     const mainSpecsData = useMemo(() => {
-        return getMainSpecifications(product);
+        const raw = getMainSpecifications(product);
+        return {
+            ...raw,
+            items: (raw.items || []).filter(
+                (item) => item.value && String(item.value).trim().length > 0,
+            ),
+        };
     }, [product]);
 
-    // Filter out Brand from General Specifications in Technical Specifications
+    // Filter out Brand from General Specifications and omit any empty items or groups
     const filteredSpecifications = useMemo(() => {
         if (!product.specifications) return [];
-        return product.specifications.map((group) => {
-            if (group.group?.toLowerCase().includes("general")) {
+        return product.specifications
+            .map((group) => {
+                let items = group.items || [];
+                if (group.group?.toLowerCase().includes("general")) {
+                    items = items.filter(
+                        (item) => item.label?.toLowerCase() !== "brand",
+                    );
+                }
+                // Exclude any specification item that has an empty or blank value
+                items = items.filter(
+                    (item) => item.value && String(item.value).trim().length > 0,
+                );
                 return {
                     ...group,
-                    items: group.items.filter(
-                        (item) => item.label?.toLowerCase() !== "brand",
-                    ),
+                    items,
                 };
-            }
-            return group;
-        });
+            })
+            // Only render specification groups that contain at least one non-empty item
+            .filter((group) => group.items.length > 0);
     }, [product.specifications]);
 
     // Active detail tab
@@ -291,7 +306,7 @@ function ProductViewContent({
             reviews: product.reviews,
             colors: [],
             sizes: [],
-            description: product.description,
+            description: product.description || "",
             brand: product.brand || "ComLink",
         });
     };
@@ -898,28 +913,36 @@ function ProductViewContent({
                                             </p>
                                         </div>
 
-                                        <div className="rounded-xl border border-border/70 overflow-hidden bg-bg/50">
-                                            <div className="bg-muted/30 px-4 py-2.5 border-b border-border/70">
-                                                <h4 className="text-xs font-bold uppercase tracking-wider text-fg">
-                                                    {mainSpecsData.categoryTitle} Specifications
-                                                </h4>
+                                        {mainSpecsData.items && mainSpecsData.items.length > 0 ? (
+                                            <div className="rounded-xl border border-border/70 overflow-hidden bg-bg/50">
+                                                <div className="bg-muted/30 px-4 py-2.5 border-b border-border/70">
+                                                    <h4 className="text-xs font-bold uppercase tracking-wider text-fg">
+                                                        {mainSpecsData.categoryTitle} Specifications
+                                                    </h4>
+                                                </div>
+                                                <div className="divide-y divide-border/40">
+                                                    {mainSpecsData.items.map((item, iIdx) => (
+                                                        <div
+                                                            key={`main-spec-${iIdx}`}
+                                                            className="grid grid-cols-1 sm:grid-cols-3 px-4 py-3 text-xs gap-1"
+                                                        >
+                                                            <span className="font-semibold text-muted">
+                                                                {item.label}
+                                                            </span>
+                                                            <span className="sm:col-span-2 text-fg font-medium">
+                                                                {item.value}
+                                                            </span>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </div>
-                                            <div className="divide-y divide-border/40">
-                                                {mainSpecsData.items.map((item, iIdx) => (
-                                                    <div
-                                                        key={`main-spec-${iIdx}`}
-                                                        className="grid grid-cols-1 sm:grid-cols-3 px-4 py-3 text-xs gap-1"
-                                                    >
-                                                        <span className="font-semibold text-muted">
-                                                            {item.label}
-                                                        </span>
-                                                        <span className="sm:col-span-2 text-fg font-medium">
-                                                            {item.value}
-                                                        </span>
-                                                    </div>
-                                                ))}
+                                        ) : (
+                                            <div className="rounded-xl border border-border/70 p-5 bg-bg/50">
+                                                <p className="text-xs text-muted">
+                                                    Standard hardware specifications apply. Brand and condition verified by ComLink Quality Assurance.
+                                                </p>
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
 
                                     {/* Section 2: Technical Specifications */}

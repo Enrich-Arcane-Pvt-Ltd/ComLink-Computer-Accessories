@@ -105,6 +105,13 @@ const defaultNavItems: NavItem[] = [
         ],
     },
     { name: "Software", path: cat("software") },
+    {
+        name: "Cameras",
+        path: cat("cameras"),
+        children: [
+            { name: "CCTV", path: "/shop?category=cameras&subcategory=cctv" },
+        ],
+    },
 ];
 
 const BUILD_PC_ROUTE = "/build-my-pc";
@@ -130,7 +137,7 @@ export default function Navbar() {
                 image: item.image,
                 children: item.children?.map((child: any) => ({
                     name: child.name,
-                    path: child.path || `/shop?category=${child.slug}`,
+                    path: child.path || `/shop?category=${item.slug}&subcategory=${child.slug}`,
                     image: child.image,
                 })),
             }));

@@ -3,7 +3,7 @@ import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/Button";
 import AppLayout from "@/Layouts/AppLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { FormEventHandler, MouseEvent, useRef, useState } from "react";
+import { FormEventHandler } from "react";
 
 export default function Login({
     status,
@@ -12,19 +12,6 @@ export default function Login({
     status?: string;
     canResetPassword: boolean;
 }) {
-    // Spotlight hero ref and hover state
-    const heroRef = useRef<HTMLDivElement>(null);
-    const [isHovering, setIsHovering] = useState(false);
-
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (!heroRef.current) return;
-        const rect = heroRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        heroRef.current.style.setProperty("--mouse-x", `${x}px`);
-        heroRef.current.style.setProperty("--mouse-y", `${y}px`);
-    };
-
     // 1. Inertia Form Hooks
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
@@ -215,54 +202,33 @@ export default function Login({
                     </div>
                 </div>
 
-                {/* ───────── RIGHT: Master hero panel with battlestation background & interactive spotlight ───────── */}
+                {/* ───────── RIGHT: Master hero panel with battlestation background ───────── */}
                 <div
-                    ref={heroRef}
-                    onMouseEnter={() => setIsHovering(true)}
-                    onMouseLeave={() => setIsHovering(false)}
-                    onMouseMove={handleMouseMove}
                     className="hidden lg:flex lg:w-1/2 relative items-center justify-center border-l border-border/40 overflow-hidden"
                 >
-                    {/* Background battlestation image (cinematic dark base) */}
+                    {/* Background battlestation image (instant fallback base while video loads) */}
                     <img
                         src="/images/login-bg.png"
                         alt="ComLink Gaming Setup"
                         className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
                     />
 
+                    {/* Ambient background video on top of the image */}
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        poster="/images/login-bg.png"
+                        className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+                    >
+                        <source src="/videos/login_video.mp4" type="video/mp4" />
+                    </video>
+
                     {/* Dark cinematic overlays for contrast & cyber ambiance */}
                     <div className="absolute inset-0 bg-black/65 backdrop-blur-[1px]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-bg/75" />
                     <div className="absolute inset-0 bg-gradient-to-r from-bg/90 via-transparent to-black/50" />
-
-                    {/* Interactive Spotlight Reveal: Clears away darkness in a focused radius under the cursor */}
-                    <div
-                        aria-hidden="true"
-                        className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
-                            isHovering ? "opacity-100" : "opacity-0"
-                        }`}
-                        style={{
-                            maskImage:
-                                "radial-gradient(circle 140px at var(--mouse-x, -999px) var(--mouse-y, -999px), black 25%, rgba(0,0,0,0.5) 65%, transparent 100%)",
-                            WebkitMaskImage:
-                                "radial-gradient(circle 140px at var(--mouse-x, -999px) var(--mouse-y, -999px), black 25%, rgba(0,0,0,0.5) 65%, transparent 100%)",
-                        }}
-                    >
-                        {/* Bright, high-clarity original image */}
-                        <img
-                            src="/images/login-bg.png"
-                            alt="ComLink Gaming Setup - Clear Spotlight"
-                            className="w-full h-full object-cover select-none brightness-110 contrast-105"
-                        />
-                        {/* Subtle cyber cyan illumination gradient over the revealed circle */}
-                        <div
-                            className="absolute inset-0"
-                            style={{
-                                background:
-                                    "radial-gradient(circle 140px at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(34,211,238,0.1) 0%, transparent 100%)",
-                            }}
-                        />
-                    </div>
 
                     {/* Ambient cyan glow */}
                     <div

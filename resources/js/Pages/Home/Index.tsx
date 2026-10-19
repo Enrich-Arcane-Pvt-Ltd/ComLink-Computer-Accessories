@@ -58,7 +58,9 @@ interface Slide {
     link: string;
 }
 interface HomeProps extends PageProps {
-    products: Product[];
+    products?: any[];
+    newestProducts?: any[];
+    bestSellerProducts?: any[];
     categories: CategoryProp[];
     testimonials: Testimonial[];
     slides: Slide[];
@@ -69,13 +71,15 @@ interface HomeProps extends PageProps {
 export default function Home({
     auth,
     products = [],
+    newestProducts = [],
+    bestSellerProducts = [],
     categories = [],
     testimonials = [],
     slides = [],
     instagramImages = [],
     title = "Home",
 }: HomeProps) {
-    const newProducts = products.filter((p) => p.isNew).slice(0, 4);
+    const newProducts = (newestProducts && newestProducts.length > 0 ? newestProducts : products).slice(0, 4);
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         username_hp: "",
@@ -207,12 +211,12 @@ export default function Home({
                 </section>
 
                 {/* New Products Carousel */}
-                <NewProductsCarousel />
+                <NewProductsCarousel products={newestProducts} />
 
                 <LegacyBanner />
 
                 {/* Best Sellers Carousel */}
-                <BestSellersCarousel />
+                <BestSellersCarousel products={bestSellerProducts} />
 
                 <FeatureSection />
 

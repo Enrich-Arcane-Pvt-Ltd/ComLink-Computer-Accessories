@@ -16,7 +16,7 @@ export default function Footer() {
     const { theme } = useTheme();
     const [email, setEmail] = useState("");
 
-    const handleSubscribe = (e) => {
+    const handleSubscribe = (e: React.FormEvent) => {
         e.preventDefault();
         // TODO: wire to your newsletter endpoint, e.g.
         // router.post(route("newsletter.subscribe"), { email });

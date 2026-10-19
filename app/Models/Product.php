@@ -67,6 +67,25 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    protected static function booted(): void
+    {
+        static::saving(function ($product) {
+            if (is_array($product->main_specifications)) {
+                $product->main_specifications = array_filter(
+                    $product->main_specifications,
+                    fn ($val) => ! is_null($val) && trim((string) $val) !== ''
+                );
+            }
+
+            if (is_array($product->technical_specifications)) {
+                $product->technical_specifications = array_filter(
+                    $product->technical_specifications,
+                    fn ($val) => ! is_null($val) && trim((string) $val) !== ''
+                );
+            }
+        });
+    }
+
     // Audit Logs
     public function getActivitylogOptions(): LogOptions
     {

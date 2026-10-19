@@ -119,9 +119,11 @@ interface BestSellersCarouselProps {
 export function BestSellersCarousel({
     products = [],
 }: BestSellersCarouselProps) {
-    // If external products array has items, use it; otherwise use 10 sample best sellers
-    const displayProducts =
-        products && products.length > 0 ? products : sampleBestSellers;
+    if (!products || products.length === 0) {
+        return null;
+    }
+
+    const displayProducts = products;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);

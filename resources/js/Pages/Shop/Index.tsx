@@ -57,6 +57,7 @@ interface ShopProps {
     activeCategory?: CategoryData | null;
     activeSubCategory?: SubCategoryData | null;
     products: ProductCardData[];
+    dynamicFacets?: FilterFacet[];
     filters: Record<string, any>;
 }
 
@@ -498,10 +499,18 @@ export default function ShopIndex({
     activeCategory = null,
     activeSubCategory = null,
     products = [],
+    dynamicFacets = [],
     filters = {},
 }: ShopProps) {
-    // Current active filter schema based on selected subcategory or category
+    // Current active filter schema based on dynamic specifications or selected category/subcategory
     const activeSchema = useMemo<CategoryFilterSchema>(() => {
+        if (dynamicFacets && dynamicFacets.length > 0) {
+            const hasCondition = activeCategory?.slug !== "thermal-paste" && activeCategory?.slug !== "software";
+            return {
+                hasCondition,
+                facets: dynamicFacets,
+            };
+        }
         if (activeSubCategory?.slug && CATEGORY_FILTER_CONFIG[activeSubCategory.slug]) {
             return CATEGORY_FILTER_CONFIG[activeSubCategory.slug];
         }
@@ -515,7 +524,7 @@ export default function ShopIndex({
                 { id: "brand", label: "Brand", options: ["ASUS", "Intel", "AMD", "MSI", "Corsair", "Logitech", "Samsung", "Razer"] },
             ],
         };
-    }, [activeCategory, activeSubCategory]);
+    }, [activeCategory, activeSubCategory, dynamicFacets]);
 
     // Local filter state
     const [condition, setCondition] = useState<string>(filters.condition || "all");
@@ -536,6 +545,18 @@ export default function ShopIndex({
         });
         return init;
     });
+
+    React.useEffect(() => {
+        setExpandedFacets((prev) => {
+            const updated: Record<string, boolean> = { ...prev, categories: true };
+            activeSchema.facets.forEach((f) => {
+                if (updated[f.id] === undefined) {
+                    updated[f.id] = true;
+                }
+            });
+            return updated;
+        });
+    }, [activeSchema]);
 
     const toggleFacet = (id: string) => {
         setExpandedFacets((prev) => ({ ...prev, [id]: !prev[id] }));

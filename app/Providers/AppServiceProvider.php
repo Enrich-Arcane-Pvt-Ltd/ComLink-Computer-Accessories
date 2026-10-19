@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (app()->isLocal()) {
+        if (app()->isLocal() && ! app()->runningInConsole()) {
             ini_set('max_execution_time', '120');
             set_time_limit(120);
         }
