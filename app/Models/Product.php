@@ -46,6 +46,28 @@ class Product extends Model
         'published_at' => 'date',
     ];
 
+    protected static function booted(): void
+    {
+        static::saving(function (self $product) {
+            if (is_array($product->main_specifications)) {
+                $cleaned = [];
+                foreach ($product->main_specifications as $k => $v) {
+                    if (! is_null($v) && trim((string) $v) !== '') {
+                        $cleaned[$k] = trim((string) $v);
+                    }
+                }
+                $product->main_specifications = $cleaned;
+            }
+
+            if (is_array($product->technical_specifications)) {
+                $product->technical_specifications = array_filter(
+                    $product->technical_specifications,
+                    fn ($val) => ! is_null($val) && trim((string) $val) !== ''
+                );
+            }
+        });
+    }
+
     // Relationships
     public function brand(): BelongsTo
     {
@@ -65,25 +87,6 @@ class Product extends Model
     public function variants(): HasMany
     {
         return $this->hasMany(ProductVariant::class);
-    }
-
-    protected static function booted(): void
-    {
-        static::saving(function ($product) {
-            if (is_array($product->main_specifications)) {
-                $product->main_specifications = array_filter(
-                    $product->main_specifications,
-                    fn ($val) => ! is_null($val) && trim((string) $val) !== ''
-                );
-            }
-
-            if (is_array($product->technical_specifications)) {
-                $product->technical_specifications = array_filter(
-                    $product->technical_specifications,
-                    fn ($val) => ! is_null($val) && trim((string) $val) !== ''
-                );
-            }
-        });
     }
 
     // Audit Logs

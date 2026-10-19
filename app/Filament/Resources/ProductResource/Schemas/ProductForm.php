@@ -275,31 +275,52 @@ class ProductForm
                                             }
 
                                             $components = [];
+                                            $targetCatId = $subId ?: $catId;
+
                                             foreach ($specs as $spec) {
+                                                // Ignore Brand Title because Brand is chosen in General Information
+                                                if (strtolower(trim($spec->title)) === 'brand') {
+                                                    continue;
+                                                }
+
                                                 $key = Str::slug($spec->title, '_');
 
-                                                // Common datalist suggestions for standard attributes
-                                                $datalist = match (strtolower(trim($spec->title))) {
-                                                    'cooling type' => ['AIO Liquid Cooler', 'Air Cooler', 'Custom Loop'],
-                                                    'modular' => ['Fully Modular', 'Semi-Modular', 'Non-Modular'],
-                                                    'power rating' => ['80 PLUS Titanium', '80 PLUS Platinum', '80 PLUS Gold', '80 PLUS Silver', '80 PLUS Bronze'],
-                                                    'mb platform' => ['AMD Platform', 'Intel Platform'],
-                                                    'ssd type' => ['M.2 NVMe PCIe 4.0', 'M.2 NVMe PCIe 5.0', '2.5" SATA III'],
-                                                    'form factor' => ['Desktop UDIMM', 'Laptop SODIMM', 'ATX', 'Micro-ATX', 'Mini-ITX'],
-                                                    'memory gen' => ['DDR5', 'DDR4', 'DDR3'],
-                                                    'panel' => ['Fast IPS', 'OLED', 'QD-OLED', 'VA', 'TN'],
-                                                    default => null,
-                                                };
+                                                // Query previous values added under this title for this specific Sub Category (or Category)
+                                                $previousValues = \App\Models\Product::whereHas('categories', function ($q) use ($targetCatId) {
+                                                    $q->where('categories.id', $targetCatId);
+                                                })
+                                                ->get(['id', 'main_specifications'])
+                                                ->map(fn ($p) => $p->main_specifications[$key] ?? null)
+                                                ->filter(fn ($v) => ! is_null($v) && trim((string) $v) !== '')
+                                                ->map(fn ($v) => trim((string) $v))
+                                                ->unique()
+                                                ->values()
+                                                ->all();
 
                                                 $input = Forms\Components\TextInput::make("main_specifications.{$key}")
                                                     ->label($spec->title)
-                                                    ->placeholder("Enter {$spec->title}...");
+                                                    ->placeholder(! empty($previousValues) ? "Select previous or enter new {$spec->title}..." : "Enter {$spec->title}...")
+                                                    ->datalist($previousValues);
 
-                                                if ($datalist) {
-                                                    $input->datalist($datalist);
+                                                if (! empty($previousValues)) {
+                                                    $preview = implode(', ', array_slice($previousValues, 0, 6));
+                                                    if (count($previousValues) > 6) {
+                                                        $preview .= ' (+' . (count($previousValues) - 6) . ' more)';
+                                                    }
+                                                    $input->helperText("Previously used in this subcategory: {$preview}");
+                                                } else {
+                                                    $input->helperText("No previous values in this subcategory yet. Enter a new value.");
                                                 }
 
                                                 $components[] = $input;
+                                            }
+
+                                            if (empty($components)) {
+                                                return [
+                                                    Forms\Components\Placeholder::make('no_specs_remaining')
+                                                        ->label('Main Specifications Notice')
+                                                        ->content('Brand is configured in General Information. No additional main specification attributes are required for this category.'),
+                                                ];
                                             }
 
                                             return $components;

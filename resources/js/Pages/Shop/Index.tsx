@@ -52,291 +52,22 @@ export interface CategoryFilterSchema {
     facets: FilterFacet[];
 }
 
+export interface BrandItem {
+    id: number;
+    name: string;
+    slug: string;
+}
+
 interface ShopProps {
     categories: CategoryData[];
     activeCategory?: CategoryData | null;
     activeSubCategory?: SubCategoryData | null;
     products: ProductCardData[];
     dynamicFacets?: FilterFacet[];
+    brands?: BrandItem[];
+    pageMaxPrice?: number;
     filters: Record<string, any>;
 }
-
-/* -------------------------------------------------------------------------- */
-/*  Category & Subcategory Specific Filter Configurations                     */
-/* -------------------------------------------------------------------------- */
-
-const CATEGORY_FILTER_CONFIG: Record<string, CategoryFilterSchema> = {
-    // 1. Laptops
-    laptops: {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["ASUS", "Lenovo", "MSI", "Dell", "HP", "Acer", "Apple", "Razer"] },
-            { id: "display_size", label: "Display Size", options: ['13.3"', '14.0"', '15.6"', '16.0"', '17.3"'] },
-            { id: "graphic_cards", label: "Graphic Cards", options: ["NVIDIA RTX 4090", "NVIDIA RTX 4080", "NVIDIA RTX 4070", "NVIDIA RTX 4060", "NVIDIA RTX 4050", "NVIDIA RTX 3050", "Intel Iris Xe", "AMD Radeon"] },
-            { id: "memory", label: "Memory", options: ["8GB", "16GB", "32GB", "64GB"] },
-            { id: "processor", label: "Processor", options: ["Intel Core i5", "Intel Core i7", "Intel Core i9", "Intel Core Ultra 7", "Intel Core Ultra 9", "AMD Ryzen 5", "AMD Ryzen 7", "AMD Ryzen 9"] },
-            { id: "storage", label: "Storage", options: ["512GB SSD", "1TB SSD", "2TB SSD"] },
-            { id: "type", label: "Type", options: ["Gaming Laptop", "Ultrabook", "Business Laptop", "2-in-1 Convertible"] },
-        ],
-    },
-
-    // 2. PC Components - Processors
-    processors: {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["Intel", "AMD"] },
-            { id: "generation", label: "Generation", options: ["Intel 14th Gen", "Intel 13th Gen", "Intel 12th Gen", "AMD Ryzen 9000 Series", "AMD Ryzen 7000 Series", "AMD Ryzen 5000 Series"] },
-            { id: "cores", label: "CORES", options: ["4 Cores", "6 Cores", "8 Cores", "12 Cores", "14 Cores", "16 Cores", "20 Cores", "24 Cores"] },
-            { id: "threads", label: "THREADS", options: ["8 Threads", "12 Threads", "16 Threads", "20 Threads", "24 Threads", "28 Threads", "32 Threads"] },
-        ],
-    },
-
-    // 3. PC Components - Thermal Paste
-    "thermal-paste": {
-        hasCondition: false,
-        facets: [
-            { id: "brand", label: "Brand", options: ["Arctic", "Thermal Grizzly", "Noctua", "Corsair", "Cooler Master"] },
-        ],
-    },
-
-    // 4. PC Components - Motherboards
-    motherboards: {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["ASUS", "MSI", "Gigabyte", "ASRock"] },
-            { id: "performance_level", label: "Performance Level", options: ["Entry Level", "Mainstream", "High-End Enthusiast"] },
-            { id: "cpu_socket", label: "CPU Socket", options: ["LGA 1700", "AM5", "AM4", "LGA 1851"] },
-            { id: "chipset_model", label: "Chipset Model", options: ["Intel Z790", "Intel B760", "Intel Z890", "AMD B650", "AMD X670E", "AMD X870", "AMD A620"] },
-            { id: "mb_platform", label: "MB Platform", options: ["Intel Platform", "AMD Platform"] },
-        ],
-    },
-
-    // 5. PC Components - Coolers
-    coolers: {
-        hasCondition: true,
-        facets: [
-            { id: "fans_size", label: "Fans Size", options: ["120mm", "140mm"] },
-            { id: "radiator_size", label: "Radiator Size", options: ["120mm", "240mm", "280mm", "360mm", "420mm"] },
-            { id: "cooling_type", label: "Cooling Type", options: ["AIO Liquid Cooler", "Air Cooler", "Custom Loop"] },
-            { id: "brand", label: "Brand", options: ["NZXT", "Corsair", "DeepCool", "Arctic", "Cooler Master", "Thermalright"] },
-        ],
-    },
-
-    // 6. PC Components - Memory Card (RAM)
-    memory: {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["Corsair", "G.Skill", "Kingston", "TeamGroup", "Crucial"] },
-            { id: "ram_capacity", label: "RAM Capacity", options: ["8GB", "16GB", "32GB (2x16GB)", "64GB (2x32GB)", "128GB"] },
-            { id: "memory_speed", label: "Memory Speed", options: ["3200MHz", "3600MHz", "5200MHz", "5600MHz", "6000MHz", "6400MHz", "7200MHz"] },
-            { id: "form_factor", label: "Form Factor", options: ["Desktop UDIMM", "Laptop SODIMM"] },
-            { id: "memory_gen", label: "Memory Gen", options: ["DDR4", "DDR5"] },
-        ],
-    },
-
-    // 7. PC Components - SSD
-    ssd: {
-        hasCondition: true,
-        facets: [
-            { id: "generation", label: "Generation", options: ["PCIe Gen 3.0", "PCIe Gen 4.0", "PCIe Gen 5.0"] },
-            { id: "storage_capacity", label: "Storage Capacity", options: ["256GB", "500GB / 512GB", "1TB", "2TB", "4TB"] },
-            { id: "brand", label: "Brand", options: ["Samsung", "Western Digital", "Kingston", "Crucial", "Lexar"] },
-            { id: "ssd_type", label: "SSD Type", options: ["M.2 NVMe", "2.5\" SATA III"] },
-        ],
-    },
-
-    // 8. PC Components - Hard Disk
-    "hard-disk": {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["Seagate", "Western Digital", "Toshiba"] },
-            { id: "hdd_color_type", label: "HDD Color Type", options: ["WD Blue", "WD Black", "WD Red (NAS)", "WD Purple (Surveillance)", "Seagate Barracuda", "Seagate IronWolf"] },
-            { id: "storage_capacity", label: "Storage Capacity", options: ["1TB", "2TB", "4TB", "6TB", "8TB", "12TB+"] },
-            { id: "storage_type", label: "Storage Type", options: ["Internal 3.5\"", "External Portable 2.5\""] },
-        ],
-    },
-
-    // 9. PC Components - Graphic Cards
-    "graphic-cards": {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["NVIDIA", "ASUS", "MSI", "Gigabyte", "Sapphire", "Zotac", "PNY", "PowerColor"] },
-            { id: "gpu_series", label: "GPU Series", options: ["GeForce RTX 40 Series", "GeForce RTX 30 Series", "Radeon RX 7000 Series", "Radeon RX 6000 Series"] },
-            { id: "vram", label: "Memory (VRAM)", options: ["6GB", "8GB", "12GB", "16GB", "20GB", "24GB"] },
-            { id: "accessory_type", label: "Accessory Type", options: ["GPU Anti-Sag Holder", "PCIe Riser Cable", "None"] },
-            { id: "psu_requirement", label: "Power Supply Requirement", options: ["500W", "650W", "750W", "850W", "1000W+"] },
-        ],
-    },
-
-    // 10. PC Components - Power Supply
-    "power-supply": {
-        hasCondition: true,
-        facets: [
-            { id: "power_output", label: "Power Output", options: ["550W", "650W", "750W", "850W", "1000W", "1200W+"] },
-            { id: "brand", label: "Brand", options: ["Corsair", "Seasonic", "Cooler Master", "Thermaltake", "MSI", "ASUS ROG"] },
-            { id: "modular", label: "Modular", options: ["Fully Modular", "Semi-Modular", "Non-Modular"] },
-            { id: "power_rating", label: "Power Rating", options: ["80 PLUS Bronze", "80 PLUS Gold", "80 PLUS Platinum", "80 PLUS Titanium"] },
-        ],
-    },
-
-    // 11. PC Components - PC Cases
-    "pc-cases": {
-        hasCondition: true,
-        facets: [
-            { id: "accessory_type", label: "Accessory Type", options: ["ARGB Fan Kit", "Vertical GPU Mount", "RGB Strip"] },
-            { id: "brand", label: "Brand", options: ["NZXT", "Lian Li", "Corsair", "Fractal Design", "Cooler Master", "Phanteks"] },
-            { id: "cooler_size", label: "Cooler Size", options: ["240mm Support", "280mm Support", "360mm Support", "420mm Support"] },
-            { id: "mb_size", label: "MB Size", options: ["Mini-ITX", "Micro-ATX", "ATX", "E-ATX"] },
-        ],
-    },
-
-    // General fallback for PC Components main
-    "pc-components": {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["Intel", "AMD", "ASUS", "MSI", "Corsair", "Gigabyte", "NZXT", "Samsung"] },
-        ],
-    },
-
-    // 12. Peripherals
-    headsets: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Razer", "Logitech G", "HyperX", "SteelSeries", "Corsair", "Sony"] }],
-    },
-    keyboards: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Redragon", "Logitech G", "Razer", "Keychron", "SteelSeries", "Corsair"] }],
-    },
-    mouse: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Logitech G", "Razer", "SteelSeries", "Glorious", "Pulsar", "Zowie"] }],
-    },
-    "mouse-pad": {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Razer", "SteelSeries", "Corsair", "Logitech G", "Aqua Control"] }],
-    },
-    speakers: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Logitech", "Creative", "Edifier", "Razer"] }],
-    },
-    webcam: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Logitech", "Elgato", "Razer", "Anker"] }],
-    },
-    converters: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["UGREEN", "Baseus", "Vention"] }],
-    },
-    adapters: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["UGREEN", "Baseus", "TP-Link", "Apple"] }],
-    },
-    "video-creator-equipments": {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Elgato", "Rode", "Shure", "Sony", "DJI"] }],
-    },
-    peripherals: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Logitech", "Razer", "SteelSeries", "Corsair", "Elgato", "Redragon"] }],
-    },
-
-    // 13. Monitors & Displays
-    "monitors-displays": {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["Samsung", "LG", "ASUS ROG", "Dell", "MSI", "ViewSonic", "AOC"] },
-            { id: "panel", label: "Panel", options: ["IPS", "Fast IPS", "OLED", "QD-OLED", "VA", "TN"] },
-            { id: "screen_size", label: "Screen Size", options: ['24 Inch', '27 Inch', '32 Inch', '34 Inch Ultrawide', '49 Inch Super Ultrawide'] },
-        ],
-    },
-
-    // 14. Gaming
-    "gaming-laptops": {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["ASUS ROG", "Lenovo Legion", "MSI Gaming", "Acer Predator", "Dell Alienware", "Razer Blade"] },
-            { id: "display_size", label: "Display Size", options: ['15.6"', '16.0"', '17.3"', '18.0"'] },
-            { id: "graphic_cards", label: "Graphic Cards", options: ["RTX 4090", "RTX 4080", "RTX 4070", "RTX 4060", "RTX 4050"] },
-            { id: "memory", label: "Memory", options: ["16GB", "32GB", "64GB"] },
-            { id: "processor", label: "Processor", options: ["Intel Core i7", "Intel Core i9", "AMD Ryzen 7", "AMD Ryzen 9"] },
-            { id: "storage", label: "Storage", options: ["512GB SSD", "1TB SSD", "2TB SSD"] },
-            { id: "type", label: "Type", options: ["High Performance", "Slim Gaming", "Desktop Replacement"] },
-        ],
-    },
-    consoles: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Sony PlayStation", "Microsoft Xbox", "Nintendo Switch", "Valve Steam Deck"] }],
-    },
-    controllers: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Sony DualSense", "Xbox Wireless", "Razer Wolverine", "Logitech", "8BitDo"] }],
-    },
-    gaming: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Sony", "Microsoft", "Nintendo", "ASUS ROG", "Razer", "Logitech"] }],
-    },
-
-    // 15. Products
-    computers: {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["ComLink Custom PC", "ASUS", "HP", "Dell", "Lenovo", "Apple"] },
-            { id: "computer_type", label: "Computer Type", options: ["Custom Gaming PC", "Workstation PC", "All-In-One", "Mini PC", "Budget Office PC"] },
-            { id: "processor", label: "Processor", options: ["Intel Core i5", "Intel Core i7", "Intel Core i9", "AMD Ryzen 5", "AMD Ryzen 7", "AMD Ryzen 9"] },
-            { id: "graphics_card", label: "Graphics Card", options: ["RTX 4060", "RTX 4070", "RTX 4080", "RTX 4090", "Integrated Graphics"] },
-            { id: "memory_ram", label: "Memory (RAM)", options: ["16GB", "32GB", "64GB", "128GB"] },
-            { id: "storage", label: "Storage", options: ["512GB SSD", "1TB SSD", "2TB SSD", "1TB SSD + 2TB HDD"] },
-            { id: "warranty", label: "Warranty", options: ["1 Year Warranty", "2 Years Warranty", "3 Years Warranty"] },
-        ],
-    },
-    ups: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["APC", "Prolink", "Mercury", "Eaton"] }],
-    },
-    chairs: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Secretlab", "DXRacer", "Cougar", "Razer", "Fantech"] }],
-    },
-    tables: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Eureka Ergonomic", "Cougar", "Thermaltake", "Custom Gaming Desk"] }],
-    },
-    "power-banks": {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Anker", "Xiaomi", "Baseus", "Romoss"] }],
-    },
-    "extension-cards": {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Huntkey", "Belkin", "LDNIO", "Schneider Electric"] }],
-    },
-    printers: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Epson", "Canon", "HP", "Brother"] }],
-    },
-    "toners-cartridges": {
-        hasCondition: true,
-        facets: [
-            { id: "brand", label: "Brand", options: ["HP", "Canon", "Epson", "Brother"] },
-            { id: "toner_type", label: "Type", options: ["Ink Bottle", "Ink Cartridge", "Ribbon", "Toner Cartridge"] },
-        ],
-    },
-    scanners: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["Canon", "Epson", "HP", "Fujitsu"] }],
-    },
-    products: {
-        hasCondition: true,
-        facets: [{ id: "brand", label: "Brand", options: ["ComLink", "HP", "Epson", "Secretlab", "APC", "Anker"] }],
-    },
-
-    // 16. Software
-    software: {
-        hasCondition: false,
-        facets: [
-            { id: "brand", label: "Brand", options: ["Microsoft", "Kaspersky", "Adobe", "Bitdefender", "ESET"] },
-        ],
-    },
-};
 
 /* -------------------------------------------------------------------------- */
 /*  Price Range Bar Component                                                 */
@@ -345,25 +76,31 @@ const CATEGORY_FILTER_CONFIG: Record<string, CategoryFilterSchema> = {
 function PriceBarSlider({
     minPrice,
     maxPrice,
+    maxLimit = 100000,
     onMinChange,
     onMaxChange,
     onApply,
+    onApplyPreset,
     onReset,
 }: {
     minPrice: string | number;
     maxPrice: string | number;
+    maxLimit?: number;
     onMinChange: (val: string) => void;
     onMaxChange: (val: string) => void;
     onApply: () => void;
+    onApplyPreset?: (min: string, max: string) => void;
     onReset: () => void;
 }) {
     const minLimit = 0;
-    const maxLimit = 3000;
-    const parsedMin = minPrice === "" ? minLimit : Math.max(minLimit, Math.min(maxLimit, Number(minPrice)));
-    const parsedMax = maxPrice === "" ? maxLimit : Math.max(minLimit, Math.min(maxLimit, Number(maxPrice)));
+    const effectiveMax = Math.max(10, Math.ceil(maxLimit));
+    const step = Math.max(1, Math.round(effectiveMax / 100));
 
-    const leftPercent = (parsedMin / maxLimit) * 100;
-    const rightPercent = (parsedMax / maxLimit) * 100;
+    const parsedMin = minPrice === "" ? minLimit : Math.max(minLimit, Math.min(effectiveMax, Number(minPrice)));
+    const parsedMax = maxPrice === "" ? effectiveMax : Math.max(minLimit, Math.min(effectiveMax, Number(maxPrice)));
+
+    const leftPercent = (parsedMin / effectiveMax) * 100;
+    const rightPercent = (parsedMax / effectiveMax) * 100;
     const fillWidth = Math.max(0, rightPercent - leftPercent);
 
     return (
@@ -382,32 +119,36 @@ function PriceBarSlider({
                     }}
                 />
 
-                {/* Min Slider Input (invisible thumb overlay) */}
+                {/* Min Slider Input (invisible thumb overlay with pointer-events on thumb) */}
                 <input
                     type="range"
                     min={minLimit}
-                    max={maxLimit}
-                    step={25}
+                    max={effectiveMax}
+                    step={step}
                     value={parsedMin}
                     onChange={(e) => {
-                        const val = Math.min(Number(e.target.value), parsedMax - 25);
-                        onMinChange(val === 0 ? "" : val.toString());
+                        const val = Math.min(Number(e.target.value), parsedMax - step);
+                        onMinChange(val <= 0 ? "" : val.toString());
                     }}
-                    className="absolute w-full h-3 opacity-0 cursor-pointer pointer-events-auto z-30"
+                    onMouseUp={onApply}
+                    onTouchEnd={onApply}
+                    className="absolute w-full h-3 opacity-0 cursor-pointer pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-moz-range-thumb]:pointer-events-auto z-30"
                 />
 
-                {/* Max Slider Input (invisible thumb overlay) */}
+                {/* Max Slider Input (invisible thumb overlay with pointer-events on thumb) */}
                 <input
                     type="range"
                     min={minLimit}
-                    max={maxLimit}
-                    step={25}
+                    max={effectiveMax}
+                    step={step}
                     value={parsedMax}
                     onChange={(e) => {
-                        const val = Math.max(Number(e.target.value), parsedMin + 25);
-                        onMaxChange(val === maxLimit ? "" : val.toString());
+                        const val = Math.max(Number(e.target.value), parsedMin + step);
+                        onMaxChange(val >= effectiveMax ? "" : val.toString());
                     }}
-                    className="absolute w-full h-3 opacity-0 cursor-pointer pointer-events-auto z-30"
+                    onMouseUp={onApply}
+                    onTouchEnd={onApply}
+                    className="absolute w-full h-3 opacity-0 cursor-pointer pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-moz-range-thumb]:pointer-events-auto z-30"
                 />
 
                 {/* Styled Visual Thumb: Min */}
@@ -429,7 +170,7 @@ function PriceBarSlider({
                 <span className="text-accent font-semibold">
                     {formatPrice(parsedMin, 0)} - {formatPrice(parsedMax, 0)}
                 </span>
-                <span>{formatPrice(500000, 0)}+</span>
+                <span>{formatPrice(effectiveMax, 0)}</span>
             </div>
 
             {/* Input boxes */}
@@ -439,6 +180,8 @@ function PriceBarSlider({
                     <input
                         type="number"
                         placeholder="0"
+                        min={0}
+                        max={effectiveMax}
                         value={minPrice}
                         onChange={(e) => onMinChange(e.target.value)}
                         className="w-full bg-bg border border-border rounded-lg px-2.5 py-1.5 text-xs text-fg focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
@@ -448,7 +191,9 @@ function PriceBarSlider({
                     <span className="text-[10px] text-muted block mb-1 font-medium">Max Price ({CURRENCY_SYMBOL.trim()})</span>
                     <input
                         type="number"
-                        placeholder="500000+"
+                        placeholder={effectiveMax.toString()}
+                        min={0}
+                        max={effectiveMax}
                         value={maxPrice}
                         onChange={(e) => onMaxChange(e.target.value)}
                         className="w-full bg-bg border border-border rounded-lg px-2.5 py-1.5 text-xs text-fg focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
@@ -457,27 +202,45 @@ function PriceBarSlider({
             </div>
 
             {/* Quick Price Ranges */}
-            <div className="flex flex-wrap gap-1.5 pt-0.5">
-                {[
-                    { label: `< ${formatPrice(10000, 0)}`, min: "0", max: "10000" },
-                    { label: `${CURRENCY_SYMBOL}10k - 50k`, min: "10000", max: "50000" },
-                    { label: `${CURRENCY_SYMBOL}50k - 150k`, min: "50000", max: "150000" },
-                    { label: `${CURRENCY_SYMBOL}150k - 300k`, min: "150000", max: "300000" },
-                    { label: `${CURRENCY_SYMBOL}300k+`, min: "300000", max: "1000000" },
-                ].map((preset) => (
-                    <button
-                        key={preset.label}
-                        type="button"
-                        onClick={() => {
-                            onMinChange(preset.min);
-                            onMaxChange(preset.max);
-                        }}
-                        className="text-[10px] px-2 py-1 bg-bg border border-border/80 rounded-md text-muted hover:text-fg hover:border-accent transition-colors"
-                    >
-                        {preset.label}
-                    </button>
-                ))}
-            </div>
+            {effectiveMax > 100 && (
+                <div className="flex flex-wrap gap-1.5 pt-0.5">
+                    {(() => {
+                        const roundNice = (num: number) => {
+                            if (num >= 50000) return Math.round(num / 5000) * 5000;
+                            if (num >= 10000) return Math.round(num / 1000) * 1000;
+                            if (num >= 1000) return Math.round(num / 500) * 500;
+                            return Math.round(num / 50) * 50;
+                        };
+                        const q1 = roundNice(effectiveMax * 0.25);
+                        const q2 = roundNice(effectiveMax * 0.5);
+                        const q3 = roundNice(effectiveMax * 0.75);
+
+                        return [
+                            { label: `< ${formatPrice(q1, 0)}`, min: "0", max: String(q1) },
+                            { label: `${formatPrice(q1, 0)} - ${formatPrice(q2, 0)}`, min: String(q1), max: String(q2) },
+                            { label: `${formatPrice(q2, 0)} - ${formatPrice(q3, 0)}`, min: String(q2), max: String(q3) },
+                            { label: `${formatPrice(q3, 0)}+`, min: String(q3), max: String(effectiveMax) },
+                        ].map((preset) => (
+                            <button
+                                key={preset.label}
+                                type="button"
+                                onClick={() => {
+                                    onMinChange(preset.min);
+                                    onMaxChange(preset.max);
+                                    if (onApplyPreset) {
+                                        onApplyPreset(preset.min, preset.max);
+                                    } else {
+                                        onApply();
+                                    }
+                                }}
+                                className="text-[10px] px-2 py-1 bg-bg border border-border/80 rounded-md text-muted hover:text-fg hover:border-accent transition-colors"
+                            >
+                                {preset.label}
+                            </button>
+                        ));
+                    })()}
+                </div>
+            )}
 
             <button
                 type="button"
@@ -500,31 +263,30 @@ export default function ShopIndex({
     activeSubCategory = null,
     products = [],
     dynamicFacets = [],
+    brands = [],
+    pageMaxPrice = 0,
     filters = {},
 }: ShopProps) {
-    // Current active filter schema based on dynamic specifications or selected category/subcategory
+    // Current maximum product price for this page scope (defaults cleanly if no products)
+    const computedMaxPrice = useMemo(() => {
+        if (pageMaxPrice && pageMaxPrice > 0) {
+            return Math.ceil(pageMaxPrice);
+        }
+        if (products && products.length > 0) {
+            const highest = Math.max(...products.map((p) => p.latestPrice || p.originalPrice || 0));
+            if (highest > 0) return Math.ceil(highest);
+        }
+        return 100000;
+    }, [pageMaxPrice, products]);
+
+    // Current active filter schema based on dynamic specifications
     const activeSchema = useMemo<CategoryFilterSchema>(() => {
-        if (dynamicFacets && dynamicFacets.length > 0) {
-            const hasCondition = activeCategory?.slug !== "thermal-paste" && activeCategory?.slug !== "software";
-            return {
-                hasCondition,
-                facets: dynamicFacets,
-            };
-        }
-        if (activeSubCategory?.slug && CATEGORY_FILTER_CONFIG[activeSubCategory.slug]) {
-            return CATEGORY_FILTER_CONFIG[activeSubCategory.slug];
-        }
-        if (activeCategory?.slug && CATEGORY_FILTER_CONFIG[activeCategory.slug]) {
-            return CATEGORY_FILTER_CONFIG[activeCategory.slug];
-        }
-        // Universal fallback for All Categories
+        const hasCondition = activeCategory?.slug !== "thermal-paste" && activeCategory?.slug !== "software";
         return {
-            hasCondition: true,
-            facets: [
-                { id: "brand", label: "Brand", options: ["ASUS", "Intel", "AMD", "MSI", "Corsair", "Logitech", "Samsung", "Razer"] },
-            ],
+            hasCondition,
+            facets: dynamicFacets || [],
         };
-    }, [activeCategory, activeSubCategory, dynamicFacets]);
+    }, [activeCategory, dynamicFacets]);
 
     // Local filter state
     const [condition, setCondition] = useState<string>(filters.condition || "all");
@@ -533,6 +295,8 @@ export default function ShopIndex({
     const [maxPrice, setMaxPrice] = useState(filters.max_price || "");
     const [inStockOnly, setInStockOnly] = useState(Boolean(filters.in_stock));
     const [outOfStockOnly, setOutOfStockOnly] = useState(Boolean(filters.out_of_stock));
+    const [brandSearch, setBrandSearch] = useState("");
+    const [brandExpanded, setBrandExpanded] = useState(true);
     const [facetSearches, setFacetSearches] = useState<Record<string, string>>({});
     const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
     const [columns, setColumns] = useState<3 | 4>(3);
@@ -588,6 +352,14 @@ export default function ShopIndex({
         return current.toString().split(",").includes(optionValue);
     };
 
+    // Helper to check if a brand is selected
+    const isBrandSelected = (brandName: string, brandSlug: string): boolean => {
+        const current = filters.brand;
+        if (!current) return false;
+        const list = Array.isArray(current) ? current : current.toString().split(",");
+        return list.includes(brandName) || list.includes(brandSlug);
+    };
+
     // Apply URL filter updates via Inertia
     const applyFilters = (newParams: Record<string, any>) => {
         const query: Record<string, any> = {
@@ -614,6 +386,27 @@ export default function ShopIndex({
         router.get("/shop", query, {
             preserveState: true,
             preserveScroll: true,
+        });
+    };
+
+    // Toggle a brand checkbox
+    const handleToggleBrand = (brandName: string) => {
+        const current = filters.brand;
+        let values: string[] = [];
+        if (Array.isArray(current)) {
+            values = [...current];
+        } else if (typeof current === "string" && current.length > 0) {
+            values = current.split(",");
+        }
+
+        if (values.includes(brandName)) {
+            values = values.filter((v) => v !== brandName);
+        } else {
+            values.push(brandName);
+        }
+
+        applyFilters({
+            brand: values.length > 0 ? values.join(",") : undefined,
         });
     };
 
@@ -708,7 +501,7 @@ export default function ShopIndex({
         if (minPrice || maxPrice) {
             pills.push({
                 key: "price_range",
-                label: `Price: ${CURRENCY_SYMBOL}${minPrice || "0"} - ${CURRENCY_SYMBOL}${maxPrice || "Max"}`,
+                label: `Price: ${formatPrice(Number(minPrice) || 0, 0)} - ${maxPrice ? formatPrice(Number(maxPrice), 0) : formatPrice(computedMaxPrice, 0)}`,
                 onRemove: () => {
                     setMinPrice("");
                     setMaxPrice("");
@@ -728,6 +521,20 @@ export default function ShopIndex({
             });
         }
 
+        if (filters.brand) {
+            const rawBrands = Array.isArray(filters.brand) ? filters.brand : filters.brand.toString().split(",");
+            rawBrands.forEach((b: string) => {
+                const trimmed = b.trim();
+                if (trimmed) {
+                    pills.push({
+                        key: `brand-${trimmed}`,
+                        label: `Brand: ${trimmed}`,
+                        onRemove: () => handleToggleBrand(trimmed),
+                    });
+                }
+            });
+        }
+
         activeSchema.facets.forEach((facet) => {
             const raw = filters[facet.id];
             if (raw) {
@@ -743,7 +550,7 @@ export default function ShopIndex({
         });
 
         return pills;
-    }, [condition, inStockOnly, outOfStockOnly, minPrice, maxPrice, searchTerm, filters, activeSchema]);
+    }, [condition, inStockOnly, outOfStockOnly, minPrice, maxPrice, searchTerm, filters, activeSchema, computedMaxPrice]);
 
     // Page title
     const pageTitle = useMemo(() => {
@@ -832,9 +639,11 @@ export default function ShopIndex({
                 <PriceBarSlider
                     minPrice={minPrice}
                     maxPrice={maxPrice}
+                    maxLimit={computedMaxPrice}
                     onMinChange={setMinPrice}
                     onMaxChange={setMaxPrice}
                     onApply={() => applyFilters({ min_price: minPrice, max_price: maxPrice })}
+                    onApplyPreset={(min, max) => applyFilters({ min_price: min, max_price: max })}
                     onReset={() => {
                         setMinPrice("");
                         setMaxPrice("");
@@ -885,7 +694,95 @@ export default function ShopIndex({
                 </div>
             </div>
 
-            {/* 4. Dynamic Category Facets (Brand, Socket, Cores, VRAM, RAM, etc.) */}
+            {/* 4. Brand Filter - Loaded dynamically from real brands added by admin in database */}
+            {brands.length > 0 && (() => {
+                const search = brandSearch.toLowerCase();
+                const filteredBrands = brands.filter((b) =>
+                    b.name.toLowerCase().includes(search)
+                );
+                const selectedBrandCount = brands.filter((b) =>
+                    isBrandSelected(b.name, b.slug)
+                ).length;
+
+                return (
+                    <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
+                        <button
+                            type="button"
+                            onClick={() => setBrandExpanded((prev) => !prev)}
+                            className="w-full flex items-center justify-between p-4 text-left transition-colors hover:bg-muted/10 group"
+                        >
+                            <div className="flex items-center gap-2">
+                                <span className="font-display font-bold text-xs uppercase tracking-wider text-fg group-hover:text-accent transition-colors">
+                                    Brand
+                                </span>
+                                {selectedBrandCount > 0 && (
+                                    <span className="text-[10px] px-1.5 py-0.2 bg-accent text-white dark:text-slate-950 font-bold rounded-full">
+                                        {selectedBrandCount}
+                                    </span>
+                                )}
+                            </div>
+                            <ChevronDown
+                                className={`w-4 h-4 text-muted group-hover:text-fg transition-transform duration-200 ${
+                                    brandExpanded ? "rotate-180" : ""
+                                }`}
+                            />
+                        </button>
+
+                        {brandExpanded && (
+                            <div className="px-4 pb-4 pt-1 space-y-2 border-t border-border/60">
+                                {brands.length > 6 && (
+                                    <div className="relative mb-2">
+                                        <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted" />
+                                        <input
+                                            type="text"
+                                            placeholder="Search brands..."
+                                            value={brandSearch}
+                                            onChange={(e) => setBrandSearch(e.target.value)}
+                                            className="w-full bg-bg border border-border rounded-lg pl-7 pr-2 py-1 text-[11px] text-fg focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                                        />
+                                    </div>
+                                )}
+
+                                <div className="max-h-48 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin">
+                                    {filteredBrands.length > 0 ? (
+                                        filteredBrands.map((b) => {
+                                            const checked = isBrandSelected(b.name, b.slug);
+                                            return (
+                                                <label
+                                                    key={b.id}
+                                                    className="flex items-center gap-2 cursor-pointer text-xs text-muted hover:text-fg select-none py-0.5 group"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={checked}
+                                                        onChange={() => handleToggleBrand(b.name)}
+                                                        className="rounded border-border text-accent focus:ring-accent w-3.5 h-3.5 bg-bg cursor-pointer accent-cyan-600 dark:accent-cyan-400"
+                                                    />
+                                                    <span
+                                                        className={`truncate transition-colors ${
+                                                            checked
+                                                                ? "text-accent font-semibold"
+                                                                : "group-hover:text-fg"
+                                                        }`}
+                                                    >
+                                                        {b.name}
+                                                    </span>
+                                                </label>
+                                            );
+                                        })
+                                    ) : (
+                                        <p className="text-[11px] text-muted py-1 italic">
+                                            No brands match search
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                );
+            })()}
+
+            {/* 5. Main Specification Titles with their added values for selections */}
             {activeSchema.facets.map((facet) => {
                 const isExpanded = Boolean(expandedFacets[facet.id]);
                 const searchVal = facetSearches[facet.id] || "";

@@ -171,14 +171,33 @@ class ShopController extends Controller
             });
         }
 
-        // 4. Filter by price
+        // Calculate the maximum Latest Price among all products in this page scope (before price filtering)
+        $scopeProducts = (clone $dbProductsQuery)->get(['price', 'sale_price']);
+        $pageMaxPrice = (float) ($scopeProducts->map(function ($p) {
+            return ($p->sale_price !== null && (float) $p->sale_price > 0)
+                ? (float) $p->sale_price
+                : (float) $p->price;
+        })->max() ?? 0);
+        $pageMaxPrice = ceil($pageMaxPrice);
+        if ($pageMaxPrice <= 0) {
+            $fallbackMax = (float) (Product::where('is_visible', true)->get(['price', 'sale_price'])->map(function ($p) {
+                return ($p->sale_price !== null && (float) $p->sale_price > 0)
+                    ? (float) $p->sale_price
+                    : (float) $p->price;
+            })->max() ?? 50000);
+            $pageMaxPrice = ceil(max($fallbackMax, 50000));
+        }
+
+        // 4. Filter by price (using Latest Selling Price)
         $minPrice = $request->query('min_price');
         $maxPrice = $request->query('max_price');
-        if ($minPrice !== null && is_numeric($minPrice)) {
-            $dbProductsQuery->where('price', '>=', (float) $minPrice);
+        $priceSql = 'CASE WHEN sale_price IS NOT NULL AND sale_price > 0 THEN sale_price ELSE price END';
+
+        if ($minPrice !== null && is_numeric($minPrice) && (float) $minPrice > 0) {
+            $dbProductsQuery->whereRaw("({$priceSql}) >= ?", [(float) $minPrice]);
         }
         if ($maxPrice !== null && is_numeric($maxPrice)) {
-            $dbProductsQuery->where('price', '<=', (float) $maxPrice);
+            $dbProductsQuery->whereRaw("({$priceSql}) <= ?", [(float) $maxPrice]);
         }
 
         // 5. Filter by condition (All / Brandnew / Used)
@@ -202,9 +221,27 @@ class ShopController extends Controller
             $dbProductsQuery->where('quantity', '<=', 0);
         }
 
+        // 6. Filter by Brand (from query parameter 'brand')
+        $brandParam = $request->query('brand');
+        if ($brandParam) {
+            $selectedBrands = is_array($brandParam) ? $brandParam : explode(',', (string) $brandParam);
+            $selectedBrands = array_filter(array_map('trim', $selectedBrands));
+
+            if (! empty($selectedBrands)) {
+                $dbProductsQuery->whereHas('brand', function ($bq) use ($selectedBrands) {
+                    $bq->whereIn('name', $selectedBrands)
+                        ->orWhereIn('slug', $selectedBrands);
+                });
+            }
+        }
+
         // 7. Dynamic Specification Attributes & Facets for Category/Subcategory
+        // ONLY shown if on a Sub Category page, OR if category has NO subcategories
         $dynamicFacets = [];
-        if ($activeCategory) {
+        $hasActiveSubCategory = ! empty($activeSubCategory);
+        $categoryHasNoSubcategories = ! empty($activeCategory) && empty($activeCategory['subcategories']);
+
+        if ($hasActiveSubCategory || $categoryHasNoSubcategories) {
             $catId = $activeCategory['id'];
             $subId = $activeSubCategory['id'] ?? null;
 
@@ -216,69 +253,40 @@ class ShopController extends Controller
                     $q->where('sub_category_id', $subId)
                         ->orWhereNull('sub_category_id');
                 });
+            } else {
+                $specQuery->whereNull('sub_category_id');
             }
 
             $specAttributes = $specQuery->orderBy('sort_order')->orderBy('id')->get();
 
             // Fetch products in this category/subcategory to extract actual values
             $baseCategoryProducts = Product::where('is_visible', true)
-                ->whereHas('categories', function ($q) use ($subId, $catId, $activeCategory) {
+                ->whereHas('categories', function ($q) use ($subId, $catId) {
                     if ($subId) {
                         $q->where('categories.id', $subId);
                     } else {
-                        $targetIds = array_merge([$catId], collect($activeCategory['subcategories'] ?? [])->pluck('id')->all());
-                        $q->whereIn('categories.id', $targetIds);
+                        $q->where('categories.id', $catId);
                     }
                 })
-                ->with('brand')
                 ->get();
 
             foreach ($specAttributes as $spec) {
+                // Ignore Brand title because Brand is already added previously as its own section
+                if (strtolower(trim($spec->title)) === 'brand') {
+                    continue;
+                }
+
                 $key = \Illuminate\Support\Str::slug($spec->title, '_');
-                $isBrand = strtolower(trim($spec->title)) === 'brand';
                 $values = [];
 
                 foreach ($baseCategoryProducts as $bp) {
-                    if ($isBrand) {
-                        if ($bp->brand?->name) {
-                            $values[] = trim($bp->brand->name);
-                        }
-                    } else {
-                        $rawVal = $bp->main_specifications[$key] ?? null;
-                        if ($rawVal !== null && trim((string) $rawVal) !== '') {
-                            $values[] = trim((string) $rawVal);
-                        }
+                    $rawVal = $bp->main_specifications[$key] ?? null;
+                    if ($rawVal !== null && trim((string) $rawVal) !== '') {
+                        $values[] = trim((string) $rawVal);
                     }
                 }
 
                 $values = array_values(array_unique(array_filter($values)));
-
-                // If no products in DB yet, load standard options
-                if (empty($values)) {
-                    $knownOptions = match (strtolower(trim($spec->title))) {
-                        'brand' => ['Intel', 'AMD', 'ASUS', 'MSI', 'Gigabyte', 'Corsair', 'Lenovo', 'HP', 'Dell', 'EZIVIZ'],
-                        'generation' => ['Intel 14th Gen', 'Intel 13th Gen', 'Intel 12th Gen', 'AMD Ryzen 7000 Series', 'AMD Ryzen 5000 Series'],
-                        'cores' => ['4 Cores', '6 Cores', '8 Cores', '12 Cores', '14 Cores', '16 Cores', '24 Cores'],
-                        'threads' => ['8 Threads', '12 Threads', '16 Threads', '20 Threads', '24 Threads', '32 Threads'],
-                        'memory' => ['8GB', '16GB', '32GB', '64GB'],
-                        'storage' => ['512GB SSD', '1TB SSD', '2TB SSD'],
-                        'display size' => ['13.3"', '14.0"', '15.6"', '16.0"', '17.3"'],
-                        'graphic cards' => ['NVIDIA RTX 4090', 'NVIDIA RTX 4080', 'NVIDIA RTX 4070', 'NVIDIA RTX 4060', 'AMD Radeon'],
-                        'cooling type' => ['AIO Liquid Cooler', 'Air Cooler', 'Custom Loop'],
-                        'form factor' => ['Desktop UDIMM', 'Laptop SODIMM', 'ATX', 'Micro-ATX'],
-                        'cpu soket', 'cpu socket' => ['LGA 1700', 'AM5', 'AM4', 'LGA 1851'],
-                        'chipset model' => ['Intel Z790', 'Intel B760', 'AMD B650', 'AMD X670E'],
-                        'mb platform' => ['Intel Platform', 'AMD Platform'],
-                        'ssd type' => ['M.2 NVMe PCIe 4.0', 'M.2 NVMe PCIe 5.0', '2.5" SATA III'],
-                        'ram capacity' => ['8GB', '16GB', '32GB (2x16GB)', '64GB (2x32GB)'],
-                        'memory speed' => ['3200MHz', '3600MHz', '5200MHz', '5600MHz', '6000MHz'],
-                        'type' => ['Gaming Laptop', 'Ultrabook', 'Business Laptop', '2-in-1 Convertible'],
-                        default => [],
-                    };
-                    if (! empty($knownOptions)) {
-                        $values = $knownOptions;
-                    }
-                }
 
                 if (! empty($values)) {
                     $dynamicFacets[] = [
@@ -295,18 +303,12 @@ class ShopController extends Controller
                     $selectedOptions = array_filter(array_map('trim', $selectedOptions));
 
                     if (! empty($selectedOptions)) {
-                        if ($isBrand) {
-                            $dbProductsQuery->whereHas('brand', function ($bq) use ($selectedOptions) {
-                                $bq->whereIn('name', $selectedOptions);
-                            });
-                        } else {
-                            $dbProductsQuery->where(function ($sq) use ($key, $selectedOptions) {
-                                foreach ($selectedOptions as $opt) {
-                                    $sq->orWhere("main_specifications->{$key}", $opt)
-                                        ->orWhere("main_specifications->{$key}", 'like', "%{$opt}%");
-                                }
-                            });
-                        }
+                        $dbProductsQuery->where(function ($sq) use ($key, $selectedOptions) {
+                            foreach ($selectedOptions as $opt) {
+                                $sq->orWhere("main_specifications->{$key}", $opt)
+                                    ->orWhere("main_specifications->{$key}", 'like', "%{$opt}%");
+                            }
+                        });
                     }
                 }
             }
@@ -316,10 +318,10 @@ class ShopController extends Controller
         $sort = $request->query('sort', 'featured');
         switch ($sort) {
             case 'price_asc':
-                $dbProductsQuery->orderBy('price', 'asc');
+                $dbProductsQuery->orderByRaw("({$priceSql}) asc");
                 break;
             case 'price_desc':
-                $dbProductsQuery->orderBy('price', 'desc');
+                $dbProductsQuery->orderByRaw("({$priceSql}) desc");
                 break;
             case 'newest':
                 $dbProductsQuery->orderBy('created_at', 'desc');
@@ -361,9 +363,20 @@ class ShopController extends Controller
             ];
         });
 
-        $brand = $request->query('brand');
-        $allQueryParams = $request->all();
+        // Real brands added by admin in database
+        $brands = \App\Models\Brand::where('is_visible', true)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('name', 'asc')
+            ->get(['id', 'name', 'slug'])
+            ->map(fn ($b) => [
+                'id' => $b->id,
+                'name' => $b->name,
+                'slug' => $b->slug,
+            ])
+            ->values()
+            ->all();
 
+        $allQueryParams = $request->all();
         $products = $dbProducts->values()->all();
 
         return Inertia::render('Shop/Index', [
@@ -371,7 +384,9 @@ class ShopController extends Controller
             'activeCategory' => $activeCategory,
             'activeSubCategory' => $activeSubCategory,
             'products' => $products,
+            'brands' => $brands,
             'dynamicFacets' => $dynamicFacets,
+            'pageMaxPrice' => $pageMaxPrice,
             'filters' => array_merge([
                 'category' => $activeCategory['slug'] ?? null,
                 'subcategory' => $activeSubCategory['slug'] ?? null,
@@ -382,6 +397,7 @@ class ShopController extends Controller
                 'in_stock' => $request->boolean('in_stock', false),
                 'out_of_stock' => $request->boolean('out_of_stock', false),
                 'condition' => $condition,
+                'brand' => $brandParam,
             ], $allQueryParams),
         ]);
     }
