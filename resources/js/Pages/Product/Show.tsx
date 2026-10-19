@@ -94,6 +94,8 @@ export interface DetailedProduct {
     specifications?: ProductSpecGroup[];
     main_specifications?: Record<string, any>;
     technical_specifications?: Record<string, any>;
+    warranty_duration?: number;
+    warranty_unit?: string;
     warranty?: ProductWarrantyInfo;
     reviewsList?: ProductReviewItem[];
 }
@@ -829,7 +831,11 @@ function ProductViewContent({
                                 </div>
                                 <div className="flex items-center gap-2 text-muted">
                                     <Wrench className="h-4 w-4 text-cyan-500 shrink-0" />
-                                    <span>Official Warranty</span>
+                                    <span>
+                                        {product.warranty_duration
+                                            ? `${product.warranty_duration} ${product.warranty_duration === 1 ? (product.warranty_unit || "Year").replace(/s$/, "") : (product.warranty_unit || "Years")} Warranty`
+                                            : "Official Warranty"}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -1012,8 +1018,10 @@ function ProductViewContent({
                                                 <span className="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 block mb-1">
                                                     Official Guarantee
                                                 </span>
-                                                <h3 className="text-xl sm:text-2xl font-black text-fg font-display">
-                                                    {product.warranty?.duration || "2 Years Official Warranty"}
+                                                <h3 className="text-xl sm:text-2xl font-black text-fg font-display uppercase">
+                                                    {product.warranty_duration
+                                                        ? `${product.warranty_duration} ${product.warranty_duration === 1 ? (product.warranty_unit || "Year").replace(/s$/, "") : (product.warranty_unit || "Years")} OFFICIAL COMLINK WARRANTY`
+                                                        : (product.warranty?.duration || "2 YEARS OFFICIAL COMLINK WARRANTY")}
                                                 </h3>
                                                 <p className="text-xs text-muted mt-0.5">
                                                     {product.warranty?.type ||

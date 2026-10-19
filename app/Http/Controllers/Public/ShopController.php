@@ -908,8 +908,17 @@ class ShopController extends Controller
             ? $item['images']
             : $this->resolve4ProductImages($targetSlug, $item['image'] ?? null);
 
-        // Warranty based on category
-        $warrantyYears = in_array($targetSlug, ['processors', 'motherboards', 'graphic-cards', 'power-supply']) ? '3 Years' : (in_array($targetSlug, ['laptops', 'gaming-laptops', 'gaming-monitors', 'monitors-displays', 'ups', 'chairs']) ? '2 Years' : '1 Year');
+        // Warranty duration and period unit
+        $warrantyDuration = ! empty($item['warranty_duration']) ? (int) $item['warranty_duration'] : null;
+        $warrantyUnit = ! empty($item['warranty_unit']) ? (string) $item['warranty_unit'] : 'Years';
+
+        if ($warrantyDuration !== null && $warrantyDuration > 0) {
+            $unitFormatted = $warrantyDuration === 1 ? rtrim($warrantyUnit, 's') : (rtrim($warrantyUnit, 's') . 's');
+            $warrantyText = "{$warrantyDuration} " . strtoupper($unitFormatted) . " OFFICIAL COMLINK WARRANTY";
+        } else {
+            $warrantyYears = in_array($targetSlug, ['processors', 'motherboards', 'graphic-cards', 'power-supply']) ? '3 Years' : (in_array($targetSlug, ['laptops', 'gaming-laptops', 'gaming-monitors', 'monitors-displays', 'ups', 'chairs']) ? '2 Years' : '1 Year');
+            $warrantyText = strtoupper("{$warrantyYears} Official ComLink Warranty");
+        }
 
         $skuPrefix = strtoupper(substr($targetSlug, 0, 3));
         $condition = $item['condition'] ?? 'Brand New';
@@ -937,6 +946,8 @@ class ShopController extends Controller
             'rating' => $rating,
             'reviews' => $reviews,
             'condition' => $condition,
+            'warranty_duration' => $warrantyDuration,
+            'warranty_unit' => $warrantyUnit,
             'image' => $images[0],
             'images' => $images,
             'description' => $description,
@@ -944,7 +955,7 @@ class ShopController extends Controller
             'main_specifications' => $item['main_specifications'] ?? null,
             'technical_specifications' => $item['technical_specifications'] ?? null,
             'warranty' => [
-                'duration' => "{$warrantyYears} Official ComLink Warranty",
+                'duration' => $warrantyText,
                 'type' => 'Manufacturer Replacement & Hardware Warranty',
                 'covered' => [
                     'Factory manufacturing defects and hardware malfunctions',
@@ -1108,6 +1119,8 @@ class ShopController extends Controller
             'specifications' => $specifications,
             'main_specifications' => $p->main_specifications,
             'technical_specifications' => $p->technical_specifications,
+            'warranty_duration' => $p->warranty_duration,
+            'warranty_unit' => $p->warranty_unit,
         ];
 
         return $this->enrichProductDetails($base);

@@ -357,6 +357,32 @@ class ProductForm
                                 ]),
                         ]),
                 ]),
+
+            // 6. Warranty Information
+            Forms\Components\Section::make('Warranty Information')
+                ->description('Specify the product warranty duration and time period.')
+                ->schema([
+                    Forms\Components\TextInput::make('warranty_duration')
+                        ->label('Warranty Period (No. of)')
+                        ->placeholder('e.g. 1, 2, 6, 12, 24')
+                        ->numeric()
+                        ->minValue(0)
+                        ->helperText('Number of time periods (e.g. 2 for 2 Years, 6 for 6 Months).'),
+
+                    Forms\Components\Select::make('warranty_unit')
+                        ->label('Warranty Time Period Unit')
+                        ->options([
+                            'Days' => 'Days',
+                            'Weeks' => 'Weeks',
+                            'Months' => 'Months',
+                            'Years' => 'Years',
+                        ])
+                        ->default('Years')
+                        ->searchable(false)
+                        ->selectablePlaceholder(false)
+                        ->native(false)
+                        ->helperText('Select time unit: Days, Weeks, Months, or Years.'),
+                ])->columns(2),
         ];
     }
 
