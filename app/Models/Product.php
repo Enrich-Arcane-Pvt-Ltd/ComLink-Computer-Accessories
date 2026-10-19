@@ -16,6 +16,7 @@ class Product extends Model
 
     protected $fillable = [
         'brand_id',
+        'supplier_id',
         'name',
         'slug',
         'sku',
@@ -25,6 +26,8 @@ class Product extends Model
         'sale_price',
         'cost_price',
         'quantity',
+        'stock_added_count',
+        'stock_added_date',
         'security_stock',
         'is_visible',
         'is_featured',
@@ -48,10 +51,21 @@ class Product extends Model
         'price' => 'decimal:2',
         'sale_price' => 'decimal:2',
         'published_at' => 'date',
+        'stock_added_count' => 'integer',
+        'stock_added_date' => 'datetime',
     ];
 
     protected static function booted(): void
     {
+        static::creating(function (self $product) {
+            if (is_null($product->stock_added_count)) {
+                $product->stock_added_count = (int) ($product->quantity ?? 0);
+            }
+            if (is_null($product->stock_added_date)) {
+                $product->stock_added_date = now();
+            }
+        });
+
         static::saving(function (self $product) {
             if (is_array($product->main_specifications)) {
                 $cleaned = [];
@@ -76,6 +90,11 @@ class Product extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
     }
 
     public function categories(): BelongsToMany

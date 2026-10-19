@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -183,10 +184,21 @@ class CheckoutController extends Controller
             foreach ($validated['items'] as $item) {
                 $qty = (int) $item['quantity'];
                 $price = (float) $item['price'];
+                $prodId = is_numeric($item['productId'] ?? null) ? (int) $item['productId'] : null;
+
+                // Decrement available product stock in database
+                if ($prodId) {
+                    $product = Product::lockForUpdate()->find($prodId);
+                    if ($product) {
+                        $currentStock = (int) ($product->quantity ?? 0);
+                        $product->quantity = max(0, $currentStock - $qty);
+                        $product->save();
+                    }
+                }
 
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'product_id' => is_numeric($item['productId'] ?? null) ? (int) $item['productId'] : null,
+                    'product_id' => $prodId,
                     'product_name' => $item['name'],
                     'product_image' => $item['image'] ?? '/images/placeholder.png',
                     'category_name' => $item['category'] ?? 'Hardware',

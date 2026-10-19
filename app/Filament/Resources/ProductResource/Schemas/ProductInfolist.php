@@ -69,8 +69,13 @@ class ProductInfolist
 
                                         return $currency.' '.number_format($record->price, 2);
                                     }),
+                                Infolists\Components\TextEntry::make('supplier.name')
+                                    ->label('Supplier Details')
+                                    ->placeholder('Direct Stock / Warehouse')
+                                    ->icon('heroicon-m-building-storefront'),
+
                                 Infolists\Components\TextEntry::make('quantity')
-                                    ->label('Total Stock')
+                                    ->label('Available Product Count')
                                     ->badge()
                                     ->color(fn ($state) => $state <= 0 ? 'danger' : ($state <= 10 ? 'warning' : 'success'))
                                     ->formatStateUsing(function ($record) {

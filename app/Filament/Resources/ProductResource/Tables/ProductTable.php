@@ -10,6 +10,7 @@ class ProductTable
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn ($query) => $query->with(['supplier', 'brand', 'categories']))
             ->columns([
                 Tables\Columns\TextColumn::make('index')
                     ->label('No')
@@ -20,8 +21,13 @@ class ProductTable
                     ->view('filament.tables.columns.product-info')
                     ->searchable(query: fn ($query, $search) => $query->where('name', 'like', "%{$search}%")),
 
+                Tables\Columns\ViewColumn::make('supplier_details')
+                    ->label('Supplier Details')
+                    ->view('filament.tables.columns.supplier-details')
+                    ->searchable(query: fn ($query, $search) => $query->whereHas('supplier', fn ($q) => $q->where('name', 'like', "%{$search}%"))),
+
                 Tables\Columns\TextColumn::make('quantity')
-                    ->label('Product Count')
+                    ->label('Available Product Count')
                     ->sortable()
                     ->badge()
                     ->color(fn ($state): string => match (true) {
@@ -44,6 +50,10 @@ class ProductTable
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+                Tables\Filters\SelectFilter::make('supplier')
+                    ->relationship('supplier', 'name')
+                    ->preload(),
+
                 Tables\Filters\SelectFilter::make('brand')
                     ->relationship('brand', 'name')
                     ->preload(),

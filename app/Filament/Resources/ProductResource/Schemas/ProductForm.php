@@ -99,7 +99,7 @@ class ProductForm
                                 $set('technical_specifications.model_series', $state);
                             }
                         })
-                        ->columnSpan(2),
+                        ->columnSpan(3),
 
                     Forms\Components\TextInput::make('slug')
                         ->label('Slug')
@@ -114,6 +114,26 @@ class ProductForm
                         ->label('SKU')
                         ->placeholder('e.g. CL-PRC-101')
                         ->unique(Product::class, 'sku', ignoreRecord: true)
+                        ->columnSpan(1),
+
+                    Forms\Components\Select::make('supplier_id')
+                        ->label('Supplier Name')
+                        ->relationship('supplier', 'name')
+                        ->searchable()
+                        ->preload()
+                        ->placeholder('Select Supplier')
+                        ->createOptionForm([
+                            Forms\Components\TextInput::make('name')
+                                ->label('Supplier Name')
+                                ->required(),
+                            Forms\Components\TextInput::make('contact_no')
+                                ->label('Contact No'),
+                            Forms\Components\TextInput::make('email')
+                                ->label('Email')
+                                ->email(),
+                            Forms\Components\Textarea::make('address')
+                                ->label('Address'),
+                        ])
                         ->columnSpan(1),
 
                     Forms\Components\TextInput::make('quantity')
@@ -138,7 +158,7 @@ class ProductForm
                         ->rows(4)
                         ->columnSpanFull()
                         ->placeholder('Provide an engaging summary, highlight key features, and compatibility notes...'),
-                ])->columns(3),
+                ])->columns(4),
 
             // 3. Product Gallery (4 Images)
             Forms\Components\Section::make('Product Gallery (4 Images)')
