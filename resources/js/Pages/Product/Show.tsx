@@ -438,7 +438,7 @@ function ProductViewContent({
                                                 onMouseEnter={() => setActiveImageIndex(idx)}
                                                 aria-label={`Select product image ${idx + 1}`}
                                                 className={cn(
-                                                    "group relative flex-1 min-h-0 aspect-square w-full rounded-xl overflow-hidden border-2 bg-gradient-to-b from-slate-100/80 to-slate-200/50 dark:from-slate-900/60 dark:to-slate-950/80 p-1.5 transition-all duration-200 cursor-pointer flex items-center justify-center",
+                                                    "group relative flex-1 min-h-0 aspect-square w-full rounded-xl overflow-hidden border-2 bg-gradient-to-b from-slate-100/80 to-slate-200/50 dark:from-slate-900/60 dark:to-slate-950/80 transition-all duration-200 cursor-pointer flex items-center justify-center",
                                                     isActive
                                                         ? "border-cyan-500 ring-2 ring-cyan-500/30 dark:ring-cyan-400/30 shadow-md scale-[1.02]"
                                                         : "border-border/70 hover:border-cyan-500/50 hover:bg-card/80 opacity-80 hover:opacity-100",
@@ -447,7 +447,7 @@ function ProductViewContent({
                                                 <img
                                                     src={imgUrl}
                                                     alt={`${product.name} view ${idx + 1}`}
-                                                    className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-108"
+                                                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-108"
                                                     loading="lazy"
                                                 />
                                                 {isActive && (
@@ -459,7 +459,7 @@ function ProductViewContent({
                                 </div>
 
                                 {/* Main Square Product Image Box */}
-                                <div className="group relative flex-1 min-w-0 aspect-square rounded-2xl overflow-hidden border border-border/80 bg-gradient-to-b from-slate-100/90 via-slate-100/60 to-slate-200/50 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-slate-950/90 p-6 sm:p-8 flex items-center justify-center shadow-sm hover:border-cyan-500/40 transition-colors">
+                                <div className="group relative flex-1 min-w-0 aspect-square rounded-2xl overflow-hidden border border-border/80 bg-gradient-to-b from-slate-100/90 via-slate-100/60 to-slate-200/50 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-slate-950/90 flex items-center justify-center shadow-sm hover:border-cyan-500/40 transition-colors">
                                     {/* Ambient subtle spotlight glow */}
                                     <div className="pointer-events-none absolute inset-0 bg-radial from-cyan-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -522,7 +522,7 @@ function ProductViewContent({
                                         src={imagesList[activeImageIndex]}
                                         alt={product.name}
                                         className={cn(
-                                            "max-h-[360px] sm:max-h-[420px] w-auto max-w-full object-contain drop-shadow-md transition-all duration-500 ease-out group-hover:scale-105 cursor-zoom-in",
+                                            "h-full w-full object-cover drop-shadow-md transition-all duration-500 ease-out group-hover:scale-105 cursor-zoom-in",
                                             !product.inStock && "opacity-60 grayscale",
                                         )}
                                         onClick={() => setIsLightboxOpen(true)}

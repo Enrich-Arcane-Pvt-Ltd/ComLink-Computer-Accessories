@@ -332,7 +332,7 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
             <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-cyan-500/10 blur-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-cyan-500/15" />
 
             {/* ---------------- 1. Image Showcase Stage ---------------- */}
-            <div className="relative mx-3 mt-3 aspect-square overflow-hidden rounded-xl bg-gradient-to-b from-slate-100/90 to-slate-200/50 dark:from-slate-900/60 dark:to-slate-950/80 p-5 flex items-center justify-center border border-border/40 group-hover:border-cyan-500/25 transition-colors duration-300">
+            <div className="relative mx-3 mt-3 aspect-square overflow-hidden rounded-xl bg-gradient-to-b from-slate-100/90 to-slate-200/50 dark:from-slate-900/60 dark:to-slate-950/80 flex items-center justify-center border border-border/40 group-hover:border-cyan-500/25 transition-colors duration-300">
                 {/* Radial spotlight effect behind product on hover */}
                 <div className="pointer-events-none absolute inset-0 bg-radial from-cyan-500/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -418,7 +418,7 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
                         alt={normalized.name}
                         loading="lazy"
                         className={cn(
-                            "max-h-[190px] w-auto max-w-full object-contain drop-shadow-sm transition-transform duration-500 ease-out group-hover:scale-108",
+                            "h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105",
                             !normalized.inStock && "opacity-50 grayscale",
                         )}
                     />
