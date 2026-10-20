@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PurchaseOrderResource\Tables;
 
+use App\Filament\Resources\GrnResource\GrnResource;
 use App\Models\PurchaseOrder;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -66,7 +67,7 @@ class PurchaseOrderTable
                     ->icon('heroicon-o-document-plus')
                     ->color('success')
                     ->tooltip('Create Goods Received Note from this Purchase Order')
-                    ->url(fn (PurchaseOrder $record): string => url('/admin/grns/create?purchase_order_id=' . $record->id)),
+                    ->url(fn (PurchaseOrder $record): string => GrnResource::getUrl('create', ['purchase_order_id' => $record->id])),
 
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),

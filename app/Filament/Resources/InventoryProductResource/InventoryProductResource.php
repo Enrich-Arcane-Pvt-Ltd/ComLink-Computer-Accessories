@@ -24,6 +24,8 @@ class InventoryProductResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Inventory Products';
 
+    protected static ?string $slug = 'inventory-products';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form

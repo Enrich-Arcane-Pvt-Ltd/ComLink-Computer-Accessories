@@ -5,6 +5,7 @@ namespace App\Filament\Resources\PurchaseOrderResource\Pages;
 use App\Filament\Resources\PurchaseOrderResource\PurchaseOrderResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\MaxWidth;
 
 class ListPurchaseOrders extends ListRecords
 {
@@ -17,5 +18,10 @@ class ListPurchaseOrders extends ListRecords
                 ->label('Add Purchase Orders')
                 ->icon('heroicon-o-plus'),
         ];
+    }
+
+    public function getMaxContentWidth(): MaxWidth | string | null
+    {
+        return MaxWidth::Full;
     }
 }

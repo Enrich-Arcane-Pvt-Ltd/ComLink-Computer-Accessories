@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use Filament\Forms;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Illuminate\Support\Str;
 
 class GrnForm
 {
@@ -55,12 +56,12 @@ class GrnForm
                                     $set('supplier_id', $po->supplier_id);
                                     $itemsData = [];
                                     foreach ($po->items as $item) {
-                                        $itemsData[] = [
+                                        $itemsData[(string) Str::uuid()] = [
                                             'inventory_product_id' => $item->inventory_product_id,
                                             'product_code' => $item->product_code,
                                             'product_name' => $item->product_name,
-                                            'product_condition' => $item->product_condition,
-                                            'product_quantity' => $item->product_quantity,
+                                            'product_condition' => $item->product_condition ?: 'Brandnew',
+                                            'product_quantity' => (int) ($item->product_quantity ?: 1),
                                             'price_per_unit' => 0.00,
                                             'total' => 0.00,
                                         ];
@@ -98,13 +99,21 @@ class GrnForm
                                     if ($supplierId) {
                                         $query->where('supplier_id', $supplierId);
                                     }
-                                    return $query->get()->mapWithKeys(fn ($p) => [
+                                    $options = $query->get()->mapWithKeys(fn ($p) => [
                                         $p->product_code => "{$p->product_code} — {$p->product_name}",
-                                    ]);
+                                    ])->toArray();
+
+                                    if (empty($options)) {
+                                        $options = InventoryProduct::all()->mapWithKeys(fn ($p) => [
+                                            $p->product_code => "{$p->product_code} — {$p->product_name}",
+                                        ])->toArray();
+                                    }
+
+                                    return $options;
                                 })
                                 ->searchable()
                                 ->reactive()
-                                ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                ->afterStateUpdated(function ($state, Set $set) {
                                     if ($state) {
                                         $invProduct = InventoryProduct::where('product_code', $state)->first();
                                         if ($invProduct) {
@@ -152,7 +161,7 @@ class GrnForm
                                 ->required()
                                 ->reactive()
                                 ->afterStateUpdated(fn (Get $get, Set $set) => self::recalculateRowAndSubtotal($get, $set))
-                                ->columnSpan(['sm' => 1, 'md' => 1]),
+                                ->columnSpan(['sm' => 1, 'md' => 2]),
 
                             Forms\Components\TextInput::make('total')
                                 ->label('Total (Rs.)')
@@ -160,11 +169,11 @@ class GrnForm
                                 ->readOnly()
                                 ->default(0.00)
                                 ->dehydrated()
-                                ->extraInputAttributes(['class' => 'font-bold text-cyan-400'])
-                                ->columnSpan(['sm' => 1, 'md' => 1]),
+                                ->extraInputAttributes(['style' => 'font-weight: 700; font-family: monospace; color: #38bdf8; min-width: 120px;'])
+                                ->columnSpan(['sm' => 2, 'md' => 2]),
                         ])
-                        ->columns(['sm' => 2, 'md' => 12])
-                        ->defaultItems(1)
+                        ->columns(['sm' => 2, 'md' => 14])
+                        ->defaultItems(fn () => request()->query('purchase_order_id') ? 0 : 1)
                         ->collapsible()
                         ->itemLabel(fn (array $state): ?string => 
                             isset($state['product_name']) && !empty($state['product_name']) 

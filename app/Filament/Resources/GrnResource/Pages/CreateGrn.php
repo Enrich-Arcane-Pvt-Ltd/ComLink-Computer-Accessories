@@ -6,6 +6,8 @@ use App\Filament\Resources\GrnResource\GrnResource;
 use App\Models\Grn;
 use App\Models\PurchaseOrder;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Support\Enums\MaxWidth;
+use Illuminate\Support\Str;
 
 class CreateGrn extends CreateRecord
 {
@@ -13,26 +15,31 @@ class CreateGrn extends CreateRecord
 
     protected static ?string $title = 'Add GRN (Goods Received Note)';
 
-    public function mount(): void
+    public function getMaxContentWidth(): MaxWidth | string | null
     {
-        parent::mount();
+        return MaxWidth::Full;
+    }
 
+    protected function fillForm(): void
+    {
         $poId = request()->query('purchase_order_id');
         if ($poId) {
             $po = PurchaseOrder::with('items')->find($poId);
             if ($po) {
                 $itemsData = [];
                 foreach ($po->items as $item) {
-                    $itemsData[] = [
+                    $itemsData[(string) Str::uuid()] = [
                         'inventory_product_id' => $item->inventory_product_id,
                         'product_code' => $item->product_code,
                         'product_name' => $item->product_name,
-                        'product_condition' => $item->product_condition,
-                        'product_quantity' => $item->product_quantity,
+                        'product_condition' => $item->product_condition ?: 'Brandnew',
+                        'product_quantity' => (int) ($item->product_quantity ?: 1),
                         'price_per_unit' => 0.00,
                         'total' => 0.00,
                     ];
                 }
+
+                $this->callHook('beforeFill');
 
                 $this->form->fill([
                     'grn_number' => Grn::generateGrnNumber(),
@@ -42,8 +49,13 @@ class CreateGrn extends CreateRecord
                     'created_at' => now(),
                     'items' => $itemsData,
                 ]);
+
+                $this->callHook('afterFill');
+                return;
             }
         }
+
+        parent::fillForm();
     }
 
     protected function mutateFormDataBeforeCreate(array $data): array

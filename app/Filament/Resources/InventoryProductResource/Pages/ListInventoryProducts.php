@@ -5,6 +5,7 @@ namespace App\Filament\Resources\InventoryProductResource\Pages;
 use App\Filament\Resources\InventoryProductResource\InventoryProductResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\MaxWidth;
 
 class ListInventoryProducts extends ListRecords
 {
@@ -17,5 +18,10 @@ class ListInventoryProducts extends ListRecords
                 ->label('Add products')
                 ->icon('heroicon-o-plus'),
         ];
+    }
+
+    public function getMaxContentWidth(): MaxWidth | string | null
+    {
+        return MaxWidth::Full;
     }
 }
