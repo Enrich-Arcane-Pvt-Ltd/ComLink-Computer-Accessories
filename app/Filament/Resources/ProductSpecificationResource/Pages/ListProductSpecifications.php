@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ProductSpecificationResource\Pages;
 use App\Filament\Resources\ProductSpecificationResource\ProductSpecificationResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\MaxWidth;
 
 class ListProductSpecifications extends ListRecords
 {
@@ -18,5 +19,10 @@ class ListProductSpecifications extends ListRecords
                 ->icon('heroicon-m-plus')
                 ->slideOver(),
         ];
+    }
+
+    public function getMaxContentWidth(): MaxWidth | string | null
+    {
+        return MaxWidth::Full;
     }
 }
