@@ -55,7 +55,6 @@ class StockCount extends Page implements HasTable
                     ->label('Inventory Full Count')
                     ->alignCenter()
                     ->formatStateUsing(fn ($record) => number_format((int) $record->inventory_full_count) . ' units')
-                    ->description(fn ($record) => 'Total received via GRN')
                     ->weight('bold')
                     ->color('primary')
                     ->sortable(query: function (Builder $query, string $direction): Builder {

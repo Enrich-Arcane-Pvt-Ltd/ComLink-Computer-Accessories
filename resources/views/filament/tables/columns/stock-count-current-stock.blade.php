@@ -17,12 +17,9 @@
     };
 @endphp
 
-<div style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 2px 0;">
+<div style="display: flex; align-items: center; justify-content: center; padding: 2px 0;">
     <span style="display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 700; {{ $badgeStyle }}">
         <span style="width: 6px; height: 6px; border-radius: 9999px; background-color: {{ $dotColor }}; flex-shrink: 0;"></span>
         {{ number_format($current) }} {{ $current === 1 ? 'unit' : 'units' }}
-    </span>
-    <span style="font-size: 10px; color: #71717a; white-space: nowrap;">
-        Wh: <strong style="color: inherit; font-weight: 600;">{{ $warehouseBalance }}</strong> &bull; Web: <strong style="color: inherit; font-weight: 600;">{{ $webStock }}</strong>
     </span>
 </div>
