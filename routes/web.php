@@ -91,6 +91,9 @@ Route::middleware('auth')->group(function () {
 
 
 require __DIR__ . '/auth.php';
+
+// Admin GRN Print Route
+Route::get('/admin/grn/{id}/print', [\App\Http\Controllers\Admin\GrnPrintController::class, 'show'])->name('admin.grn.print');
  
 // Fallback Route (placed after all routes)
 Route::fallback(function () {
