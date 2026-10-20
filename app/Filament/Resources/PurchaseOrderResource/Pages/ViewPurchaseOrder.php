@@ -21,10 +21,19 @@ class ViewPurchaseOrder extends ViewRecord
     {
         return [
             Actions\Action::make('create_grn')
-                ->label('Create GRN')
-                ->icon('heroicon-o-document-plus')
-                ->color('success')
-                ->url(fn (): string => GrnResource::getUrl('create', ['purchase_order_id' => $this->record->id])),
+                ->label(fn (): string => $this->record->grns()->exists() ? 'GRN Done' : 'Create GRN')
+                ->icon(fn (): string => $this->record->grns()->exists() ? 'heroicon-o-check-circle' : 'heroicon-o-document-plus')
+                ->color(fn (): string => $this->record->grns()->exists() ? 'gray' : 'success')
+                ->tooltip(fn (): string => 
+                    $this->record->grns()->exists()
+                        ? 'GRN already created: ' . $this->record->grns()->first()->grn_number . ' (Click to view)'
+                        : 'Create Goods Received Note from this Purchase Order'
+                )
+                ->url(fn (): string => 
+                    $this->record->grns()->exists()
+                        ? GrnResource::getUrl('view', ['record' => $this->record->grns()->first()->id])
+                        : GrnResource::getUrl('create', ['purchase_order_id' => $this->record->id])
+                ),
             Actions\EditAction::make(),
             Actions\DeleteAction::make(),
         ];

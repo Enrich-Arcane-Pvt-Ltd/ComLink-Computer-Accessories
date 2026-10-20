@@ -61,13 +61,22 @@ class PurchaseOrderTable
                     ->label('Supplier')
                     ->relationship('supplier', 'name'),
             ])
+            ->modifyQueryUsing(fn ($query) => $query->with(['grns', 'supplier', 'items']))
             ->actions([
                 Tables\Actions\Action::make('create_grn')
-                    ->label('GRN')
-                    ->icon('heroicon-o-document-plus')
-                    ->color('success')
-                    ->tooltip('Create Goods Received Note from this Purchase Order')
-                    ->url(fn (PurchaseOrder $record): string => GrnResource::getUrl('create', ['purchase_order_id' => $record->id])),
+                    ->label(fn (PurchaseOrder $record): string => $record->grns->isNotEmpty() ? 'GRN Done' : 'GRN')
+                    ->icon(fn (PurchaseOrder $record): string => $record->grns->isNotEmpty() ? 'heroicon-o-check-circle' : 'heroicon-o-document-plus')
+                    ->color(fn (PurchaseOrder $record): string => $record->grns->isNotEmpty() ? 'gray' : 'success')
+                    ->tooltip(fn (PurchaseOrder $record): string => 
+                        $record->grns->isNotEmpty() 
+                            ? 'GRN already created: ' . $record->grns->first()->grn_number . ' (Click to view)' 
+                            : 'Create Goods Received Note from this Purchase Order'
+                    )
+                    ->url(fn (PurchaseOrder $record): string => 
+                        $record->grns->isNotEmpty()
+                            ? GrnResource::getUrl('view', ['record' => $record->grns->first()->id])
+                            : GrnResource::getUrl('create', ['purchase_order_id' => $record->id])
+                    ),
 
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),

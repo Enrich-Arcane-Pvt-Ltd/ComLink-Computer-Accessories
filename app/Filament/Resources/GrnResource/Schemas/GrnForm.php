@@ -45,7 +45,10 @@ class GrnForm
                             if ($supplierId) {
                                 $query->where('supplier_id', $supplierId);
                             }
-                            return $query->pluck('po_number', 'id');
+                            return $query->with('grns')->get()->mapWithKeys(function ($po) {
+                                $tag = $po->grns->isNotEmpty() ? ' (GRN Done - ' . $po->grns->first()->grn_number . ')' : '';
+                                return [$po->id => "{$po->po_number}{$tag}"];
+                            });
                         })
                         ->searchable()
                         ->reactive()
