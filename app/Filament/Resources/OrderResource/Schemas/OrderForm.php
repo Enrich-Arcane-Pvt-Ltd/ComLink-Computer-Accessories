@@ -15,7 +15,7 @@ class OrderForm
         return [
             // 1. Order Status & Metadata
             Forms\Components\Section::make('Order Information')
-                ->description('Manage order tracking code, status, and payment details.')
+                ->description('Manage order status and payment details.')
                 ->schema([
                     Forms\Components\Select::make('status')
                         ->label('Order Status')
@@ -52,16 +52,7 @@ class OrderForm
                     Forms\Components\TextInput::make('payment_method')
                         ->label('Payment Method')
                         ->default('Stripe Card Payment'),
-
-                    Forms\Components\TextInput::make('courier_name')
-                        ->label('Courier Service')
-                        ->default('Pronto Courier Service')
-                        ->placeholder('e.g. Pronto Courier / Domestic Express'),
-
-                    Forms\Components\TextInput::make('tracking_number')
-                        ->label('Courier Tracking Number')
-                        ->placeholder('e.g. PRN-LK-984210'),
-                ])->columns(3),
+                ])->columns(2),
 
             // 2. User Information
             Forms\Components\Section::make('User Information')
