@@ -94,6 +94,13 @@ require __DIR__ . '/auth.php';
 
 // Admin GRN Print Route
 Route::get('/admin/grn/{id}/print', [\App\Http\Controllers\Admin\GrnPrintController::class, 'show'])->name('admin.grn.print');
+
+// Admin GRN Analyzer Report Routes
+Route::prefix('admin/grn-analyzer')->name('admin.grn-analyzer.')->group(function () {
+    Route::get('/{report}/view', [\App\Http\Controllers\Admin\GrnReportController::class, 'view'])->name('view');
+    Route::get('/{report}/pdf', [\App\Http\Controllers\Admin\GrnReportController::class, 'downloadPdf'])->name('pdf');
+    Route::get('/{report}/print', [\App\Http\Controllers\Admin\GrnReportController::class, 'print'])->name('print');
+});
  
 // Fallback Route (placed after all routes)
 Route::fallback(function () {
