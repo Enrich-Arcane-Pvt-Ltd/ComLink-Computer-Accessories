@@ -142,12 +142,50 @@ class Product extends Model
 
     public function getBalanceInventoryStockAttribute(): int
     {
-        $total = $this->product_code
-            ? (int) GrnItem::where('product_code', $this->product_code)->sum('product_quantity')
-            : (int) ($this->inventory_stock ?? 0);
+        $total = $this->inventory_full_count;
         $show = (int) ($this->show_quantity ?? $this->quantity ?? 0);
 
         return max(0, $total - $show);
+    }
+
+    /**
+     * Total quantity ever received through GRNs.
+     */
+    public function getInventoryFullCountAttribute(): int
+    {
+        if ($this->product_code) {
+            $grnSum = (int) GrnItem::where('product_code', $this->product_code)->sum('product_quantity');
+            if ($grnSum > 0) {
+                return $grnSum;
+            }
+        }
+
+        return (int) ($this->inventory_stock ?? 0);
+    }
+
+    /**
+     * Total quantity sold through successful (paid) customer orders.
+     */
+    public function getSoldCountAttribute(): int
+    {
+        return (int) OrderItem::where(function ($q) {
+            $q->where('product_id', $this->id);
+            if ($this->product_code) {
+                $q->orWhere('product_name', $this->name);
+            }
+        })
+        ->whereHas('order', function ($q) {
+            $q->where('payment_status', 'Paid');
+        })
+        ->sum('quantity');
+    }
+
+    /**
+     * Current physical remaining inventory stock (Full Count - Sold Count).
+     */
+    public function getCurrentInventoryStockAttribute(): int
+    {
+        return max(0, $this->inventory_full_count - $this->sold_count);
     }
 
     // Audit Logs

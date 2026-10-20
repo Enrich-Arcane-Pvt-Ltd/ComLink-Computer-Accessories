@@ -86,6 +86,7 @@ class AdminPanelProvider extends PanelProvider
                 'Catalog Management',
                 'Order Management',
                 'Inventory Management',
+                'Stock Management',
                 'Supplier Management',
                 'Marketing',
                 'System Management',

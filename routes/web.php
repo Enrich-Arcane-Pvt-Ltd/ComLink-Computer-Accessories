@@ -101,6 +101,12 @@ Route::prefix('admin/grn-analyzer')->name('admin.grn-analyzer.')->group(function
     Route::get('/{report}/pdf', [\App\Http\Controllers\Admin\GrnReportController::class, 'downloadPdf'])->name('pdf');
     Route::get('/{report}/print', [\App\Http\Controllers\Admin\GrnReportController::class, 'print'])->name('print');
 });
+
+// Admin Stock Analyzer Report Routes
+Route::prefix('admin/stock-analyzer')->name('admin.stock-analyzer.')->group(function () {
+    Route::get('/report/pdf', [\App\Http\Controllers\Admin\StockAnalyzerReportController::class, 'downloadPdf'])->name('pdf');
+    Route::get('/report/print', [\App\Http\Controllers\Admin\StockAnalyzerReportController::class, 'printView'])->name('print');
+});
  
 // Fallback Route (placed after all routes)
 Route::fallback(function () {
