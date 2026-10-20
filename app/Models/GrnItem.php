@@ -44,10 +44,27 @@ class GrnItem extends Model
 
         static::saved(function (GrnItem $item) {
             $item->grn?->recalculateSubTotal();
+            static::syncProductInventory($item->product_code);
         });
 
         static::deleted(function (GrnItem $item) {
             $item->grn?->recalculateSubTotal();
+            static::syncProductInventory($item->product_code);
         });
+    }
+
+    public static function syncProductInventory(?string $productCode): void
+    {
+        if (! $productCode) {
+            return;
+        }
+
+        $totalStock = (int) static::where('product_code', $productCode)->sum('product_quantity');
+        $latestPrice = static::where('product_code', $productCode)->latest('id')->value('price_per_unit');
+
+        Product::where('product_code', $productCode)->update([
+            'inventory_stock' => $totalStock,
+            'grn_price' => $latestPrice ?? 0,
+        ]);
     }
 }

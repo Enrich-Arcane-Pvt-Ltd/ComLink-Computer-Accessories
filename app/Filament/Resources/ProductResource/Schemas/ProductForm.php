@@ -4,8 +4,11 @@ namespace App\Filament\Resources\ProductResource\Schemas;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\GrnItem;
+use App\Models\InventoryProduct;
 use App\Models\Product;
 use App\Models\ProductSpecification;
+use App\Models\Supplier;
 use Filament\Forms;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -88,40 +91,13 @@ class ProductForm
             // 2. Primary Information
             Forms\Components\Section::make('General Information')
                 ->schema([
-                    Forms\Components\TextInput::make('name')
-                        ->label('Product Name')
-                        ->required()
-                        ->maxLength(255)
-                        ->live(onBlur: true)
-                        ->afterStateUpdated(function (Set $set, ?string $state, Get $get) {
-                            $set('slug', Str::slug($state));
-                            if (! $get('technical_specifications.model_series')) {
-                                $set('technical_specifications.model_series', $state);
-                            }
-                        })
-                        ->columnSpan(3),
-
-                    Forms\Components\TextInput::make('slug')
-                        ->label('Slug')
-                        ->required()
-                        ->maxLength(255)
-                        ->unique(Product::class, 'slug', ignoreRecord: true)
-                        ->disabled()
-                        ->dehydrated()
-                        ->columnSpan(1),
-
-                    Forms\Components\TextInput::make('sku')
-                        ->label('SKU')
-                        ->placeholder('e.g. CL-PRC-101')
-                        ->unique(Product::class, 'sku', ignoreRecord: true)
-                        ->columnSpan(1),
-
                     Forms\Components\Select::make('supplier_id')
                         ->label('Supplier Name')
                         ->relationship('supplier', 'name')
                         ->searchable()
                         ->preload()
                         ->placeholder('Select Supplier')
+                        ->live()
                         ->createOptionForm([
                             Forms\Components\TextInput::make('name')
                                 ->label('Supplier Name')
@@ -136,11 +112,98 @@ class ProductForm
                         ])
                         ->columnSpan(1),
 
-                    Forms\Components\TextInput::make('quantity')
-                        ->label('Product Quantity (Stock)')
-                        ->numeric()
-                        ->default(10)
+                    Forms\Components\Select::make('product_code')
+                        ->label('Product Code')
+                        ->searchable()
+                        ->preload()
+                        ->placeholder('Select Product Code from Inventory')
+                        ->options(function (Get $get) {
+                            $supplierId = $get('supplier_id');
+
+                            $query = InventoryProduct::query();
+                            if ($supplierId) {
+                                $query->where('supplier_id', $supplierId);
+                            }
+                            $inventoryCodes = $query->pluck('product_name', 'product_code')->toArray();
+
+                            $grnQuery = GrnItem::query();
+                            if ($supplierId) {
+                                $grnQuery->whereHas('grn', fn ($q) => $q->where('supplier_id', $supplierId));
+                            }
+                            $grnCodes = $grnQuery->pluck('product_name', 'product_code')->toArray();
+
+                            $all = array_merge($inventoryCodes, $grnCodes);
+                            $options = [];
+                            foreach ($all as $code => $name) {
+                                $options[$code] = "{$code} - {$name}";
+                            }
+
+                            return $options;
+                        })
+                        ->live()
+                        ->afterStateUpdated(function (Set $set, ?string $state, Get $get) {
+                            if (! $state) {
+                                return;
+                            }
+
+                            // 1. Product Name
+                            $name = GrnItem::where('product_code', $state)->latest('id')->value('product_name')
+                                ?? InventoryProduct::where('product_code', $state)->value('product_name');
+                            if ($name) {
+                                $set('name', $name);
+                                $set('slug', Str::slug($name));
+                                if (! $get('technical_specifications.model_series')) {
+                                    $set('technical_specifications.model_series', $name);
+                                }
+                            }
+
+                            // 2. Product Condition
+                            $rawCondition = GrnItem::where('product_code', $state)->latest('id')->value('product_condition');
+                            if ($rawCondition) {
+                                $normalizedCondition = (strtolower($rawCondition) === 'used') ? 'Used' : 'Brand New';
+                                $set('condition', $normalizedCondition);
+                            }
+
+                            // 3. Inventory Stock
+                            $inventoryStock = (int) GrnItem::where('product_code', $state)->sum('product_quantity');
+                            $set('inventory_stock', $inventoryStock);
+
+                            // 4. Show Quantity (default to inventory stock or adjust)
+                            $currentShow = (int) $get('show_quantity');
+                            if ($currentShow <= 0 || $currentShow > $inventoryStock) {
+                                $set('show_quantity', $inventoryStock);
+                                $set('quantity', $inventoryStock);
+                            }
+
+                            // 5. GRN Price
+                            $grnPrice = GrnItem::where('product_code', $state)->latest('id')->value('price_per_unit');
+                            if ($grnPrice !== null) {
+                                $set('grn_price', round((float) $grnPrice, 2));
+                                $set('cost_price', round((float) $grnPrice, 2));
+                            }
+
+                            // 6. Supplier (auto-populate if not selected)
+                            if (! $get('supplier_id')) {
+                                $supId = InventoryProduct::where('product_code', $state)->value('supplier_id')
+                                    ?? GrnItem::where('product_code', $state)->latest('id')->first()?->grn?->supplier_id;
+                                if ($supId) {
+                                    $set('supplier_id', $supId);
+                                }
+                            }
+                        })
+                        ->columnSpan(1),
+
+                    Forms\Components\TextInput::make('name')
+                        ->label('Product Name')
                         ->required()
+                        ->maxLength(255)
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(function (Set $set, ?string $state, Get $get) {
+                            $set('slug', Str::slug($state));
+                            if (! $get('technical_specifications.model_series')) {
+                                $set('technical_specifications.model_series', $state);
+                            }
+                        })
                         ->columnSpan(1),
 
                     Forms\Components\Select::make('condition')
@@ -153,12 +216,67 @@ class ProductForm
                         ->required()
                         ->columnSpan(1),
 
+                    Forms\Components\TextInput::make('inventory_stock')
+                        ->label('Inventory Stock')
+                        ->numeric()
+                        ->default(0)
+                        ->readOnly()
+                        ->dehydrated()
+                        ->helperText('Loaded from Inventory physical stock')
+                        ->afterStateHydrated(function (Forms\Components\TextInput $component, ?Product $record) {
+                            if ($record && $record->product_code) {
+                                $stock = (int) GrnItem::where('product_code', $record->product_code)->sum('product_quantity');
+                                $component->state($stock);
+                            }
+                        })
+                        ->columnSpan(1),
+
+                    Forms\Components\TextInput::make('show_quantity')
+                        ->label('Show Quantity')
+                        ->numeric()
+                        ->default(0)
+                        ->required()
+                        ->helperText(function (Get $get) {
+                            $invStock = (int) ($get('inventory_stock') ?? 0);
+                            $showQty = (int) ($get('show_quantity') ?? 0);
+                            $balance = max(0, $invStock - $showQty);
+                            return "Balance Inventory in warehouse: {$balance} units (Total: {$invStock} units)";
+                        })
+                        ->rules([
+                            fn (Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
+                                $invStock = (int) ($get('inventory_stock') ?? 0);
+                                if ($invStock > 0 && (int) $value > $invStock) {
+                                    $fail("Show Quantity ({$value}) cannot exceed Total Inventory Stock ({$invStock} units).");
+                                }
+                            },
+                        ])
+                        ->afterStateHydrated(function (Forms\Components\TextInput $component, ?Product $record) {
+                            if ($record) {
+                                $val = $record->show_quantity ?? $record->quantity ?? 0;
+                                $component->state($val);
+                            }
+                        })
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(function (Set $set, $state, ?Product $record) {
+                            if (! $record) {
+                                $set('quantity', (int) $state);
+                            }
+                        })
+                        ->columnSpan(1),
+
+                    Forms\Components\Hidden::make('quantity')
+                        ->default(0)
+                        ->dehydrated(),
+
+                    Forms\Components\Hidden::make('slug')
+                        ->dehydrated(),
+
                     Forms\Components\Textarea::make('description')
                         ->label('Product Overview')
                         ->rows(4)
                         ->columnSpanFull()
                         ->placeholder('Provide an engaging summary, highlight key features, and compatibility notes...'),
-                ])->columns(4),
+                ])->columns(3),
 
             // 3. Product Gallery (4 Images)
             Forms\Components\Section::make('Product Gallery (4 Images)')
@@ -183,6 +301,20 @@ class ProductForm
             Forms\Components\Section::make('Pricing & Promotion')
                 ->description('Specify original price and latest sale price. Discount percentage calculates automatically.')
                 ->schema([
+                    Forms\Components\TextInput::make('grn_price')
+                        ->label('GRN Price')
+                        ->numeric()
+                        ->prefix($currency)
+                        ->readOnly()
+                        ->dehydrated()
+                        ->helperText('Inventory GRN unit cost (Admin reference only, not shown to customers)')
+                        ->afterStateHydrated(function (Forms\Components\TextInput $component, ?Product $record) {
+                            if ($record && $record->product_code) {
+                                $price = GrnItem::where('product_code', $record->product_code)->latest('id')->value('price_per_unit');
+                                $component->state($price ? round((float) $price, 2) : 0);
+                            }
+                        }),
+
                     Forms\Components\TextInput::make('price')
                         ->label('Original Price')
                         ->numeric()

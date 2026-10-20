@@ -10,7 +10,7 @@ class ProductTable
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn ($query) => $query->with(['supplier', 'brand', 'categories']))
+            ->modifyQueryUsing(fn ($query) => $query->with(['supplier', 'brand', 'categories', 'latestGrnItem']))
             ->columns([
                 Tables\Columns\TextColumn::make('index')
                     ->label('No')
@@ -26,15 +26,109 @@ class ProductTable
                     ->view('filament.tables.columns.supplier-details')
                     ->searchable(query: fn ($query, $search) => $query->whereHas('supplier', fn ($q) => $q->where('name', 'like', "%{$search}%"))),
 
-                Tables\Columns\TextColumn::make('quantity')
-                    ->label('Available Product Count')
+                Tables\Columns\ViewColumn::make('web_show_count')
+                    ->label('Web Show Count')
+                    ->view('filament.tables.columns.web-show-count')
+                    ->sortable(query: fn ($query, $direction) => $query->orderBy('quantity', $direction))
+                    ->tooltip('Click to adjust web show count')
+                    ->action(
+                        Tables\Actions\Action::make('adjust_web_count_column')
+                            ->modalHeading(fn (\App\Models\Product $record) => "Adjust Web Show Count - {$record->name}")
+                            ->modalDescription('Transfer stock between Warehouse Inventory and Web Storefront.')
+                            ->modalSubmitActionLabel('Update Stock Allocation')
+                            ->form(function (\App\Models\Product $record) {
+                                $invStock = $record->product_code
+                                    ? (int) \App\Models\GrnItem::where('product_code', $record->product_code)->sum('product_quantity')
+                                    : (int) ($record->inventory_stock ?? $record->quantity ?? 0);
+                                $currentShow = (int) ($record->show_quantity ?? $record->quantity ?? 0);
+                                $currentAvailable = (int) ($record->quantity ?? 0);
+                                $currentBalance = max(0, $invStock - $currentShow);
+
+                                return [
+                                    \Filament\Forms\Components\Grid::make(2)
+                                        ->schema([
+                                            \Filament\Forms\Components\Placeholder::make('total_inventory')
+                                                ->label('Total Inventory Stock (GRN)')
+                                                ->content("{$invStock} units"),
+                                            \Filament\Forms\Components\Placeholder::make('current_balance')
+                                                ->label('Current Warehouse Balance')
+                                                ->content("{$currentBalance} units"),
+                                            \Filament\Forms\Components\Placeholder::make('current_show')
+                                                ->label('Current Web Show Count')
+                                                ->content("{$currentShow} units"),
+                                            \Filament\Forms\Components\Placeholder::make('current_available')
+                                                ->label('Current Available (Online)')
+                                                ->content("{$currentAvailable} units"),
+                                        ]),
+
+                                    \Filament\Forms\Components\TextInput::make('new_show_quantity')
+                                        ->label('New Web Show Count')
+                                        ->numeric()
+                                        ->required()
+                                        ->default($currentShow)
+                                        ->minValue(0)
+                                        ->maxValue($invStock)
+                                        ->helperText("Must be between 0 and {$invStock} units (Total Inventory Stock).")
+                                        ->live()
+                                        ->afterStateUpdated(function (\Filament\Forms\Set $set, $state) use ($invStock) {
+                                            $newShow = (int) $state;
+                                            $newBalance = max(0, $invStock - $newShow);
+                                            $set('projected_balance', "{$newBalance} units remaining in warehouse");
+                                        }),
+
+                                    \Filament\Forms\Components\Placeholder::make('projected_balance')
+                                        ->label('Projected Warehouse Balance')
+                                        ->content(function (\Filament\Forms\Get $get) use ($invStock, $currentShow) {
+                                            $newShow = (int) ($get('new_show_quantity') ?? $currentShow);
+                                            $newBalance = max(0, $invStock - $newShow);
+                                            return "{$newBalance} units remaining in warehouse";
+                                        }),
+                                ];
+                            })
+                            ->action(function (\App\Models\Product $record, array $data) {
+                                $newShow = (int) $data['new_show_quantity'];
+                                $oldShow = (int) ($record->show_quantity ?? $record->quantity ?? 0);
+                                $diff = $newShow - $oldShow;
+
+                                $currentAvailable = (int) ($record->quantity ?? 0);
+                                $newAvailable = max(0, min($newShow, $currentAvailable + $diff));
+
+                                $invStock = $record->product_code
+                                    ? (int) \App\Models\GrnItem::where('product_code', $record->product_code)->sum('product_quantity')
+                                    : (int) ($record->inventory_stock ?? 0);
+
+                                $record->update([
+                                    'show_quantity' => $newShow,
+                                    'quantity' => $newAvailable,
+                                    'inventory_stock' => $invStock,
+                                ]);
+
+                                $newBalance = max(0, $invStock - $newShow);
+
+                                \Filament\Notifications\Notification::make()
+                                    ->title('Stock Allocation Updated')
+                                    ->body("Web Show Count set to {$newShow}. Balance Inventory Stock is now {$newBalance} units.")
+                                    ->success()
+                                    ->send();
+                            })
+                    ),
+
+                Tables\Columns\TextColumn::make('grn_price')
+                    ->label('GRN Price')
+                    ->getStateUsing(function ($record) {
+                        if ($record->product_code) {
+                            $price = \App\Models\GrnItem::where('product_code', $record->product_code)->latest('id')->value('price_per_unit');
+                            if ($price !== null) {
+                                return (float) $price;
+                            }
+                        }
+                        return (float) ($record->grn_price ?? 0);
+                    })
+                    ->formatStateUsing(fn ($state) => config('app.currency_symbol', 'Rs. ') . number_format((float) $state, 2))
                     ->sortable()
                     ->badge()
-                    ->color(fn ($state): string => match (true) {
-                        $state <= 0 => 'danger',
-                        $state < 10 => 'warning',
-                        default => 'success',
-                    }),
+                    ->color('gray')
+                    ->weight('semibold'),
 
                 Tables\Columns\ViewColumn::make('price')
                     ->label('Latest Price')
@@ -71,9 +165,100 @@ class ProductTable
                     ->label('Best Seller Only'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('adjust_web_count')
+                    ->label('Adjust Web Count')
+                    ->tooltip('Adjust Web Show Count')
+                    ->icon('heroicon-o-arrows-right-left')
+                    ->iconButton()
+                    ->color('info')
+                    ->modalHeading(fn (\App\Models\Product $record) => "Adjust Web Show Count - {$record->name}")
+                    ->modalDescription('Transfer stock between Warehouse Inventory and Web Storefront.')
+                    ->modalSubmitActionLabel('Update Stock Allocation')
+                    ->form(function (\App\Models\Product $record) {
+                        $invStock = $record->product_code
+                            ? (int) \App\Models\GrnItem::where('product_code', $record->product_code)->sum('product_quantity')
+                            : (int) ($record->inventory_stock ?? $record->quantity ?? 0);
+                        $currentShow = (int) ($record->show_quantity ?? $record->quantity ?? 0);
+                        $currentAvailable = (int) ($record->quantity ?? 0);
+                        $currentBalance = max(0, $invStock - $currentShow);
+
+                        return [
+                            \Filament\Forms\Components\Grid::make(2)
+                                ->schema([
+                                    \Filament\Forms\Components\Placeholder::make('total_inventory')
+                                        ->label('Total Inventory Stock (GRN)')
+                                        ->content("{$invStock} units"),
+                                    \Filament\Forms\Components\Placeholder::make('current_balance')
+                                        ->label('Current Warehouse Balance')
+                                        ->content("{$currentBalance} units"),
+                                    \Filament\Forms\Components\Placeholder::make('current_show')
+                                        ->label('Current Web Show Count')
+                                        ->content("{$currentShow} units"),
+                                    \Filament\Forms\Components\Placeholder::make('current_available')
+                                        ->label('Current Available (Online)')
+                                        ->content("{$currentAvailable} units"),
+                                ]),
+
+                            \Filament\Forms\Components\TextInput::make('new_show_quantity')
+                                ->label('New Web Show Count')
+                                ->numeric()
+                                ->required()
+                                ->default($currentShow)
+                                ->minValue(0)
+                                ->maxValue($invStock)
+                                ->helperText("Must be between 0 and {$invStock} units (Total Inventory Stock).")
+                                ->live()
+                                ->afterStateUpdated(function (\Filament\Forms\Set $set, $state) use ($invStock) {
+                                    $newShow = (int) $state;
+                                    $newBalance = max(0, $invStock - $newShow);
+                                    $set('projected_balance', "{$newBalance} units remaining in warehouse");
+                                }),
+
+                            \Filament\Forms\Components\Placeholder::make('projected_balance')
+                                ->label('Projected Warehouse Balance')
+                                ->content(function (\Filament\Forms\Get $get) use ($invStock, $currentShow) {
+                                    $newShow = (int) ($get('new_show_quantity') ?? $currentShow);
+                                    $newBalance = max(0, $invStock - $newShow);
+                                    return "{$newBalance} units remaining in warehouse";
+                                }),
+                        ];
+                    })
+                    ->action(function (\App\Models\Product $record, array $data) {
+                        $newShow = (int) $data['new_show_quantity'];
+                        $oldShow = (int) ($record->show_quantity ?? $record->quantity ?? 0);
+                        $diff = $newShow - $oldShow;
+
+                        $currentAvailable = (int) ($record->quantity ?? 0);
+                        $newAvailable = max(0, min($newShow, $currentAvailable + $diff));
+
+                        $invStock = $record->product_code
+                            ? (int) \App\Models\GrnItem::where('product_code', $record->product_code)->sum('product_quantity')
+                            : (int) ($record->inventory_stock ?? 0);
+
+                        $record->update([
+                            'show_quantity' => $newShow,
+                            'quantity' => $newAvailable,
+                            'inventory_stock' => $invStock,
+                        ]);
+
+                        $newBalance = max(0, $invStock - $newShow);
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('Stock Allocation Updated')
+                            ->body("Web Show Count set to {$newShow}. Balance Inventory Stock is now {$newBalance} units.")
+                            ->success()
+                            ->send();
+                    }),
+                Tables\Actions\ViewAction::make()
+                    ->iconButton()
+                    ->tooltip('View Product Details')
+                    ->url(fn (\App\Models\Product $record): string => \App\Filament\Resources\ProductResource\ProductResource::getUrl('view', ['record' => $record])),
+                Tables\Actions\EditAction::make()
+                    ->iconButton()
+                    ->tooltip('Edit Product'),
+                Tables\Actions\DeleteAction::make()
+                    ->iconButton()
+                    ->tooltip('Delete Product'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

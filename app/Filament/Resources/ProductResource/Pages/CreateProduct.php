@@ -15,7 +15,10 @@ class CreateProduct extends CreateRecord
             $data['images'] = array_values(array_filter($data['images']));
         }
 
-        $data['stock_added_count'] = (int) ($data['quantity'] ?? 0);
+        $showQty = (int) ($data['show_quantity'] ?? $data['quantity'] ?? 0);
+        $data['show_quantity'] = $showQty;
+        $data['quantity'] = $showQty;
+        $data['stock_added_count'] = $showQty;
         $data['stock_added_date'] = now();
 
         unset($data['image_1'], $data['image_2'], $data['image_3'], $data['image_4'], $data['discount_percentage']);

@@ -17,6 +17,7 @@ class Product extends Model
     protected $fillable = [
         'brand_id',
         'supplier_id',
+        'product_code',
         'name',
         'slug',
         'sku',
@@ -25,7 +26,10 @@ class Product extends Model
         'price',
         'sale_price',
         'cost_price',
+        'grn_price',
         'quantity',
+        'inventory_stock',
+        'show_quantity',
         'stock_added_count',
         'stock_added_date',
         'security_stock',
@@ -50,16 +54,25 @@ class Product extends Model
         'is_featured' => 'boolean',
         'price' => 'decimal:2',
         'sale_price' => 'decimal:2',
+        'grn_price' => 'decimal:2',
         'published_at' => 'date',
         'stock_added_count' => 'integer',
         'stock_added_date' => 'datetime',
+        'inventory_stock' => 'integer',
+        'show_quantity' => 'integer',
     ];
 
     protected static function booted(): void
     {
         static::creating(function (self $product) {
+            if (is_null($product->show_quantity) && ! is_null($product->quantity)) {
+                $product->show_quantity = (int) $product->quantity;
+            } elseif (! is_null($product->show_quantity) && is_null($product->quantity)) {
+                $product->quantity = (int) $product->show_quantity;
+            }
+
             if (is_null($product->stock_added_count)) {
-                $product->stock_added_count = (int) ($product->quantity ?? 0);
+                $product->stock_added_count = (int) ($product->show_quantity ?? $product->quantity ?? 0);
             }
             if (is_null($product->stock_added_date)) {
                 $product->stock_added_date = now();
@@ -112,11 +125,36 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function inventoryProduct(): BelongsTo
+    {
+        return $this->belongsTo(InventoryProduct::class, 'product_code', 'product_code');
+    }
+
+    public function grnItems(): HasMany
+    {
+        return $this->hasMany(GrnItem::class, 'product_code', 'product_code');
+    }
+
+    public function latestGrnItem()
+    {
+        return $this->hasOne(GrnItem::class, 'product_code', 'product_code')->latestOfMany();
+    }
+
+    public function getBalanceInventoryStockAttribute(): int
+    {
+        $total = $this->product_code
+            ? (int) GrnItem::where('product_code', $this->product_code)->sum('product_quantity')
+            : (int) ($this->inventory_stock ?? 0);
+        $show = (int) ($this->show_quantity ?? $this->quantity ?? 0);
+
+        return max(0, $total - $show);
+    }
+
     // Audit Logs
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'slug', 'sku', 'price', 'quantity', 'is_visible'])
+            ->logOnly(['name', 'slug', 'sku', 'product_code', 'price', 'quantity', 'show_quantity', 'inventory_stock', 'is_visible'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
