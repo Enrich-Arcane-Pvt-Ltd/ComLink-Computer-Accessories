@@ -1684,102 +1684,111 @@ function BuildPcContent({
                                 Load them with one click and customize as you
                                 like.
                             </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {templates.map((tmpl) => (
-                                <div
-                                    key={tmpl.id}
-                                    className="rounded-2xl border border-border/80 bg-bg/60 p-5 flex flex-col justify-between hover:border-cyan-500 transition-all shadow-xs group"
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between mb-2">
-                                            <span
-                                                className={cn(
-                                                    "px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full border",
-                                                    tmpl.badgeColor === "cyan"
-                                                        ? "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30"
-                                                        : tmpl.badgeColor ===
-                                                            "emerald"
-                                                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
-                                                          : tmpl.badgeColor ===
-                                                              "purple"
-                                                            ? "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30"
-                                                            : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
-                                                )}
-                                            >
-                                                {tmpl.badge}
-                                            </span>
-                                            <span className="text-[11px] font-bold text-muted">
-                                                ⚡ {tmpl.totalWattage}W
-                                            </span>
-                                        </div>
-
-                                        <h4 className="font-display text-lg font-bold text-fg group-hover:text-cyan-500 transition-colors">
-                                            {tmpl.name}
-                                        </h4>
-                                        <p className="text-xs text-muted mt-1">
-                                            {tmpl.subtitle}
-                                        </p>
-
-                                        {/* Parts list preview */}
-                                        <div className="mt-4 space-y-1.5 border-t border-border/40 pt-3">
-                                            {Object.entries(tmpl.parts).map(
-                                                ([slotKey, pId]) => {
-                                                    const prod = products.find(
-                                                        (p) => p.id === pId,
-                                                    );
-                                                    const s =
-                                                        ESSENTIALS_SLOTS.find(
-                                                            (x) =>
-                                                                x.id ===
-                                                                slotKey,
-                                                        );
-                                                    if (!prod) return null;
-                                                    return (
-                                                        <div
-                                                            key={slotKey}
-                                                            className="flex items-center justify-between text-[11px]"
-                                                        >
-                                                            <span className="text-muted font-medium">
-                                                                {s?.shortName ||
-                                                                    slotKey}
-                                                                :
-                                                            </span>
-                                                            <span className="text-fg font-semibold truncate max-w-[200px]">
-                                                                {prod.name}
-                                                            </span>
-                                                        </div>
-                                                    );
-                                                },
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-5 pt-4 border-t border-border/50 flex items-center justify-between">
+                                 {templates && templates.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {templates.map((tmpl) => (
+                                    <div
+                                        key={tmpl.id}
+                                        className="rounded-2xl border border-border/80 bg-bg/60 p-5 flex flex-col justify-between hover:border-cyan-500 transition-all shadow-xs group"
+                                    >
                                         <div>
-                                            <span className="text-[10px] uppercase font-bold text-muted block">
-                                                Est. Total
-                                            </span>
-                                            <span className="font-display text-lg font-extrabold text-emerald-600 dark:text-emerald-400">
-                                                {formatLkr(tmpl.estimatedPrice)}
-                                            </span>
+                                            <div className="flex items-center justify-between mb-2">
+                                                <span
+                                                    className={cn(
+                                                        "px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full border",
+                                                        tmpl.badgeColor === "cyan"
+                                                            ? "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30"
+                                                            : tmpl.badgeColor ===
+                                                                "emerald"
+                                                              ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30"
+                                                              : tmpl.badgeColor ===
+                                                                  "purple"
+                                                                ? "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30"
+                                                                : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
+                                                    )}
+                                                >
+                                                    {tmpl.badge}
+                                                </span>
+                                                <span className="text-[11px] font-bold text-muted">
+                                                    ⚡ {tmpl.totalWattage}W
+                                                </span>
+                                            </div>
+
+                                            <h4 className="font-display text-lg font-bold text-fg group-hover:text-cyan-500 transition-colors">
+                                                {tmpl.name}
+                                            </h4>
+                                            <p className="text-xs text-muted mt-1">
+                                                {tmpl.subtitle}
+                                            </p>
+
+                                            {/* Parts list preview */}
+                                            <div className="mt-4 space-y-1.5 border-t border-border/40 pt-3">
+                                                {Object.entries(tmpl.parts).map(
+                                                    ([slotKey, pId]) => {
+                                                        const prod = products.find(
+                                                            (p) => p.id === pId,
+                                                        );
+                                                        const s =
+                                                            ESSENTIALS_SLOTS.find(
+                                                                (x) =>
+                                                                    x.id ===
+                                                                    slotKey,
+                                                            );
+                                                        if (!prod) return null;
+                                                        return (
+                                                            <div
+                                                                key={slotKey}
+                                                                className="flex items-center justify-between text-[11px]"
+                                                            >
+                                                                <span className="text-muted font-medium">
+                                                                    {s?.shortName ||
+                                                                        slotKey}
+                                                                    :
+                                                                </span>
+                                                                <span className="text-fg font-semibold truncate max-w-[200px]">
+                                                                    {prod.name}
+                                                                </span>
+                                                            </div>
+                                                        );
+                                                    },
+                                                )}
+                                            </div>
                                         </div>
 
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleApplyTemplate(tmpl)
-                                            }
-                                            className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-sm transition-all active:scale-95 cursor-pointer"
-                                        >
-                                            <Sparkles className="h-3.5 w-3.5" />
-                                            <span>Load This Build</span>
-                                        </button>
+                                        <div className="mt-5 pt-4 border-t border-border/50 flex items-center justify-between">
+                                            <div>
+                                                <span className="text-[10px] uppercase font-bold text-muted block">
+                                                    Est. Total
+                                                </span>
+                                                <span className="font-display text-lg font-extrabold text-emerald-600 dark:text-emerald-400">
+                                                    {formatLkr(tmpl.estimatedPrice)}
+                                                </span>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleApplyTemplate(tmpl)
+                                                }
+                                                className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-sm transition-all active:scale-95 cursor-pointer"
+                                            >
+                                                <Sparkles className="h-3.5 w-3.5" />
+                                                <span>Load This Build</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="py-12 text-center rounded-2xl border border-dashed border-border bg-bg/50 p-6">
+                                <AlertTriangle className="mx-auto h-8 w-8 text-amber-500 mb-2" />
+                                <h4 className="text-sm font-bold text-fg">
+                                    No Pre-built Templates Available
+                                </h4>
+                                <p className="text-xs text-muted mt-1 max-w-sm mx-auto">
+                                    Configure your custom build component-by-component by choosing parts from the left sidebar slots.
+                                </p>
+                            </div>
+                        )}                   </div>
                     </div>
                 </div>
             )}
