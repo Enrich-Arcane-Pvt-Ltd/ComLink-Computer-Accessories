@@ -45,8 +45,10 @@ class GrnForm
                             if ($supplierId) {
                                 $query->where('supplier_id', $supplierId);
                             }
+
                             return $query->with('grns')->get()->mapWithKeys(function ($po) {
-                                $tag = $po->grns->isNotEmpty() ? ' (GRN Done - ' . $po->grns->first()->grn_number . ')' : '';
+                                $tag = $po->grns->isNotEmpty() ? ' (GRN Done - '.$po->grns->first()->grn_number.')' : '';
+
                                 return [$po->id => "{$po->po_number}{$tag}"];
                             });
                         })
@@ -61,6 +63,8 @@ class GrnForm
                                     foreach ($po->items as $item) {
                                         $itemsData[(string) Str::uuid()] = [
                                             'inventory_product_id' => $item->inventory_product_id,
+                                            'product_variant_id' => $item->product_variant_id,
+                                            'color_name' => $item->color_name,
                                             'product_code' => $item->product_code,
                                             'product_name' => $item->product_name,
                                             'product_condition' => $item->product_condition ?: 'Brandnew',
@@ -93,6 +97,7 @@ class GrnForm
                         ->addActionLabel('+ Add Product Section')
                         ->schema([
                             Forms\Components\Hidden::make('inventory_product_id'),
+                            Forms\Components\Hidden::make('product_variant_id'),
 
                             Forms\Components\Select::make('product_code')
                                 ->label('Product Code')
@@ -123,6 +128,12 @@ class GrnForm
                                             $set('product_name', $invProduct->product_name);
                                             $set('inventory_product_id', $invProduct->id);
                                         }
+
+                                        $storeProduct = \App\Models\Product::with('variants')->where('product_code', $state)->first();
+                                        if (! $storeProduct || $storeProduct->variants->isEmpty()) {
+                                            $set('color_name', null);
+                                            $set('product_variant_id', null);
+                                        }
                                     }
                                 })
                                 ->required()
@@ -134,6 +145,45 @@ class GrnForm
                                 ->readOnly()
                                 ->helperText('Auto-filled from Inventory Products')
                                 ->columnSpan(['sm' => 2, 'md' => 3]),
+
+                            Forms\Components\TextInput::make('color_name')
+                                ->label('Color Variant')
+                                ->placeholder('Type color (e.g. Red, Black)')
+                                ->datalist(function (Get $get) {
+                                    $code = $get('product_code');
+                                    $defaultColors = ['Red', 'White', 'Black', 'Blue', 'Silver', 'Grey', 'Gold', 'Green', 'Yellow', 'RGB', 'Pink', 'Purple', 'Orange'];
+                                    if ($code) {
+                                        $product = \App\Models\Product::with('variants')->where('product_code', $code)->first();
+                                        if ($product && $product->variants->isNotEmpty()) {
+                                            $variantColors = $product->variants->pluck('color_name')->filter()->toArray();
+
+                                            return array_values(array_unique(array_merge($variantColors, $defaultColors)));
+                                        }
+                                    }
+
+                                    return $defaultColors;
+                                })
+                                ->live(onBlur: true)
+                                ->afterStateUpdated(function ($state, Get $get, Set $set) {
+                                    $code = $get('product_code');
+                                    if ($code && $state) {
+                                        $product = \App\Models\Product::with('variants')->where('product_code', $code)->first();
+                                        $variant = $product?->variants->first(fn ($v) => strcasecmp((string) $v->color_name, trim((string) $state)) === 0);
+                                        if ($variant) {
+                                            $set('product_variant_id', $variant->id);
+                                            if ((float) $variant->grn_price > 0) {
+                                                $set('price_per_unit', (float) $variant->grn_price);
+                                            }
+                                        } else {
+                                            $set('product_variant_id', null);
+                                        }
+                                    } else {
+                                        $set('product_variant_id', null);
+                                    }
+                                    self::recalculateRowAndSubtotal($get, $set);
+                                })
+                                ->helperText('Type any color or pick from suggestions')
+                                ->columnSpan(['sm' => 2, 'md' => 2]),
 
                             Forms\Components\Select::make('product_condition')
                                 ->label('Condition')
@@ -164,7 +214,7 @@ class GrnForm
                                 ->required()
                                 ->reactive()
                                 ->afterStateUpdated(fn (Get $get, Set $set) => self::recalculateRowAndSubtotal($get, $set))
-                                ->columnSpan(['sm' => 1, 'md' => 2]),
+                                ->columnSpan(['sm' => 1, 'md' => 1]),
 
                             Forms\Components\TextInput::make('total')
                                 ->label('Total (Rs.)')
@@ -175,12 +225,11 @@ class GrnForm
                                 ->extraInputAttributes(['style' => 'font-weight: 700; font-family: monospace; color: #38bdf8; min-width: 120px;'])
                                 ->columnSpan(['sm' => 2, 'md' => 2]),
                         ])
-                        ->columns(['sm' => 2, 'md' => 14])
+                        ->columns(['sm' => 2, 'md' => 15])
                         ->defaultItems(fn () => request()->query('purchase_order_id') ? 0 : 1)
                         ->collapsible()
-                        ->itemLabel(fn (array $state): ?string => 
-                            isset($state['product_name']) && !empty($state['product_name']) 
-                                ? "{$state['product_name']} ({$state['product_condition']}) × {$state['product_quantity']} — Rs. " . number_format((float) ($state['total'] ?? 0), 2)
+                        ->itemLabel(fn (array $state): ?string => isset($state['product_name']) && ! empty($state['product_name'])
+                                ? "{$state['product_name']}".(! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '')." [{$state['product_condition']}] × {$state['product_quantity']} — Rs. ".number_format((float) ($state['total'] ?? 0), 2)
                                 : 'Product Item'
                         )
                         ->columnSpanFull(),

@@ -67,13 +67,11 @@ class PurchaseOrderTable
                     ->label(fn (PurchaseOrder $record): string => $record->grns->isNotEmpty() ? 'GRN Done' : 'GRN')
                     ->icon(fn (PurchaseOrder $record): string => $record->grns->isNotEmpty() ? 'heroicon-o-check-circle' : 'heroicon-o-document-plus')
                     ->color(fn (PurchaseOrder $record): string => $record->grns->isNotEmpty() ? 'gray' : 'success')
-                    ->tooltip(fn (PurchaseOrder $record): string => 
-                        $record->grns->isNotEmpty() 
-                            ? 'GRN already created: ' . $record->grns->first()->grn_number . ' (Click to view)' 
+                    ->tooltip(fn (PurchaseOrder $record): string => $record->grns->isNotEmpty()
+                            ? 'GRN already created: '.$record->grns->first()->grn_number.' (Click to view)'
                             : 'Create Goods Received Note from this Purchase Order'
                     )
-                    ->url(fn (PurchaseOrder $record): string => 
-                        $record->grns->isNotEmpty()
+                    ->url(fn (PurchaseOrder $record): string => $record->grns->isNotEmpty()
                             ? GrnResource::getUrl('view', ['record' => $record->grns->first()->id])
                             : GrnResource::getUrl('create', ['purchase_order_id' => $record->id])
                     ),

@@ -125,6 +125,17 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function hasColorVariants(): bool
+    {
+        if ($this->type === 'variable') {
+            return true;
+        }
+
+        return $this->relationLoaded('variants')
+            ? $this->variants->isNotEmpty()
+            : $this->variants()->exists();
+    }
+
     public function inventoryProduct(): BelongsTo
     {
         return $this->belongsTo(InventoryProduct::class, 'product_code', 'product_code');
@@ -174,10 +185,10 @@ class Product extends Model
                 $q->orWhere('product_name', $this->name);
             }
         })
-        ->whereHas('order', function ($q) {
-            $q->where('payment_status', 'Paid');
-        })
-        ->sum('quantity');
+            ->whereHas('order', function ($q) {
+                $q->where('payment_status', 'Paid');
+            })
+            ->sum('quantity');
     }
 
     /**

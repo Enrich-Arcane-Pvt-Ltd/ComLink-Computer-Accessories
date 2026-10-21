@@ -92,6 +92,6 @@ class Order extends Model
         $latest = static::latest('id')->first();
         $nextNum = $latest ? ($latest->id + 10001) : 10001;
 
-        return $prefix . $nextNum;
+        return $prefix.$nextNum;
     }
 }

@@ -5,13 +5,13 @@ namespace App\Filament\Resources\PostResource\Schemas;
 use App\Models\Post;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Set;
 use Illuminate\Support\Str;
 
@@ -24,7 +24,7 @@ class PostForm
             ->distinct()
             ->pluck('category')
             ->filter()
-            ->mapWithKeys(fn($c) => [$c => $c])
+            ->mapWithKeys(fn ($c) => [$c => $c])
             ->toArray();
 
         // DB එකෙන් existing tags load කරනවා → TagsInput suggestions
@@ -46,7 +46,7 @@ class PostForm
                                 ->required()
                                 ->maxLength(255)
                                 ->live(onBlur: true)
-                                ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
                             TextInput::make('slug')
                                 ->required()
@@ -100,7 +100,7 @@ class PostForm
                                         ->label('New Category')
                                         ->required(),
                                 ])
-                                ->createOptionUsing(fn(array $data) => $data['category'])
+                                ->createOptionUsing(fn (array $data) => $data['category'])
                                 ->placeholder('Select or type new category...')
                                 ->required(),
 

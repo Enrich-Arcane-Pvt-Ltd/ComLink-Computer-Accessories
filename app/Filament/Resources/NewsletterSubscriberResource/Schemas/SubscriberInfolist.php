@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\NewsletterSubscriberResource\Schemas;
 
-use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Infolist;
 
 class SubscriberInfolist
 {

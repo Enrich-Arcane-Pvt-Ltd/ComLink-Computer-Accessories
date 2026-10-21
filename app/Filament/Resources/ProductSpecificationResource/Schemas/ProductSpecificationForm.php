@@ -33,6 +33,7 @@ class ProductSpecificationForm
                                 return 'Select a category first';
                             }
                             $hasSubs = Category::where('parent_id', $catId)->exists();
+
                             return $hasSubs ? 'Select Sub Category (or leave empty for whole category)' : 'No subcategories (Applies to whole category)';
                         })
                         ->options(function (Get $get) {
@@ -40,6 +41,7 @@ class ProductSpecificationForm
                             if (! $catId) {
                                 return [];
                             }
+
                             return Category::where('parent_id', $catId)
                                 ->orderBy('sort_order')
                                 ->pluck('name', 'id');

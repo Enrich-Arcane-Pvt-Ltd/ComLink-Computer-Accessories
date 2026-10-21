@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\TestimonialResource\Tables;
 
-use Filament\Tables;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
@@ -37,7 +36,7 @@ class TestimonialTable
                 TextColumn::make('rating')
                     ->label('Stars')
                     ->sortable()
-                    ->formatStateUsing(fn(int $state): string => str_repeat('⭐', $state))
+                    ->formatStateUsing(fn (int $state): string => str_repeat('⭐', $state))
                     ->color('warning'),
 
                 IconColumn::make('is_active')

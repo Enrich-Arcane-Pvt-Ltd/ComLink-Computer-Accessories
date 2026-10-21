@@ -22,26 +22,25 @@ class CouponTable
 
                 Tables\Columns\TextColumn::make('type')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'fixed' => 'info',
                         'percent' => 'warning',
                     })
-                    ->formatStateUsing(fn(string $state): string => $state === 'fixed' ? 'Fixed Amount' : 'Percentage'),
+                    ->formatStateUsing(fn (string $state): string => $state === 'fixed' ? 'Fixed Amount' : 'Percentage'),
 
                 Tables\Columns\TextColumn::make('value')
                     ->label('Value')
                     ->formatStateUsing(function ($record) use ($currency) {
                         return $record->type === 'percent'
-                            ? $record->value . '%'
-                            : $currency . ' ' . number_format($record->value, 2);
+                            ? $record->value.'%'
+                            : $currency.' '.number_format($record->value, 2);
                     })
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('usage_limit')
                     ->label('Usage')
                     ->formatStateUsing(
-                        fn($record) =>
-                        $record->used_count . ' / ' . ($record->usage_limit ?? '∞')
+                        fn ($record) => $record->used_count.' / '.($record->usage_limit ?? '∞')
                     )
                     ->badge()
                     ->color('gray'),
@@ -51,7 +50,7 @@ class CouponTable
                     ->date()
                     ->sortable()
                     ->placeholder('Never Expires')
-                    ->color(fn($state) => $state && now()->gt($state) ? 'danger' : 'success'),
+                    ->color(fn ($state) => $state && now()->gt($state) ? 'danger' : 'success'),
 
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Active'),

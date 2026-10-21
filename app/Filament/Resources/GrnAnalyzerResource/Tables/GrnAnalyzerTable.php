@@ -48,6 +48,7 @@ class GrnAnalyzerTable
                     ->getStateUsing(function (GrnReport $record) {
                         $from = $record->date_from ? $record->date_from->format('M d, Y') : '';
                         $to = $record->date_to ? $record->date_to->format('M d, Y') : '';
+
                         return "{$from} - {$to}";
                     })
                     ->icon('heroicon-o-calendar')
@@ -58,12 +59,12 @@ class GrnAnalyzerTable
                     ->label('Total Qty')
                     ->badge()
                     ->color('gray')
-                    ->formatStateUsing(fn ($state) => number_format((int) $state) . ' units')
+                    ->formatStateUsing(fn ($state) => number_format((int) $state).' units')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('total_amount')
                     ->label('Total Value (Rs.)')
-                    ->formatStateUsing(fn ($state) => config('app.currency_symbol', 'Rs. ') . number_format((float) $state, 2))
+                    ->formatStateUsing(fn ($state) => config('app.currency_symbol', 'Rs. ').number_format((float) $state, 2))
                     ->weight('bold')
                     ->color('success')
                     ->sortable(),

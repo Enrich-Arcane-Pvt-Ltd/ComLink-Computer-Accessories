@@ -348,6 +348,18 @@
                                                     &bull; {{ $prod['condition'] }}
                                                 </span>
                                             </div>
+                                            @if(!empty($prod['color_breakdown']))
+                                                <div style="display: flex; align-items: center; gap: 4px; margin-top: 5px; flex-wrap: wrap;">
+                                                    <span style="display: inline-flex; align-items: center; gap: 2px; font-size: 10px; font-weight: 700; color: #c084fc; background-color: rgba(192, 132, 252, 0.15); padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(192, 132, 252, 0.3);">
+                                                        🎨 {{ count($prod['color_breakdown']) }} Colors
+                                                    </span>
+                                                    @foreach($prod['color_breakdown'] as $cb)
+                                                        <span style="font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: 4px; background: rgba(39, 39, 42, 0.85); color: #e4e4e7; border: 1px solid #3f3f46;" title="Stock: {{ $cb['stock'] }} units | Sold: {{ $cb['sold_qty'] }} units">
+                                                            <span style="color: #38bdf8; font-weight: 700;">{{ $cb['color'] }}:</span> {{ $cb['stock'] }}
+                                                        </span>
+                                                    @endforeach
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>
@@ -519,6 +531,33 @@
                             </div>
                         </div>
 
+                        <!-- Registered Color Variants (if multi-color product) -->
+                        @if(!empty($activeBreakdown['color_variants']))
+                        <div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <h4 style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #c084fc; margin: 0; display: flex; align-items: center; gap: 6px;">
+                                    🎨 Registered Color Variants
+                                </h4>
+                                <span style="font-size: 11px; color: #71717a;">
+                                    {{ count($activeBreakdown['color_variants']) }} colors
+                                </span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px;">
+                                @foreach($activeBreakdown['color_variants'] as $cVar)
+                                    <div style="padding: 10px 12px; background-color: #202024; border: 1px solid #3f3f46; border-radius: 6px;">
+                                        <div style="font-weight: 700; font-size: 12px; color: #c084fc;">{{ $cVar['color'] }}</div>
+                                        <div style="font-size: 11px; color: #a1a1aa; margin-top: 3px;">
+                                            Stock: <strong style="color: #38bdf8;">{{ number_format($cVar['stock']) }} units</strong>
+                                        </div>
+                                        <div style="font-size: 11px; color: #71717a; margin-top: 2px;">
+                                            Price: Rs. {{ number_format($cVar['price'], 2) }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+
                         <!-- 1. Inward Batches (GRNs) -->
                         <div>
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
@@ -552,7 +591,14 @@
                                                     {{ $grn['grn_code'] }}
                                                 </td>
                                                 <td style="color: #a1a1aa;">{{ $grn['received_date'] }}</td>
-                                                <td style="color: #f4f4f5;">{{ $grn['supplier_name'] }}</td>
+                                                <td style="color: #f4f4f5;">
+                                                    {{ $grn['supplier_name'] }}
+                                                    @if(!empty($grn['color_name']))
+                                                        <span style="display: inline-block; margin-left: 4px; font-size: 10px; font-weight: bold; color: #c084fc; background: rgba(192, 132, 252, 0.15); padding: 1px 5px; border-radius: 3px; border: 1px solid rgba(192, 132, 252, 0.3);">
+                                                            {{ $grn['color_name'] }}
+                                                        </span>
+                                                    @endif
+                                                </td>
                                                 <td style="text-align: center; font-weight: 700; color: #f4f4f5;">{{ number_format($grn['quantity']) }}</td>
                                                 <td style="text-align: right; color: #a1a1aa;">Rs. {{ number_format($grn['unit_price'], 2) }}</td>
                                                 <td style="text-align: right; font-weight: 700; color: #f4f4f5;">Rs. {{ number_format($grn['total'], 2) }}</td>
@@ -601,7 +647,14 @@
                                                 </td>
                                                 <td style="color: #a1a1aa;">{{ $sale['order_date'] }}</td>
                                                 <td>
-                                                    <div style="color: #f4f4f5; font-weight: 600;">{{ $sale['customer_name'] }}</div>
+                                                    <div style="color: #f4f4f5; font-weight: 600;">
+                                                        {{ $sale['customer_name'] }}
+                                                        @if(!empty($sale['color_name']))
+                                                            <span style="display: inline-block; margin-left: 4px; font-size: 10px; font-weight: bold; color: #c084fc; background: rgba(192, 132, 252, 0.15); padding: 1px 5px; border-radius: 3px; border: 1px solid rgba(192, 132, 252, 0.3);">
+                                                                {{ $sale['color_name'] }}
+                                                            </span>
+                                                        @endif
+                                                    </div>
                                                     <div style="font-size: 10px; color: #71717a;">{{ $sale['customer_phone'] }}</div>
                                                 </td>
                                                 <td style="text-align: center; font-weight: 700; color: #f4f4f5;">{{ number_format($sale['quantity']) }}</td>

@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 export interface CartItem {
   id: string;
   productId: string;
+  variantId?: string | number;
   name: string;
   price: number;
   image: string;
@@ -33,6 +34,7 @@ export function CartProvider({ children }: {children: React.ReactNode;}) {
       const existingItemIndex = prev.findIndex(
         (item) =>
         item.productId === newItem.productId &&
+        item.variantId === newItem.variantId &&
         item.size === newItem.size &&
         item.color === newItem.color
       );

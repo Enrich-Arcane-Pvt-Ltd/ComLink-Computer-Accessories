@@ -66,7 +66,7 @@ class SlideForm
                                 ->imageEditor()
                                 ->maxSize(2048)
                                 ->rules([
-                                    'dimensions:width=1920,height=1080'
+                                    'dimensions:width=1920,height=1080',
                                 ])
                                 ->imageEditorAspectRatios([
                                     '16:9',

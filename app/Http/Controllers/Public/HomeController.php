@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\GalleryItem;
 use App\Models\Slide;
-use Illuminate\Support\Str;
 use App\Models\Testimonial;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -51,7 +51,7 @@ class HomeController extends Controller
                 ];
             });
 
-        $allSlides =  Slide::where('is_active', true)
+        $allSlides = Slide::where('is_active', true)
             ->orderBy('sort_order', 'asc')
             ->get();
 
@@ -69,16 +69,15 @@ class HomeController extends Controller
 
         if ($heroSlides->isEmpty()) {
             $heroSlides = collect([[
-                "id" => 1,
-                "image" => "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=2000",
-                "title" => "MAKING A STATEMENT THROUGH FASHION",
-                "subtitle" => "New Collection",
-                "description" => "Elevate your everyday style with our premium collection of streetwear and essentials.",
-                "cta" => "Shop Collection",
-                "link" => "/",
+                'id' => 1,
+                'image' => 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=2000',
+                'title' => 'MAKING A STATEMENT THROUGH FASHION',
+                'subtitle' => 'New Collection',
+                'description' => 'Elevate your everyday style with our premium collection of streetwear and essentials.',
+                'cta' => 'Shop Collection',
+                'link' => '/',
             ]]);
         }
-
 
         // 3. Dynamic Products Data Fetching (Real products added by admin)
         $realProducts = \App\Models\Product::where('is_visible', true)
@@ -91,7 +90,7 @@ class HomeController extends Controller
             $cat = $p->categories->firstWhere('parent_id', null) ?? $p->categories->first();
             $subCat = $p->categories->firstWhere('parent_id', '!=', null);
             $rawImg = ! empty($p->images) && is_array($p->images) ? $p->images[0] : null;
-            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/' . $rawImg)) : '/images/placeholder.png';
+            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/'.$rawImg)) : '/images/placeholder.png';
 
             return [
                 'id' => $p->id,
@@ -143,12 +142,12 @@ class HomeController extends Controller
 
         if (empty($instagramImages)) {
             $instagramImages = [
-                "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&q=80&w=400"
+                'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400',
+                'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=400',
+                'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=400',
+                'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=80&w=400',
+                'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=400',
+                'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&q=80&w=400',
             ];
         }
 

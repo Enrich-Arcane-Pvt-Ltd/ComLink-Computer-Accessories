@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\InventoryResource;
 
-use App\Filament\Resources\InventoryResource\Pages;
 use App\Filament\Resources\InventoryResource\Schemas\InventoryForm;
 use App\Filament\Resources\InventoryResource\Tables\InventoryTable;
 use App\Models\GrnItem;

@@ -50,17 +50,17 @@ class UserInfolist
                                     Infolists\Components\ImageEntry::make('avatar_url')
                                         ->hiddenLabel()
                                         ->circular()
-                                        ->defaultImageUrl(fn($record) => $record->getFilamentAvatarUrl())
+                                        ->defaultImageUrl(fn ($record) => $record->getFilamentAvatarUrl())
                                         ->height(100), // ලොකුවට පෙන්නන්න
 
                                     Infolists\Components\TextEntry::make('role')
                                         ->badge()
-                                        ->color(fn(string $state): string => $state === 'admin' ? 'danger' : 'info')
+                                        ->color(fn (string $state): string => $state === 'admin' ? 'danger' : 'info')
                                         ->alignCenter(),
 
                                     Infolists\Components\TextEntry::make('status')
                                         ->badge()
-                                        ->color(fn(string $state): string => match ($state) {
+                                        ->color(fn (string $state): string => match ($state) {
                                             'active' => 'success',
                                             'blocked' => 'danger',
                                             default => 'gray',

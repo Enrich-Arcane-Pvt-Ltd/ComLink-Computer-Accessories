@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\ContactInquiryResource;
 
-use App\Filament\Resources\ContactInquiryResource\Pages;
 use App\Models\ContactInquiry;
 use App\Notifications\ContactInquiryReplyNotification;
 use Filament\Forms;
@@ -17,8 +16,11 @@ use Illuminate\Support\Facades\Notification;
 class ContactInquiryResource extends Resource
 {
     protected static ?string $model = ContactInquiry::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
+
     protected static ?string $navigationGroup = 'Customer Relations';
+
     protected static ?string $pluralLabel = 'Contact Inquiries';
 
     // Form එක සාමාන්‍යයෙන් Edit කරන්න නොදෙන නිසා හිස්ව තබයි (අපි පාවිච්චි කරන්නේ Infolist / View)
@@ -51,13 +53,13 @@ class ContactInquiryResource extends Resource
 
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
                         'replied' => 'success',
                         'spam' => 'danger',
                         default => 'gray',
                     })
-                    ->icon(fn(string $state): string => match ($state) {
+                    ->icon(fn (string $state): string => match ($state) {
                         'pending' => 'heroicon-o-clock',
                         'replied' => 'heroicon-o-check-circle',
                         'spam' => 'heroicon-o-x-circle',
@@ -77,7 +79,7 @@ class ContactInquiryResource extends Resource
                 Tables\Actions\Action::make('reply')
                     ->icon('heroicon-o-arrow-turn-up-left')
                     ->color('success')
-                    ->modalHeading(fn(ContactInquiry $record) => "Reply to: {$record->name}")
+                    ->modalHeading(fn (ContactInquiry $record) => "Reply to: {$record->name}")
                     ->modalDescription('This will send an official email response directly to the customer.')
                     ->form([
                         Forms\Components\Textarea::make('reply_message')
@@ -88,7 +90,7 @@ class ContactInquiryResource extends Resource
                             ->helperText('Markdown formatting is supported.'),
                     ])
                     // රිප්ලයි කරලා ඉවර නම් බටන් එක ඩිසේබල් කරන්න පුළුවන්
-                    ->disabled(fn(ContactInquiry $record) => $record->status === 'replied')
+                    ->disabled(fn (ContactInquiry $record) => $record->status === 'replied')
                     ->action(function (ContactInquiry $record, array $data): void {
 
                         // 1. Customer හට ඊමේල් Notification එක යැවීම
@@ -136,7 +138,7 @@ class ContactInquiryResource extends Resource
                     ->schema([
                         Infolists\Components\TextEntry::make('status')
                             ->badge()
-                            ->color(fn(string $state): string => match ($state) {
+                            ->color(fn (string $state): string => match ($state) {
                                 'pending' => 'warning',
                                 'replied' => 'success',
                                 'spam' => 'danger',
@@ -149,7 +151,7 @@ class ContactInquiryResource extends Resource
                             ->columnSpanFull()
                             ->placeholder('No response sent yet.')
                             ->prose(),
-                    ])->columns(2)->visible(fn(ContactInquiry $record) => $record->status === 'replied'),
+                    ])->columns(2)->visible(fn (ContactInquiry $record) => $record->status === 'replied'),
             ]);
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\OrderResource;
 
-use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\Schemas\OrderForm;
 use App\Filament\Resources\OrderResource\Tables\OrderTable;
 use App\Models\Order;

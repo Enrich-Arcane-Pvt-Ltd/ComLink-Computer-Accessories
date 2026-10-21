@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Grn;
-use App\Models\GrnItem;
 use App\Models\GrnReport;
 use App\Models\InventoryProduct;
 use App\Models\Supplier;
@@ -72,6 +71,7 @@ class GrnAnalysisService
                     'supplier_name' => $supName,
                     'product_code' => $item->product_code,
                     'product_name' => $item->product_name,
+                    'color_name' => $item->color_name,
                     'product_condition' => $item->product_condition,
                     'quantity' => $qty,
                     'price_per_unit' => $unitPrice,
@@ -102,11 +102,15 @@ class GrnAnalysisService
                         'total_quantity' => 0,
                         'total_amount' => 0.0,
                         'unit_prices' => [],
+                        'colors' => [],
                     ];
                 }
                 $productGroups[$codeKey]['total_quantity'] += $qty;
                 $productGroups[$codeKey]['total_amount'] += $lineTotal;
                 $productGroups[$codeKey]['unit_prices'][] = $unitPrice;
+                if (! empty($item->color_name)) {
+                    $productGroups[$codeKey]['colors'][$item->color_name] = ($productGroups[$codeKey]['colors'][$item->color_name] ?? 0) + $qty;
+                }
             }
         }
 
@@ -136,6 +140,7 @@ class GrnAnalysisService
                 'avg_price' => round($avgPrice, 2),
                 'total_amount' => round($prod['total_amount'], 2),
                 'percentage' => $totalAmount > 0 ? round(($prod['total_amount'] / $totalAmount) * 100, 1) : 0,
+                'colors' => $prod['colors'] ?? [],
             ];
         }
         usort($formattedProducts, fn ($a, $b) => $b['total_amount'] <=> $a['total_amount']);
@@ -144,10 +149,10 @@ class GrnAnalysisService
         $scopeText = 'All';
         if ($analysisType === 'supplier_wise') {
             $scopeText = $supplierId ? (Supplier::find($supplierId)?->name ?? 'Selected Supplier') : 'All Suppliers';
-            $defaultTitle = "GRN Analysis ({$scopeText}) - " . $dateFrom->format('M d') . ' to ' . $dateTo->format('M d, Y');
+            $defaultTitle = "GRN Analysis ({$scopeText}) - ".$dateFrom->format('M d').' to '.$dateTo->format('M d, Y');
         } else {
-            $scopeText = $productCode ? ($productCode . ' - ' . (InventoryProduct::where('product_code', $productCode)->value('product_name') ?? 'Selected Product')) : 'All Products';
-            $defaultTitle = "GRN Analysis ({$scopeText}) - " . $dateFrom->format('M d') . ' to ' . $dateTo->format('M d, Y');
+            $scopeText = $productCode ? ($productCode.' - '.(InventoryProduct::where('product_code', $productCode)->value('product_name') ?? 'Selected Product')) : 'All Products';
+            $defaultTitle = "GRN Analysis ({$scopeText}) - ".$dateFrom->format('M d').' to '.$dateTo->format('M d, Y');
         }
 
         $title = ! empty($params['title']) ? trim($params['title']) : $defaultTitle;

@@ -2,27 +2,23 @@
 
 namespace App\Filament\Resources\GalleryItemResource;
 
-use App\Filament\Resources\GalleryItemResource\Pages;
-use App\Filament\Resources\GalleryItemResource\RelationManagers;
 use App\Filament\Resources\GalleryItemResource\Schemas\GalleryItemForm;
 use App\Filament\Resources\GalleryItemResource\Schemas\GalleryItemInfolist;
 use App\Filament\Resources\GalleryItemResource\Tables\GalleryItemTable;
 use App\Models\GalleryItem;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GalleryItemResource extends Resource
 {
     protected static ?string $model = GalleryItem::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-camera';
+
     protected static ?string $navigationGroup = 'Content Management';
+
     protected static ?string $pluralLabel = 'Media Gallery';
 
     public static function form(Form $form): Form
@@ -39,8 +35,6 @@ class GalleryItemResource extends Resource
     {
         return GalleryItemInfolist::infolist($infolist);
     }
-
-
 
     public static function getRelations(): array
     {

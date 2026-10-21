@@ -50,7 +50,7 @@ class ShopController extends Controller
             ->where(function ($q) use ($product) {
                 $q->where('id', $product)->orWhere('slug', $product);
             })
-            ->with(['brand', 'categories'])
+            ->with(['brand', 'categories', 'variants'])
             ->first();
 
         if ($dbProduct) {
@@ -340,7 +340,7 @@ class ShopController extends Controller
             $subCatName = $subCat?->name;
 
             $rawImg = ! empty($p->images) && is_array($p->images) ? $p->images[0] : null;
-            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/' . $rawImg)) : '/images/placeholder.png';
+            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/'.$rawImg)) : '/images/placeholder.png';
 
             return [
                 'id' => $p->id,
@@ -903,18 +903,24 @@ class ShopController extends Controller
         $rating = (float) ($item['rating'] ?? 4.9);
         $reviews = (int) ($item['reviews'] ?? 36);
 
-        // Curate 4 distinct images - preserve real uploaded product images if present
-        $images = ! empty($item['images']) && is_array($item['images'])
-            ? $item['images']
-            : $this->resolve4ProductImages($targetSlug, $item['image'] ?? null);
+        // Curate distinct images - preserve real uploaded product images or variant images
+        if (! empty($item['hasColorVariants']) && ! empty($item['variants'])) {
+            $images = ! empty($item['images']) && is_array($item['images'])
+                ? $item['images']
+                : (! empty($item['image']) ? [$item['image']] : $this->resolve4ProductImages($targetSlug, null));
+        } else {
+            $images = ! empty($item['images']) && is_array($item['images'])
+                ? $item['images']
+                : $this->resolve4ProductImages($targetSlug, $item['image'] ?? null);
+        }
 
         // Warranty duration and period unit
         $warrantyDuration = ! empty($item['warranty_duration']) ? (int) $item['warranty_duration'] : null;
         $warrantyUnit = ! empty($item['warranty_unit']) ? (string) $item['warranty_unit'] : 'Years';
 
         if ($warrantyDuration !== null && $warrantyDuration > 0) {
-            $unitFormatted = $warrantyDuration === 1 ? rtrim($warrantyUnit, 's') : (rtrim($warrantyUnit, 's') . 's');
-            $warrantyText = "{$warrantyDuration} " . strtoupper($unitFormatted) . " OFFICIAL COMLINK WARRANTY";
+            $unitFormatted = $warrantyDuration === 1 ? rtrim($warrantyUnit, 's') : (rtrim($warrantyUnit, 's').'s');
+            $warrantyText = "{$warrantyDuration} ".strtoupper($unitFormatted).' OFFICIAL COMLINK WARRANTY';
         } else {
             $warrantyYears = in_array($targetSlug, ['processors', 'motherboards', 'graphic-cards', 'power-supply']) ? '3 Years' : (in_array($targetSlug, ['laptops', 'gaming-laptops', 'gaming-monitors', 'monitors-displays', 'ups', 'chairs']) ? '2 Years' : '1 Year');
             $warrantyText = strtoupper("{$warrantyYears} Official ComLink Warranty");
@@ -1001,6 +1007,8 @@ class ShopController extends Controller
                     'comment' => 'Very reliable and runs cool under heavy load. The instructions were crystal clear and build aesthetics look very clean.',
                 ],
             ],
+            'hasColorVariants' => $item['hasColorVariants'] ?? false,
+            'variants' => $item['variants'] ?? [],
         ];
     }
 
@@ -1029,15 +1037,30 @@ class ShopController extends Controller
 
         $targetSlug = $subCatSlug ?: $catSlug;
 
-        // Process all uploaded images from database
-        $rawImages = is_array($p->images) ? array_values(array_filter($p->images)) : [];
+        // Process images: if product has color variants, prioritize images from the variant sections
+        $hasColorVariants = $p->hasColorVariants() && $p->variants->isNotEmpty();
         $images = [];
-        foreach ($rawImages as $img) {
-            if (empty($img)) {
-                continue;
+
+        if ($hasColorVariants) {
+            foreach ($p->variants as $v) {
+                if (! empty($v->image)) {
+                    $images[] = (str_starts_with($v->image, 'http') || str_starts_with($v->image, '/'))
+                        ? $v->image
+                        : asset('storage/'.$v->image);
+                }
             }
-            $images[] = (str_starts_with($img, 'http') || str_starts_with($img, '/')) ? $img : asset('storage/' . $img);
         }
+
+        if (empty($images)) {
+            $rawImages = is_array($p->images) ? array_values(array_filter($p->images)) : [];
+            foreach ($rawImages as $img) {
+                if (empty($img)) {
+                    continue;
+                }
+                $images[] = (str_starts_with($img, 'http') || str_starts_with($img, '/')) ? $img : asset('storage/'.$img);
+            }
+        }
+
         if (empty($images)) {
             $images = $this->resolve4ProductImages($targetSlug, null);
         }
@@ -1121,6 +1144,28 @@ class ShopController extends Controller
             'technical_specifications' => $p->technical_specifications,
             'warranty_duration' => $p->warranty_duration,
             'warranty_unit' => $p->warranty_unit,
+            'hasColorVariants' => $p->hasColorVariants(),
+            'variants' => $p->variants->map(function ($v) {
+                $img = $v->image;
+                $imgUrl = $img ? ((str_starts_with($img, 'http') || str_starts_with($img, '/')) ? $img : asset('storage/'.$img)) : null;
+                $orig = (float) $v->price;
+                $sale = $v->sale_price !== null ? (float) $v->sale_price : $orig;
+                $disc = ($sale < $orig && $orig > 0) ? (int) round((($orig - $sale) / $orig) * 100) : (int) ($v->discount_percentage ?? 0);
+                $stock = (int) ($v->stock ?? $v->show_quantity ?? 0);
+
+                return [
+                    'id' => $v->id,
+                    'color' => $v->color_name,
+                    'name' => $v->variant_name ?? ($v->color_name ? "{$v->product?->name} - {$v->color_name}" : $v->product?->name),
+                    'condition' => $v->condition ?? 'Brand New',
+                    'originalPrice' => $orig,
+                    'latestPrice' => $sale,
+                    'discountPercent' => $disc,
+                    'inStock' => $stock > 0,
+                    'stockCount' => $stock,
+                    'image' => $imgUrl,
+                ];
+            })->values()->all(),
         ];
 
         return $this->enrichProductDetails($base);
@@ -1154,7 +1199,7 @@ class ShopController extends Controller
             $subCatName = ! $isMainWithoutSub && $p->categories->count() > 1 ? $p->categories->last()?->name : null;
 
             $rawImg = ! empty($p->images) && is_array($p->images) ? $p->images[0] : null;
-            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/' . $rawImg)) : '/images/placeholder.png';
+            $image = $rawImg ? ((str_starts_with($rawImg, 'http') || str_starts_with($rawImg, '/')) ? $rawImg : asset('storage/'.$rawImg)) : '/images/placeholder.png';
 
             return [
                 'id' => $p->id,

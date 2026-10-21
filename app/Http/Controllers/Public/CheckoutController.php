@@ -31,7 +31,7 @@ class CheckoutController extends Controller
 
         $fullName = '';
         if ($user) {
-            $fullName = trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''));
+            $fullName = trim(($user->first_name ?? '').' '.($user->last_name ?? ''));
             if (empty($fullName)) {
                 $fullName = $user->name ?? '';
             }
@@ -82,11 +82,12 @@ class CheckoutController extends Controller
                     'currency' => 'lkr',
                     'payment_method_types' => ['card'],
                     'receipt_email' => $validated['email'] ?? null,
-                    'description' => "ComLink Store Order payment - " . ($validated['name'] ?? 'Customer'),
+                    'description' => 'ComLink Store Order payment - '.($validated['name'] ?? 'Customer'),
                 ]);
 
             if ($response->failed()) {
                 Log::error('Stripe PaymentIntent Creation Failed', ['body' => $response->body()]);
+
                 return response()->json([
                     'error' => $response->json('error.message') ?? 'Failed to initialize payment gateway.',
                 ], 422);
@@ -98,8 +99,9 @@ class CheckoutController extends Controller
             ]);
         } catch (\Throwable $e) {
             Log::error('Stripe Connection Exception', ['message' => $e->getMessage()]);
+
             return response()->json([
-                'error' => 'Unable to communicate with payment processor: ' . $e->getMessage(),
+                'error' => 'Unable to communicate with payment processor: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -122,6 +124,8 @@ class CheckoutController extends Controller
             'shipping_country' => ['nullable', 'string', 'max:100'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.productId' => ['nullable'],
+            'items.*.variantId' => ['nullable'],
+            'items.*.color' => ['nullable', 'string'],
             'items.*.name' => ['required', 'string'],
             'items.*.price' => ['required', 'numeric', 'min:0'],
             'items.*.quantity' => ['required', 'integer', 'min:1'],
@@ -178,15 +182,44 @@ class CheckoutController extends Controller
                 'payment_status' => $paymentStatus,
                 'stripe_payment_intent_id' => $paymentIntentId,
                 'courier_name' => 'Pronto Courier Service',
-                'tracking_number' => 'PRN-' . strtoupper(substr(uniqid(), -6)),
+                'tracking_number' => 'PRN-'.strtoupper(substr(uniqid(), -6)),
             ]);
 
             foreach ($validated['items'] as $item) {
                 $qty = (int) $item['quantity'];
                 $price = (float) $item['price'];
                 $prodId = is_numeric($item['productId'] ?? null) ? (int) $item['productId'] : null;
+                $variantId = is_numeric($item['variantId'] ?? null) ? (int) $item['variantId'] : null;
+                $color = $item['color'] ?? null;
 
-                // Decrement available product stock in database
+                // 1. Decrement specific color variant stock if applicable
+                if ($variantId) {
+                    $variant = \App\Models\ProductVariant::lockForUpdate()->find($variantId);
+                    if ($variant) {
+                        $variant->stock = max(0, ((int) $variant->stock) - $qty);
+                        $variant->show_quantity = max(0, ((int) $variant->show_quantity) - $qty);
+                        $variant->save();
+                        if (! $color) {
+                            $color = $variant->color_name;
+                        }
+                    }
+                } elseif ($prodId && $color) {
+                    $variant = \App\Models\ProductVariant::where('product_id', $prodId)
+                        ->where(function ($q) use ($color) {
+                            $q->where('color_name', $color)
+                                ->orWhere('variant_name', 'like', "%{$color}%");
+                        })
+                        ->lockForUpdate()
+                        ->first();
+                    if ($variant) {
+                        $variant->stock = max(0, ((int) $variant->stock) - $qty);
+                        $variant->show_quantity = max(0, ((int) $variant->show_quantity) - $qty);
+                        $variant->save();
+                        $variantId = $variant->id;
+                    }
+                }
+
+                // 2. Decrement available product stock in database
                 if ($prodId) {
                     $product = Product::lockForUpdate()->find($prodId);
                     if ($product) {
@@ -199,6 +232,8 @@ class CheckoutController extends Controller
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $prodId,
+                    'variant_id' => $variantId,
+                    'color' => $color,
                     'product_name' => $item['name'],
                     'product_image' => $item['image'] ?? '/images/placeholder.png',
                     'category_name' => $item['category'] ?? 'Hardware',

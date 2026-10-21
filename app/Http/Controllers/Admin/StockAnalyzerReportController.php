@@ -34,11 +34,11 @@ class StockAnalyzerReportController extends Controller
             'data' => $data,
             'isPrint' => false,
         ])
-        ->setPaper('a4', 'landscape')
-        ->setOption('isRemoteEnabled', true)
-        ->setOption('dpi', 150);
+            ->setPaper('a4', 'landscape')
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('dpi', 150);
 
-        $filename = 'stock-analysis-report-' . now()->format('Ymd-His') . '.pdf';
+        $filename = 'stock-analysis-report-'.now()->format('Ymd-His').'.pdf';
 
         return $pdf->download($filename);
     }

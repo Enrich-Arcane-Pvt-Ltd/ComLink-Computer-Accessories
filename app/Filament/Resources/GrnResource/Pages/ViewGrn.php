@@ -11,7 +11,7 @@ class ViewGrn extends ViewRecord
 {
     protected static string $resource = GrnResource::class;
 
-    public function getMaxContentWidth(): MaxWidth | string | null
+    public function getMaxContentWidth(): MaxWidth|string|null
     {
         return MaxWidth::Full;
     }

@@ -19,8 +19,7 @@ class InventoryTable
 
                 Tables\Columns\ImageColumn::make('product_image')
                     ->label('Product Image')
-                    ->getStateUsing(fn (GrnItem $record): ?string => 
-                        $record->inventoryProduct?->product_image 
+                    ->getStateUsing(fn (GrnItem $record): ?string => $record->inventoryProduct?->product_image
                         ?? InventoryProduct::where('product_code', $record->product_code)->value('product_image')
                     )
                     ->disk('public')
@@ -30,9 +29,8 @@ class InventoryTable
                 Tables\Columns\ViewColumn::make('product_name')
                     ->label('Product Name')
                     ->view('filament.tables.columns.inventory-product-name')
-                    ->searchable(query: fn ($query, $search) => 
-                        $query->where('product_name', 'like', "%{$search}%")
-                              ->orWhere('product_code', 'like', "%{$search}%")
+                    ->searchable(query: fn ($query, $search) => $query->where('product_name', 'like', "%{$search}%")
+                        ->orWhere('product_code', 'like', "%{$search}%")
                     )
                     ->sortable(query: fn ($query, $direction) => $query->orderBy('product_name', $direction)),
 

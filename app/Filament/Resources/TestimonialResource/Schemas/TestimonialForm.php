@@ -5,12 +5,12 @@ namespace App\Filament\Resources\TestimonialResource\Schemas;
 use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Radio;
 use Filament\Forms\Set;
 
 class TestimonialForm
@@ -24,7 +24,7 @@ class TestimonialForm
                         ->schema([
                             Select::make('user_id')
                                 ->relationship('user', 'first_name')
-                                ->getOptionLabelFromRecordUsing(fn($record) => "{$record->first_name} {$record->last_name}")
+                                ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->first_name} {$record->last_name}")
                                 ->searchable(['first_name', 'last_name'])
                                 ->preload()
                                 ->placeholder('Select registered user (Optional / Guest)')

@@ -7,7 +7,6 @@ namespace App\Models;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +17,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, LogsActivity;
+    use HasFactory, LogsActivity, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -37,7 +36,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'status',
         'avatar_url',
         'is_guest',
-        'email_verified_at'
+        'email_verified_at',
     ];
 
     /**
@@ -76,7 +75,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     protected static function booted()
     {
         static::created(function ($user) {
-            $user->customer_id = 'VCUS' . str_pad($user->id, 5, '0', STR_PAD_LEFT);
+            $user->customer_id = 'VCUS'.str_pad($user->id, 5, '0', STR_PAD_LEFT);
             $user->saveQuietly();
         });
     }
@@ -99,7 +98,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             return Storage::url($this->avatar_url);
         }
 
-        $name = trim($this->first_name . ' ' . $this->last_name);
+        $name = trim($this->first_name.' '.$this->last_name);
+
         return "https://ui-avatars.com/api/?name={$name}&color=7F9CF5&background=EBF4FF";
     }
 
@@ -122,7 +122,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         return trim("{$this->first_name} {$this->last_name}") ?: $this->username ?: 'User';
     }
-
 
     public function getActivitylogOptions(): LogOptions
     {

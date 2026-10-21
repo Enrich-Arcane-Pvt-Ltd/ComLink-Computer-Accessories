@@ -55,17 +55,17 @@ class UserForm
                                                     ->password()
                                                     ->revealable() // ඇහැ Icon එක (Show Password)
                                                     ->confirmed() // password_confirmation field එක check කරනවා
-                                                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
-                                                    ->dehydrated(fn($state) => filled($state))
-                                                    ->required(fn(string $context, $get) => $context === 'create' && !$get('is_guest'))
+                                                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                                                    ->dehydrated(fn ($state) => filled($state))
+                                                    ->required(fn (string $context, $get) => $context === 'create' && ! $get('is_guest'))
                                                     ->rule(Password::default()),
 
                                                 Forms\Components\TextInput::make('password_confirmation')
                                                     ->label('Confirm Password')
                                                     ->password()
                                                     ->revealable() // මෙතනත් Icon එක දාමු
-                                                    ->required(fn(string $context, $get) => $context === 'create' && filled($get('password')))
-                                                    ->visible(fn($context, $get) => $context === 'create' || filled($get('password'))),
+                                                    ->required(fn (string $context, $get) => $context === 'create' && filled($get('password')))
+                                                    ->visible(fn ($context, $get) => $context === 'create' || filled($get('password'))),
                                             ]),
                                     ]),
                             ])

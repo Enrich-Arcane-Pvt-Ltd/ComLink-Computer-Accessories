@@ -3,11 +3,11 @@
 namespace App\Filament\Resources\SlideResource\Tables;
 
 use Filament\Tables;
-use Filament\Tables\Table;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 
 class SlideTable
 {
@@ -27,7 +27,7 @@ class SlideTable
 
                 TextColumn::make('location')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'hero' => 'info',
                         'newsletter' => 'success',
                         default => 'gray',

@@ -71,7 +71,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->font('Plus Jakarta Sans')
             ->brandName('Wiki-Store')
-            ->brandLogo(fn() => view('filament.components.brand'))
+            ->brandLogo(fn () => view('filament.components.brand'))
             ->brandLogoHeight('3.5rem')
             ->darkMode(true)
             ->favicon(asset('favicon.ico'))

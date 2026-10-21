@@ -48,13 +48,13 @@ class Grn extends Model
             ->orderBy('id', 'desc')
             ->value('grn_number');
 
-        if ($latest && preg_match('/' . preg_quote($prefix, '/') . '(\d+)/', $latest, $matches)) {
+        if ($latest && preg_match('/'.preg_quote($prefix, '/').'(\d+)/', $latest, $matches)) {
             $next = (int) $matches[1] + 1;
         } else {
             $next = 1;
         }
 
-        return $prefix . str_pad((string) $next, 6, '0', STR_PAD_LEFT);
+        return $prefix.str_pad((string) $next, 6, '0', STR_PAD_LEFT);
     }
 
     public function recalculateSubTotal(): void

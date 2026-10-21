@@ -20,12 +20,12 @@ class ContactInquiryReplyNotification extends Notification implements ShouldQueu
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('RE: ' . $this->inquiry->subject)
-            ->greeting('Hello ' . $this->inquiry->name . ',')
-            ->line('Thank you for contacting us. Regarding your inquiry about "' . $this->inquiry->subject . '", please find our response below:')
+            ->subject('RE: '.$this->inquiry->subject)
+            ->greeting('Hello '.$this->inquiry->name.',')
+            ->line('Thank you for contacting us. Regarding your inquiry about "'.$this->inquiry->subject.'", please find our response below:')
             ->markdown('mail.inquiry-reply', [
                 'replyMessage' => $this->replyMessage,
-                'originalMessage' => $this->inquiry->message
+                'originalMessage' => $this->inquiry->message,
             ]);
     }
 

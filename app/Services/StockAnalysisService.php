@@ -3,11 +3,9 @@
 namespace App\Services;
 
 use App\Models\GrnItem;
-use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class StockAnalysisService
 {
@@ -23,42 +21,43 @@ class StockAnalysisService
                 return [
                     'start' => $now->copy()->startOfDay(),
                     'end' => $now->copy()->endOfDay(),
-                    'label' => 'Today (' . $now->format('M d, Y') . ')',
+                    'label' => 'Today ('.$now->format('M d, Y').')',
                 ];
 
             case 'this_week':
                 return [
                     'start' => $now->copy()->startOfWeek(),
                     'end' => $now->copy()->endOfWeek(),
-                    'label' => 'This Week (' . $now->copy()->startOfWeek()->format('M d') . ' - ' . $now->copy()->endOfWeek()->format('M d, Y') . ')',
+                    'label' => 'This Week ('.$now->copy()->startOfWeek()->format('M d').' - '.$now->copy()->endOfWeek()->format('M d, Y').')',
                 ];
 
             case 'this_month':
                 return [
                     'start' => $now->copy()->startOfMonth(),
                     'end' => $now->copy()->endOfMonth(),
-                    'label' => 'This Month (' . $now->format('F Y') . ')',
+                    'label' => 'This Month ('.$now->format('F Y').')',
                 ];
 
             case 'last_month':
                 $lastMonth = $now->copy()->subMonth();
+
                 return [
                     'start' => $lastMonth->copy()->startOfMonth(),
                     'end' => $lastMonth->copy()->endOfMonth(),
-                    'label' => 'Last Month (' . $lastMonth->format('F Y') . ')',
+                    'label' => 'Last Month ('.$lastMonth->format('F Y').')',
                 ];
 
             case 'this_year':
                 return [
                     'start' => $now->copy()->startOfYear(),
                     'end' => $now->copy()->endOfYear(),
-                    'label' => 'This Year (' . $now->format('Y') . ')',
+                    'label' => 'This Year ('.$now->format('Y').')',
                 ];
 
             case 'custom':
                 $start = $customStart ? Carbon::parse($customStart)->startOfDay() : null;
                 $end = $customEnd ? Carbon::parse($customEnd)->endOfDay() : null;
-                $label = 'Custom Range (' . ($start ? $start->format('M d, Y') : 'Beginning') . ' to ' . ($end ? $end->format('M d, Y') : 'Present') . ')';
+                $label = 'Custom Range ('.($start ? $start->format('M d, Y') : 'Beginning').' to '.($end ? $end->format('M d, Y') : 'Present').')';
 
                 return [
                     'start' => $start,
@@ -92,7 +91,7 @@ class StockAnalysisService
         $end = $dates['end'];
 
         $productQuery = Product::query()
-            ->with(['supplier', 'brand', 'categories', 'grnItems.grn.purchaseOrder.supplier'])
+            ->with(['supplier', 'brand', 'categories', 'variants', 'grnItems.grn.purchaseOrder.supplier'])
             ->latest('id');
 
         if ($supplierId) {
@@ -107,7 +106,7 @@ class StockAnalysisService
             $term = trim($search);
             $productQuery->where(function ($q) use ($term) {
                 $q->where('name', 'like', "%{$term}%")
-                  ->orWhere('product_code', 'like', "%{$term}%");
+                    ->orWhere('product_code', 'like', "%{$term}%");
             });
         }
 
@@ -186,7 +185,7 @@ class StockAnalysisService
             if ($start && $end) {
                 $orderItemQuery->whereHas('order', function ($q) use ($start, $end) {
                     $q->where('payment_status', 'Paid')
-                      ->whereBetween('created_at', [$start, $end]);
+                        ->whereBetween('created_at', [$start, $end]);
                 });
             }
             $periodSoldItems = $orderItemQuery->get();
@@ -222,8 +221,29 @@ class StockAnalysisService
             $images = is_array($product->images) ? $product->images : [];
             $firstImg = count($images) > 0 ? $images[0] : null;
             $imgUrl = $firstImg
-                ? ((str_starts_with($firstImg, 'http') || str_starts_with($firstImg, '/')) ? $firstImg : asset('storage/' . $firstImg))
+                ? ((str_starts_with($firstImg, 'http') || str_starts_with($firstImg, '/')) ? $firstImg : asset('storage/'.$firstImg))
                 : '/images/placeholder.png';
+
+            // Color breakdown for variable products
+            $colorBreakdown = [];
+            if ($product->hasColorVariants() && $product->variants->isNotEmpty()) {
+                foreach ($product->variants as $v) {
+                    $vSold = (int) OrderItem::where('product_id', $product->id)
+                        ->where(function ($sq) use ($v) {
+                            $sq->where('variant_id', $v->id)
+                                ->orWhere('color', $v->color_name);
+                        })
+                        ->whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+                        ->sum('quantity');
+
+                    $colorBreakdown[] = [
+                        'color' => $v->color_name,
+                        'stock' => (int) $v->inventory_stock,
+                        'sold_qty' => $vSold,
+                        'price' => (float) ($v->sale_price ?: $v->price ?: 0),
+                    ];
+                }
+            }
 
             $rows[] = [
                 'product_id' => $product->id,
@@ -235,6 +255,7 @@ class StockAnalysisService
                 'current_stock' => $currentStock,
                 'warehouse_stock' => (int) $product->balance_inventory_stock,
                 'web_stock' => (int) ($product->quantity ?? 0),
+                'color_breakdown' => $colorBreakdown,
 
                 // Purchasing / Expense
                 'purchased_qty' => $purchasedQty,
@@ -305,7 +326,7 @@ class StockAnalysisService
      */
     public function getProductBreakdown(int $productId): array
     {
-        $product = Product::with(['supplier', 'brand'])->findOrFail($productId);
+        $product = Product::with(['supplier', 'brand', 'variants'])->findOrFail($productId);
 
         // 1. Inward GRNs
         $grnQuery = GrnItem::query()->with(['grn.purchaseOrder.supplier']);
@@ -319,9 +340,10 @@ class StockAnalysisService
         $inwardBatches = $grnItems->map(function (GrnItem $item) {
             return [
                 'grn_id' => $item->grn_id,
-                'grn_code' => $item->grn?->grn_number ?? ('GRN-#' . $item->grn_id),
+                'grn_code' => $item->grn?->grn_number ?? ('GRN-#'.$item->grn_id),
                 'received_date' => $item->grn?->received_date ? Carbon::parse($item->grn->received_date)->format('M d, Y') : $item->created_at->format('M d, Y'),
                 'supplier_name' => $item->grn?->purchaseOrder?->supplier?->name ?? 'Default Supplier',
+                'color_name' => $item->color_name,
                 'quantity' => (int) $item->product_quantity,
                 'unit_price' => (float) $item->price_per_unit,
                 'total' => (float) $item->total,
@@ -347,10 +369,11 @@ class StockAnalysisService
         $outwardSales = $orderItems->map(function (OrderItem $item) {
             return [
                 'order_id' => $item->order_id,
-                'order_number' => $item->order?->order_number ?? ('ORD-#' . $item->order_id),
+                'order_number' => $item->order?->order_number ?? ('ORD-#'.$item->order_id),
                 'order_date' => $item->order?->created_at ? $item->order->created_at->format('M d, Y h:i A') : $item->created_at->format('M d, Y'),
                 'customer_name' => $item->order?->customer_name ?? 'Guest Customer',
                 'customer_phone' => $item->order?->customer_phone ?? '-',
+                'color_name' => $item->color,
                 'quantity' => (int) $item->quantity,
                 'unit_price' => (float) $item->unit_price,
                 'total_price' => (float) $item->total_price,
@@ -358,6 +381,12 @@ class StockAnalysisService
                 'status' => $item->order?->status ?? 'Completed',
             ];
         })->toArray();
+
+        $colorVariants = $product->variants->map(fn ($v) => [
+            'color' => $v->color_name,
+            'stock' => (int) $v->inventory_stock,
+            'price' => (float) ($v->sale_price ?: $v->price ?: 0),
+        ])->toArray();
 
         return [
             'product' => [
@@ -367,6 +396,7 @@ class StockAnalysisService
                 'condition' => $product->condition ?? 'Brand New',
                 'supplier_name' => $product->supplier?->name ?? 'N/A',
             ],
+            'color_variants' => $colorVariants,
             'inward_batches' => $inwardBatches,
             'outward_sales' => $outwardSales,
             'total_inward_qty' => array_sum(array_column($inwardBatches, 'quantity')),

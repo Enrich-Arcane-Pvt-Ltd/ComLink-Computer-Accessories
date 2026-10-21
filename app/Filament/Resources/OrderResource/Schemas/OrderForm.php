@@ -117,7 +117,7 @@ class OrderForm
 
                                             $images = is_array($p->images) ? $p->images : [];
                                             $img = count($images) > 0 ? $images[0] : null;
-                                            $imgUrl = $img ? ((str_starts_with($img, 'http') || str_starts_with($img, '/')) ? $img : asset('storage/' . $img)) : '/images/placeholder.png';
+                                            $imgUrl = $img ? ((str_starts_with($img, 'http') || str_starts_with($img, '/')) ? $img : asset('storage/'.$img)) : '/images/placeholder.png';
                                             $set('product_image', $imgUrl);
                                         }
                                     }

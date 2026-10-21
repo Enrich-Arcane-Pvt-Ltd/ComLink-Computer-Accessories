@@ -2,26 +2,23 @@
 
 namespace App\Filament\Resources\SlideResource;
 
-use App\Filament\Resources\SlideResource\Pages;
-use App\Filament\Resources\SlideResource\RelationManagers;
 use App\Filament\Resources\SlideResource\Schemas\SlideForm;
 use App\Filament\Resources\SlideResource\Schemas\SlideInfolist;
 use App\Filament\Resources\SlideResource\Tables\SlideTable;
 use App\Models\Slide;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SlideResource extends Resource
 {
     protected static ?string $model = Slide::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-photo';
+
     protected static ?string $navigationGroup = 'Content Management';
+
     protected static ?string $pluralLabel = 'Hero & CTA Content';
 
     public static function form(Form $form): Form

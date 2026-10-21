@@ -15,7 +15,7 @@ class CreateGrn extends CreateRecord
 
     protected static ?string $title = 'Add GRN (Goods Received Note)';
 
-    public function getMaxContentWidth(): MaxWidth | string | null
+    public function getMaxContentWidth(): MaxWidth|string|null
     {
         return MaxWidth::Full;
     }
@@ -30,6 +30,8 @@ class CreateGrn extends CreateRecord
                 foreach ($po->items as $item) {
                     $itemsData[(string) Str::uuid()] = [
                         'inventory_product_id' => $item->inventory_product_id,
+                        'product_variant_id' => $item->product_variant_id,
+                        'color_name' => $item->color_name,
                         'product_code' => $item->product_code,
                         'product_name' => $item->product_name,
                         'product_condition' => $item->product_condition ?: 'Brandnew',
@@ -51,6 +53,7 @@ class CreateGrn extends CreateRecord
                 ]);
 
                 $this->callHook('afterFill');
+
                 return;
             }
         }

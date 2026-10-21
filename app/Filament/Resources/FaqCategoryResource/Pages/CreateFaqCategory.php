@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\FaqCategoryResource\Pages;
 
 use App\Filament\Resources\FaqCategoryResource\FaqCategoryResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateFaqCategory extends CreateRecord

@@ -53,13 +53,13 @@ class OrderController extends Controller
                 'total' => (float) $o->total_amount,
                 'shippingAddress' => [
                     'recipient' => $o->customer_name,
-                    'address' => trim($o->shipping_address_line_1 . ($o->shipping_address_line_2 ? ', ' . $o->shipping_address_line_2 : '')),
-                    'city' => trim($o->shipping_city . ($o->shipping_postal_code ? ', ' . $o->shipping_postal_code : '')),
-                    'phone' => $o->customer_phone . ($o->customer_secondary_phone ? " / {$o->customer_secondary_phone}" : ''),
+                    'address' => trim($o->shipping_address_line_1.($o->shipping_address_line_2 ? ', '.$o->shipping_address_line_2 : '')),
+                    'city' => trim($o->shipping_city.($o->shipping_postal_code ? ', '.$o->shipping_postal_code : '')),
+                    'phone' => $o->customer_phone.($o->customer_secondary_phone ? " / {$o->customer_secondary_phone}" : ''),
                 ],
                 'courier' => [
                     'name' => $o->courier_name ?: 'Pronto Courier Service',
-                    'trackingNumber' => $o->tracking_number ?: ('PRN-LK-' . $o->id),
+                    'trackingNumber' => $o->tracking_number ?: ('PRN-LK-'.$o->id),
                 ],
                 'items' => $o->items->map(function ($item) {
                     return [

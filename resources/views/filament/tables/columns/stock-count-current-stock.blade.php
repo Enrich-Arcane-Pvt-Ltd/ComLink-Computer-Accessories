@@ -17,9 +17,18 @@
     };
 @endphp
 
-<div style="display: flex; align-items: center; justify-content: center; padding: 2px 0;">
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px 0;">
     <span style="display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 700; {{ $badgeStyle }}">
         <span style="width: 6px; height: 6px; border-radius: 9999px; background-color: {{ $dotColor }}; flex-shrink: 0;"></span>
         {{ number_format($current) }} {{ $current === 1 ? 'unit' : 'units' }}
     </span>
+    @if($product->hasColorVariants() && $product->variants->isNotEmpty())
+        <div style="display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 4px; flex-wrap: wrap; max-width: 220px;" title="{{ $product->variants->map(fn($v) => $v->color_name . ': ' . (int) $v->inventory_stock . ' units')->join(' | ') }}">
+            @foreach($product->variants as $variant)
+                <span style="font-size: 10px; font-weight: 600; padding: 1px 4px; border-radius: 4px; background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25);">
+                    {{ $variant->color_name }}: {{ (int) $variant->inventory_stock }}
+                </span>
+            @endforeach
+        </div>
+    @endif
 </div>

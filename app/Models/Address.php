@@ -19,7 +19,7 @@ class Address extends Model
         'state',
         'country',
         'phone',
-        'secondary_phone'
+        'secondary_phone',
     ];
 
     protected function casts(): array

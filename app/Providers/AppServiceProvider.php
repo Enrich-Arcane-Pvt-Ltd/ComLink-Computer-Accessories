@@ -30,9 +30,10 @@ class AppServiceProvider extends ServiceProvider
                 $len = strlen($prefix);
                 if (strncmp($prefix, $class, $len) === 0) {
                     $relativeClass = substr($class, $len);
-                    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+                    $file = $baseDir.str_replace('\\', '/', $relativeClass).'.php';
                     if (file_exists($file)) {
                         require_once $file;
+
                         return;
                     }
                 }
@@ -62,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
 
             if ($panel && ($panel->getId() === 'admin')) {
                 Notification::make()
-                    ->title('Welcome back, ' . $event->user->first_name . '!')
+                    ->title('Welcome back, '.$event->user->first_name.'!')
                     ->body('Have a productive day at Wiki-Store.')
                     ->success()
                     ->send();

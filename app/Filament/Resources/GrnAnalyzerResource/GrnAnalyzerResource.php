@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\GrnAnalyzerResource;
 
-use App\Filament\Resources\GrnAnalyzerResource\Pages;
 use App\Filament\Resources\GrnAnalyzerResource\Tables\GrnAnalyzerTable;
 use App\Models\GrnReport;
 use Filament\Forms\Form;

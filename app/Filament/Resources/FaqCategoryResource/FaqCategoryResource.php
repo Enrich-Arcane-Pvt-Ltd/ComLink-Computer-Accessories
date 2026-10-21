@@ -2,23 +2,22 @@
 
 namespace App\Filament\Resources\FaqCategoryResource;
 
-use App\Filament\Resources\FaqCategoryResource\Pages;
-use App\Filament\Resources\FaqCategoryResource\RelationManagers;
 use App\Models\FaqCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class FaqCategoryResource extends Resource
 {
     protected static ?string $model = FaqCategory::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-folder';
+
     protected static ?string $navigationGroup = 'FAQ Management';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -32,8 +31,7 @@ class FaqCategoryResource extends Resource
                             ->maxLength(255)
                             ->live(onBlur: true)
                             ->afterStateUpdated(
-                                fn(string $operation, $state, Forms\Set $set) =>
-                                $operation === 'create' ? $set('slug', Str::slug($state)) : null
+                                fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null
                             ),
 
                         Forms\Components\TextInput::make('slug')
@@ -49,7 +47,7 @@ class FaqCategoryResource extends Resource
                             ->label('Active Status')
                             ->default(true)
                             ->required(),
-                    ])->columns(2)
+                    ])->columns(2),
             ]);
     }
 

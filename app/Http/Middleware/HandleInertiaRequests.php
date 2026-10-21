@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'ziggy' => fn() => [
+            'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
@@ -64,14 +64,14 @@ class HandleInertiaRequests extends Middleware
                                 'id' => $cat->id,
                                 'name' => $cat->name,
                                 'slug' => $cat->slug,
-                                'path' => '/shop?category=' . $cat->slug,
+                                'path' => '/shop?category='.$cat->slug,
                                 'image' => $cat->image_url,
                                 'children' => $cat->children->map(function ($child) use ($cat) {
                                     return [
                                         'id' => $child->id,
                                         'name' => $child->name,
                                         'slug' => $child->slug,
-                                        'path' => '/shop?category=' . $cat->slug . '&subcategory=' . $child->slug,
+                                        'path' => '/shop?category='.$cat->slug.'&subcategory='.$child->slug,
                                         'image' => $child->image_url,
                                     ];
                                 })->values()->all(),

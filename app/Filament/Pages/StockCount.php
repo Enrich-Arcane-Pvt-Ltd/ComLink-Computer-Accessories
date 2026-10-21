@@ -31,7 +31,7 @@ class StockCount extends Page implements HasTable
         return $table
             ->query(
                 Product::query()
-                    ->with(['supplier', 'brand', 'grnItems', 'latestGrnItem'])
+                    ->with(['supplier', 'brand', 'variants', 'grnItems', 'latestGrnItem'])
                     ->latest('id')
             )
             ->columns([
@@ -47,14 +47,14 @@ class StockCount extends Page implements HasTable
                     ->searchable(query: function (Builder $query, string $search): Builder {
                         return $query->where(function ($q) use ($search) {
                             $q->where('name', 'like', "%{$search}%")
-                              ->orWhere('product_code', 'like', "%{$search}%");
+                                ->orWhere('product_code', 'like', "%{$search}%");
                         });
                     }),
 
                 Tables\Columns\TextColumn::make('inventory_full_count')
                     ->label('Inventory Full Count')
                     ->alignCenter()
-                    ->formatStateUsing(fn ($record) => number_format((int) $record->inventory_full_count) . ' units')
+                    ->formatStateUsing(fn ($record) => number_format((int) $record->inventory_full_count).' units')
                     ->weight('bold')
                     ->color('primary')
                     ->sortable(query: function (Builder $query, string $direction): Builder {

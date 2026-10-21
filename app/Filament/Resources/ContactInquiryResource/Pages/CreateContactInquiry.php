@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ContactInquiryResource\Pages;
 
 use App\Filament\Resources\ContactInquiryResource\ContactInquiryResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateContactInquiry extends CreateRecord

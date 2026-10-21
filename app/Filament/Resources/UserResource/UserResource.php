@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\UserResource;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\Schemas\UserForm;
 use App\Filament\Resources\UserResource\Schemas\UserInfolist; // අලුත් Infolist එක
 use App\Filament\Resources\UserResource\Tables\UserTable;
@@ -19,7 +17,9 @@ use Illuminate\Support\Facades\Auth;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
     protected static ?string $navigationGroup = 'User Management';
 
     // 1. Form Configuration
@@ -38,8 +38,9 @@ class UserResource extends Resource
                 if ($record->id === 1) {
                     return null;
                 }
+
                 // අනිත් අයට View Page එකට යන්න
-                return  Pages\ViewUser::getUrl([$record->id]);
+                return Pages\ViewUser::getUrl([$record->id]);
             });
     }
 

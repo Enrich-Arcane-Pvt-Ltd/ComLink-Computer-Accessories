@@ -3,17 +3,20 @@
 namespace App\Filament\Pages;
 
 use App\Models\SystemSetting;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Actions\Action;
 
 class ManageSystemSettings extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+
     protected static ?string $navigationGroup = 'System Management';
+
     protected static ?string $navigationLabel = 'System Settings';
+
     protected static ?string $title = 'System Settings';
 
     protected static string $view = 'filament.pages.manage-system-settings';

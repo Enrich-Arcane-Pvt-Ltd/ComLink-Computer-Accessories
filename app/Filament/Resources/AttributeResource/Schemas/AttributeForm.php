@@ -39,7 +39,7 @@ class AttributeForm
                             // Type එක 'color' නම් විතරක් පාට තෝරන්න දෙනවා
                             Forms\Components\ColorPicker::make('hex_color')
                                 ->label('Color Picker')
-                                ->visible(fn(Get $get) => $get('../../type') === 'color'),
+                                ->visible(fn (Get $get) => $get('../../type') === 'color'),
                         ])
                         ->grid(2) // තීරු දෙකකට පෙන්නන්න
                         ->defaultItems(1)

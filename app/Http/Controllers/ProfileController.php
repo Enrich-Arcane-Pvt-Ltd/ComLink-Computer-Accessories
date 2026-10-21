@@ -48,7 +48,7 @@ class ProfileController extends Controller
         $addressKeys = ['address_line_1', 'address_line_2', 'city', 'postal_code', 'state', 'country'];
         $hasAddressInput = false;
         foreach ($addressKeys as $k) {
-            if (!empty($validated[$k])) {
+            if (! empty($validated[$k])) {
                 $hasAddressInput = true;
                 break;
             }

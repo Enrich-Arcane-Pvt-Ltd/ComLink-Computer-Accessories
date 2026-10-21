@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $superAdmin =  User::firstOrCreate(
+        $superAdmin = User::firstOrCreate(
             ['email' => 'admin@enricharcane.com'],
             [
                 'first_name' => 'Super',
@@ -26,8 +25,8 @@ class UserSeeder extends Seeder
             ]
         );
 
-        if (!$superAdmin->customer_id) {
-            $superAdmin->customer_id = 'VCUS' . str_pad($superAdmin->id, 5, '0', STR_PAD_LEFT);
+        if (! $superAdmin->customer_id) {
+            $superAdmin->customer_id = 'VCUS'.str_pad($superAdmin->id, 5, '0', STR_PAD_LEFT);
             $superAdmin->save();
         }
 
@@ -42,8 +41,8 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('Admin@1qaz'),
             ]
         );
-        if (!$admin->customer_id) {
-            $admin->customer_id = 'VCUS' . str_pad($admin->id, 5, '0', STR_PAD_LEFT);
+        if (! $admin->customer_id) {
+            $admin->customer_id = 'VCUS'.str_pad($admin->id, 5, '0', STR_PAD_LEFT);
             $admin->save();
         }
     }

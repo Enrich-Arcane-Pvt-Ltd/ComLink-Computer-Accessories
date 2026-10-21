@@ -19,7 +19,7 @@ class AttributeInfolist
 
                         Infolists\Components\TextEntry::make('type')
                             ->badge()
-                            ->color(fn(string $state): string => match ($state) {
+                            ->color(fn (string $state): string => match ($state) {
                                 'color' => 'info',
                                 'text' => 'success',
                                 default => 'gray',
@@ -40,7 +40,7 @@ class AttributeInfolist
                                         // Color එකක් නම් පාට පෙන්නනවා
                                         Infolists\Components\ColorEntry::make('hex_color')
                                             ->label('Color Swatch')
-                                            ->visible(fn($record) => !empty($record->hex_color)),
+                                            ->visible(fn ($record) => ! empty($record->hex_color)),
                                     ]),
                             ])
                             ->grid(3) // පේළියකට 3 ගානේ පෙන්නන්න

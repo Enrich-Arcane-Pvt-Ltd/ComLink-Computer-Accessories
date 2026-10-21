@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\ProductCollectionResource;
 
-use App\Filament\Resources\ProductCollectionResource\Pages;
 use App\Filament\Resources\ProductCollectionResource\Schemas\CollectionForm;
 use App\Filament\Resources\ProductCollectionResource\Schemas\CollectionInfolist;
 use App\Filament\Resources\ProductCollectionResource\Tables\CollectionTable;
@@ -15,9 +14,13 @@ use Filament\Tables\Table;
 class ProductCollectionResource extends Resource
 {
     protected static ?string $model = ProductCollection::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
+
     protected static ?string $navigationGroup = 'Catalog Management';
+
     protected static ?int $navigationSort = 3;
+
     protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form

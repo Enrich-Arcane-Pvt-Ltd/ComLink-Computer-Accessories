@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\SlideResource\Schemas;
 
-use Filament\Infolists\Infolist;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 
 class SlideInfolist
 {
@@ -36,7 +36,7 @@ class SlideInfolist
 
                                         TextEntry::make('location')
                                             ->badge()
-                                            ->color(fn(string $state): string => match ($state) {
+                                            ->color(fn (string $state): string => match ($state) {
                                                 'hero' => 'info',
                                                 'newsletter' => 'success',
                                                 default => 'gray',

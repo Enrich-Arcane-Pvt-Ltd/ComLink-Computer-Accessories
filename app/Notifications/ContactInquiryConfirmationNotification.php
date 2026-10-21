@@ -23,12 +23,12 @@ class ContactInquiryConfirmationNotification extends Notification implements Sho
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('We received your inquiry: ' . $this->inquiry->subject)
-            ->greeting('Dear ' . $this->inquiry->name . ',')
-            ->line('Thank you for reaching out to us! We have successfully received your inquiry regarding "' . $this->inquiry->subject . '".')
+            ->subject('We received your inquiry: '.$this->inquiry->subject)
+            ->greeting('Dear '.$this->inquiry->name.',')
+            ->line('Thank you for reaching out to us! We have successfully received your inquiry regarding "'.$this->inquiry->subject.'".')
             ->line('Our support team is currently reviewing your message and will get back to you as soon as possible (usually within 24 hours).')
             ->markdown('mail.inquiry-confirmation', [
-                'originalMessage' => $this->inquiry->message
+                'originalMessage' => $this->inquiry->message,
             ]);
     }
 }

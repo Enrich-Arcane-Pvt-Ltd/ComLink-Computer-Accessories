@@ -2,9 +2,15 @@
     @if($getRecord() && $getRecord()->items)
         @foreach($getRecord()->items as $item)
             <div class="border-b border-gray-700/50 last:border-b-0 pb-1.5 last:pb-0">
-                <div class="font-semibold text-gray-100 text-xs sm:text-sm">
-                    {{ $item->product_name }} 
-                    <span class="text-cyan-400 font-bold ml-1 font-mono">× {{ $item->product_quantity }}</span>
+                <div class="font-semibold text-gray-100 text-xs sm:text-sm flex items-center gap-1.5 flex-wrap">
+                    <span>{{ $item->product_name }}</span>
+                    @if(!empty($item->color_name))
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-violet-950/90 text-violet-300 border border-violet-800/60">
+                            <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>
+                            {{ $item->color_name }}
+                        </span>
+                    @endif
+                    <span class="text-cyan-400 font-bold ml-0.5 font-mono">× {{ $item->product_quantity }}</span>
                 </div>
                 <div class="flex items-center gap-2 mt-0.5 text-xs text-gray-400">
                     <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider {{ $item->product_condition === 'Brandnew' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800' }}">

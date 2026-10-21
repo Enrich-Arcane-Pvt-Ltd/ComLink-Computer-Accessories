@@ -18,7 +18,7 @@ class ListGrnAnalyzers extends ListRecords
 {
     protected static string $resource = GrnAnalyzerResource::class;
 
-    public function getMaxContentWidth(): MaxWidth | string | null
+    public function getMaxContentWidth(): MaxWidth|string|null
     {
         return MaxWidth::Full;
     }
@@ -62,6 +62,7 @@ class ListGrnAnalyzers extends ListRecords
                             foreach ($products as $code => $name) {
                                 $options[$code] = "{$code} - {$name}";
                             }
+
                             return $options;
                         })
                         ->default('')
@@ -137,7 +138,7 @@ class ListGrnAnalyzers extends ListRecords
 
                     Notification::make()
                         ->title('Report Generated Successfully')
-                        ->body("Report {$report->report_number} generated with {$report->total_items_count} items (Total: Rs. " . number_format($report->total_amount, 2) . ').')
+                        ->body("Report {$report->report_number} generated with {$report->total_items_count} items (Total: Rs. ".number_format($report->total_amount, 2).').')
                         ->success()
                         ->actions([
                             \Filament\Notifications\Actions\Action::make('view')

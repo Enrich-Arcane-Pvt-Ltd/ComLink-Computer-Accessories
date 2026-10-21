@@ -346,6 +346,16 @@
                                 Condition: <strong>{{ $row['condition'] }}</strong> &bull;
                                 Supplier: {{ $row['supplier_name'] }}
                             </div>
+                            @if(!empty($row['color_breakdown']))
+                                <div style="margin-top: 3px; font-size: 8px;">
+                                    <strong style="color: #7c3aed;">Colors:</strong>
+                                    @foreach($row['color_breakdown'] as $cb)
+                                        <span style="display: inline-block; background: #f3e8ff; color: #6b21a8; padding: 1px 3px; border-radius: 2px; margin-right: 2px;">
+                                            {{ $cb['color'] }}: {{ $cb['stock'] }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
                         </td>
                         <td class="center font-bold">{{ number_format($row['purchased_qty']) }}</td>
                         <td class="right">Rs. {{ number_format($row['avg_purchase_price'], 2) }}</td>

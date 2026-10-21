@@ -19,7 +19,7 @@ class Slide extends Model
         'button_text',
         'button_url',
         'sort_order',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [

@@ -12,7 +12,7 @@ class CreateProductSpecification extends CreateRecord
 
     protected static ?string $title = '+ Add Specification Attributes';
 
-    public function getMaxContentWidth(): MaxWidth | string | null
+    public function getMaxContentWidth(): MaxWidth|string|null
     {
         return MaxWidth::Full;
     }

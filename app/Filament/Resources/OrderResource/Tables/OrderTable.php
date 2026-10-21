@@ -28,7 +28,7 @@ class OrderTable
                 // 3rd column: Total Amount
                 Tables\Columns\TextColumn::make('total_amount')
                     ->label('Total Amount')
-                    ->formatStateUsing(fn ($state) => 'Rs. ' . number_format((float) $state, 2))
+                    ->formatStateUsing(fn ($state) => 'Rs. '.number_format((float) $state, 2))
                     ->sortable()
                     ->weight('bold')
                     ->color('info'),

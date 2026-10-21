@@ -17,14 +17,10 @@ use App\Http\Controllers\Public\TestimonialController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
 // Redirects
 Route::redirect('admin/login', '/login');
 Route::redirect('/dashboard', '/admin')->name('dashboard');
 Route::redirect('admin/dashboard', '/admin');
-
-
-
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -49,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
-// Protected Blogs Routes 
+// Protected Blogs Routes
 Route::middleware(['auth'])->group(function () {
     Route::post('/blog/{id}/like', [BlogController::class, 'like'])->name('blog.like');
     Route::post('/blog/{id}/comment', [BlogController::class, 'storeComment'])->name('blog.comment');
@@ -89,8 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
 
 // Admin GRN Print Route
 Route::get('/admin/grn/{id}/print', [\App\Http\Controllers\Admin\GrnPrintController::class, 'show'])->name('admin.grn.print');
@@ -107,7 +102,7 @@ Route::prefix('admin/stock-analyzer')->name('admin.stock-analyzer.')->group(func
     Route::get('/report/pdf', [\App\Http\Controllers\Admin\StockAnalyzerReportController::class, 'downloadPdf'])->name('pdf');
     Route::get('/report/print', [\App\Http\Controllers\Admin\StockAnalyzerReportController::class, 'printView'])->name('print');
 });
- 
+
 // Fallback Route (placed after all routes)
 Route::fallback(function () {
     return Inertia::render('Error/Index', [

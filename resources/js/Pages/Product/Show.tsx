@@ -98,6 +98,21 @@ export interface DetailedProduct {
     warranty_unit?: string;
     warranty?: ProductWarrantyInfo;
     reviewsList?: ProductReviewItem[];
+    hasColorVariants?: boolean;
+    variants?: ProductVariantItem[];
+}
+
+export interface ProductVariantItem {
+    id: number | string;
+    color: string;
+    name: string;
+    condition: string;
+    originalPrice: number;
+    latestPrice: number;
+    discountPercent: number;
+    inStock: boolean;
+    stockCount: number;
+    image?: string;
 }
 
 interface ProductShowProps {
@@ -131,25 +146,70 @@ function ProductViewContent({
     const { addToCart } = useCart();
     const { toggleWishlist, isInWishlist } = useWishlist();
 
+    // Product Variant Mode status
+    const isVariantProduct = Boolean(
+        product.hasColorVariants && product.variants && product.variants.length > 0
+    );
+
+    // Initial variant selection: Always default to the first section added by admin
+    const [selectedVariant, setSelectedVariant] = useState<ProductVariantItem | null>(() => {
+        if (isVariantProduct && product.variants && product.variants.length > 0) {
+            return product.variants[0];
+        }
+        return null;
+    });
+
+    const currentLatestPrice = selectedVariant ? selectedVariant.latestPrice : product.latestPrice;
+    const currentOriginalPrice = selectedVariant ? selectedVariant.originalPrice : product.originalPrice;
+    const currentDiscountPercent = selectedVariant ? selectedVariant.discountPercent : product.discountPercent;
+    const currentInStock = selectedVariant ? selectedVariant.inStock : product.inStock;
+    const currentStockCount = selectedVariant ? selectedVariant.stockCount : product.stockCount;
+    const currentCondition = selectedVariant ? selectedVariant.condition : (product.condition || "Brand New");
+    const currentSavings = Math.max(0, currentOriginalPrice - currentLatestPrice);
+    const hasDiscount = currentDiscountPercent > 0;
+
     // Image gallery states
     const imagesList = useMemo(() => {
-        if (Array.isArray(product.images) && product.images.length >= 4) {
-            return product.images.slice(0, 4);
+        if (isVariantProduct && product.variants && product.variants.length > 0) {
+            // For variant products: number of image boxes equals the number of color variant sections added by admin
+            return product.variants.map((v) => {
+                return v.image || product.image || "/images/products/sample-keyboard.jpg";
+            });
         }
+
+        // Standard products without color variants: up to 4 images
+        let list: string[] = [];
         if (Array.isArray(product.images) && product.images.length > 0) {
-            const list = [...product.images];
-            while (list.length < 4) {
-                list.push(product.image || list[0]);
-            }
-            return list;
+            list.push(...product.images.filter((img) => Boolean(img)));
         }
-        const fallback = product.image || "/images/products/sample-keyboard.jpg";
-        return [fallback, fallback, fallback, fallback];
-    }, [product.images, product.image]);
+        if (list.length === 0 && product.image) {
+            list.push(product.image);
+        }
+        if (list.length === 0) {
+            const fallback = "/images/products/sample-keyboard.jpg";
+            return [fallback, fallback, fallback, fallback];
+        }
+        while (list.length < 4) {
+            list.push(list[0]);
+        }
+        return list.slice(0, 4);
+    }, [isVariantProduct, product.variants, product.images, product.image]);
 
     // First small box image is default in main image box
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+    // Helper to select variant and keep activeImageIndex in sync
+    const handleSelectVariant = (variant: ProductVariantItem, index?: number) => {
+        setSelectedVariant(variant);
+        const targetIdx = index !== undefined
+            ? index
+            : (product.variants?.findIndex((v) => v.id === variant.id) ?? 0);
+        if (targetIdx !== -1) {
+            setActiveImageIndex(targetIdx);
+        }
+        setQuantity(1);
+    };
 
     // Quantity state
     const [quantity, setQuantity] = useState(1);
@@ -210,14 +270,15 @@ function ProductViewContent({
         product.reviewsList || [],
     );
 
-    // Calculate savings
-    const hasDiscount = product.discountPercent > 0;
-    const savings = Math.max(0, product.originalPrice - product.latestPrice);
-
     // Sync active image if product changes
     useEffect(() => {
         setActiveImageIndex(0);
         setQuantity(1);
+        if (product.hasColorVariants && product.variants && product.variants.length > 0) {
+            setSelectedVariant(product.variants.find((v) => v.inStock) || product.variants[0]);
+        } else {
+            setSelectedVariant(null);
+        }
     }, [product.id]);
 
     // Responsive visible cards count for carousel
@@ -251,16 +312,16 @@ function ProductViewContent({
 
     // Quantity handlers
     const handleIncrement = () => {
-        if (!product.inStock) return;
-        if (product.stockCount && quantity >= product.stockCount) {
-            toast.warning(`Only ${product.stockCount} units available in stock.`);
+        if (!currentInStock) return;
+        if (currentStockCount && quantity >= currentStockCount) {
+            toast.warning(`Only ${currentStockCount} units available in stock.`);
             return;
         }
         setQuantity((q) => q + 1);
     };
 
     const handleDecrement = () => {
-        if (!product.inStock) return;
+        if (!currentInStock) return;
         setQuantity((q) => (q > 1 ? q - 1 : 1));
     };
 
@@ -272,16 +333,18 @@ function ProductViewContent({
             return;
         }
 
-        if (!product.inStock) {
+        if (!currentInStock) {
             toast.error("This item is currently out of stock.");
             return;
         }
 
         addToCart({
             productId: String(product.id),
-            name: product.name,
-            price: product.latestPrice,
-            image: imagesList[0],
+            variantId: selectedVariant?.id,
+            color: selectedVariant?.color,
+            name: selectedVariant ? `${product.name} - ${selectedVariant.color}` : product.name,
+            price: currentLatestPrice,
+            image: (selectedVariant?.image) || imagesList[0],
             quantity: quantity,
         });
 
@@ -428,27 +491,39 @@ function ProductViewContent({
                               - main box top and bottom margin should be align with that 4 small image boxes section top and bottom alignment
                             */}
                             <div className="flex items-stretch gap-3 sm:gap-4 select-none">
-                                {/* 4 Small Image Boxes Column (Left side of main image) */}
-                                <div className="w-20 sm:w-24 shrink-0 flex flex-col justify-between gap-2.5 sm:gap-3">
+                                {/* Small Image Boxes Column (Left side of main image) */}
+                                <div className="w-20 sm:w-24 shrink-0 flex flex-col justify-start gap-2.5 sm:gap-3">
                                     {imagesList.map((imgUrl, idx) => {
                                         const isActive = activeImageIndex === idx;
+                                        const variantForThumb = isVariantProduct && product.variants ? product.variants[idx] : null;
                                         return (
                                             <button
                                                 key={`thumb-${idx}`}
                                                 type="button"
-                                                onClick={() => setActiveImageIndex(idx)}
-                                                onMouseEnter={() => setActiveImageIndex(idx)}
+                                                onClick={() => {
+                                                    setActiveImageIndex(idx);
+                                                    if (variantForThumb) {
+                                                        handleSelectVariant(variantForThumb, idx);
+                                                    }
+                                                }}
+                                                onMouseEnter={() => {
+                                                    setActiveImageIndex(idx);
+                                                    if (variantForThumb) {
+                                                        setSelectedVariant(variantForThumb);
+                                                    }
+                                                }}
                                                 aria-label={`Select product image ${idx + 1}`}
                                                 className={cn(
-                                                    "group relative flex-1 min-h-0 aspect-square w-full rounded-xl overflow-hidden border-2 bg-gradient-to-b from-slate-100/80 to-slate-200/50 dark:from-slate-900/60 dark:to-slate-950/80 transition-all duration-200 cursor-pointer flex items-center justify-center",
+                                                    "group relative aspect-square w-full rounded-xl overflow-hidden border-2 bg-gradient-to-b from-slate-100/80 to-slate-200/50 dark:from-slate-900/60 dark:to-slate-950/80 transition-all duration-200 cursor-pointer flex items-center justify-center shrink-0",
                                                     isActive
                                                         ? "border-cyan-500 ring-2 ring-cyan-500/30 dark:ring-cyan-400/30 shadow-md scale-[1.02]"
                                                         : "border-border/70 hover:border-cyan-500/50 hover:bg-card/80 opacity-80 hover:opacity-100",
                                                 )}
+                                                title={variantForThumb ? `Color: ${variantForThumb.color}` : undefined}
                                             >
                                                 <img
                                                     src={imgUrl}
-                                                    alt={`${product.name} view ${idx + 1}`}
+                                                    alt={variantForThumb ? `${product.name} - ${variantForThumb.color}` : `${product.name} view ${idx + 1}`}
                                                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-108"
                                                     loading="lazy"
                                                 />
@@ -535,9 +610,11 @@ function ProductViewContent({
                                         type="button"
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setActiveImageIndex((prev) =>
-                                                prev <= 0 ? imagesList.length - 1 : prev - 1,
-                                            );
+                                            const nextIdx = activeImageIndex <= 0 ? imagesList.length - 1 : activeImageIndex - 1;
+                                            setActiveImageIndex(nextIdx);
+                                            if (isVariantProduct && product.variants && product.variants[nextIdx]) {
+                                                setSelectedVariant(product.variants[nextIdx]);
+                                            }
                                         }}
                                         aria-label="Previous image"
                                         className="absolute left-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-card/80 backdrop-blur-md border border-border/80 flex items-center justify-center text-fg opacity-0 group-hover:opacity-100 hover:bg-cyan-500 hover:text-white transition-all shadow-md cursor-pointer"
@@ -548,9 +625,11 @@ function ProductViewContent({
                                         type="button"
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setActiveImageIndex((prev) =>
-                                                prev >= imagesList.length - 1 ? 0 : prev + 1,
-                                            );
+                                            const nextIdx = activeImageIndex >= imagesList.length - 1 ? 0 : activeImageIndex + 1;
+                                            setActiveImageIndex(nextIdx);
+                                            if (isVariantProduct && product.variants && product.variants[nextIdx]) {
+                                                setSelectedVariant(product.variants[nextIdx]);
+                                            }
                                         }}
                                         aria-label="Next image"
                                         className="absolute right-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-card/80 backdrop-blur-md border border-border/80 flex items-center justify-center text-fg opacity-0 group-hover:opacity-100 hover:bg-cyan-500 hover:text-white transition-all shadow-md cursor-pointer"
@@ -564,17 +643,17 @@ function ProductViewContent({
                         {/* ========================================================== */}
                         {/* RIGHT SIDE: PRODUCT CONTENT SECTION                        */}
                         {/* ========================================================== */}
-                        <div className="lg:col-span-6 xl:col-span-6 flex flex-col">
+                        <div className="lg:col-span-6 xl:col-span-6 flex flex-col min-w-0">
                             {/* 1. In Stock / Out of Stock Status */}
                             <div className="flex items-center gap-3 mb-2.5">
-                                {product.inStock ? (
+                                {currentInStock ? (
                                     <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
                                         <span className="relative flex h-2 w-2">
                                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                                             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                                         </span>
                                         <span>
-                                            In Stock ({product.stockCount} units available)
+                                            In Stock ({currentStockCount} units available)
                                         </span>
                                     </div>
                                 ) : (
@@ -584,9 +663,9 @@ function ProductViewContent({
                                     </div>
                                 )}
 
-                                {product.condition && (
+                                {currentCondition && (
                                     <span className="rounded-full bg-muted/20 px-2.5 py-0.5 text-[11px] font-semibold text-muted border border-border/50">
-                                        {product.condition}
+                                        {currentCondition}
                                     </span>
                                 )}
 
@@ -598,7 +677,7 @@ function ProductViewContent({
                             </div>
 
                             {/* 2. Product Name */}
-                            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg font-display leading-tight mb-2.5">
+                            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-fg font-display leading-tight mb-2.5 break-words">
                                 {product.name}
                             </h1>
 
@@ -665,33 +744,83 @@ function ProductViewContent({
                             {/* 5. Pricing Row: Latest Price, Original Price, Discount percentage */}
                             <div className="flex items-baseline flex-wrap gap-3 mb-5">
                                 <span className="text-3xl sm:text-4xl font-black text-fg font-display tracking-tight">
-                                    {formatPrice(product.latestPrice)}
+                                    {formatPrice(currentLatestPrice)}
                                 </span>
 
                                 {hasDiscount && (
                                     <>
                                         <span className="text-lg text-muted line-through font-medium">
-                                            {formatPrice(product.originalPrice)}
+                                            {formatPrice(currentOriginalPrice)}
                                         </span>
                                         <span className="rounded-full bg-gradient-to-r from-amber-500 to-rose-500 px-3 py-1 text-xs font-black uppercase tracking-wider text-white shadow-xs">
-                                            {product.discountPercent}% OFF
+                                            {currentDiscountPercent}% OFF
                                         </span>
                                         <span className="rounded-md bg-emerald-500/10 px-2 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                                            Save {formatPrice(savings)}
+                                            Save {formatPrice(currentSavings)}
                                         </span>
                                     </>
                                 )}
                             </div>
 
                             {/* 6. Product Description */}
-                            <div className="mb-6">
+                            <div className="mb-6 overflow-hidden">
                                 <h3 className="text-xs font-bold uppercase tracking-wider text-muted mb-2">
                                     Overview
                                 </h3>
-                                <p className="text-sm leading-relaxed text-muted dark:text-slate-300">
+                                <p className="text-sm leading-relaxed text-muted dark:text-slate-300 break-words [overflow-wrap:anywhere] whitespace-pre-line">
                                     {product.description}
                                 </p>
                             </div>
+
+                            {/* 6.5. Color Options Selection for multi-color products */}
+                            {product.hasColorVariants && product.variants && product.variants.length > 0 && (
+                                <div className="mb-6 p-4 rounded-xl border border-border/60 bg-card/50">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <span className="text-xs font-bold uppercase tracking-wider text-fg flex items-center gap-1.5">
+                                            <span className="inline-block w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+                                            Available Colors
+                                        </span>
+                                        <span className="text-xs font-semibold text-muted">
+                                            Selected: <strong className="text-cyan-600 dark:text-cyan-400">{selectedVariant?.color}</strong> ({selectedVariant?.inStock ? `${selectedVariant.stockCount} in stock` : 'Out of stock'})
+                                        </span>
+                                    </div>
+
+                                    <div className="flex flex-wrap items-center gap-2.5">
+                                        {product.variants.map((v) => {
+                                            const isSelected = selectedVariant?.id === v.id;
+                                            return (
+                                                <button
+                                                    key={v.id}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const vIdx = product.variants!.findIndex((item) => item.id === v.id);
+                                                        handleSelectVariant(v, vIdx !== -1 ? vIdx : undefined);
+                                                    }}
+                                                    className={cn(
+                                                        "group relative flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-xs",
+                                                        isSelected
+                                                            ? "bg-cyan-500/15 border-cyan-500 text-cyan-700 dark:text-cyan-300 ring-2 ring-cyan-500/30 font-bold"
+                                                            : "bg-card hover:bg-muted/15 border-border text-fg hover:border-border/80",
+                                                        !v.inStock && "opacity-50 line-through",
+                                                    )}
+                                                >
+                                                    {v.image && (
+                                                        <img
+                                                            src={v.image}
+                                                            alt={v.color}
+                                                            className="w-5 h-5 rounded-md object-cover border border-border/60"
+                                                        />
+                                                    )}
+                                                    <span>{v.color}</span>
+                                                    <span className="text-[11px] font-mono opacity-80">
+                                                        {formatPrice(v.latestPrice)}
+                                                    </span>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
 
                             {/* 7. Quantity value handling section */}
                             {/* Requirement: In status == out of stock, quantity handling and Add to cart Option should restricted */}
@@ -700,9 +829,9 @@ function ProductViewContent({
                                     <span className="text-xs font-bold uppercase tracking-wider text-fg">
                                         Quantity Selection
                                     </span>
-                                    {product.inStock ? (
+                                    {currentInStock ? (
                                         <span className="text-xs text-muted">
-                                            Maximum available: <strong>{product.stockCount}</strong>
+                                            Maximum available: <strong>{currentStockCount}</strong>
                                         </span>
                                     ) : (
                                         <span className="text-xs font-semibold text-rose-500">
@@ -715,7 +844,7 @@ function ProductViewContent({
                                     <div
                                         className={cn(
                                             "flex items-center rounded-xl border bg-card overflow-hidden shadow-xs transition-colors",
-                                            product.inStock
+                                            currentInStock
                                                 ? "border-border hover:border-cyan-500/40"
                                                 : "border-border/40 opacity-40 cursor-not-allowed pointer-events-none",
                                         )}
@@ -723,21 +852,21 @@ function ProductViewContent({
                                         <button
                                             type="button"
                                             onClick={handleDecrement}
-                                            disabled={!product.inStock || quantity <= 1}
+                                            disabled={!currentInStock || quantity <= 1}
                                             aria-label="Decrease quantity"
                                             className="h-10 w-10 flex items-center justify-center text-fg hover:bg-muted/20 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
                                         >
                                             <Minus className="h-4 w-4" />
                                         </button>
                                         <span className="h-10 w-14 flex items-center justify-center font-bold font-mono text-sm border-x border-border/40 select-none">
-                                            {product.inStock ? quantity : 0}
+                                            {currentInStock ? quantity : 0}
                                         </span>
                                         <button
                                             type="button"
                                             onClick={handleIncrement}
                                             disabled={
-                                                !product.inStock ||
-                                                Boolean(product.stockCount && quantity >= product.stockCount)
+                                                !currentInStock ||
+                                                Boolean(currentStockCount && quantity >= currentStockCount)
                                             }
                                             aria-label="Increase quantity"
                                             className="h-10 w-10 flex items-center justify-center text-fg hover:bg-muted/20 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
@@ -746,11 +875,11 @@ function ProductViewContent({
                                         </button>
                                     </div>
 
-                                    {product.inStock && (
+                                    {currentInStock && (
                                         <span className="text-xs text-muted">
                                             Subtotal:{" "}
                                             <strong className="text-fg font-mono">
-                                                {formatPrice(product.latestPrice * quantity)}
+                                                {formatPrice(currentLatestPrice * quantity)}
                                             </strong>
                                         </span>
                                     )}
@@ -763,17 +892,17 @@ function ProductViewContent({
                                 <button
                                     type="button"
                                     onClick={handleAddToCart}
-                                    disabled={!product.inStock}
+                                    disabled={!currentInStock}
                                     className={cn(
                                         "group/btn relative flex-1 flex items-center justify-center gap-2.5 rounded-xl py-3.5 px-6 font-bold text-sm uppercase tracking-wider transition-all duration-300 shadow-md",
-                                        product.inStock
+                                        currentInStock
                                             ? isAddedToCart
                                                 ? "bg-emerald-600 text-white shadow-emerald-600/30 cursor-default"
                                                 : "bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white dark:from-cyan-500 dark:to-cyan-400 dark:hover:from-cyan-400 dark:hover:to-cyan-300 dark:text-slate-950 shadow-cyan-500/25 hover:shadow-cyan-500/40 active:scale-[0.98] cursor-pointer"
                                             : "bg-muted/30 text-muted border border-border/60 cursor-not-allowed shadow-none opacity-60",
                                     )}
                                 >
-                                    {product.inStock ? (
+                                    {currentInStock ? (
                                         isAddedToCart ? (
                                             <>
                                                 <Check className="h-5 w-5 animate-scale-in" />

@@ -61,6 +61,7 @@ class PurchaseOrderForm
                         ->addActionLabel('+ Add Product Section')
                         ->schema([
                             Forms\Components\Hidden::make('inventory_product_id'),
+                            Forms\Components\Hidden::make('product_variant_id'),
 
                             Forms\Components\Select::make('product_code')
                                 ->label('Product Code')
@@ -70,6 +71,7 @@ class PurchaseOrderForm
                                     if ($supplierId) {
                                         $query->where('supplier_id', $supplierId);
                                     }
+
                                     return $query->get()->mapWithKeys(fn ($p) => [
                                         $p->product_code => "{$p->product_code} — {$p->product_name}",
                                     ]);
@@ -83,6 +85,15 @@ class PurchaseOrderForm
                                             $set('product_name', $invProduct->product_name);
                                             $set('inventory_product_id', $invProduct->id);
                                         }
+
+                                        // Auto-link store product variant if applicable
+                                        $storeProduct = \App\Models\Product::with('variants')->where('product_code', $state)->first();
+                                        if ($storeProduct && $storeProduct->variants->isNotEmpty()) {
+                                            // Keep color_name open for selection
+                                        } else {
+                                            $set('color_name', null);
+                                            $set('product_variant_id', null);
+                                        }
                                     }
                                 })
                                 ->required()
@@ -93,18 +104,53 @@ class PurchaseOrderForm
                                 ->required()
                                 ->readOnly()
                                 ->helperText('Auto-filled from Inventory Products')
-                                ->columnSpan(['sm' => 2, 'md' => 4]),
+                                ->columnSpan(['sm' => 2, 'md' => 3]),
+
+                            Forms\Components\TextInput::make('color_name')
+                                ->label('Color Variant')
+                                ->placeholder('Type color (e.g. Red, Black)')
+                                ->datalist(function (Get $get) {
+                                    $code = $get('product_code');
+                                    $defaultColors = ['Red', 'White', 'Black', 'Blue', 'Silver', 'Grey', 'Gold', 'Green', 'Yellow', 'RGB', 'Pink', 'Purple', 'Orange'];
+                                    if ($code) {
+                                        $product = \App\Models\Product::with('variants')->where('product_code', $code)->first();
+                                        if ($product && $product->variants->isNotEmpty()) {
+                                            $variantColors = $product->variants->pluck('color_name')->filter()->toArray();
+
+                                            return array_values(array_unique(array_merge($variantColors, $defaultColors)));
+                                        }
+                                    }
+
+                                    return $defaultColors;
+                                })
+                                ->live(onBlur: true)
+                                ->afterStateUpdated(function ($state, Get $get, Set $set) {
+                                    $code = $get('product_code');
+                                    if ($code && $state) {
+                                        $product = \App\Models\Product::with('variants')->where('product_code', $code)->first();
+                                        $variant = $product?->variants->first(fn ($v) => strcasecmp((string) $v->color_name, trim((string) $state)) === 0);
+                                        if ($variant) {
+                                            $set('product_variant_id', $variant->id);
+                                        } else {
+                                            $set('product_variant_id', null);
+                                        }
+                                    } else {
+                                        $set('product_variant_id', null);
+                                    }
+                                })
+                                ->helperText('Type any color or pick from suggestions')
+                                ->columnSpan(['sm' => 2, 'md' => 2]),
 
                             Forms\Components\TextInput::make('product_quantity')
-                                ->label('Product Quantity')
+                                ->label('Quantity')
                                 ->numeric()
                                 ->minValue(1)
                                 ->default(1)
                                 ->required()
-                                ->columnSpan(['sm' => 1, 'md' => 2]),
+                                ->columnSpan(['sm' => 1, 'md' => 1]),
 
                             Forms\Components\Select::make('product_condition')
-                                ->label('Product Condition')
+                                ->label('Condition')
                                 ->options([
                                     'Brandnew' => 'Brandnew',
                                     'Used' => 'Used',
@@ -117,9 +163,8 @@ class PurchaseOrderForm
                         ->columns(['sm' => 2, 'md' => 12])
                         ->defaultItems(1)
                         ->collapsible()
-                        ->itemLabel(fn (array $state): ?string => 
-                            isset($state['product_name']) && !empty($state['product_name']) 
-                                ? "{$state['product_name']} ({$state['product_condition']}) × {$state['product_quantity']}" 
+                        ->itemLabel(fn (array $state): ?string => isset($state['product_name']) && ! empty($state['product_name'])
+                                ? "{$state['product_name']}".(! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '')." [{$state['product_condition']}] × {$state['product_quantity']}"
                                 : 'New Item'
                         )
                         ->columnSpanFull(),

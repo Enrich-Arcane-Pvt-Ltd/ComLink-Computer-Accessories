@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -54,9 +53,9 @@ class AuthenticatedSessionController extends Controller
         $role = Auth::user()->role ?? null;
 
         $destination = match (true) {
-            in_array($role, ['super-admin', 'admin'])    => '/admin', // requires AdminPanelProvider
-            in_array($role, ['user'])                 => '/',
-            default                                      => '/login',
+            in_array($role, ['super-admin', 'admin']) => '/admin', // requires AdminPanelProvider
+            in_array($role, ['user']) => '/',
+            default => '/login',
         };
 
         // Inertia::location() sends a 409 + X-Inertia-Location header.

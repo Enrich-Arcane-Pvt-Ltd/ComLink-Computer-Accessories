@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources\CouponResource;
 
-use App\Filament\Resources\CouponResource\Pages;
 use App\Filament\Resources\CouponResource\Schemas\CouponForm;
-use App\Filament\Resources\CouponResource\Tables\CouponTable;
 use App\Filament\Resources\CouponResource\Schemas\CouponInfolist;
+use App\Filament\Resources\CouponResource\Tables\CouponTable;
 use App\Models\Coupon;
 use Filament\Forms\Form;
 use Filament\Infolists\Infolist;
@@ -15,8 +14,11 @@ use Filament\Tables\Table;
 class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
+
     protected static ?string $navigationGroup = 'Marketing';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form

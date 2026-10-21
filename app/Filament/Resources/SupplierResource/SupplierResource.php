@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\SupplierResource;
 
-use App\Filament\Resources\SupplierResource\Pages;
 use App\Filament\Resources\SupplierResource\Schemas\SupplierForm;
 use App\Filament\Resources\SupplierResource\Schemas\SupplierInfolist;
 use App\Filament\Resources\SupplierResource\Tables\SupplierTable;

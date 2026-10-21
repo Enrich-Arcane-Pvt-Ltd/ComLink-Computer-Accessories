@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Activitylog\Traits\LogsActivity; // 1. මෙය Import කරන්න
-use Spatie\Activitylog\LogOptions; // 2. මෙයත් Import කරන්න
+use Spatie\Activitylog\LogOptions; // 1. මෙය Import කරන්න
+use Spatie\Activitylog\Traits\LogsActivity; // 2. මෙයත් Import කරන්න
 
 class Coupon extends Model
 {
@@ -49,10 +49,18 @@ class Coupon extends Model
 
     public function isValid(): bool
     {
-        if (!$this->is_active) return false;
-        if ($this->usage_limit && $this->used_count >= $this->usage_limit) return false;
-        if ($this->starts_at && now()->lt($this->starts_at)) return false;
-        if ($this->ends_at && now()->gt($this->ends_at)) return false;
+        if (! $this->is_active) {
+            return false;
+        }
+        if ($this->usage_limit && $this->used_count >= $this->usage_limit) {
+            return false;
+        }
+        if ($this->starts_at && now()->lt($this->starts_at)) {
+            return false;
+        }
+        if ($this->ends_at && now()->gt($this->ends_at)) {
+            return false;
+        }
 
         return true;
     }
@@ -69,7 +77,7 @@ class Coupon extends Model
                 'usage_limit',
                 'is_active',
                 'starts_at',
-                'ends_at'
+                'ends_at',
             ]) // ලොග් කරන්න අවශ්‍ය Columns ටික
             ->logOnlyDirty() // වෙනස් වුන දේවල් විතරක් ලොග් කරන්න
             ->dontSubmitEmptyLogs(); // කිසි දෙයක් වෙනස් වුනේ නැත්නම් ලොග් කරන්න එපා

@@ -3,10 +3,10 @@
 namespace App\Filament\Resources\NewsletterSubscriberResource\Tables;
 
 use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Table;
 
 class SubscriberTable
 {

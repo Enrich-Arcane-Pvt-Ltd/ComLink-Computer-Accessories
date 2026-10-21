@@ -52,7 +52,7 @@ class GrnReport extends Model
         static::creating(function (GrnReport $report) {
             if (empty($report->report_number)) {
                 $count = static::whereDate('created_at', today())->count() + 1;
-                $report->report_number = 'GRN-REP-' . date('Ymd') . '-' . str_pad($count, 3, '0', STR_PAD_LEFT);
+                $report->report_number = 'GRN-REP-'.date('Ymd').'-'.str_pad($count, 3, '0', STR_PAD_LEFT);
             }
         });
     }

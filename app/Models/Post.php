@@ -27,7 +27,7 @@ class Post extends Model
     ];
 
     protected $casts = [
-        'tags'      => 'array',
+        'tags' => 'array',
         'is_active' => 'boolean',
     ];
 
@@ -59,7 +59,6 @@ class Post extends Model
     {
         return $this->hasMany(BlogComment::class)->latest();
     }
-
 
     public function likedByUsers()
     {

@@ -21,12 +21,12 @@ class CouponForm
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->live(onBlur: true)
-                        ->afterStateUpdated(fn($state, Forms\Set $set) => $set('code', Str::upper($state)))
+                        ->afterStateUpdated(fn ($state, Forms\Set $set) => $set('code', Str::upper($state)))
                         ->placeholder('Ex: SUMMER2026'),
 
                     Forms\Components\Select::make('type')
                         ->options([
-                            'fixed' => 'Fixed Amount (' . $currency . ')',
+                            'fixed' => 'Fixed Amount ('.$currency.')',
                             'percent' => 'Percentage (%)',
                         ])
                         ->required()
@@ -37,7 +37,7 @@ class CouponForm
                         ->label('Discount Value')
                         ->required()
                         ->numeric()
-                        ->prefix(fn(Forms\Get $get) => $get('type') === 'percent' ? '%' : $currency),
+                        ->prefix(fn (Forms\Get $get) => $get('type') === 'percent' ? '%' : $currency),
                 ])->columns(3),
 
             // කොටස 2: සීමාවන් (Restrictions)

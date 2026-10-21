@@ -28,17 +28,16 @@ class CouponInfolist
                             ->size(Infolists\Components\TextEntry\TextEntrySize::Large)
                             ->color('primary')
                             ->formatStateUsing(
-                                fn($record) =>
-                                $record->type === 'percent'
-                                    ? $record->value . '%'
-                                    : $currency . ' ' . number_format($record->value, 2)
+                                fn ($record) => $record->type === 'percent'
+                                    ? $record->value.'%'
+                                    : $currency.' '.number_format($record->value, 2)
                             ),
 
                         Infolists\Components\TextEntry::make('is_active')
                             ->label('Status')
                             ->badge()
-                            ->color(fn(bool $state) => $state ? 'success' : 'danger')
-                            ->formatStateUsing(fn(bool $state) => $state ? 'Active' : 'Inactive'),
+                            ->color(fn (bool $state) => $state ? 'success' : 'danger')
+                            ->formatStateUsing(fn (bool $state) => $state ? 'Active' : 'Inactive'),
                     ])->columns(3),
 
                 // Section 2: Restrictions
@@ -75,7 +74,7 @@ class CouponInfolist
                     ->schema([
                         Infolists\Components\TextEntry::make('usage_summary')
                             ->label('Usage Count')
-                            ->state(fn($record) => $record->used_count . ' used out of ' . ($record->usage_limit ?? 'Unlimited')),
+                            ->state(fn ($record) => $record->used_count.' used out of '.($record->usage_limit ?? 'Unlimited')),
 
                         Infolists\Components\TextEntry::make('usage_limit_per_user')
                             ->label('Limit Per User'),
@@ -85,7 +84,7 @@ class CouponInfolist
 
                         Infolists\Components\TextEntry::make('ends_at')
                             ->dateTime()
-                            ->color(fn($state) => $state && now()->gt($state) ? 'danger' : 'success'),
+                            ->color(fn ($state) => $state && now()->gt($state) ? 'danger' : 'success'),
                     ])->columns(4),
             ]);
     }

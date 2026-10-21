@@ -91,7 +91,9 @@ class ProductSpecificationGroup extends Model
 
         if (is_array($this->main_specs)) {
             foreach (array_values(array_filter($this->main_specs)) as $order => $title) {
-                if (trim((string) $title) === '') continue;
+                if (trim((string) $title) === '') {
+                    continue;
+                }
                 ProductSpecification::create([
                     'category_id' => $this->category_id,
                     'sub_category_id' => $this->sub_category_id,
@@ -105,7 +107,9 @@ class ProductSpecificationGroup extends Model
 
         if (is_array($this->general_specs)) {
             foreach (array_values(array_filter($this->general_specs)) as $order => $title) {
-                if (trim((string) $title) === '') continue;
+                if (trim((string) $title) === '') {
+                    continue;
+                }
                 ProductSpecification::create([
                     'category_id' => $this->category_id,
                     'sub_category_id' => $this->sub_category_id,
@@ -119,7 +123,9 @@ class ProductSpecificationGroup extends Model
 
         if (is_array($this->performance_specs)) {
             foreach (array_values(array_filter($this->performance_specs)) as $order => $title) {
-                if (trim((string) $title) === '') continue;
+                if (trim((string) $title) === '') {
+                    continue;
+                }
                 ProductSpecification::create([
                     'category_id' => $this->category_id,
                     'sub_category_id' => $this->sub_category_id,
@@ -133,7 +139,9 @@ class ProductSpecificationGroup extends Model
 
         if (is_array($this->compatibility_specs)) {
             foreach (array_values(array_filter($this->compatibility_specs)) as $order => $title) {
-                if (trim((string) $title) === '') continue;
+                if (trim((string) $title) === '') {
+                    continue;
+                }
                 ProductSpecification::create([
                     'category_id' => $this->category_id,
                     'sub_category_id' => $this->sub_category_id,

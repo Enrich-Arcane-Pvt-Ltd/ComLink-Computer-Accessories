@@ -2,12 +2,11 @@
 
 namespace App\Filament\Resources\TestimonialResource\Schemas;
 
-use Filament\Infolists;
-use Filament\Infolists\Infolist;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 
 class TestimonialInfolist
 {
@@ -35,7 +34,7 @@ class TestimonialInfolist
 
                         TextEntry::make('rating')
                             ->label('Rating Given')
-                            ->formatStateUsing(fn(int $state): string => str_repeat('⭐', $state)),
+                            ->formatStateUsing(fn (int $state): string => str_repeat('⭐', $state)),
 
                         IconEntry::make('is_active')
                             ->label('Approval Status')

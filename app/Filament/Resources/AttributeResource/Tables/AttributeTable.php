@@ -17,7 +17,7 @@ class AttributeTable
 
                 Tables\Columns\TextColumn::make('type')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'color' => 'info',
                         'text' => 'success',
                         default => 'gray',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +15,9 @@ class OrderItem extends Model
     protected $fillable = [
         'order_id',
         'product_id',
+        'variant_id',
         'product_name',
+        'color',
         'product_image',
         'category_name',
         'unit_price',
@@ -21,11 +25,14 @@ class OrderItem extends Model
         'total_price',
     ];
 
-    protected $casts = [
-        'unit_price' => 'decimal:2',
-        'quantity' => 'integer',
-        'total_price' => 'decimal:2',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'unit_price' => 'decimal:2',
+            'quantity' => 'integer',
+            'total_price' => 'decimal:2',
+        ];
+    }
 
     public function order(): BelongsTo
     {
@@ -35,5 +42,10 @@ class OrderItem extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function variant(): BelongsTo
+    {
+        return $this->belongsTo(ProductVariant::class, 'variant_id');
     }
 }

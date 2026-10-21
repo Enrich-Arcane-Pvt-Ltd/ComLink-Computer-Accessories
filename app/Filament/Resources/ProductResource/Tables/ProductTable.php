@@ -10,27 +10,31 @@ class ProductTable
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn ($query) => $query->with(['supplier', 'brand', 'categories', 'latestGrnItem']))
+            ->modifyQueryUsing(fn ($query) => $query->with(['supplier', 'brand', 'categories', 'latestGrnItem', 'variants']))
             ->columns([
                 Tables\Columns\TextColumn::make('index')
                     ->label('No')
-                    ->rowIndex(),
+                    ->rowIndex()
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px;']),
 
                 Tables\Columns\ViewColumn::make('product_info')
                     ->label('Product')
                     ->view('filament.tables.columns.product-info')
-                    ->searchable(query: fn ($query, $search) => $query->where('name', 'like', "%{$search}%")),
+                    ->searchable(query: fn ($query, $search) => $query->where('name', 'like', "%{$search}%"))
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 220px;']),
 
                 Tables\Columns\ViewColumn::make('supplier_details')
                     ->label('Supplier Details')
                     ->view('filament.tables.columns.supplier-details')
-                    ->searchable(query: fn ($query, $search) => $query->whereHas('supplier', fn ($q) => $q->where('name', 'like', "%{$search}%"))),
+                    ->searchable(query: fn ($query, $search) => $query->whereHas('supplier', fn ($q) => $q->where('name', 'like', "%{$search}%")))
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 220px;']),
 
                 Tables\Columns\ViewColumn::make('web_show_count')
                     ->label('Web Show Count')
                     ->view('filament.tables.columns.web-show-count')
                     ->sortable(query: fn ($query, $direction) => $query->orderBy('quantity', $direction))
                     ->tooltip('Click to adjust web show count')
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 140px;'])
                     ->action(
                         Tables\Actions\Action::make('adjust_web_count_column')
                             ->modalHeading(fn (\App\Models\Product $record) => "Adjust Web Show Count - {$record->name}")
@@ -81,6 +85,7 @@ class ProductTable
                                         ->content(function (\Filament\Forms\Get $get) use ($invStock, $currentShow) {
                                             $newShow = (int) ($get('new_show_quantity') ?? $currentShow);
                                             $newBalance = max(0, $invStock - $newShow);
+
                                             return "{$newBalance} units remaining in warehouse";
                                         }),
                                 ];
@@ -113,34 +118,25 @@ class ProductTable
                             })
                     ),
 
-                Tables\Columns\TextColumn::make('grn_price')
+                Tables\Columns\ViewColumn::make('grn_price')
                     ->label('GRN Price')
-                    ->getStateUsing(function ($record) {
-                        if ($record->product_code) {
-                            $price = \App\Models\GrnItem::where('product_code', $record->product_code)->latest('id')->value('price_per_unit');
-                            if ($price !== null) {
-                                return (float) $price;
-                            }
-                        }
-                        return (float) ($record->grn_price ?? 0);
-                    })
-                    ->formatStateUsing(fn ($state) => config('app.currency_symbol', 'Rs. ') . number_format((float) $state, 2))
-                    ->sortable()
-                    ->badge()
-                    ->color('gray')
-                    ->weight('semibold'),
+                    ->view('filament.tables.columns.product-grn-price')
+                    ->sortable(query: fn ($query, $direction) => $query->orderBy('grn_price', $direction))
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 110px;']),
 
                 Tables\Columns\ViewColumn::make('price')
                     ->label('Latest Price')
                     ->view('filament.tables.columns.product-price')
-                    ->sortable(query: fn ($query, $direction) => $query->orderBy('price', $direction)),
+                    ->sortable(query: fn ($query, $direction) => $query->orderBy('price', $direction))
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 180px;']),
 
                 Tables\Columns\ToggleColumn::make('is_visible')
                     ->label('Availability')
                     ->onColor('success')
                     ->offColor('danger')
                     ->tooltip('Control product display on the storefront')
-                    ->sortable(),
+                    ->sortable()
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px;']),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
@@ -219,6 +215,7 @@ class ProductTable
                                 ->content(function (\Filament\Forms\Get $get) use ($invStock, $currentShow) {
                                     $newShow = (int) ($get('new_show_quantity') ?? $currentShow);
                                     $newBalance = max(0, $invStock - $newShow);
+
                                     return "{$newBalance} units remaining in warehouse";
                                 }),
                         ];

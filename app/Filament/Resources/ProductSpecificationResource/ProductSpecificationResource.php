@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\ProductSpecificationResource;
 
-use App\Filament\Resources\ProductSpecificationResource\Pages;
 use App\Filament\Resources\ProductSpecificationResource\Schemas\ProductSpecificationForm;
 use App\Filament\Resources\ProductSpecificationResource\Tables\ProductSpecificationTable;
 use App\Models\ProductSpecificationGroup;

@@ -24,7 +24,7 @@ class UserTable
                 Tables\Columns\ImageColumn::make('avatar_url')
                     ->label('Image')
                     ->circular()
-                    ->defaultImageUrl(fn($record) => $record->getFilamentAvatarUrl()),
+                    ->defaultImageUrl(fn ($record) => $record->getFilamentAvatarUrl()),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Customer Name')
@@ -37,7 +37,7 @@ class UserTable
 
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'active' => 'success',
                         'blocked' => 'danger',
                         default => 'gray',
@@ -45,7 +45,7 @@ class UserTable
 
                 Tables\Columns\TextColumn::make('role')
                     ->badge()
-                    ->color(fn(string $state): string => $state === 'admin' ? 'danger' : 'info'),
+                    ->color(fn (string $state): string => $state === 'admin' ? 'danger' : 'info'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role'),
@@ -56,15 +56,15 @@ class UserTable
 
                 Tables\Actions\EditAction::make()
                     // Super Admin (ID 1) ව edit කරන්න බෑ
-                    ->hidden(fn(Model $record) => $record->id === 1),
+                    ->hidden(fn (Model $record) => $record->id === 1),
 
                 Tables\Actions\DeleteAction::make()
                     // Super Admin (ID 1) ව delete කරන්න බෑ
-                    ->hidden(fn(Model $record) => $record->id === 1),
+                    ->hidden(fn (Model $record) => $record->id === 1),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
+                    Tables\Actions\DeleteBulkAction::make(),
                     // Bulk delete වලිනුත් Super Admin බේරගන්න ඕන නම් logic එකක් ලියන්න ඕන,
                     // නමුත් දැනට මේක ඇති.
                 ]),

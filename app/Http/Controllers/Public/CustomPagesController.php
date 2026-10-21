@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-use Inertia\Response;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CustomPagesController extends Controller
 {
@@ -36,11 +36,11 @@ class CustomPagesController extends Controller
 
                 <h2>6. Contact Information</h2>
                 <p>Questions about the Terms of Service should be sent to us at legal@wikistore.com.</p>
-            '
+            ',
         ];
 
         return Inertia::render('Policies/TermsOfService', [
-            'terms' => $terms
+            'terms' => $terms,
         ]);
     }
 
@@ -75,11 +75,11 @@ class CustomPagesController extends Controller
 
                 <h2>7. Contact Us</h2>
                 <p>If you have any questions about this Privacy Policy, please contact us at:<br>Email: privacy@wikistore.com<br>Address: 368 Ocean Ave, Seaside, CA 12345</p>
-            '
+            ',
         ];
 
         return Inertia::render('Policies/PrivacyPolicy', [
-            'privacy' => $privacy
+            'privacy' => $privacy,
         ]);
     }
 
@@ -105,11 +105,11 @@ class CustomPagesController extends Controller
 
                 <h2>3. Shipment Confirmation & Order Tracking</h2>
                 <p>You will receive a Shipment Confirmation email and a WhatsApp alert containing your tracking number(s) once your order has shipped.</p>
-            '
+            ',
         ];
 
         return Inertia::render('Policies/ShippingDelivery', [
-            'shipping' => $shipping
+            'shipping' => $shipping,
         ]);
     }
 
@@ -132,11 +132,11 @@ class CustomPagesController extends Controller
 
                 <h2>3. Cancellations</h2>
                 <p>You can cancel an order within 1 hour of placing it. Please contact customer support immediately to request a cancellation.</p>
-            '
+            ',
         ];
 
         return Inertia::render('Policies/ReturnRefund', [
-            'refunds' => $refunds
+            'refunds' => $refunds,
         ]);
     }
 }

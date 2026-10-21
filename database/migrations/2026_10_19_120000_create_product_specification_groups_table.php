@@ -34,7 +34,7 @@ return new class extends Migration
 
             $grouped = [];
             foreach ($specs as $spec) {
-                $groupKey = $spec->category_id . '_' . ($spec->sub_category_id ?? 'null');
+                $groupKey = $spec->category_id.'_'.($spec->sub_category_id ?? 'null');
                 if (! isset($grouped[$groupKey])) {
                     $grouped[$groupKey] = [
                         'category_id' => $spec->category_id,

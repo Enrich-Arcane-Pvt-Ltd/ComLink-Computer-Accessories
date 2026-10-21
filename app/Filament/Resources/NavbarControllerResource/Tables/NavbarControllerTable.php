@@ -42,7 +42,7 @@ class NavbarControllerTable
                     ->label('Display Order')
                     ->badge()
                     ->color('primary')
-                    ->formatStateUsing(fn ($state) => '#' . ((int) $state + 1))
+                    ->formatStateUsing(fn ($state) => '#'.((int) $state + 1))
                     ->alignCenter()
                     ->sortable()
                     ->tooltip('Position in navbar (left-to-right). Use the ↑ / ↓ buttons to swap order.'),
@@ -138,7 +138,7 @@ class NavbarControllerTable
                         if ($subsCount === 0) {
                             return [
                                 Forms\Components\Placeholder::make('no_subs')
-                                    ->content('No subcategories exist for this category yet. You can add them under Product Catalog > Sub Categories.')
+                                    ->content('No subcategories exist for this category yet. You can add them under Product Catalog > Sub Categories.'),
                             ];
                         }
 

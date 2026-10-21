@@ -45,7 +45,7 @@ class GrnTable
 
                 Tables\Columns\TextColumn::make('sub_total')
                     ->label('Sub Total')
-                    ->formatStateUsing(fn ($state) => 'Rs. ' . number_format((float) $state, 2))
+                    ->formatStateUsing(fn ($state) => 'Rs. '.number_format((float) $state, 2))
                     ->weight('bold')
                     ->fontFamily('mono')
                     ->color('info')

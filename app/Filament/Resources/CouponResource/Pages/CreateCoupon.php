@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\CouponResource\Pages;
 
 use App\Filament\Resources\CouponResource\CouponResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateCoupon extends CreateRecord

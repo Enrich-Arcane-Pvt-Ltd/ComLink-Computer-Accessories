@@ -362,7 +362,18 @@
         <tr>
             <td class="text-center">{{ $index + 1 }}</td>
             <td class="font-bold" style="color: #0284c7;">{{ $prod['product_code'] }}</td>
-            <td>{{ $prod['product_name'] }}</td>
+            <td>
+                {{ $prod['product_name'] }}
+                @if(!empty($prod['colors']))
+                    <div style="font-size: 8.5px; margin-top: 3px; display: flex; gap: 4px; flex-wrap: wrap;">
+                        @foreach($prod['colors'] as $c => $q)
+                            <span style="display: inline-block; background-color: #f3e8ff; color: #7e22ce; padding: 1px 4px; border-radius: 3px; border: 1px solid #d8b4fe; font-weight: bold;">
+                                {{ $c }}: {{ $q }}
+                            </span>
+                        @endforeach
+                    </div>
+                @endif
+            </td>
             <td class="text-center">{{ $prod['product_condition'] }}</td>
             <td class="text-right font-bold">{{ number_format($prod['total_quantity']) }}</td>
             <td class="text-right">{{ number_format($prod['avg_price'], 2) }}</td>
@@ -381,11 +392,11 @@
         <tr>
             <th style="width: 12%;">GRN No</th>
             <th style="width: 13%;">Date</th>
-            <th style="width: 25%;">Supplier</th>
-            <th style="width: 25%;">Product</th>
+            <th style="width: 23%;">Supplier</th>
+            <th style="width: 27%;">Product</th>
             <th class="text-center" style="width: 7%;">Qty</th>
             <th class="text-right" style="width: 12%;">Price (Rs.)</th>
-            <th class="text-right" style="width: 14%;">Total (Rs.)</th>
+            <th class="text-right" style="width: 13%;">Total (Rs.)</th>
         </tr>
     </thead>
     <tbody>
@@ -396,6 +407,11 @@
             <td>{{ $item['supplier_name'] }}</td>
             <td>
                 <strong>{{ $item['product_code'] }}</strong> - {{ $item['product_name'] }}
+                @if(!empty($item['color_name']))
+                    <span style="font-size: 8.5px; font-weight: bold; color: #7c3aed; background: #ede9fe; padding: 1px 4px; border-radius: 3px; border: 1px solid #d8b4fe;">
+                        {{ $item['color_name'] }}
+                    </span>
+                @endif
                 <span style="font-size: 8.5px; color: #64748b;">({{ $item['product_condition'] }})</span>
             </td>
             <td class="text-center font-bold">{{ $item['quantity'] }}</td>

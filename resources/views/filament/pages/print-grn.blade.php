@@ -104,7 +104,14 @@
                     <tr>
                         <td class="py-3.5 px-3 text-center text-xs text-gray-500 font-mono">{{ $index + 1 }}</td>
                         <td class="py-3.5 px-3 font-mono font-bold text-xs text-gray-900">{{ $item->product_code }}</td>
-                        <td class="py-3.5 px-3 font-semibold text-gray-800">{{ $item->product_name }}</td>
+                        <td class="py-3.5 px-3 font-semibold text-gray-800">
+                            {{ $item->product_name }}
+                            @if(!empty($item->color_name))
+                                <span class="inline-block ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded bg-purple-100 text-purple-800 border border-purple-200">
+                                    Color: {{ $item->color_name }}
+                                </span>
+                            @endif
+                        </td>
                         <td class="py-3.5 px-3 text-center">
                             <span class="inline-block px-2 py-0.5 text-[11px] font-semibold rounded {{ $item->product_condition === 'Brandnew' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                                 {{ $item->product_condition }}

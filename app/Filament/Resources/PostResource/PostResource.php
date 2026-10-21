@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\PostResource;
 
-use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\Pages\ViewPost;
 use App\Filament\Resources\PostResource\RelationManagers\BlogCommentsRelationManager;
 use App\Filament\Resources\PostResource\Schemas\PostForm;
@@ -17,7 +16,9 @@ class PostResource extends Resource
     protected static ?string $model = Post::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
     protected static ?string $navigationGroup = 'Content Management';
+
     protected static ?string $pluralLabel = 'Blogs';
 
     public static function form(Form $form): Form
@@ -40,10 +41,10 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPosts::route('/'),
+            'index' => Pages\ListPosts::route('/'),
             'create' => Pages\CreatePost::route('/create'),
-            'view'   => ViewPost::route('/{record}'),
-            'edit'   => Pages\EditPost::route('/{record}/edit'),
+            'view' => ViewPost::route('/{record}'),
+            'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
     }
 }
