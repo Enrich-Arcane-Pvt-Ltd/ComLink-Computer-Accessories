@@ -32,7 +32,8 @@ class InventoryTable
                     ->searchable(query: fn ($query, $search) => $query->where('product_name', 'like', "%{$search}%")
                         ->orWhere('product_code', 'like', "%{$search}%")
                     )
-                    ->sortable(query: fn ($query, $direction) => $query->orderBy('product_name', $direction)),
+                    ->sortable(query: fn ($query, $direction) => $query->orderBy('product_name', $direction))
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 260px;']),
 
                 Tables\Columns\ViewColumn::make('total')
                     ->label('Total')

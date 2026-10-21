@@ -41,7 +41,8 @@ class PurchaseOrderTable
 
                 Tables\Columns\ViewColumn::make('order_details')
                     ->label('Order Details')
-                    ->view('filament.tables.columns.po-order-details'),
+                    ->view('filament.tables.columns.po-order-details')
+                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 300px;']),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Order Created Date')
