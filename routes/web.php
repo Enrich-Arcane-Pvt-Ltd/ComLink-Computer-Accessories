@@ -30,10 +30,10 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/category/{category}', [ShopController::class, 'category'])->name('category.show');
 Route::get('/category/{category}/{subcategory}', [ShopController::class, 'subcategory'])->name('category.subcategory');
 Route::get('/product/{product}', [ShopController::class, 'showProduct'])->name('product.show');
+Route::get('/build-my-pc', [BuildPcController::class, 'index'])->name('build-pc');
 
 // Authenticated Customer Routes (Requires login)
 Route::middleware(['auth'])->group(function () {
-    Route::get('/build-my-pc', [BuildPcController::class, 'index'])->name('build-pc');
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout/payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.payment-intent');

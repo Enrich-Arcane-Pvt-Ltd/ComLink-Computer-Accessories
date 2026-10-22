@@ -345,24 +345,45 @@ class BuildPcController extends Controller
         $tech = is_array($product->technical_specifications) ? $product->technical_specifications : [];
         $main = is_array($product->main_specifications) ? $product->main_specifications : [];
 
-        // Chipset extraction for CPU and Motherboard
-        $chipset = null;
+        // Helper to find spec case-insensitively with loose key matching
+        $getSpec = function (array $source, ...$keys) {
+            foreach ($keys as $k) {
+                if (isset($source[$k]) && ! is_null($source[$k]) && trim((string) $source[$k]) !== '') {
+                    return trim((string) $source[$k]);
+                }
+                $cleanK = strtolower(str_replace([' ', '.', '-', '_'], '', $k));
+                foreach ($source as $sk => $sv) {
+                    $cleanSK = strtolower(str_replace([' ', '.', '-', '_'], '', (string) $sk));
+                    if ($cleanSK === $cleanK && ! is_null($sv) && trim((string) $sv) !== '') {
+                        return trim((string) $sv);
+                    }
+                }
+            }
+            return null;
+        };
+
+        // 1. Platform (AMD vs Intel)
+        $rawPlatform = $getSpec($main, 'mb_platform', 'platform')
+            ?? $getSpec($tech, 'platform', 'processor_type', 'architecture')
+            ?? null;
+        $platform = null;
         if (in_array($slot, ['processors', 'motherboards'])) {
-            $rawChipset = $tech['chipset'] ?? $tech['platform'] ?? $tech['processor_type'] ?? null;
-            $textToScan = strtolower($product->name . ' ' . ($product->brand?->name ?? '') . ' ' . (is_string($rawChipset) ? $rawChipset : ''));
+            $textToScan = strtolower($product->name . ' ' . ($product->brand?->name ?? '') . ' ' . ($rawPlatform ?? ''));
 
             if (str_contains($textToScan, 'amd') || str_contains($textToScan, 'ryzen') || str_contains($textToScan, 'am5') || str_contains($textToScan, 'am4') || str_contains($textToScan, 'b650') || str_contains($textToScan, 'x670') || str_contains($textToScan, 'b550') || str_contains($textToScan, 'a620')) {
-                $chipset = 'AMD';
+                $platform = 'AMD';
             } elseif (str_contains($textToScan, 'intel') || str_contains($textToScan, 'core i') || str_contains($textToScan, 'lga') || str_contains($textToScan, 'z790') || str_contains($textToScan, 'b760') || str_contains($textToScan, 'h610') || str_contains($textToScan, 'z690')) {
-                $chipset = 'Intel';
+                $platform = 'Intel';
             }
         }
 
-        // Socket extraction
+        // 2. CPU Socket (AM4, AM5, LGA1700, LGA1200, etc.)
+        $rawSocket = $getSpec($main, 'cpu_socket', 'cpu_soket', 'socket', 'socket_type')
+            ?? $getSpec($tech, 'socket', 'cpu_socket', 'socket_type')
+            ?? null;
         $socket = null;
-        if (in_array($slot, ['processors', 'motherboards'])) {
-            $rawSocket = $tech['socket'] ?? $tech['cpu_socket'] ?? $tech['socket_type'] ?? null;
-            $textToScan = $product->name . ' ' . (is_string($rawSocket) ? $rawSocket : '');
+        if (in_array($slot, ['processors', 'motherboards', 'coolers'])) {
+            $textToScan = ($rawSocket ?? '') . ' ' . $product->name;
 
             if (preg_match('/\b(AM5|AM4|AM3\+|LGA\s*1700|LGA\s*1200|LGA\s*1151|LGA\s*1155|sTR5|TR4)\b/i', $textToScan, $m)) {
                 $socket = strtoupper(str_replace(' ', '', $m[1]));
@@ -379,16 +400,56 @@ class BuildPcController extends Controller
             }
         }
 
-        // Wattage extraction
-        $wattage = 0;
-        $rawWatt = $tech['wattage'] ?? $tech['power_consumption'] ?? $tech['tdp'] ?? $main['wattage'] ?? null;
-        if (is_numeric($rawWatt) && (int) $rawWatt > 0) {
-            $wattage = (int) $rawWatt;
-        } elseif (is_string($rawWatt) && preg_match('/(\d{2,4})\s*W/i', $rawWatt, $m)) {
+        // 3. Chipset Model (B650, B550, Z790, B760, etc.)
+        $chipsetModel = $getSpec($main, 'chipset_model', 'chipset')
+            ?? $getSpec($tech, 'chipset')
+            ?? null;
+        if (! $chipsetModel && $slot === 'motherboards') {
+            if (preg_match('/\b(X670E|X670|B650E|B650|A620|X570|B550|A520|B450|Z790|Z690|B760|B660|H610)\b/i', $product->name, $m)) {
+                $chipsetModel = strtoupper($m[1]);
+            }
+        }
+
+        // 4. Memory Generation (DDR4 vs DDR5)
+        $rawMemGen = $getSpec($main, 'memory_gen', 'generation', 'memory_generation')
+            ?? $getSpec($tech, 'memory_generation', 'architecture')
+            ?? null;
+        $memoryGen = null;
+        if ($rawMemGen) {
+            $upper = strtoupper($rawMemGen);
+            if (str_contains($upper, 'DDR5')) {
+                $memoryGen = 'DDR5';
+            } elseif (str_contains($upper, 'DDR4')) {
+                $memoryGen = 'DDR4';
+            }
+        }
+        if (! $memoryGen && preg_match('/\b(DDR5|DDR4|DDR3)\b/i', $product->name . ' ' . json_encode($main) . ' ' . json_encode($tech), $m)) {
+            $memoryGen = strtoupper($m[1]);
+        }
+
+        // 5. Wattage / Power Consumption / Power Output
+        $parseWatts = function ($val) {
+            if (is_numeric($val) && (int) $val > 0) {
+                return (int) $val;
+            }
+            if (is_string($val) && preg_match('/(\d{2,4})\s*W/i', $val, $m)) {
+                return (int) $m[1];
+            }
+            return null;
+        };
+
+        // For Power Supplies: look for Power Output first
+        $rawPsuOutput = $getSpec($main, 'power_output', 'output_wattage');
+        $rawPower = $parseWatts($rawPsuOutput)
+            ?? $parseWatts($getSpec($tech, 'power_consumption', 'tdp', 'power'))
+            ?? $parseWatts($getSpec($main, 'power_consumption', 'wattage'));
+
+        $wattage = $rawPower;
+        if (! $wattage && preg_match('/(\d{3,4})\s*W\b/i', $product->name, $m)) {
             $wattage = (int) $m[1];
-        } elseif (preg_match('/(\d{3,4})\s*W\b/i', $product->name, $m)) {
-            $wattage = (int) $m[1];
-        } else {
+        }
+
+        if (! $wattage || $wattage <= 0) {
             $wattage = match ($slot) {
                 'power-supply' => 650,
                 'processors' => 105,
@@ -402,6 +463,14 @@ class BuildPcController extends Controller
                 default => 0,
             };
         }
+
+        // 6. GPU Recommended Minimum PSU Requirement
+        $rawMinPsu = $getSpec($main, 'power_supply_requirement', 'psu_requirement', 'recommended_psu')
+            ?? $getSpec($tech, 'power_supply_requirement');
+        $minPsuWatts = $parseWatts($rawMinPsu);
+
+        // 7. Power Supply Rating (80 Plus Bronze/Gold/etc.)
+        $psuRating = $getSpec($main, 'power_rating', 'modular');
 
         // Format specs key-values
         $specs = [];
@@ -445,9 +514,13 @@ class BuildPcController extends Controller
             'category' => $catName,
             'subCategory' => $subCatName,
             'brand' => $brand,
-            'chipset' => $chipset,
+            'platform' => $platform,
+            'chipset' => $chipsetModel ?? $platform,
             'socket' => $socket,
+            'memoryGen' => $memoryGen,
             'wattage' => $wattage,
+            'minPsuWatts' => $minPsuWatts,
+            'psuRating' => $psuRating,
             'price' => $price,
             'originalPrice' => $origPrice,
             'image' => $image,

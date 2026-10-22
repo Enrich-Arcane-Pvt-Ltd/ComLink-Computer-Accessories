@@ -49,9 +49,13 @@ export interface BuilderProduct {
     category: string;
     subCategory: string;
     brand: string;
-    chipset?: "AMD" | "Intel" | string;
+    platform?: "AMD" | "Intel" | string;
+    chipset?: string;
     socket?: string;
+    memoryGen?: "DDR4" | "DDR5" | string;
     wattage?: number;
+    minPsuWatts?: number;
+    psuRating?: string;
     price: number;
     originalPrice?: number;
     image: string;
@@ -365,10 +369,10 @@ function BuildPcContent({
     );
     const [activeSlotId, setActiveSlotId] = useState<string>("processors");
 
-    // Chipset Filter (All | AMD | Intel)
-    const [chipsetFilter, setChipsetFilter] = useState<"ALL" | "AMD" | "Intel">(
-        "ALL",
-    );
+    // Platform Filter (All | AMD | Intel)
+    const [platformFilter, setPlatformFilter] = useState<
+        "ALL" | "AMD" | "Intel"
+    >("ALL");
 
     // Auto-advance toggle (matches competitor reference!)
     const [autoAdvance, setAutoAdvance] = useState<boolean>(true);
@@ -410,13 +414,14 @@ function BuildPcContent({
             // Match slot
             if (p.slot !== activeSlotId) return false;
 
-            // Apply Chipset filter for CPU and Motherboard
+            // Apply Platform filter for CPU and Motherboard
             if (
                 (activeSlotId === "processors" ||
                     activeSlotId === "motherboards") &&
-                chipsetFilter !== "ALL"
+                platformFilter !== "ALL"
             ) {
-                if (p.chipset && p.chipset !== chipsetFilter) {
+                const prodPlatform = p.platform || p.chipset;
+                if (prodPlatform && prodPlatform !== platformFilter) {
                     return false;
                 }
             }
@@ -439,7 +444,7 @@ function BuildPcContent({
 
             return true;
         });
-    }, [products, activeSlotId, chipsetFilter, selectedBrand, searchQuery]);
+    }, [products, activeSlotId, platformFilter, selectedBrand, searchQuery]);
 
     // Available brands in the active slot
     const availableBrands = useMemo(() => {
@@ -473,17 +478,32 @@ function BuildPcContent({
         );
     }, [selectedParts]);
 
-    const totalWattage = useMemo(() => {
-        return Object.values(selectedParts).reduce(
-            (acc, curr) => acc + (curr.wattage || 0),
-            0,
-        );
+    // Estimated electrical draw of all active components (excluding the PSU itself)
+    const estimatedPowerDraw = useMemo(() => {
+        return Object.entries(selectedParts).reduce((acc, [slotKey, part]) => {
+            if (slotKey === "power-supply") return acc;
+            return acc + (part.wattage || 0);
+        }, 0);
     }, [selectedParts]);
 
     const psuProduct = selectedParts["power-supply"];
-    const psuWattage = psuProduct?.wattage || 0;
+    const psuDeliveredWatts = psuProduct?.wattage || 0;
 
-    // Compatibility Checker Logic
+    // Minimum PSU recommended by graphics card
+    const gpuProduct = selectedParts["graphic-cards"];
+    const gpuMinPsu = gpuProduct?.minPsuWatts || 0;
+
+    // Recommended PSU wattage: estimated draw + 25% safety headroom, or GPU min requirement
+    const recommendedPsuWattage = useMemo(() => {
+        if (estimatedPowerDraw === 0 && gpuMinPsu === 0) return 0;
+        const withHeadroom = Math.round(estimatedPowerDraw * 1.25);
+        return Math.max(withHeadroom, gpuMinPsu, 450);
+    }, [estimatedPowerDraw, gpuMinPsu]);
+
+    // Backward-compatible alias for existing totalWattage usages
+    const totalWattage = psuProduct ? psuDeliveredWatts : estimatedPowerDraw;
+
+    // Comprehensive Compatibility Checker Logic
     const compatibilityCheck = useMemo(() => {
         if (selectedCount === 0) {
             return {
@@ -496,9 +516,24 @@ function BuildPcContent({
 
         const cpu = selectedParts["processors"];
         const mobo = selectedParts["motherboards"];
+        const ram = selectedParts["memory"];
 
-        // Check Socket Compatibility
+        // 1. Platform Mismatch Check (AMD CPU on Intel Motherboard)
         if (cpu && mobo) {
+            if (
+                cpu.platform &&
+                mobo.platform &&
+                cpu.platform !== mobo.platform
+            ) {
+                return {
+                    status: "Platform Mismatch",
+                    isOk: false,
+                    message: `Selected CPU is on ${cpu.platform} platform, but Motherboard is designed for ${mobo.platform}`,
+                    color: "text-rose-500",
+                };
+            }
+
+            // 2. CPU Socket Mismatch
             if (cpu.socket && mobo.socket && cpu.socket !== mobo.socket) {
                 return {
                     status: "Socket Mismatch",
@@ -509,26 +544,68 @@ function BuildPcContent({
             }
         }
 
-        // Check PSU Wattage Headroom
-        if (psuProduct && totalWattage > 0) {
-            const recommended = Math.round(totalWattage * 1.25);
-            if (psuWattage < totalWattage) {
+        // 3. RAM Generation Mismatch
+        if (mobo && ram) {
+            if (
+                mobo.memoryGen &&
+                ram.memoryGen &&
+                mobo.memoryGen !== ram.memoryGen
+            ) {
                 return {
-                    status: "Low PSU Wattage",
+                    status: "RAM Gen Mismatch",
                     isOk: false,
-                    message: `System draws ~${totalWattage}W. PSU delivers only ${psuWattage}W. Upgrade PSU to at least ${recommended}W.`,
+                    message: `Motherboard requires ${mobo.memoryGen} memory, but selected RAM is ${ram.memoryGen}`,
                     color: "text-rose-500",
                 };
             }
         }
 
+        // 4. Power Supply Wattage Validation
+        if (psuProduct && estimatedPowerDraw > 0) {
+            if (psuDeliveredWatts < estimatedPowerDraw) {
+                return {
+                    status: "Underpowered PSU",
+                    isOk: false,
+                    message: `System draws ~${estimatedPowerDraw}W, but PSU delivers only ${psuDeliveredWatts}W. Upgrade to at least ${recommendedPsuWattage}W.`,
+                    color: "text-rose-500",
+                };
+            }
+            if (gpuMinPsu > 0 && psuDeliveredWatts < gpuMinPsu) {
+                return {
+                    status: "Low PSU for GPU",
+                    isOk: false,
+                    message: `Graphics Card recommends a minimum ${gpuMinPsu}W PSU. Selected PSU is ${psuDeliveredWatts}W.`,
+                    color: "text-amber-500",
+                };
+            }
+        }
+
+        // 5. Positive Verified Compatibility
+        if (cpu && mobo) {
+            const socketLabel = cpu.socket || mobo.socket || "Platform";
+            return {
+                status: "Compatible",
+                isOk: true,
+                message: `Verified compatible (${cpu.platform || "Platform"} · Socket ${socketLabel})`,
+                color: "text-emerald-500",
+            };
+        }
+
         return {
-            status: "Compatible",
+            status: "In Progress",
             isOk: true,
-            message: "All selected components are verified compatible!",
-            color: "text-emerald-500",
+            message: "Components selected so far have no conflicts.",
+            color: "text-cyan-500",
         };
-    }, [selectedParts, selectedCount, psuProduct, psuWattage, totalWattage]);
+    }, [
+        selectedParts,
+        selectedCount,
+        psuProduct,
+        psuDeliveredWatts,
+        estimatedPowerDraw,
+        recommendedPsuWattage,
+        gpuMinPsu,
+    ]);
 
     // Handler to select a product into the active slot
     const handleSelectProduct = (product: BuilderProduct) => {
@@ -536,6 +613,16 @@ function BuildPcContent({
             ...prev,
             [activeSlotId]: product,
         }));
+
+        // If customer selects a CPU or Motherboard, auto-sync the platform filter
+        if (
+            (activeSlotId === "processors" ||
+                activeSlotId === "motherboards") &&
+            product.platform &&
+            (product.platform === "AMD" || product.platform === "Intel")
+        ) {
+            setPlatformFilter(product.platform);
+        }
 
         toast.success(`Selected ${product.name}`);
 
@@ -598,9 +685,9 @@ function BuildPcContent({
         setIsTemplatesModalOpen(false);
 
         if (template.targetChipset === "AMD") {
-            setChipsetFilter("AMD");
+            setPlatformFilter("AMD");
         } else if (template.targetChipset === "Intel") {
-            setChipsetFilter("Intel");
+            setPlatformFilter("Intel");
         }
 
         toast.success(`Loaded "${template.name}" configuration!`);
@@ -672,7 +759,7 @@ function BuildPcContent({
                 return `• ${sDef?.shortName || slotKey}: ${part.name} - ${formatLkr(part.price)}`;
             }),
             "--------------------------------------------------",
-            `⚡ Estimated Wattage: ${totalWattage}W`,
+            `⚡ Estimated Draw: ~${estimatedPowerDraw}W (Rec. PSU: ${recommendedPsuWattage}W+)${psuProduct ? ` | PSU Output: ${psuDeliveredWatts}W` : ""}`,
             `💰 Total Investment: ${formatLkr(totalCost)}`,
             `🔗 Build Yours at: ${window.location.href}`,
         ];
@@ -706,7 +793,14 @@ function BuildPcContent({
             `Generated on: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
             `Status: ${compatibilityCheck.status} (${compatibilityCheck.message})`,
             `Total Components: ${selectedCount}`,
-            `Estimated Power: ${totalWattage}W`,
+            `Estimated System Draw: ~${estimatedPowerDraw}W`,
+            `Recommended PSU: ${recommendedPsuWattage}W+`,
+            ...(psuProduct
+                ? [
+                      `Selected PSU: ${psuProduct.name} (${psuDeliveredWatts}W)`,
+                      `Headroom: ${psuDeliveredWatts - estimatedPowerDraw > 0 ? "+" : ""}${psuDeliveredWatts - estimatedPowerDraw}W`,
+                  ]
+                : ["Selected PSU: None"]),
             "----------------------------------------------------------",
             "SELECTED COMPONENTS:",
             ...Object.entries(selectedParts).map(([slot, item]) => {
@@ -716,7 +810,7 @@ function BuildPcContent({
                 return `[${s?.name || slot}]\n  Name:  ${item.name}\n  Brand: ${item.brand}\n  Price: ${formatLkr(item.price)}\n`;
             }),
             "----------------------------------------------------------",
-            `TOTAL BUILD COST: ${formatLkr(totalCost)}`,
+            "TOTAL BUILD COST: " + formatLkr(totalCost),
             "==========================================================",
             "Contact ComLink: 127.0.0.1:8000 | support@comlink.lk",
         ].join("\n");
@@ -776,38 +870,43 @@ function BuildPcContent({
                                     </p>
                                 </div>
 
-                                {/* Chipset Toggle Pills (All | AMD | Intel) */}
+                                {/* Platform Toggle Pills (All | AMD | Intel) */}
                                 <div className="mb-4 flex items-center justify-between border-b border-border/50 pb-4">
-                                    <span className="text-xs font-bold uppercase tracking-wider text-muted">
-                                        Chipset
-                                    </span>
+                                    <div>
+                                        <span className="text-xs font-bold uppercase tracking-wider text-muted block">
+                                            Platform
+                                        </span>
+                                        <span className="text-[10px] text-muted/70">
+                                            AMD / Intel architecture
+                                        </span>
+                                    </div>
                                     <div className="inline-flex rounded-xl bg-bg p-1 border border-border/80">
                                         {(["ALL", "AMD", "Intel"] as const).map(
-                                            (chip) => {
+                                            (plat) => {
                                                 const isActive =
-                                                    chipsetFilter === chip;
+                                                    platformFilter === plat;
                                                 return (
                                                     <button
-                                                        key={chip}
+                                                        key={plat}
                                                         type="button"
                                                         onClick={() =>
-                                                            setChipsetFilter(
-                                                                chip,
+                                                            setPlatformFilter(
+                                                                plat,
                                                             )
                                                         }
                                                         className={cn(
                                                             "px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer",
                                                             isActive
-                                                                ? chip === "AMD"
+                                                                ? plat === "AMD"
                                                                     ? "bg-rose-600 text-white shadow-xs"
-                                                                    : chip ===
+                                                                    : plat ===
                                                                         "Intel"
                                                                       ? "bg-blue-600 text-white shadow-xs"
                                                                       : "bg-cyan-600 text-white shadow-xs"
                                                                 : "text-muted hover:text-fg",
                                                         )}
                                                     >
-                                                        {chip}
+                                                        {plat}
                                                     </button>
                                                 );
                                             },
@@ -1076,16 +1175,33 @@ function BuildPcContent({
                                     <div className="rounded-xl border border-border/80 bg-bg/80 p-3.5 flex flex-col justify-between relative overflow-hidden">
                                         <div className="flex items-center justify-between text-muted mb-2">
                                             <Zap className="h-4 w-4 text-amber-500" />
-                                            <span className="text-[10px] font-bold uppercase tracking-wider rounded bg-card px-1.5 py-0.5 border border-border/60 text-amber-600 dark:text-amber-400">
-                                                Estimated
+                                            <span
+                                                className={cn(
+                                                    "text-[10px] font-bold uppercase tracking-wider rounded bg-card px-1.5 py-0.5 border",
+                                                    psuProduct
+                                                        ? psuDeliveredWatts >= estimatedPowerDraw
+                                                            ? "text-emerald-500 border-emerald-500/30"
+                                                            : "text-rose-500 border-rose-500/30"
+                                                        : "text-amber-600 dark:text-amber-400 border-border/60",
+                                                )}
+                                            >
+                                                {psuProduct ? "Delivered" : "Est. Draw"}
                                             </span>
                                         </div>
                                         <div>
                                             <div className="font-display text-2xl font-bold text-fg">
-                                                {totalWattage}W
+                                                {psuProduct
+                                                    ? `${psuDeliveredWatts}W`
+                                                    : `~${estimatedPowerDraw}W`}
                                             </div>
-                                            <span className="text-[11px] text-muted">
-                                                Power Supply
+                                            <span className="text-[11px] text-muted truncate block">
+                                                {psuProduct
+                                                    ? psuDeliveredWatts >= estimatedPowerDraw
+                                                        ? `+${psuDeliveredWatts - estimatedPowerDraw}W Headroom`
+                                                        : `Deficit: ${estimatedPowerDraw - psuDeliveredWatts}W`
+                                                    : recommendedPsuWattage > 0
+                                                      ? `Rec. PSU: ${recommendedPsuWattage}W+`
+                                                      : "Power Draw"}
                                             </span>
                                         </div>
                                     </div>
@@ -1282,22 +1398,67 @@ function BuildPcContent({
                                                     )}
                                                 >
                                                     {/* Top Badges */}
-                                                    <div className="flex items-center justify-between mb-3">
-                                                        <span className="rounded bg-primary-100 dark:bg-primary-800 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-700 dark:text-primary-200">
-                                                            {prod.brand}
-                                                        </span>
-                                                        {prod.wattage !==
-                                                            undefined &&
-                                                            prod.wattage >
-                                                                0 && (
-                                                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                                                                    <Zap className="h-3 w-3" />
-                                                                    {
-                                                                        prod.wattage
-                                                                    }
-                                                                    W
-                                                                </span>
+                                                    <div className="flex items-center justify-between mb-3 gap-1.5 flex-wrap">
+                                                        <div className="flex items-center gap-1.5 flex-wrap">
+                                                            <span className="rounded bg-primary-100 dark:bg-primary-800 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-700 dark:text-primary-200">
+                                                                {prod.brand}
+                                                            </span>
+                                                            {/* Motherboard Socket Compatibility with Selected CPU */}
+                                                            {activeSlotId === "motherboards" && selectedParts["processors"]?.socket && prod.socket && (
+                                                                selectedParts["processors"].socket === prod.socket ? (
+                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                                                                        <Check className="h-3 w-3" /> Compatible ({prod.socket})
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
+                                                                        <AlertTriangle className="h-3 w-3" /> Needs {selectedParts["processors"].socket}
+                                                                    </span>
+                                                                )
                                                             )}
+                                                            {/* RAM Generation Compatibility with Selected Motherboard */}
+                                                            {activeSlotId === "memory" && selectedParts["motherboards"]?.memoryGen && prod.memoryGen && (
+                                                                selectedParts["motherboards"].memoryGen === prod.memoryGen ? (
+                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                                                                        <Check className="h-3 w-3" /> {prod.memoryGen}
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
+                                                                        <AlertTriangle className="h-3 w-3" /> Needs {selectedParts["motherboards"].memoryGen}
+                                                                    </span>
+                                                                )
+                                                            )}
+                                                        </div>
+
+                                                        {/* Power badge */}
+                                                        {activeSlotId === "power-supply" ? (
+                                                            estimatedPowerDraw > 0 ? (
+                                                                (prod.wattage || 0) >= recommendedPsuWattage ? (
+                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                                                                        <Check className="h-3 w-3" /> Recommended ({prod.wattage}W)
+                                                                    </span>
+                                                                ) : (prod.wattage || 0) < estimatedPowerDraw ? (
+                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
+                                                                        <AlertTriangle className="h-3 w-3" /> Low Power ({prod.wattage}W)
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                                                                        <Zap className="h-3 w-3" /> {prod.wattage}W
+                                                                    </span>
+                                                                )
+                                                            ) : (
+                                                                prod.wattage !== undefined && prod.wattage > 0 && (
+                                                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+                                                                        <Zap className="h-3 w-3" /> {prod.wattage}W Output
+                                                                    </span>
+                                                                )
+                                                            )
+                                                        ) : (
+                                                            prod.wattage !== undefined && prod.wattage > 0 && (
+                                                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                                                                    <Zap className="h-3 w-3" /> {prod.wattage}W
+                                                                </span>
+                                                            )
+                                                        )}
                                                     </div>
 
                                                     {/* Product Image & Title */}
@@ -1411,19 +1572,19 @@ function BuildPcContent({
                                         <p className="text-xs text-muted mt-1 max-w-sm mx-auto">
                                             {searchQuery ||
                                             selectedBrand !== "ALL" ||
-                                            chipsetFilter !== "ALL"
-                                                ? "Try clearing your search query or chipset filters to see more parts."
+                                            platformFilter !== "ALL"
+                                                ? "Try clearing your search query or platform filters to see more parts."
                                                 : "No products are currently available in this category."}
                                         </p>
                                         {(searchQuery ||
                                             selectedBrand !== "ALL" ||
-                                            chipsetFilter !== "ALL") && (
+                                            platformFilter !== "ALL") && (
                                             <button
                                                 type="button"
                                                 onClick={() => {
                                                     setSearchQuery("");
                                                     setSelectedBrand("ALL");
-                                                    setChipsetFilter("ALL");
+                                                    setPlatformFilter("ALL");
                                                 }}
                                                 className="mt-4 px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-card hover:bg-muted/10 border border-border rounded-xl transition-colors cursor-pointer"
                                             >
