@@ -30,6 +30,7 @@ import {
     ShieldAlert,
     ShieldCheck,
     ShoppingCart,
+    Sparkles,
     Trash2,
     Wind,
     X,
