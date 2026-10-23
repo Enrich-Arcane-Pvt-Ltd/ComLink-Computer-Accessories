@@ -224,22 +224,6 @@ export function CategoriesCarousel({
 
                 {/* Categories Slider Container */}
                 <div className="relative group">
-                    {/* Soft gradient edge fade on left when scrolled */}
-                    <div
-                        className={cn(
-                            "pointer-events-none absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-bg to-transparent z-10 transition-opacity duration-300",
-                            canScrollLeft ? "opacity-100" : "opacity-0",
-                        )}
-                    />
-
-                    {/* Soft gradient edge fade on right when overflowing */}
-                    <div
-                        className={cn(
-                            "pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-bg to-transparent z-10 transition-opacity duration-300",
-                            canScrollRight ? "opacity-100" : "opacity-0",
-                        )}
-                    />
-
                     {/* Horizontal Drag-To-Scroll Track */}
                     <div
                         ref={scrollRef}
@@ -247,7 +231,7 @@ export function CategoriesCarousel({
                         onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUpOrLeave}
                         className={cn(
-                            "flex items-stretch gap-4 sm:gap-5 lg:gap-6 overflow-x-auto pb-8 pt-4 px-2 select-none",
+                            "flex items-stretch gap-4 sm:gap-5 lg:gap-6 overflow-x-auto pb-8 pt-4 px-3 select-none",
                             // Hide scrollbars across browsers
                             "[scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
                             // Mouse cursor feedback
