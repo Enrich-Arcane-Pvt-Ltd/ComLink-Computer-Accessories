@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
 import { Link } from "@inertiajs/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
 export interface CategoryItem {
@@ -86,8 +86,8 @@ export function CategoriesCarousel({
                 // Loop smoothly back to the beginning
                 container.scrollTo({ left: 0, behavior: "smooth" });
             } else {
-                // Advance by approximately 1-2 categories
-                const step = 200;
+                // Advance by roughly one card
+                const step = 240;
                 container.scrollBy({ left: step, behavior: "smooth" });
             }
         }, autoScrollInterval);
@@ -247,7 +247,7 @@ export function CategoriesCarousel({
                         onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUpOrLeave}
                         className={cn(
-                            "flex items-start gap-4 sm:gap-6 lg:gap-8 overflow-x-auto pb-4 pt-2 px-1 select-none",
+                            "flex items-stretch gap-4 sm:gap-5 lg:gap-6 overflow-x-auto pb-8 pt-4 px-2 select-none",
                             // Hide scrollbars across browsers
                             "[scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
                             // Mouse cursor feedback
@@ -270,6 +270,7 @@ export function CategoriesCarousel({
                                     .toLowerCase()
                                     .trim()
                                     .replace(/[^a-z0-9]+/g, "-");
+                            const count = category.count ?? 0;
 
                             return (
                                 <Link
@@ -282,56 +283,78 @@ export function CategoriesCarousel({
                                             e.stopPropagation();
                                         }
                                     }}
-                                    className="group/item flex flex-col items-center text-center cursor-pointer flex-shrink-0 w-[120px] sm:w-[136px] lg:w-[148px]"
+                                    className="group/item relative flex-shrink-0 w-[190px] h-[300px] sm:w-[210px] sm:h-[330px] lg:w-[230px] lg:h-[360px] outline-none"
                                     style={{ scrollSnapAlign: "start" }}
                                     draggable={false}
                                 >
-                                    {/* Circular Image Container */}
+                                    {/* Arch card */}
                                     <div
                                         className="
-                                            relative rounded-full overflow-hidden
-                                            w-[110px] h-[110px]
-                                            sm:w-[124px] sm:h-[124px]
-                                            lg:w-[136px] lg:h-[136px]
-                                            bg-card border border-border/80
-                                            transition-all duration-300 ease-out
-                                            group-hover/item:border-cyan-500 group-hover/item:ring-4 group-hover/item:ring-cyan-500/20 
-                                            group-hover/item:shadow-lg group-hover/item:shadow-cyan-500/20 group-hover/item:-translate-y-1
-                                            flex items-center justify-center p-3.5 mb-3
+                                            relative h-full w-full overflow-hidden
+                                            rounded-t-[999px] rounded-b-[28px]
+                                            border border-border/70
+                                            bg-gradient-to-b from-cyan-500/20 via-card to-card
+                                            transition-all duration-500 ease-out
+                                            group-hover/item:-translate-y-2
+                                            group-hover/item:border-cyan-500/70
+                                            group-hover/item:shadow-[0_20px_50px_-15px_rgba(6,182,212,0.45)]
+                                            group-focus-visible/item:border-cyan-500 group-focus-visible/item:ring-4 group-focus-visible/item:ring-cyan-500/30
                                         "
                                     >
-                                        {/* Soft ambient inner radial glow on hover */}
-                                        <div className="pointer-events-none absolute inset-0 bg-radial from-cyan-500/20 via-transparent to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
+                                        {/* Spotlight behind the product */}
+                                        <div className="pointer-events-none absolute left-1/2 top-[34%] -translate-x-1/2 -translate-y-1/2 h-44 w-44 rounded-full bg-cyan-400/20 blur-3xl opacity-60 transition-opacity duration-500 group-hover/item:opacity-100" />
 
-                                        <img
-                                            src={category.image}
-                                            alt={category.name}
-                                            loading="lazy"
-                                            draggable={false}
-                                            onError={(e) => {
-                                                const target = e.currentTarget;
-                                                const currentSrc = target.src;
-                                                if (/[A-Z]/.test(currentSrc)) {
+                                        {/* Product image */}
+                                        <div className="absolute inset-x-0 top-0 bottom-24 flex items-center justify-center px-7 pt-12">
+                                            <img
+                                                src={category.image}
+                                                alt={category.name}
+                                                loading="lazy"
+                                                draggable={false}
+                                                onError={(e) => {
+                                                    const target =
+                                                        e.currentTarget;
+                                                    const currentSrc =
+                                                        target.src;
+                                                    if (/[A-Z]/.test(currentSrc)) {
+                                                        target.src =
+                                                            currentSrc.toLowerCase();
+                                                        return;
+                                                    }
                                                     target.src =
-                                                        currentSrc.toLowerCase();
-                                                    return;
-                                                }
-                                                target.src =
-                                                    "/images/categories/products.png";
-                                            }}
-                                            className="h-full w-full object-contain drop-shadow-sm transition-transform duration-500 ease-out group-hover/item:scale-110 pointer-events-none select-none"
-                                        />
-                                    </div>
+                                                        "/images/categories/products.png";
+                                                }}
+                                                className="relative max-h-full w-full object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.45)] transition-transform duration-500 ease-out group-hover/item:scale-110 group-hover/item:-rotate-2 pointer-events-none select-none"
+                                            />
+                                        </div>
 
-                                    {/* Category Label & Details */}
-                                    <div className="flex flex-col items-center w-full px-1">
-                                        <h3 className="font-display font-bold uppercase tracking-wider text-fg text-xs sm:text-sm group-hover/item:text-cyan-600 dark:group-hover/item:text-cyan-400 transition-colors leading-tight line-clamp-2">
-                                            {category.name}
-                                        </h3>
-                                        <span className="block h-0.5 w-0 bg-cyan-500 transition-all duration-300 group-hover/item:w-6 rounded-full mt-1.5" />
-                                        <p className="text-[11px] sm:text-xs text-muted mt-1 font-mono">
-                                            {category.count ?? 0} Products
-                                        </p>
+                                        {/* Glass info bar */}
+                                        <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-2 rounded-[20px] border border-border/60 bg-bg/60 backdrop-blur-md pl-4 pr-2.5 py-2.5">
+                                            <div className="min-w-0">
+                                                <h3 className="font-display font-bold uppercase tracking-wide text-fg text-[13px] sm:text-sm leading-tight line-clamp-2 transition-colors group-hover/item:text-cyan-600 dark:group-hover/item:text-cyan-400">
+                                                    {category.name}
+                                                </h3>
+                                                <p className="mt-0.5 text-[11px] sm:text-xs text-muted">
+                                                    <span
+                                                        className={cn(
+                                                            "font-semibold",
+                                                            count > 0
+                                                                ? "text-cyan-600 dark:text-cyan-400"
+                                                                : "text-muted",
+                                                        )}
+                                                    >
+                                                        {count}
+                                                    </span>{" "}
+                                                    {count === 1
+                                                        ? "product"
+                                                        : "products"}
+                                                </p>
+                                            </div>
+
+                                            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 transition-all duration-300 group-hover/item:bg-cyan-500 group-hover/item:text-white group-hover/item:border-cyan-500 group-hover/item:rotate-45">
+                                                <ArrowUpRight className="h-4 w-4 -rotate-45 transition-transform" />
+                                            </span>
+                                        </div>
                                     </div>
                                 </Link>
                             );
