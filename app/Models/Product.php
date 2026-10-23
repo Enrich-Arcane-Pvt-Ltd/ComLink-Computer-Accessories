@@ -199,6 +199,48 @@ class Product extends Model
         return max(0, $this->inventory_full_count - $this->sold_count);
     }
 
+    public function getAvailableStockAttribute(): int
+    {
+        return $this->current_inventory_stock;
+    }
+
+    /**
+     * Sync database quantity columns with true physical inventory minus sold count.
+     */
+    public static function syncAllProductAvailableQuantities(): void
+    {
+        try {
+            foreach (static::all() as $product) {
+                $stock = $product->inventory_full_count;
+                $sold = $product->sold_count;
+                $avail = max(0, $stock - $sold);
+
+                $product->updateQuietly([
+                    'inventory_stock' => $stock,
+                    'quantity' => $avail,
+                    'show_quantity' => $avail,
+                ]);
+
+                if ($product->hasColorVariants()) {
+                    foreach ($product->variants as $variant) {
+                        $vStock = (int) ($variant->inventory_stock ?? 0);
+                        $vSold = (int) OrderItem::where('variant_id', $variant->id)
+                            ->whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+                            ->sum('quantity');
+                        $vAvail = max(0, $vStock - $vSold);
+
+                        $variant->updateQuietly([
+                            'stock' => $vAvail,
+                            'show_quantity' => $vAvail,
+                        ]);
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            // Ignore during setup
+        }
+    }
+
     // Audit Logs
     public function getActivitylogOptions(): LogOptions
     {

@@ -52,7 +52,6 @@ class EditProduct extends EditRecord
             $data['color_variants'] = $variants;
 
             $totalInv = array_sum(array_map(fn ($v) => (int) ($v['inventory_stock'] ?? 0), $variants));
-            $totalShow = array_sum(array_map(fn ($v) => (int) ($v['show_quantity'] ?? 0), $variants));
             $prices = array_values(array_filter(array_map(fn ($v) => (float) ($v['price'] ?? 0), $variants)));
             $salePrices = array_values(array_filter(array_map(fn ($v) => (float) ($v['sale_price'] ?? 0), $variants)));
             $grnPrices = array_values(array_filter(array_map(fn ($v) => (float) ($v['grn_price'] ?? 0), $variants)));
@@ -68,14 +67,12 @@ class EditProduct extends EditRecord
             $minPrice = ! empty($prices) ? min($prices) : (float) ($data['price'] ?? 0);
             $minSale = ! empty($salePrices) ? min($salePrices) : $minPrice;
 
-            $oldShow = (int) ($this->record->show_quantity ?? $this->record->quantity ?? 0);
-            $diff = $totalShow - $oldShow;
-            $currentAvailable = (int) ($this->record->quantity ?? 0);
-            $newAvailable = max(0, min($totalShow, $currentAvailable + $diff));
+            $totalSold = (int) $this->record->sold_count;
+            $newAvailable = max(0, $totalInv - $totalSold);
 
             $data['type'] = 'variable';
             $data['inventory_stock'] = $totalInv;
-            $data['show_quantity'] = $totalShow;
+            $data['show_quantity'] = $totalInv;
             $data['quantity'] = $newAvailable;
             $data['price'] = $minPrice;
             $data['sale_price'] = $minSale;
@@ -91,20 +88,17 @@ class EditProduct extends EditRecord
                 $data['images'] = array_values(array_filter($data['images']));
             }
 
-            if (isset($data['show_quantity'])) {
-                $newShow = (int) $data['show_quantity'];
-                $oldShow = (int) ($this->record->show_quantity ?? $this->record->quantity ?? 0);
-                $diff = $newShow - $oldShow;
-
-                $currentAvailable = (int) ($this->record->quantity ?? 0);
-                $data['quantity'] = max(0, min($newShow, $currentAvailable + $diff));
-            }
-
             $code = $data['product_code'] ?? $this->record->product_code;
-            if ($code) {
-                $data['inventory_stock'] = (int) \App\Models\GrnItem::where('product_code', $code)->sum('product_quantity');
-            }
+            $invStock = $code 
+                ? (int) \App\Models\GrnItem::where('product_code', $code)->sum('product_quantity') 
+                : (int) ($data['quantity'] ?? $this->record->quantity ?? 0);
 
+            $sold = (int) $this->record->sold_count;
+            $available = max(0, $invStock - $sold);
+
+            $data['inventory_stock'] = $invStock;
+            $data['show_quantity'] = $invStock;
+            $data['quantity'] = $available;
             $data['type'] = 'simple';
         }
 
@@ -142,15 +136,21 @@ class EditProduct extends EditRecord
                 }
                 $image = is_string($image) && trim($image) !== '' ? trim($image) : null;
 
+                $vInv = (int) ($v['inventory_stock'] ?? 0);
+                $vSold = ! empty($v['id'])
+                    ? (int) \App\Models\OrderItem::where('variant_id', $v['id'])->whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))->sum('quantity')
+                    : 0;
+                $vAvail = max(0, $vInv - $vSold);
+
                 $variantData = [
                     'color_name' => $v['color_name'],
                     'variant_name' => $v['variant_name'] ?? "{$this->record->name} - {$v['color_name']}",
                     'attributes' => ['color' => $v['color_name']],
                     'image' => $image,
                     'condition' => $v['condition'] ?? 'Brand New',
-                    'inventory_stock' => (int) ($v['inventory_stock'] ?? 0),
-                    'show_quantity' => (int) ($v['show_quantity'] ?? 0),
-                    'stock' => (int) ($v['show_quantity'] ?? 0),
+                    'inventory_stock' => $vInv,
+                    'show_quantity' => $vInv,
+                    'stock' => $vAvail,
                     'grn_price' => ! empty($v['grn_price']) ? (float) $v['grn_price'] : null,
                     'price' => (float) ($v['price'] ?? 0),
                     'discount_percentage' => (int) ($v['discount_percentage'] ?? 0),

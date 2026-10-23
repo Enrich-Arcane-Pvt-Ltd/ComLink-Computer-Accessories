@@ -15,6 +15,7 @@ class GrnItem extends Model
         'inventory_product_id',
         'product_variant_id',
         'product_code',
+        'stock_code',
         'product_name',
         'color_name',
         'product_condition',
@@ -43,10 +44,48 @@ class GrnItem extends Model
         return $this->belongsTo(ProductVariant::class, 'product_variant_id');
     }
 
+    public function getStockCodeAttribute(): string
+    {
+        if (! empty($this->attributes['stock_code'])) {
+            return $this->attributes['stock_code'];
+        }
+
+        return static::generateStockCode($this->product_code, $this->color_name, $this->id);
+    }
+
+    public static function generateStockCode(?string $productCode, ?string $colorName = null, ?int $excludeId = null): string
+    {
+        $prefix = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', (string) $productCode));
+        if (empty($prefix)) {
+            $prefix = 'ITEM';
+        }
+
+        $colorPart = ! empty($colorName)
+            ? '-' . strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', (string) $colorName), 0, 3))
+            : '';
+
+        $query = static::where('product_code', $productCode);
+        if ($colorName) {
+            $query->where('color_name', $colorName);
+        }
+        if ($excludeId) {
+            $query->where('id', '<=', $excludeId);
+        }
+
+        $batchIndex = max(1, $query->count());
+        $batchNum = str_pad((string) $batchIndex, 3, '0', STR_PAD_LEFT);
+
+        return "STK-{$prefix}{$colorPart}-{$batchNum}";
+    }
+
     protected static function booted(): void
     {
         static::saving(function (GrnItem $item) {
             $item->total = round((float) $item->price_per_unit * (int) $item->product_quantity, 2);
+
+            if (empty($item->attributes['stock_code']) && \Illuminate\Support\Facades\Schema::hasColumn('grn_items', 'stock_code')) {
+                $item->stock_code = static::generateStockCode($item->product_code, $item->color_name, $item->id);
+            }
         });
 
         static::saved(function (GrnItem $item) {
