@@ -7,6 +7,7 @@ import {
     ChevronRight,
     Filter,
     Grid3X3,
+    Layers,
     LayoutGrid,
     RotateCcw,
     Search,
@@ -574,7 +575,7 @@ export default function ShopIndex({
             {/* 1. Condition Selector (All / Brandnew / Used) - Only if enabled for this category */}
             {activeSchema.hasCondition && (
                 <div className="bg-card rounded-2xl border border-border p-4 shadow-sm">
-                    <label className="text-xs font-bold uppercase tracking-wider text-muted block mb-3">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300 dark:text-slate-200 block mb-3">
                         Condition
                     </label>
                     <div className="grid grid-cols-3 gap-1.5 p-1 bg-bg/80 rounded-xl border border-border/80">
@@ -584,7 +585,7 @@ export default function ShopIndex({
                             className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all ${
                                 condition === "all"
                                     ? "bg-accent text-white dark:text-slate-950 shadow-sm"
-                                    : "text-muted hover:text-fg hover:bg-muted/10"
+                                    : "text-slate-200 dark:text-slate-100 hover:text-cyan-400 hover:bg-cyan-500/10"
                             }`}
                         >
                             All
@@ -595,7 +596,7 @@ export default function ShopIndex({
                             className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all ${
                                 condition === "brandnew"
                                     ? "bg-accent text-white dark:text-slate-950 shadow-sm"
-                                    : "text-muted hover:text-fg hover:bg-muted/10"
+                                    : "text-slate-200 dark:text-slate-100 hover:text-cyan-400 hover:bg-cyan-500/10"
                             }`}
                         >
                             Brandnew
@@ -606,7 +607,7 @@ export default function ShopIndex({
                             className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all ${
                                 condition === "used"
                                     ? "bg-accent text-white dark:text-slate-950 shadow-sm"
-                                    : "text-muted hover:text-fg hover:bg-muted/10"
+                                    : "text-slate-200 dark:text-slate-100 hover:text-cyan-400 hover:bg-cyan-500/10"
                             }`}
                         >
                             Used
@@ -618,7 +619,7 @@ export default function ShopIndex({
             {/* 2. Price Range Bar & Visual Slider */}
             <div className="bg-card rounded-2xl border border-border p-4 shadow-sm space-y-3">
                 <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold uppercase tracking-wider text-muted">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-300 dark:text-slate-200">
                         Price Range
                     </label>
                     {(minPrice || maxPrice) && (
@@ -654,7 +655,7 @@ export default function ShopIndex({
 
             {/* 3. Availability Checkboxes */}
             <div className="bg-card rounded-2xl border border-border p-4 shadow-sm space-y-2.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-muted block">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-300 dark:text-slate-200 block">
                     Availability
                 </label>
                 <div className="space-y-2">
@@ -750,7 +751,7 @@ export default function ShopIndex({
                                             return (
                                                 <label
                                                     key={b.id}
-                                                    className="flex items-center gap-2 cursor-pointer text-xs text-muted hover:text-fg select-none py-0.5 group"
+                                                    className="flex items-center gap-2 cursor-pointer text-xs text-slate-200 dark:text-slate-100 hover:text-cyan-400 select-none py-0.5 group"
                                                 >
                                                     <input
                                                         type="checkbox"
@@ -761,8 +762,8 @@ export default function ShopIndex({
                                                     <span
                                                         className={`truncate transition-colors ${
                                                             checked
-                                                                ? "text-accent font-semibold"
-                                                                : "group-hover:text-fg"
+                                                                ? "text-cyan-400 font-semibold"
+                                                                : "group-hover:text-cyan-400"
                                                         }`}
                                                     >
                                                         {b.name}
@@ -849,7 +850,7 @@ export default function ShopIndex({
                                             return (
                                                 <label
                                                     key={opt}
-                                                    className="flex items-center gap-2 cursor-pointer text-xs text-muted hover:text-fg select-none py-0.5 group"
+                                                    className="flex items-center gap-2 cursor-pointer text-xs text-slate-200 dark:text-slate-100 hover:text-cyan-400 select-none py-0.5 group"
                                                 >
                                                     <input
                                                         type="checkbox"
@@ -862,8 +863,8 @@ export default function ShopIndex({
                                                     <span
                                                         className={`truncate transition-colors ${
                                                             checked
-                                                                ? "text-accent font-semibold"
-                                                                : "group-hover:text-fg"
+                                                                ? "text-cyan-400 font-semibold"
+                                                                : "group-hover:text-cyan-400"
                                                         }`}
                                                     >
                                                         {opt}
@@ -970,7 +971,7 @@ export default function ShopIndex({
                         {currentSubcategories.length > 0 && (
                             <div className="mt-6 pt-5 border-t border-border/60">
                                 <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
-                                    <span className="text-xs font-semibold text-muted uppercase tracking-wider mr-2 shrink-0">
+                                    <span className="text-xs font-bold text-slate-300 dark:text-slate-200 uppercase tracking-wider mr-2 shrink-0">
                                         Subcategories:
                                     </span>
                                     <Link
@@ -978,7 +979,7 @@ export default function ShopIndex({
                                         className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all shrink-0 border ${
                                             !activeSubCategory
                                                 ? "bg-accent text-white dark:text-slate-950 border-accent shadow-sm"
-                                                : "bg-card border-border text-muted hover:text-fg hover:border-accent/40"
+                                                : "bg-card/90 border-border/90 text-slate-200 dark:text-slate-100 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-card"
                                         }`}
                                     >
                                         All {activeCategory?.name}
@@ -992,16 +993,16 @@ export default function ShopIndex({
                                                 className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all shrink-0 border flex items-center gap-1.5 ${
                                                     isSelected
                                                         ? "bg-accent text-white dark:text-slate-950 border-accent shadow-sm"
-                                                        : "bg-card border-border text-muted hover:text-fg hover:border-accent/50"
+                                                        : "bg-card/90 border-border/90 text-slate-200 dark:text-slate-100 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-card"
                                                 }`}
                                             >
                                                 <span>{sub.name}</span>
                                                 {typeof sub.count === "number" && sub.count > 0 && (
                                                     <span
-                                                        className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                                                        className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-medium ${
                                                             isSelected
-                                                                ? "bg-black/20 text-white"
-                                                                : "bg-muted/20 text-muted"
+                                                                ? "bg-black/20 text-white dark:text-slate-950"
+                                                                : "bg-slate-800 text-slate-300 border border-slate-700/60"
                                                         }`}
                                                     >
                                                         {sub.count}
@@ -1026,14 +1027,15 @@ export default function ShopIndex({
                         {/* -------------------------------------------------------------- */}
                         <aside className="hidden lg:block w-72 shrink-0 sticky top-24 space-y-6">
                             {/* Categories Tree Navigation */}
-                            <div className="bg-card rounded-2xl border border-border p-5 shadow-sm">
-                                <div className="flex items-center justify-between pb-3 mb-4 border-b border-border">
-                                    <h3 className="font-display font-bold text-xs tracking-wide uppercase text-fg">
+                            <div className="bg-card rounded-2xl border border-border/80 p-5 shadow-sm">
+                                <div className="flex items-center justify-between pb-3 mb-4 border-b border-border/80">
+                                    <h3 className="font-display font-extrabold text-xs tracking-wider uppercase text-fg flex items-center gap-2">
+                                        <Layers className="w-3.5 h-3.5 text-cyan-500" />
                                         Categories
                                     </h3>
                                     <Link
                                         href="/shop"
-                                        className="text-xs text-accent hover:underline font-semibold"
+                                        className="text-xs text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 hover:underline font-bold transition-colors"
                                     >
                                         View All
                                     </Link>
@@ -1046,26 +1048,30 @@ export default function ShopIndex({
                                         const isExpanded = Boolean(expandedCategories[cat.slug]);
 
                                         return (
-                                            <div key={cat.slug} className="rounded-lg overflow-hidden">
+                                            <div key={cat.slug} className="rounded-xl overflow-hidden">
                                                 <div
-                                                    className={`flex items-center justify-between px-3 py-2 text-xs rounded-lg transition-colors cursor-pointer ${
+                                                    className={`group/cat flex items-center justify-between px-3 py-2 text-xs rounded-xl transition-all cursor-pointer ${
                                                         isCatActive && !activeSubCategory
-                                                            ? "bg-accent/10 text-accent font-semibold border-l-2 border-accent"
-                                                            : "text-muted hover:bg-muted/10 hover:text-fg"
+                                                            ? "bg-cyan-500/15 text-cyan-400 font-bold border-l-2 border-cyan-400 shadow-sm shadow-cyan-500/10"
+                                                            : isCatActive && activeSubCategory
+                                                            ? "bg-cyan-500/10 text-cyan-300 font-semibold border-l-2 border-cyan-400/60"
+                                                            : "text-slate-100 dark:text-slate-100 font-medium hover:bg-muted/30 hover:text-cyan-400"
                                                     }`}
                                                 >
                                                     <Link
                                                         href={`/shop?category=${cat.slug}`}
-                                                        className="flex items-center gap-2 flex-1"
+                                                        className="flex items-center gap-2.5 flex-1 min-w-0"
                                                     >
                                                         {cat.image && (
-                                                            <img
-                                                                src={cat.image}
-                                                                alt={cat.name}
-                                                                className="w-4 h-4 rounded-full object-cover shrink-0"
-                                                            />
+                                                            <div className="w-5 h-5 rounded-full overflow-hidden bg-slate-800/80 border border-slate-700/60 shrink-0 flex items-center justify-center p-0.5 group-hover/cat:border-cyan-500/50 transition-colors">
+                                                                <img
+                                                                    src={cat.image}
+                                                                    alt={cat.name}
+                                                                    className="w-full h-full object-contain"
+                                                                />
+                                                            </div>
                                                         )}
-                                                        <span className="truncate">{cat.name}</span>
+                                                        <span className="truncate tracking-wide">{cat.name}</span>
                                                     </Link>
 
                                                     {hasSubs && (
@@ -1075,11 +1081,12 @@ export default function ShopIndex({
                                                                 e.stopPropagation();
                                                                 toggleAccordion(cat.slug);
                                                             }}
-                                                            className="p-1 text-muted hover:text-fg"
+                                                            className="p-1 rounded-md text-slate-300 dark:text-slate-300 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors cursor-pointer"
+                                                            aria-label={`Toggle ${cat.name} subcategories`}
                                                         >
                                                             <ChevronDown
                                                                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                                                                    isExpanded ? "rotate-180" : ""
+                                                                    isExpanded ? "rotate-180 text-cyan-400" : ""
                                                                 }`}
                                                             />
                                                         </button>
@@ -1088,7 +1095,7 @@ export default function ShopIndex({
 
                                                 {/* Subcategories list */}
                                                 {hasSubs && isExpanded && (
-                                                    <div className="ml-5 pl-2 my-1 border-l border-border/80 space-y-0.5 py-1">
+                                                    <div className="ml-6 pl-2.5 my-1.5 border-l-2 border-slate-700/80 dark:border-slate-800 space-y-1 py-1">
                                                         {cat.subcategories.map((sub) => {
                                                             const isSubActive =
                                                                 activeCategory?.slug === cat.slug &&
@@ -1098,15 +1105,21 @@ export default function ShopIndex({
                                                                 <Link
                                                                     key={sub.slug}
                                                                     href={`/shop?category=${cat.slug}&subcategory=${sub.slug}`}
-                                                                    className={`flex items-center justify-between px-2 py-1 text-[11px] rounded transition-colors ${
+                                                                    className={`group/sub flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md transition-all ${
                                                                         isSubActive
-                                                                            ? "text-accent font-semibold bg-accent/10"
-                                                                            : "text-muted hover:text-fg hover:bg-muted/10"
+                                                                            ? "text-cyan-400 font-bold bg-cyan-500/15 border-l-2 border-cyan-400 pl-3 shadow-xs"
+                                                                            : "text-slate-200 dark:text-slate-200 font-medium hover:text-cyan-400 hover:bg-cyan-500/10 hover:pl-3"
                                                                     }`}
                                                                 >
                                                                     <span className="truncate">{sub.name}</span>
                                                                     {typeof sub.count === "number" && sub.count > 0 && (
-                                                                        <span className="text-[10px] text-muted">
+                                                                        <span
+                                                                            className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded-full transition-colors ${
+                                                                                isSubActive
+                                                                                    ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
+                                                                                    : "bg-slate-800/90 text-slate-300 border border-slate-700/60 group-hover/sub:border-cyan-500/40 group-hover/sub:text-cyan-300"
+                                                                            }`}
+                                                                        >
                                                                             {sub.count}
                                                                         </span>
                                                                     )}
@@ -1328,6 +1341,114 @@ export default function ShopIndex({
                                     >
                                         <X className="w-5 h-5" />
                                     </button>
+                                </div>
+
+                                {/* Categories Navigation in Mobile Drawer */}
+                                <div className="mb-6 pb-6 border-b border-border">
+                                    <div className="flex items-center justify-between pb-3 mb-3 border-b border-border/80">
+                                        <h3 className="font-display font-extrabold text-xs tracking-wider uppercase text-fg flex items-center gap-2">
+                                            <Layers className="w-3.5 h-3.5 text-cyan-500" />
+                                            Categories
+                                        </h3>
+                                        <Link
+                                            href="/shop"
+                                            onClick={() => setMobileFilterOpen(false)}
+                                            className="text-xs text-cyan-600 dark:text-cyan-400 hover:underline font-bold"
+                                        >
+                                            View All
+                                        </Link>
+                                    </div>
+                                    <div className="space-y-1 max-h-64 overflow-y-auto pr-1 scrollbar-thin">
+                                        {categories.map((cat) => {
+                                            const isCatActive = activeCategory?.slug === cat.slug;
+                                            const hasSubs = cat.subcategories && cat.subcategories.length > 0;
+                                            const isExpanded = Boolean(expandedCategories[cat.slug]);
+
+                                            return (
+                                                <div key={`m-${cat.slug}`} className="rounded-xl overflow-hidden">
+                                                    <div
+                                                        className={`group/cat flex items-center justify-between px-3 py-2 text-xs rounded-xl transition-all cursor-pointer ${
+                                                            isCatActive && !activeSubCategory
+                                                                ? "bg-cyan-500/15 text-cyan-400 font-bold border-l-2 border-cyan-400 shadow-sm shadow-cyan-500/10"
+                                                                : isCatActive && activeSubCategory
+                                                                ? "bg-cyan-500/10 text-cyan-300 font-semibold border-l-2 border-cyan-400/60"
+                                                                : "text-slate-100 dark:text-slate-100 font-medium hover:bg-muted/30 hover:text-cyan-400"
+                                                        }`}
+                                                    >
+                                                        <Link
+                                                            href={`/shop?category=${cat.slug}`}
+                                                            onClick={() => setMobileFilterOpen(false)}
+                                                            className="flex items-center gap-2.5 flex-1 min-w-0"
+                                                        >
+                                                            {cat.image && (
+                                                                <div className="w-5 h-5 rounded-full overflow-hidden bg-slate-800/80 border border-slate-700/60 shrink-0 flex items-center justify-center p-0.5">
+                                                                    <img
+                                                                        src={cat.image}
+                                                                        alt={cat.name}
+                                                                        className="w-full h-full object-contain"
+                                                                    />
+                                                                </div>
+                                                            )}
+                                                            <span className="truncate tracking-wide">{cat.name}</span>
+                                                        </Link>
+
+                                                        {hasSubs && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    toggleAccordion(cat.slug);
+                                                                }}
+                                                                className="p-1 rounded-md text-slate-300 dark:text-slate-300 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors"
+                                                            >
+                                                                <ChevronDown
+                                                                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                                                                        isExpanded ? "rotate-180 text-cyan-400" : ""
+                                                                    }`}
+                                                                />
+                                                            </button>
+                                                        )}
+                                                    </div>
+
+                                                    {hasSubs && isExpanded && (
+                                                        <div className="ml-6 pl-2.5 my-1.5 border-l-2 border-slate-700/80 dark:border-slate-800 space-y-1 py-1">
+                                                            {cat.subcategories.map((sub) => {
+                                                                const isSubActive =
+                                                                    activeCategory?.slug === cat.slug &&
+                                                                    activeSubCategory?.slug === sub.slug;
+
+                                                                return (
+                                                                    <Link
+                                                                        key={`m-${sub.slug}`}
+                                                                        href={`/shop?category=${cat.slug}&subcategory=${sub.slug}`}
+                                                                        onClick={() => setMobileFilterOpen(false)}
+                                                                        className={`group/sub flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md transition-all ${
+                                                                            isSubActive
+                                                                                ? "text-cyan-400 font-bold bg-cyan-500/15 border-l-2 border-cyan-400 pl-3"
+                                                                                : "text-slate-200 dark:text-slate-200 font-medium hover:text-cyan-400 hover:bg-cyan-500/10 hover:pl-3"
+                                                                        }`}
+                                                                    >
+                                                                        <span className="truncate">{sub.name}</span>
+                                                                        {typeof sub.count === "number" && sub.count > 0 && (
+                                                                            <span
+                                                                                className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded-full ${
+                                                                                    isSubActive
+                                                                                        ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
+                                                                                        : "bg-slate-800/90 text-slate-300 border border-slate-700/60"
+                                                                                }`}
+                                                                            >
+                                                                                {sub.count}
+                                                                            </span>
+                                                                        )}
+                                                                    </Link>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
 
                                 {renderFilterControls(true)}
