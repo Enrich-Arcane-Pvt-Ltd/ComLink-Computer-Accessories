@@ -2,13 +2,14 @@ import AppLayout from "@/Layouts/AppLayout";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/utils/cn";
 import { formatPrice } from "@/utils/currency";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import {
     AlertTriangle,
     Box,
     Check,
     ChevronRight,
     CircuitBoard,
+    Compass,
     Copy,
     Cpu,
     Database,
@@ -29,14 +30,16 @@ import {
     ShieldAlert,
     ShieldCheck,
     ShoppingCart,
-    Sparkles,
     Trash2,
     Wind,
     X,
     Zap,
 } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { BuildGuideModal } from "@/Components/build-pc/BuildGuideModal";
+import { BuildProgressGuide } from "@/Components/build-pc/BuildProgressGuide";
+import { BuildWalkthroughTour } from "@/Components/build-pc/BuildWalkthroughTour";
 
 /* -------------------------------------------------------------------------- */
 /*  Interfaces                                                                */
@@ -389,11 +392,66 @@ function BuildPcContent({
         "featured" | "price_asc" | "price_desc"
     >("featured");
 
-    // Modals
+    const { auth } = usePage().props as any;
+    const userId = auth?.user?.id;
+
+    // Modals & Interactive Tour
+    const [isGuideModalOpen, setIsGuideModalOpen] = useState<boolean>(false);
+    const [isWalkthroughTourOpen, setIsWalkthroughTourOpen] =
+        useState<boolean>(false);
     const [isTemplatesModalOpen, setIsTemplatesModalOpen] =
         useState<boolean>(false);
     const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
     const [isSubmittingCart, setIsSubmittingCart] = useState<boolean>(false);
+
+    // Auto-launch interactive pointing-arrow tour for new or first-time registered users
+    useEffect(() => {
+        try {
+            const tourStorageKey = userId
+                ? `comlink_tour_seen_user_${userId}`
+                : `comlink_tour_seen_guest`;
+            const hasSeenTour = localStorage.getItem(tourStorageKey);
+            if (hasSeenTour !== "true") {
+                const timer = setTimeout(() => {
+                    setIsWalkthroughTourOpen(true);
+                }, 700);
+                return () => clearTimeout(timer);
+            }
+        } catch {
+            // ignore
+        }
+    }, [userId]);
+
+    const handleCloseTour = () => {
+        setIsWalkthroughTourOpen(false);
+        try {
+            const tourStorageKey = userId
+                ? `comlink_tour_seen_user_${userId}`
+                : `comlink_tour_seen_guest`;
+            localStorage.setItem(tourStorageKey, "true");
+        } catch {
+            // ignore
+        }
+    };
+
+    const handleCloseGuide = () => {
+        setIsGuideModalOpen(false);
+    };
+
+    // Recommended next slot to guide user sequentially through essentials
+    const recommendedNextSlotId = useMemo(() => {
+        const sequence = [
+            "processors",
+            "motherboards",
+            "memory",
+            "graphic-cards",
+            "ssd",
+            "power-supply",
+            "coolers",
+            "pc-cases",
+        ];
+        return sequence.find((id) => !selectedParts[id]) || null;
+    }, [selectedParts]);
 
     // Current slots list based on active tab
     const currentSlots =
@@ -859,7 +917,7 @@ function BuildPcContent({
                         {/* LEFT PANEL: COMPONENTS SELECTOR (col-span-3)               */}
                         {/* ========================================================== */}
                         <div className="lg:col-span-3 space-y-4">
-                            <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
+                            <div id="tour-step-components" className="rounded-2xl border border-border bg-card p-5 shadow-xs">
                                 {/* Header */}
                                 <div className="mb-4">
                                     <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-fg uppercase">
@@ -1042,7 +1100,7 @@ function BuildPcContent({
                                                 </div>
 
                                                 {/* Price badge / Chevron */}
-                                                <div className="shrink-0 flex items-center gap-1">
+                                                <div className="shrink-0 flex items-center gap-1.5">
                                                     {isSelected ? (
                                                         <span className="text-[11px] font-bold text-fg">
                                                             {formatLkr(
@@ -1050,7 +1108,15 @@ function BuildPcContent({
                                                             )}
                                                         </span>
                                                     ) : (
-                                                        <ChevronRight className="h-4 w-4 text-muted group-hover:text-fg transition-transform group-hover:translate-x-0.5" />
+                                                        <>
+                                                            {activeTab === "essentials" &&
+                                                                slot.id === recommendedNextSlotId && (
+                                                                    <span className="px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider rounded-md bg-cyan-500/15 border border-cyan-500/40 text-cyan-600 dark:text-cyan-400 animate-pulse">
+                                                                        NEXT
+                                                                    </span>
+                                                                )}
+                                                            <ChevronRight className="h-4 w-4 text-muted group-hover:text-fg transition-transform group-hover:translate-x-0.5" />
+                                                        </>
                                                     )}
                                                 </div>
                                             </button>
@@ -1065,7 +1131,7 @@ function BuildPcContent({
                         {/* ========================================================== */}
                         <div className="lg:col-span-6 space-y-6">
                             {/* Header row with Title, Auto-advance, and Templates Button */}
-                            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-xs">
+                            <div id="tour-step-metrics" className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-xs">
                                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-border/50">
                                     <div>
                                         <div className="flex items-center gap-2">
@@ -1081,17 +1147,26 @@ function BuildPcContent({
                                         </p>
                                     </div>
 
-                                    {/* Pre-Built Templates Button */}
-                                    {/* <button
-                                        type="button"
-                                        onClick={() =>
-                                            setIsTemplatesModalOpen(true)
-                                        }
-                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-100 dark:hover:bg-white dark:text-slate-950 px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
-                                    >
-                                        <Sparkles className="h-4 w-4 text-amber-400" />
-                                        <span>Pre Built PC Templates</span>
-                                    </button> */}
+                                    {/* Action Buttons: Walkthrough Tour & Guide Modal */}
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsWalkthroughTourOpen(true)}
+                                            className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-600 dark:text-cyan-400 border border-cyan-500/40 px-3.5 py-2 text-xs font-bold uppercase tracking-wider transition-all shadow-xs cursor-pointer active:scale-95"
+                                            title="Start interactive step-by-step tour with pointer arrows"
+                                        >
+                                            <Compass className="h-4 w-4 text-cyan-500 animate-pulse" />
+                                            <span>Interactive Tour</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsGuideModalOpen(true)}
+                                            className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-border/80 bg-card hover:bg-muted/10 text-muted hover:text-fg px-3.5 py-2 text-xs font-bold uppercase tracking-wider transition-all shadow-xs cursor-pointer active:scale-95"
+                                        >
+                                            <Lightbulb className="h-4 w-4 text-amber-500" />
+                                            <span>How to Build Guide</span>
+                                        </button>
+                                    </div>
                                 </div>
 
                                 {/* Auto-advance switch */}
@@ -1238,6 +1313,32 @@ function BuildPcContent({
                                 </div>
                             </div>
 
+                            {/* ---------------- INTERACTIVE STEP-BY-STEP PROGRESS GUIDE ---------------- */}
+                            <BuildProgressGuide
+                                selectedParts={selectedParts}
+                                activeSlotId={activeSlotId}
+                                onSelectSlot={(slotId) => {
+                                    if (
+                                        ACCESSORIES_SLOTS.some(
+                                            (s) => s.id === slotId,
+                                        )
+                                    ) {
+                                        setActiveTab("accessories");
+                                    } else {
+                                        setActiveTab("essentials");
+                                    }
+                                    setActiveSlotId(slotId);
+                                }}
+                                onOpenFullGuide={() =>
+                                    setIsGuideModalOpen(true)
+                                }
+                                onOpenTour={() =>
+                                    setIsWalkthroughTourOpen(true)
+                                }
+                                estimatedPowerDraw={estimatedPowerDraw}
+                                recommendedPsuWattage={recommendedPsuWattage}
+                            />
+
                             {/* ---------------- 3D BUILD PREVIEW (appears after first selection) ---------------- */}
                             {selectedCount > 0 && (
                                 <BuildPreview3D
@@ -1247,7 +1348,7 @@ function BuildPcContent({
                             )}
 
                             {/* ---------------- ACTIVE SLOT PRODUCT PICKER ---------------- */}
-                            <div className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-xs">
+                            <div id="tour-step-products" className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-xs">
                                 {/* Slot Title & Search / Brand Filters */}
                                 <div className="space-y-4 mb-6">
                                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-3 border-b border-border/50">
@@ -1600,7 +1701,7 @@ function BuildPcContent({
                         {/* RIGHT PANEL: BUILD SUMMARY (col-span-3)                    */}
                         {/* ========================================================== */}
                         <div className="lg:col-span-3 space-y-4">
-                            <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
+                            <div id="tour-step-summary" className="rounded-2xl border border-border bg-card p-5 shadow-xs lg:sticky lg:top-24">
                                 {/* Header */}
                                 <div className="mb-4">
                                     <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-fg uppercase">
@@ -2010,6 +2111,28 @@ function BuildPcContent({
                     </div>
                 </div>
             )}
+
+            {/* ========================================================== */}
+            {/* INTERACTIVE SPOTLIGHT WALKTHROUGH TOUR (WITH ARROWS)       */}
+            {/* ========================================================== */}
+            <BuildWalkthroughTour
+                isOpen={isWalkthroughTourOpen}
+                onClose={handleCloseTour}
+                onComplete={handleCloseTour}
+            />
+
+            {/* ========================================================== */}
+            {/* MODAL: INTERACTIVE BEGINNER'S GUIDE TOUR                    */}
+            {/* ========================================================== */}
+            <BuildGuideModal
+                isOpen={isGuideModalOpen}
+                onClose={handleCloseGuide}
+                onStartBuilding={handleCloseGuide}
+                onStartTour={() => {
+                    setIsGuideModalOpen(false);
+                    setIsWalkthroughTourOpen(true);
+                }}
+            />
         </>
     );
 }

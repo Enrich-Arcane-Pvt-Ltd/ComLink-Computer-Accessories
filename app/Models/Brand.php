@@ -26,6 +26,23 @@ class Brand extends Model
         'is_visible' => 'boolean',
     ];
 
+    protected $appends = [
+        'logo_url',
+    ];
+
+    public function getLogoUrlAttribute(): ?string
+    {
+        if (!$this->logo) {
+            return null;
+        }
+
+        if (str_starts_with($this->logo, 'http://') || str_starts_with($this->logo, 'https://')) {
+            return $this->logo;
+        }
+
+        return '/storage/' . ltrim($this->logo, '/');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

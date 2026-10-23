@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import {
     useEffect,
+    useMemo,
     useRef,
     useState,
     type ElementType,
@@ -509,19 +510,20 @@ function WhoWeAre() {
                     </Reveal>
                 </div>
 
-                <Reveal className="mb-8 text-center">
+                {/* <Reveal className="mb-8 text-center">
                     <h3 className="text-2xl font-bold text-fg md:text-3xl">
                         Meet the team
                     </h3>
-                </Reveal>
+                </Reveal> */}
 
-                <div className="mx-auto grid max-w-6xl grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                {/* <div className="mx-auto grid max-w-6xl grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-4">
                     {team.map((member, i) => (
                         <Reveal key={member.name} delay={i * 100} className="w-full max-w-[290px]">
                             <TeamCard member={member} />
                         </Reveal>
                     ))}
-                </div>
+                </div> */}
+
             </div>
         </section>
     );
@@ -637,13 +639,34 @@ function WhatWeDo() {
 /*  5. Brands: scrolling logo marquee                                         */
 /* ========================================================================== */
 
-function BrandLogo({ name, logo }: { name: string; logo: string }) {
+interface BrandItem {
+    id?: number;
+    name: string;
+    slug?: string;
+    logo?: string | null;
+    url?: string | null;
+}
+
+function BrandLogo({ name, logo }: { name: string; logo?: string | null }) {
     const [failed, setFailed] = useState(false);
 
-    // If a logo file is missing, show the brand name instead of a broken image
-    if (failed) {
+    // Normalize logo path: support relative storage paths or absolute URLs
+    const imageSrc = useMemo(() => {
+        if (!logo) return null;
+        if (
+            logo.startsWith("http://") ||
+            logo.startsWith("https://") ||
+            logo.startsWith("/")
+        ) {
+            return logo;
+        }
+        return `/storage/${logo}`;
+    }, [logo]);
+
+    // If a logo file is missing or fails to load, display the brand title neatly
+    if (failed || !imageSrc) {
         return (
-            <span className="whitespace-nowrap font-display text-lg font-semibold tracking-[0.18em] text-muted hover:text-fg transition-colors">
+            <span className="whitespace-nowrap font-display text-sm md:text-base font-bold tracking-[0.15em] text-muted hover:text-fg transition-colors px-3 py-1.5 rounded-lg bg-card border border-border/60 shadow-xs">
                 {name}
             </span>
         );
@@ -651,21 +674,30 @@ function BrandLogo({ name, logo }: { name: string; logo: string }) {
 
     return (
         <img
-            src={logo}
+            src={imageSrc}
             alt={name}
             loading="lazy"
             draggable={false}
             onError={() => setFailed(true)}
-            className="h-9 w-auto max-w-[9rem] object-contain md:h-10"
+            className="h-10 w-auto max-w-[9.5rem] object-contain drop-shadow-xs dark:brightness-105 transition-transform hover:scale-105"
         />
     );
 }
 
-function BrandMarquee() {
+function BrandMarquee({ brands: propBrands = [] }: { brands?: BrandItem[] }) {
+    // If admin has brands in database, use them; otherwise fallback to default brands list
+    const activeBrands =
+        propBrands && propBrands.length > 0 ? propBrands : brands;
+
+    if (!activeBrands || activeBrands.length === 0) {
+        return null;
+    }
+
     // Repeat the list so one half of the track is always wider than the screen
+    const repeatCount = Math.max(1, Math.ceil(12 / activeBrands.length));
     const row = Array.from(
-        { length: Math.max(1, Math.ceil(10 / brands.length)) },
-        () => brands,
+        { length: repeatCount },
+        () => activeBrands,
     ).flat();
     const track = [...row, ...row]; // two identical halves = seamless loop
 
@@ -676,7 +708,7 @@ function BrandMarquee() {
                     0%   { transform: translateX(0); }
                     100% { transform: translateX(-50%); }
                 }
-                .about-marquee-track { animation: about-marquee 40s linear infinite; }
+                .about-marquee-track { animation: about-marquee 35s linear infinite; }
                 .about-marquee:hover .about-marquee-track { animation-play-state: paused; }
                 @media (prefers-reduced-motion: reduce) {
                     .about-marquee-track { animation: none; }
@@ -702,7 +734,7 @@ function BrandMarquee() {
                                 <div
                                     key={`${brand.name}-${i}`}
                                     aria-hidden={i >= row.length}
-                                    className="flex h-14 items-center px-6 md:px-10"
+                                    className="flex h-16 items-center px-6 md:px-10"
                                 >
                                     <BrandLogo
                                         name={brand.name}
@@ -940,7 +972,12 @@ function ConnectCTA() {
 /*  Page                                                                      */
 /* ========================================================================== */
 
-export default function About() {
+export default function About({
+    brands = [],
+}: {
+    title?: string;
+    brands?: BrandItem[];
+}) {
     return (
         <AppLayout>
             <Head title="About Us | ComLink" />
@@ -948,7 +985,7 @@ export default function About() {
             <WhoWeAre />
             <MissionVision />
             <WhatWeDo />
-            <BrandMarquee />
+            <BrandMarquee brands={brands} />
             <WhyChooseUs />
             <Journey />
             <ConnectCTA />

@@ -119,12 +119,20 @@ class Category extends Model
     public function getImageUrlAttribute(): ?string
     {
         if ($this->image) {
-            // If already full URL or starts with slash
+            // If already full URL
             if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
                 return $this->image;
             }
 
+            // If starts with slash
             if (str_starts_with($this->image, '/')) {
+                $clean = ltrim($this->image, '/');
+                if (file_exists(public_path($clean))) {
+                    return url($this->image);
+                }
+                if (file_exists(public_path(strtolower($clean)))) {
+                    return url('/' . strtolower($clean));
+                }
                 return url($this->image);
             }
 
@@ -133,15 +141,38 @@ class Category extends Model
                 return url($this->image);
             }
 
+            // Check case-insensitive / lowercase version (crucial for Linux production environments)
+            $lowerImage = strtolower($this->image);
+            if (file_exists(public_path($lowerImage))) {
+                return url($lowerImage);
+            }
+
+            // Check if file exists in public/images/categories/{slug}.{ext}
+            if (!empty($this->slug)) {
+                foreach (['png', 'webp', 'jpg', 'jpeg', 'svg'] as $ext) {
+                    $slugImg = "images/categories/{$this->slug}.{$ext}";
+                    if (file_exists(public_path($slugImg))) {
+                        return url($slugImg);
+                    }
+                }
+            }
+
+            // Check if file exists in storage disk
+            if (Storage::disk('public')->exists($this->image)) {
+                return Storage::url($this->image);
+            }
+
             // Fallback to storage URL (e.g. categories/filename.jpg)
             return Storage::url($this->image);
         }
 
         // Check if there is an image with matching slug in images/categories
-        foreach (['webp', 'png', 'jpg', 'jpeg'] as $ext) {
-            $slugImg = "images/categories/{$this->slug}.{$ext}";
-            if (file_exists(public_path($slugImg))) {
-                return url($slugImg);
+        if (!empty($this->slug)) {
+            foreach (['png', 'webp', 'jpg', 'jpeg', 'svg'] as $ext) {
+                $slugImg = "images/categories/{$this->slug}.{$ext}";
+                if (file_exists(public_path($slugImg))) {
+                    return url($slugImg);
+                }
             }
         }
 

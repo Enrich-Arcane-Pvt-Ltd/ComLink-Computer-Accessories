@@ -201,7 +201,6 @@ export function HeroCarousel({
             const isSettled = Math.abs(diff) < 0.01;
 
             if (!isSettled) {
-                // Smooth cinematic glide with responsive frame tracking
                 currentFrameFloat.current += diff * 0.11;
             } else {
                 currentFrameFloat.current = targetFrame.current;
@@ -291,27 +290,11 @@ export function HeroCarousel({
     const hudPhase = useMemo(() => {
         if (scrollPercentDisplay < 15) {
             return {
-                code: "STATUS: STABLE",
-                title: "COM-LINK CUSTOM RIG",
                 desc: "Fully assembled high-performance system",
             };
-        } else if (scrollPercentDisplay < 50) {
+        } else{
             return {
-                code: "PHASE 01 // DECOUPLING",
-                title: "CHASSIS & AIRFLOW MATRIX",
-                desc: "Tempered panoramic glass & high-static pressure fans",
-            };
-        } else if (scrollPercentDisplay < 80) {
-            return {
-                code: "PHASE 02 // THERMAL CORE",
-                title: "LIQUID COOLING & GPU ARRAY",
-                desc: "Precision copper block & triple-fan cooling dissipation",
-            };
-        } else {
-            return {
-                code: "PHASE 03 // FULL EXPLODED VIEW",
-                title: "MODULAR COMPONENT ARCHITECTURE",
-                desc: "100% precision engineered hardware layer by layer",
+                desc: "Fully assembled high-performance system for your technical needs.",
             };
         }
     }, [scrollPercentDisplay]);
@@ -329,6 +312,21 @@ export function HeroCarousel({
         scrollPercentDisplay > 18
             ? Math.min(1, (scrollPercentDisplay - 18) / 20)
             : 0;
+
+    // Second text section: fades in as the first one fades out, stays until the last frame.
+    // The first block reaches 0 opacity at ~35%, so the second starts at 34% to avoid an empty gap.
+    const SECOND_FADE_START = 34;
+    const SECOND_FADE_END = 46;
+
+    const secondContentOpacity = Math.max(
+        0,
+        Math.min(
+            1,
+            (scrollPercentDisplay - SECOND_FADE_START) /
+                (SECOND_FADE_END - SECOND_FADE_START),
+        ),
+    );
+    const secondContentTransformY = (1 - secondContentOpacity) * 40;
 
     return (
         <section
@@ -506,6 +504,82 @@ export function HeroCarousel({
                                 </Link>
                             </Button>
                         </motion.div>
+                    </div>
+
+                    {/* ---------- Second section: appears while the frames explode ---------- */}
+                    <div
+                        className="absolute inset-x-4 md:inset-x-8 top-1/2 -translate-y-1/2"
+                        style={{
+                            pointerEvents:
+                                secondContentOpacity < 0.2 ? "none" : "auto",
+                        }}
+                    >
+                        <div
+                            style={{
+                                opacity: secondContentOpacity,
+                                transform: `translateY(${secondContentTransformY}px)`,
+                                transition:
+                                    "opacity 0.15s ease-out, transform 0.15s ease-out",
+                            }}
+                            className="max-w-3xl"
+                        >
+                            {/* Label: changes with the scroll phase */}
+                            {/* <span className="inline-flex items-center gap-2 mb-5 text-xs font-mono tracking-[0.25em] uppercase text-cyan-300">
+                                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                                {hudPhase.code}
+                            </span> */}
+
+                            {/* Headline */}
+                            <h2 className="font-display font-black tracking-tight leading-[0.95] text-4xl sm:text-6xl lg:text-7xl xl:text-8xl uppercase mb-6">
+                                <span className="block text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
+                                    BUILT FOR
+                                </span>
+                                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-white drop-shadow-[0_0_40px_rgba(34,211,238,0.45)]">
+                                    PERFORMANCE
+                                </span>
+                            </h2>
+
+                            {/* Text: also changes with the scroll phase */}
+                            <p className="text-base sm:text-lg md:text-xl text-slate-300/90 mb-8 max-w-xl leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                                
+                                {hudPhase.desc}
+                            </p>
+
+                            {/* Buttons */}
+                            <div className="flex flex-wrap items-center gap-4 pt-2">
+                                <Button
+                                    size="lg"
+                                    className="group relative overflow-hidden bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-8 h-13 shadow-[0_0_30px_rgba(6,182,212,0.4)] hover:shadow-[0_0_45px_rgba(6,182,212,0.7)] transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer rounded-none"
+                                    asChild
+                                >
+                                    <Link
+                                        href="/shop?category=pc-components"
+                                        className="inline-flex items-center gap-3"
+                                    >
+                                        <span className="tracking-wider uppercase text-sm font-black">
+                                            Explore Components
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                                    </Link>
+                                </Button>
+
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    className="group relative border border-white/30 hover:border-cyan-400/80 bg-white/5 hover:bg-cyan-500/10 backdrop-blur-md text-white hover:text-cyan-300 font-semibold px-8 h-13 shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer rounded-none"
+                                    asChild
+                                >
+                                    <Link
+                                        href="/shop"
+                                        className="inline-flex items-center gap-3"
+                                    >
+                                        <span className="tracking-wider uppercase text-sm font-bold">
+                                            Shop All
+                                        </span>
+                                    </Link>
+                                </Button>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Exploded Architecture HUD Hologram (Appears dynamically as user scrolls down) */}

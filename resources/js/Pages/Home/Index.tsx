@@ -1,4 +1,5 @@
 import { BestSellersCarousel } from "@/Components/home/BestSellersCarousel";
+import { CategoriesCarousel } from "@/Components/home/CategoriesCarousel";
 import { HeroCarousel } from "@/Components/home/HeroCarousel";
 import { InstagramGrid } from "@/Components/home/InstagramGrid";
 import { NewProductsCarousel } from "@/Components/home/NewProductsCarousel";
@@ -10,7 +11,7 @@ import { ProductCard } from "@/Components/product/ProductCard";
 import { Button } from "@/Components/ui/Button";
 import AppLayout from "@/Layouts/AppLayout";
 import { PageProps } from "@/types";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, RefreshCw, ShieldCheck, Truck } from "lucide-react";
 import { useState } from "react";
@@ -126,89 +127,8 @@ export default function Home({
                 {/* Hero Carousel */}
                 <HeroCarousel slides={slides} />
 
-                {/* Categories Showcase */}
-                <section className="py-20 bg-bg relative overflow-hidden">
-                    {/* Subtle ambient cyan background flare */}
-                    <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-cyan-500/5 blur-[120px] rounded-full" />
-
-                    <div className="container relative z-10 mx-auto px-4 md:px-6">
-                        <div className="text-center mb-14">
-                            <span className="inline-block text-xs font-bold tracking-widest text-cyan-600 dark:text-cyan-400 uppercase mb-2">
-                                Premium Hardware & Accessories
-                            </span>
-                            <h2 className="font-display text-3xl md:text-5xl font-bold text-fg tracking-tight">
-                                SHOP BY CATEGORY
-                            </h2>
-                            <p className="text-muted max-w-2xl mx-auto mt-3 text-sm md:text-base">
-                                Explore our wide range of laptops, PC components, and accessories
-                                built for gaming, work, and everyday performance.
-                            </p>
-                        </div>
-
-                        {/* Responsive Categories Grid: 2 cols on mobile, 4 on tablet, 7 on desktop */}
-                        <div
-                            className="
-                                grid grid-cols-2 gap-6
-                                sm:grid-cols-3 sm:gap-6
-                                md:grid-cols-4 md:gap-8
-                                lg:grid-cols-7 lg:gap-6
-                                max-w-7xl mx-auto
-                            "
-                        >
-                            {categories.length > 0 ? (
-                                categories.map((category) => {
-                                    const catSlug = category.slug || category.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
-                                    return (
-                                        <Link
-                                            key={category.slug || category.name}
-                                            href={`/shop?category=${catSlug}`}
-                                            className="group flex flex-col items-center text-center cursor-pointer"
-                                        >
-                                            {/* Circular Image Container */}
-                                            <div
-                                                className="
-                                                    relative rounded-full overflow-hidden
-                                                    w-[110px] h-[110px]
-                                                    sm:w-[120px] sm:h-[120px]
-                                                    lg:w-[136px] lg:h-[136px]
-                                                    bg-card border border-border/80
-                                                    transition-all duration-300 ease-out
-                                                    group-hover:border-cyan-500 group-hover:ring-4 group-hover:ring-cyan-500/20 group-hover:shadow-lg group-hover:shadow-cyan-500/10
-                                                    flex items-center justify-center p-3.5 mb-3
-                                                "
-                                            >
-                                                {/* Soft ambient inner glow on hover */}
-                                                <div className="pointer-events-none absolute inset-0 bg-radial from-cyan-500/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                                                <img
-                                                    src={category.image}
-                                                    alt={category.name}
-                                                    loading="lazy"
-                                                    className="h-full w-full object-contain drop-shadow-sm transition-transform duration-500 ease-out group-hover:scale-110"
-                                                />
-                                            </div>
-
-                                            {/* Label & Details */}
-                                            <div className="flex flex-col items-center">
-                                                <h3 className="font-display font-bold uppercase tracking-wider text-fg text-xs sm:text-sm group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors leading-tight">
-                                                    {category.name}
-                                                </h3>
-                                                <span className="block h-0.5 w-0 bg-cyan-500 transition-all duration-300 group-hover:w-6 rounded-full mt-1" />
-                                                <p className="text-xs text-muted mt-1">
-                                                    {category.count} Products
-                                                </p>
-                                            </div>
-                                        </Link>
-                                    );
-                                })
-                            ) : (
-                                <p className="text-muted col-span-full text-center py-4">
-                                    No categories available at the moment.
-                                </p>
-                            )}
-                        </div>
-                    </div>
-                </section>
+                {/* Categories Showcase Slider */}
+                <CategoriesCarousel categories={categories} />
 
                 {/* New Products Carousel */}
                 <NewProductsCarousel products={newestProducts} />

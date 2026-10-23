@@ -13,6 +13,8 @@ class BrandTable
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
                     ->label('Brand Image')
+                    ->disk('public')
+                    ->visibility('public')
                     ->circular()
                     ->defaultImageUrl(url('/images/placeholder.png')),
 
