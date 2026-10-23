@@ -43,7 +43,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Peripherals',
                 'slug' => 'peripherals',
-                'image' => 'images/categories/Peripherals.png',
+                'image' => 'images/categories/peripherals.png',
                 'description' => 'Gaming and office peripherals, keyboards, mice, headsets, and creator accessories.',
                 'sort_order' => 3,
                 'subcategories' => [
