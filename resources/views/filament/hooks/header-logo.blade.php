@@ -1,6 +1,3 @@
 <div class="flex items-center gap-2 lg:hidden mr-4">
-    <img src="{{ asset('images/logo.png') }}" alt="Wiki-Store" class="h-8 w-auto">
-    <span class="font-heading font-bold text-lg">
-        <span class="text-secondary-600">Wiki</span><span class="text-primary-500">Store</span>
-    </span>
+    <img src="{{ asset('images/Comlink_logo.png') }}" alt="ComLink" class="h-10 w-auto object-contain">
 </div>
