@@ -50,22 +50,18 @@ export default function Footer() {
                 {/* Top row: brand | payments | newsletter */}
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 lg:items-start pb-14">
                     {/* Brand */}
-                    <div className="max-w-md space-y-5">
-                        <Link href="/" className="inline-block">
+                    <div className="max-w-md space-y-2">
+                        <Link href="/" className="inline-block -mt-6 -mb-4 md:-mt-10 md:-mb-8">
                             <img
-                                src={
-                                    theme === "dark"
-                                        ? "/images/logo-white.png"
-                                        : "/images/logo.png"
-                                }
+                                src="/images/Comlink_logo.png"
                                 alt="ComLink Logo"
-                                className="h-8 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                                className="h-24 md:h-36 w-auto object-contain"
                             />
                         </Link>
                         <p className="text-primary-fg/80 text-sm leading-relaxed">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Suspendisse tristique ullamcorper ex, vitae
-                            consequat nisl ultrices a.
+                            Your one-stop shop for all computer and IT
+                            accessories in Sri Lanka. Quality products,
+                            great prices, and reliable service.
                         </p>
                         <div className="flex items-center gap-3">
                             {socials.map(({ label, icon: Icon, href }) => (
