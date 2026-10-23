@@ -201,7 +201,6 @@ export function HeroCarousel({
             const isSettled = Math.abs(diff) < 0.01;
 
             if (!isSettled) {
-                // Ultra-gentle, slow cinematic glide so every frame is crystal clear
                 currentFrameFloat.current += diff * 0.11;
             } else {
                 currentFrameFloat.current = targetFrame.current;
