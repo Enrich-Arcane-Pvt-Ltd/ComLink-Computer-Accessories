@@ -40,7 +40,7 @@ class StockManagementService
             ->get();
 
         // 2. Fetch all paid orders for this product in chronological order
-        $orderItems = OrderItem::with('order')
+        $orderItems = OrderItem::with(['order', 'variant'])
             ->where(function ($q) use ($product, $productCode, $productName) {
                 if ($product && $product->id) {
                     $q->where('product_id', $product->id);
@@ -68,7 +68,7 @@ class StockManagementService
         $totalAchievedRevenue = 0.0;
         $totalExpectedRevenue = 0.0;
         $endedBatchesCount = 0;
-        $activeBatchCode = null;
+        $activeBatchCodes = [];
 
         foreach ($batches as $batch) {
             $totalStock += $batch['quantity'];
@@ -81,8 +81,11 @@ class StockManagementService
             if ($batch['status'] === 'ENDED') {
                 $endedBatchesCount++;
             }
-            if ($batch['status'] === 'ACTIVE' && ! $activeBatchCode) {
-                $activeBatchCode = $batch['stock_code'];
+            if ($batch['status'] === 'ACTIVE') {
+                $label = ! empty($batch['color_name'])
+                    ? "{$batch['stock_code']} ({$batch['color_name']})"
+                    : $batch['stock_code'];
+                $activeBatchCodes[] = $label;
             }
         }
 
@@ -110,7 +113,8 @@ class StockManagementService
                 'total_profit_achieved' => $totalProfitAchieved,
                 'total_batches_count' => count($batches),
                 'ended_batches_count' => $endedBatchesCount,
-                'active_batch_code' => $activeBatchCode ?? 'None (Out of Stock / No Batches)',
+                'active_batch_code' => ! empty($activeBatchCodes) ? implode(', ', $activeBatchCodes) : 'None (Out of Stock / No Batches)',
+                'active_batch_codes' => $activeBatchCodes,
             ],
             'batches' => $batches,
         ];
@@ -157,7 +161,7 @@ class StockManagementService
                 'latest_price' => $batchLatestPrice,
                 'sold_quantity' => 0,
                 'available_quantity' => (int) $record->product_quantity,
-                'revenue_price' => round($batchLatestPrice * (int) $record->product_quantity, 2),
+                'revenue_price' => round((float) $record->price_per_unit * (int) $record->product_quantity, 2),
                 'achieved_from_sale' => 0.0,
                 'status' => 'QUEUED',
                 'sales_breakdown' => [], // Keyed by price: [price => [qty, revenue, date_range]]
@@ -167,12 +171,13 @@ class StockManagementService
         // Clone order items queue: each has [qty_remaining, unit_price, date, order_no, color]
         $orderQueue = [];
         foreach ($orderItems as $item) {
+            $color = $item->color ?? $item->variant?->color_name;
             $orderQueue[] = [
                 'remaining' => (int) $item->quantity,
                 'unit_price' => (float) $item->unit_price,
                 'created_at' => $item->created_at,
                 'order_no' => $item->order?->order_number ?? ("#".$item->order_id),
-                'color' => $item->color,
+                'color' => $color,
                 'variant_id' => $item->variant_id,
             ];
         }
@@ -236,20 +241,23 @@ class StockManagementService
         }
         unset($batch, $order);
 
-        // Finalize status for each batch
-        $activeAssigned = false;
+        // Finalize status for each batch: track active FIFO batch separately for each color variant
+        $activeAssignedPerColor = [];
         foreach ($batches as &$batch) {
             $batch['available_quantity'] = max(0, $batch['quantity'] - $batch['sold_quantity']);
             $batch['profit_achieved'] = round($batch['achieved_from_sale'] - ($batch['sold_quantity'] * $batch['grn_unit_price']), 2);
             $batch['sales_breakdown'] = array_values($batch['sales_breakdown']);
 
+            // Color variant grouping key (or __default__ for non-variant products)
+            $colorKey = ! empty($batch['color_name']) ? strtolower(trim((string) $batch['color_name'])) : '__default__';
+
             if ($batch['available_quantity'] <= 0) {
                 $batch['status'] = 'ENDED'; // Stock ended / completely sold out
-            } elseif (! $activeAssigned) {
-                $batch['status'] = 'ACTIVE'; // First available batch in FIFO = Current Selling Stock!
-                $activeAssigned = true;
+            } elseif (! isset($activeAssignedPerColor[$colorKey])) {
+                $batch['status'] = 'ACTIVE'; // First available batch for THIS color variant in FIFO = Current Selling Stock!
+                $activeAssignedPerColor[$colorKey] = $batch['stock_code'];
             } else {
-                $batch['status'] = 'QUEUED'; // In queue / upcoming stock
+                $batch['status'] = 'QUEUED'; // In queue / upcoming stock for this color variant
             }
         }
         unset($batch);

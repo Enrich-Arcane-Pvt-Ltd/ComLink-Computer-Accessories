@@ -396,20 +396,28 @@
 
         {{-- Revenue Price for Stock --}}
         <div class="sr-kpi-card">
-            <span class="sr-kpi-label">Total Revenue Value</span>
+            <span class="sr-kpi-label">Total Revenue Price</span>
             <div class="sr-kpi-val" style="color: #22d3ee; font-size: 16px;" title="Rs. {{ number_format((float) ($summary['total_expected_revenue'] ?? 0), 2) }}">
                 Rs. {{ number_format((float) ($summary['total_expected_revenue'] ?? 0), 2) }}
             </div>
-            <span class="sr-kpi-sub">At Current Latest Price</span>
+            <span class="sr-kpi-sub">Batch Qty × GRN Unit Cost</span>
         </div>
 
         {{-- Active Selling Stock --}}
         <div class="sr-kpi-card">
             <span class="sr-kpi-label">Current Selling Stock</span>
-            <div style="margin: 4px 0 2px 0;">
-                <span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; font-family: ui-monospace, monospace; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35);">
-                    {{ $summary['active_batch_code'] ?? 'None' }}
-                </span>
+            <div style="margin: 4px 0 2px 0; display: flex; flex-wrap: wrap; gap: 4px;">
+                @if(!empty($summary['active_batch_codes']))
+                    @foreach($summary['active_batch_codes'] as $actCode)
+                        <span style="display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; font-family: ui-monospace, monospace; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35);">
+                            {{ $actCode }}
+                        </span>
+                    @endforeach
+                @else
+                    <span style="display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 600; color: #94a3b8;">
+                        None
+                    </span>
+                @endif
             </div>
             <span class="sr-kpi-sub">FIFO Active Priority</span>
         </div>
@@ -455,8 +463,8 @@
                             <th style="text-align: center;">Sold Qty</th>
                             <th style="text-align: center;">Available</th>
                             <th style="text-align: center;">Stock Status</th>
-                            <th style="text-align: right;">Revenue Price</th>
-                            <th style="text-align: right;">Achieved From Sale</th>
+                            <th style="text-align: right;" title="Batch Qty × GRN Unit Cost">Revenue Price</th>
+                            <th style="text-align: right;" title="Total Revenue Collected from Sold Units">Achieved From Sale</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -540,7 +548,7 @@
                                     @endif
                                 </td>
 
-                                {{-- Revenue Price for the Stock (Expected) --}}
+                                {{-- Revenue Price for the Stock (Batch Qty x GRN Cost) --}}
                                 <td style="text-align: right; font-family: ui-monospace, monospace; color: #cbd5e1;">
                                     Rs. {{ number_format((float) $batch['revenue_price'], 2) }}
                                 </td>
@@ -596,7 +604,7 @@
         </svg>
         <div>
             <strong>FIFO (First-In, First-Out) Stock Principle:</strong>
-            Customer orders automatically consume stock starting from the oldest received batch (Batch 1). Once an older batch is completely depleted, it transitions to <strong style="color: #f87171;">Ended (Sold Out)</strong>, and subsequent sales automatically draw from the next queue batch as the <strong style="color: #34d399;">Current Selling Stock</strong>. When admin updates the Latest Price in Products, any subsequent sales are tracked under that new selling price while retaining original GRN unit cost.
+            Customer orders automatically consume stock starting from the oldest received batch. For products with color variants, each color variant maintains its own independent FIFO queue so that every active color is ready for purchase as <strong style="color: #34d399;">Current Selling Stock</strong>. Once an older batch of a color is depleted, it transitions to <strong style="color: #f87171;">Ended (Sold Out)</strong> and subsequent sales draw from the next queue batch for that color. When admin updates the Latest Price in Products, any subsequent sales are tracked under that new selling price while preserving the original GRN unit cost.
         </div>
     </div>
 </div>

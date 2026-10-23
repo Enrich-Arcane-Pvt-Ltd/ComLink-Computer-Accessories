@@ -18,13 +18,24 @@
         @endif
     </div>
 
-    @if($activeBatch && !str_starts_with($activeBatch, 'None'))
+    @php
+        $activeCodes = $report['summary']['active_batch_codes'] ?? [];
+        $activeCount = count($activeCodes);
+    @endphp
+
+    @if($activeCount > 0)
         <div style="display: flex; align-items: center; gap: 4px; font-size: 11px; margin-top: 2px;">
             <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: #10b981; box-shadow: 0 0 4px #10b981;"></span>
             <span style="font-size: 10px; font-weight: 600; color: #64748b;">Active:</span>
-            <span style="font-family: monospace; font-size: 11px; font-weight: 700; color: #10b981;">
-                {{ $activeBatch }}
-            </span>
+            @if($activeCount === 1)
+                <span style="font-family: monospace; font-size: 11px; font-weight: 700; color: #10b981;">
+                    {{ $activeCodes[0] }}
+                </span>
+            @else
+                <span style="font-size: 11px; font-weight: 700; color: #10b981;" title="{{ implode(', ', $activeCodes) }}">
+                    {{ $activeCount }} Colors Active
+                </span>
+            @endif
         </div>
     @else
         <div style="font-size: 10px; color: #94a3b8; font-style: italic; margin-top: 2px;">
