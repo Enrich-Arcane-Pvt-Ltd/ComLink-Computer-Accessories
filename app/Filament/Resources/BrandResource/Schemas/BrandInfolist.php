@@ -15,6 +15,8 @@ class BrandInfolist
                     ->schema([
                         Infolists\Components\ImageEntry::make('logo')
                             ->label('Logo')
+                            ->disk('public')
+                            ->visibility('public')
                             ->circular()
                             // View එකෙත් සුදු පාට Background එක ඕන නම්
                             ->extraImgAttributes(['style' => 'background-color: white; padding: 2px;']),

@@ -34,6 +34,8 @@ class BrandForm
                     Forms\Components\FileUpload::make('logo')
                         ->label('Brand Image')
                         ->image()
+                        ->disk('public')
+                        ->visibility('public')
                         ->directory('brands')
                         ->imageEditor()
                         ->columnSpanFull()
