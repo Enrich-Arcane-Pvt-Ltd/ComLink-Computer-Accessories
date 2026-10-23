@@ -14,6 +14,7 @@ use App\Http\Controllers\Public\NewsletterController;
 use App\Http\Controllers\Public\OrderController;
 use App\Http\Controllers\Public\ShopController;
 use App\Http\Controllers\Public\TestimonialController;
+use App\Http\Controllers\Public\WishlistController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -31,6 +32,7 @@ Route::get('/category/{category}', [ShopController::class, 'category'])->name('c
 Route::get('/category/{category}/{subcategory}', [ShopController::class, 'subcategory'])->name('category.subcategory');
 Route::get('/product/{product}', [ShopController::class, 'showProduct'])->name('product.show');
 Route::get('/build-my-pc', [BuildPcController::class, 'index'])->name('build-pc');
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
 
 // Authenticated Customer Routes (Requires login)
 Route::middleware(['auth'])->group(function () {

@@ -308,14 +308,19 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
             name: normalized.name,
             price: latestPrice,
             originalPrice: normalized.originalPrice,
+            latestPrice: latestPrice,
+            discountPercent: normalized.discountPercent,
+            image: normalized.image,
             images: [normalized.image],
             category: normalized.category,
+            subCategory: normalized.subCategory,
             rating: normalized.rating ?? 5,
             reviews: normalized.reviewCount ?? 0,
             colors: [],
             sizes: [],
             description: "",
             brand: normalized.brand || "ComLink",
+            inStock: normalized.inStock,
         });
     };
 

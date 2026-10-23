@@ -3,8 +3,12 @@ export interface Product {
     name: string;
     price: number;
     originalPrice?: number;
+    latestPrice?: number;
+    discountPercent?: number;
     images: string[];
+    image?: string;
     category: string;
+    subCategory?: string;
     rating: number;
     reviews: number;
     isNew?: boolean;
@@ -13,6 +17,7 @@ export interface Product {
     sizes: string[];
     description: string;
     brand: string;
+    inStock?: boolean;
 }
 
 export const products: Product[] = [

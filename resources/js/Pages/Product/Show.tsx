@@ -365,14 +365,19 @@ function ProductViewContent({
             name: product.name,
             price: product.latestPrice,
             originalPrice: product.originalPrice,
+            latestPrice: product.latestPrice,
+            discountPercent: product.discountPercent,
+            image: imagesList[0],
             images: imagesList,
             category: product.category,
+            subCategory: product.subCategory,
             rating: product.rating,
             reviews: product.reviews,
             colors: [],
             sizes: [],
             description: product.description || "",
             brand: product.brand || "ComLink",
+            inStock: product.inStock,
         });
     };
 
