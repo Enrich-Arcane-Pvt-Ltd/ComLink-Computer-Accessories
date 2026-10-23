@@ -201,8 +201,8 @@ export function HeroCarousel({
             const isSettled = Math.abs(diff) < 0.01;
 
             if (!isSettled) {
-                // Ultra-gentle, slow cinematic glide so every frame is crystal clear
-                currentFrameFloat.current += diff * 0.065;
+                // Smooth cinematic glide with responsive frame tracking
+                currentFrameFloat.current += diff * 0.11;
             } else {
                 currentFrameFloat.current = targetFrame.current;
             }
@@ -333,7 +333,7 @@ export function HeroCarousel({
     return (
         <section
             ref={containerRef}
-            className="relative w-full h-[650vh] sm:h-[750vh] bg-[#070b12] text-white"
+            className="relative w-full h-[460vh] sm:h-[500vh] bg-[#070b12] text-white"
         >
             {/* Sticky 100vh Viewport: Pinned on screen while scrubbing */}
             <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between select-none">
