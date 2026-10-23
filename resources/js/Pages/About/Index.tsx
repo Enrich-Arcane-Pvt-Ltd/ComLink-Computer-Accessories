@@ -509,19 +509,20 @@ function WhoWeAre() {
                     </Reveal>
                 </div>
 
-                <Reveal className="mb-8 text-center">
+                {/* <Reveal className="mb-8 text-center">
                     <h3 className="text-2xl font-bold text-fg md:text-3xl">
                         Meet the team
                     </h3>
-                </Reveal>
+                </Reveal> */}
 
-                <div className="mx-auto grid max-w-6xl grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                {/* <div className="mx-auto grid max-w-6xl grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-4">
                     {team.map((member, i) => (
                         <Reveal key={member.name} delay={i * 100} className="w-full max-w-[290px]">
                             <TeamCard member={member} />
                         </Reveal>
                     ))}
-                </div>
+                </div> */}
+
             </div>
         </section>
     );
