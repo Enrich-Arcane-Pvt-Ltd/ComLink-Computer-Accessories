@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout/payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.payment-intent');
     Route::post('/checkout/process-order', [CheckoutController::class, 'processOrder'])->name('checkout.process-order');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}/receipt', [OrderController::class, 'downloadReceipt'])->name('orders.receipt');
 });
 
 // Blogs
