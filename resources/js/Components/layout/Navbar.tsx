@@ -727,7 +727,7 @@ export default function Navbar() {
                                                                             : "text-fg",
                                                                     )}
                                                                 >
-                                                                    {child.image && (
+                                                                    {/* {child.image && (
                                                                         <img
                                                                             src={
                                                                                 child.image
@@ -737,7 +737,7 @@ export default function Navbar() {
                                                                             }
                                                                             className="w-5 h-5 rounded-sm object-cover flex-shrink-0 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"
                                                                         />
-                                                                    )}
+                                                                    )} */}
                                                                     <span className="truncate">
                                                                         {child.name}
                                                                     </span>
