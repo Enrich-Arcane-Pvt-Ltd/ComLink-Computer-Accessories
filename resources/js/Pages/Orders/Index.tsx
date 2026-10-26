@@ -16,6 +16,7 @@ import {
     ShoppingBag,
     ArrowRight,
     Tag,
+    Download,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -471,21 +472,21 @@ function OrdersContent({ orders }: OrdersPageProps) {
                                 </div>
 
                                 {/* Modal Footer */}
-                                <div className="p-4 bg-muted/10 border-t border-border flex items-center justify-between gap-3">
-                                    <span className="text-xs text-muted">
-                                        Payment Method: {selectedOrder.paymentMethod}
-                                    </span>
-                                    <button
-                                        type="button"
+                                <div className="p-4 bg-muted/10 border-t border-border flex items-center justify-end">
+                                    <a
+                                        href={`/orders/${selectedOrder.id}/receipt`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         onClick={() => {
                                             toast.success(
                                                 `Downloading receipt for Order #${selectedOrder.orderNumber}...`,
                                             );
                                         }}
-                                        className="px-4 py-2 rounded-xl bg-accent text-accent-fg font-bold text-xs uppercase tracking-wider shadow-sm hover:opacity-90 transition-opacity cursor-pointer"
+                                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-accent-fg font-bold text-xs uppercase tracking-wider shadow-sm hover:opacity-90 transition-opacity cursor-pointer"
                                     >
-                                        Download Receipt
-                                    </button>
+                                        <Download className="w-4 h-4" />
+                                        <span>Download Receipt</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>

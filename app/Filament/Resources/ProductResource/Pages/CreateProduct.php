@@ -18,7 +18,6 @@ class CreateProduct extends CreateRecord
             $data['color_variants'] = $variants;
 
             $totalInv = array_sum(array_map(fn ($v) => (int) ($v['inventory_stock'] ?? 0), $variants));
-            $totalShow = array_sum(array_map(fn ($v) => (int) ($v['show_quantity'] ?? 0), $variants));
             $prices = array_values(array_filter(array_map(fn ($v) => (float) ($v['price'] ?? 0), $variants)));
             $salePrices = array_values(array_filter(array_map(fn ($v) => (float) ($v['sale_price'] ?? 0), $variants)));
             $grnPrices = array_values(array_filter(array_map(fn ($v) => (float) ($v['grn_price'] ?? 0), $variants)));
@@ -36,9 +35,9 @@ class CreateProduct extends CreateRecord
 
             $data['type'] = 'variable';
             $data['inventory_stock'] = $totalInv;
-            $data['show_quantity'] = $totalShow;
-            $data['quantity'] = $totalShow;
-            $data['stock_added_count'] = $totalShow;
+            $data['show_quantity'] = $totalInv;
+            $data['quantity'] = $totalInv;
+            $data['stock_added_count'] = $totalInv;
             $data['stock_added_date'] = now();
             $data['price'] = $minPrice;
             $data['sale_price'] = $minSale;
@@ -52,10 +51,11 @@ class CreateProduct extends CreateRecord
                 $data['images'] = array_values(array_filter($data['images']));
             }
 
-            $showQty = (int) ($data['show_quantity'] ?? $data['quantity'] ?? 0);
-            $data['show_quantity'] = $showQty;
-            $data['quantity'] = $showQty;
-            $data['stock_added_count'] = $showQty;
+            $fullStock = (int) ($data['quantity'] ?? $data['inventory_stock'] ?? 0);
+            $data['inventory_stock'] = $fullStock;
+            $data['show_quantity'] = $fullStock;
+            $data['quantity'] = $fullStock;
+            $data['stock_added_count'] = $fullStock;
             $data['stock_added_date'] = now();
             $data['type'] = 'simple';
         }
@@ -95,8 +95,8 @@ class CreateProduct extends CreateRecord
                     'image' => $image,
                     'condition' => $v['condition'] ?? 'Brand New',
                     'inventory_stock' => (int) ($v['inventory_stock'] ?? 0),
-                    'show_quantity' => (int) ($v['show_quantity'] ?? 0),
-                    'stock' => (int) ($v['show_quantity'] ?? 0),
+                    'show_quantity' => (int) ($v['inventory_stock'] ?? 0),
+                    'stock' => (int) ($v['inventory_stock'] ?? 0),
                     'grn_price' => ! empty($v['grn_price']) ? (float) $v['grn_price'] : null,
                     'price' => (float) ($v['price'] ?? 0),
                     'discount_percentage' => (int) ($v['discount_percentage'] ?? 0),

@@ -203,25 +203,20 @@ class ProductForm
                                 $set('condition', $normalizedCondition);
                             }
 
-                            // 3. Inventory Stock
+                            // 3. Inventory Stock & Quantity (Full amount moved to storefront)
                             $inventoryStock = (int) GrnItem::where('product_code', $state)->sum('product_quantity');
                             $set('inventory_stock', $inventoryStock);
+                            $set('quantity', $inventoryStock);
+                            $set('show_quantity', $inventoryStock);
 
-                            // 4. Show Quantity (default to inventory stock or adjust)
-                            $currentShow = (int) $get('show_quantity');
-                            if ($currentShow <= 0 || $currentShow > $inventoryStock) {
-                                $set('show_quantity', $inventoryStock);
-                                $set('quantity', $inventoryStock);
-                            }
-
-                            // 5. GRN Price
+                            // 4. GRN Price
                             $grnPrice = GrnItem::where('product_code', $state)->latest('id')->value('price_per_unit');
                             if ($grnPrice !== null) {
                                 $set('grn_price', round((float) $grnPrice, 2));
                                 $set('cost_price', round((float) $grnPrice, 2));
                             }
 
-                            // 6. Supplier (auto-populate if not selected)
+                            // 5. Supplier (auto-populate if not selected)
                             if (! $get('supplier_id')) {
                                 $supId = InventoryProduct::where('product_code', $state)->value('supplier_id')
                                     ?? GrnItem::where('product_code', $state)->latest('id')->first()?->grn?->supplier_id;
@@ -230,7 +225,7 @@ class ProductForm
                                 }
                             }
 
-                            // 7. Auto-populate Color Variants if in variant mode
+                            // 6. Auto-populate Color Variants if in variant mode
                             if ((bool) $get('has_color_variants')) {
                                 self::autoPopulateColorVariants($set, $state, $name);
                             }
@@ -272,58 +267,28 @@ class ProductForm
                         ->hidden(fn (Get $get) => (bool) $get('has_color_variants'))
                         ->columnSpan(1),
 
-                    Forms\Components\TextInput::make('inventory_stock')
-                        ->label('Inventory Stock')
+                    Forms\Components\TextInput::make('quantity')
+                        ->label('Product Stock / Quantity')
                         ->numeric()
                         ->default(0)
                         ->readOnly()
                         ->dehydrated()
                         ->hidden(fn (Get $get) => (bool) $get('has_color_variants'))
-                        ->helperText('Loaded from Inventory physical stock')
+                        ->helperText('Full quantity automatically loaded from GRN Inventory.')
                         ->afterStateHydrated(function (Forms\Components\TextInput $component, ?Product $record) {
                             if ($record && $record->product_code) {
                                 $stock = (int) GrnItem::where('product_code', $record->product_code)->sum('product_quantity');
-                                $component->state($stock);
+                                $sold = (int) $record->sold_count;
+                                $component->state(max(0, $stock - $sold));
                             }
                         })
                         ->columnSpan(1),
 
-                    Forms\Components\TextInput::make('show_quantity')
-                        ->label('Show Quantity')
-                        ->numeric()
+                    Forms\Components\Hidden::make('inventory_stock')
                         ->default(0)
-                        ->required(fn (Get $get) => ! (bool) $get('has_color_variants'))
-                        ->hidden(fn (Get $get) => (bool) $get('has_color_variants'))
-                        ->helperText(function (Get $get) {
-                            $invStock = (int) ($get('inventory_stock') ?? 0);
-                            $showQty = (int) ($get('show_quantity') ?? 0);
-                            $balance = max(0, $invStock - $showQty);
+                        ->dehydrated(),
 
-                            return "Balance Inventory in warehouse: {$balance} units (Total: {$invStock} units)";
-                        })
-                        ->rules([
-                            fn (Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
-                                $invStock = (int) ($get('inventory_stock') ?? 0);
-                                if ($invStock > 0 && (int) $value > $invStock) {
-                                    $fail("Show Quantity ({$value}) cannot exceed Total Inventory Stock ({$invStock} units).");
-                                }
-                            },
-                        ])
-                        ->afterStateHydrated(function (Forms\Components\TextInput $component, ?Product $record) {
-                            if ($record) {
-                                $val = $record->show_quantity ?? $record->quantity ?? 0;
-                                $component->state($val);
-                            }
-                        })
-                        ->live(onBlur: true)
-                        ->afterStateUpdated(function (Set $set, $state, ?Product $record) {
-                            if (! $record) {
-                                $set('quantity', (int) $state);
-                            }
-                        })
-                        ->columnSpan(1),
-
-                    Forms\Components\Hidden::make('quantity')
+                    Forms\Components\Hidden::make('show_quantity')
                         ->default(0)
                         ->dehydrated(),
 
@@ -349,7 +314,7 @@ class ProductForm
                         ->reorderable()
                         ->cloneable()
                         ->collapsible()
-                        ->itemLabel(fn (array $state): ?string => (! empty($state['color_name']) ? "Color: {$state['color_name']} — ".($state['variant_name'] ?? '').' [Stock: '.($state['show_quantity'] ?? 0).' units]' : 'New Color Option'))
+                        ->itemLabel(fn (array $state): ?string => (! empty($state['color_name']) ? "Color: {$state['color_name']} — ".($state['variant_name'] ?? '').' [Stock: '.($state['inventory_stock'] ?? 0).' units]' : 'New Color Option'))
                         ->schema([
                             Forms\Components\Grid::make(3)
                                 ->schema([
@@ -382,7 +347,7 @@ class ProductForm
                                         ->required(),
                                 ]),
 
-                            Forms\Components\Grid::make(4)
+                            Forms\Components\Grid::make(3)
                                 ->schema([
                                     Forms\Components\FileUpload::make('image')
                                         ->label('Color Image')
@@ -395,32 +360,11 @@ class ProductForm
                                         ->columnSpan(1),
 
                                     Forms\Components\TextInput::make('inventory_stock')
-                                        ->label('Inventory Stock')
+                                        ->label('Stock Quantity')
                                         ->numeric()
                                         ->default(0)
                                         ->required()
-                                        ->helperText('Physical warehouse count for this color')
-                                        ->columnSpan(1),
-
-                                    Forms\Components\TextInput::make('show_quantity')
-                                        ->label('Show Quantity')
-                                        ->numeric()
-                                        ->required()
-                                        ->helperText(function (Get $get) {
-                                            $invStock = (int) ($get('inventory_stock') ?? 0);
-                                            $showQty = (int) ($get('show_quantity') ?? 0);
-                                            $balance = max(0, $invStock - $showQty);
-
-                                            return "Warehouse balance: {$balance} units (Total: {$invStock} units)";
-                                        })
-                                        ->rules([
-                                            fn (Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
-                                                $invStock = (int) ($get('inventory_stock') ?? 0);
-                                                if ($invStock > 0 && (int) $value > $invStock) {
-                                                    $fail("Show Quantity ({$value}) cannot exceed Total Inventory Stock ({$invStock} units).");
-                                                }
-                                            },
-                                        ])
+                                        ->helperText('Full physical warehouse count for this color')
                                         ->columnSpan(1),
 
                                     Forms\Components\TextInput::make('grn_price')

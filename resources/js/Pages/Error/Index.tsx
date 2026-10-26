@@ -81,9 +81,9 @@ export default function ErrorPage({
                                     <img
                                         width={120}
                                         height={80}
-                                        src="/images/logo.png"
-                                        alt="Enrich Arcane"
-                                        className=""
+                                        src="/images/Comlink_logo.png"
+                                        alt="ComLink"
+                                        className="object-contain"
                                     />
                                 </a>
                             </Link>

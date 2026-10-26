@@ -28,6 +28,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Shop & Category Pages
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/api/search-products', [ShopController::class, 'searchApi'])->name('api.search-products');
 Route::get('/category/{category}', [ShopController::class, 'category'])->name('category.show');
 Route::get('/category/{category}/{subcategory}', [ShopController::class, 'subcategory'])->name('category.subcategory');
 Route::get('/product/{product}', [ShopController::class, 'showProduct'])->name('product.show');
@@ -41,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout/payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.payment-intent');
     Route::post('/checkout/process-order', [CheckoutController::class, 'processOrder'])->name('checkout.process-order');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}/receipt', [OrderController::class, 'downloadReceipt'])->name('orders.receipt');
 });
 
 // Blogs

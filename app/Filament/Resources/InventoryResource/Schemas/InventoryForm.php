@@ -1,69 +1,70 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\InventoryResource\Schemas;
 
+use App\Models\InventoryProduct;
 use Filament\Forms;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 
 class InventoryForm
 {
     public static function schema(): array
     {
         return [
-            Forms\Components\Section::make('Inventory Product Details')
-                ->description('Received item details linked to GRN invoice.')
+            Forms\Components\Section::make('Inventory Product Information')
+                ->description('Supplier product code, name, and warehouse catalog info.')
                 ->schema([
                     Forms\Components\TextInput::make('product_code')
                         ->label('Product Code')
-                        ->readOnly()
-                        ->dehydrated(),
+                        ->required()
+                        ->disabled(fn (string $operation) => $operation === 'edit')
+                        ->dehydrated()
+                        ->unique(InventoryProduct::class, 'product_code', ignoreRecord: true),
 
                     Forms\Components\TextInput::make('product_name')
                         ->label('Product Name')
-                        ->readOnly()
-                        ->dehydrated(),
+                        ->required()
+                        ->maxLength(255),
 
-                    Forms\Components\Select::make('product_condition')
-                        ->label('Product Condition')
-                        ->options([
-                            'Brandnew' => 'Brandnew',
-                            'Used' => 'Used',
-                        ])
-                        ->native(false)
+                    Forms\Components\Select::make('supplier_id')
+                        ->label('Supplier')
+                        ->relationship('supplier', 'name')
+                        ->searchable()
+                        ->preload()
                         ->required(),
 
-                    Forms\Components\TextInput::make('price_per_unit')
-                        ->label('Price Per Unit (Rs.)')
-                        ->numeric()
-                        ->prefix('Rs. ')
-                        ->required()
-                        ->reactive()
-                        ->afterStateUpdated(function (Get $get, Set $set) {
-                            $price = (float) ($get('price_per_unit') ?: 0);
-                            $qty = (int) ($get('product_quantity') ?: 1);
-                            $set('total', round($price * $qty, 2));
-                        }),
-
-                    Forms\Components\TextInput::make('product_quantity')
-                        ->label('Product Quantity')
-                        ->numeric()
-                        ->minValue(1)
-                        ->required()
-                        ->reactive()
-                        ->afterStateUpdated(function (Get $get, Set $set) {
-                            $price = (float) ($get('price_per_unit') ?: 0);
-                            $qty = (int) ($get('product_quantity') ?: 1);
-                            $set('total', round($price * $qty, 2));
-                        }),
-
-                    Forms\Components\TextInput::make('total')
-                        ->label('Total (Rs.)')
-                        ->prefix('Rs. ')
-                        ->numeric()
-                        ->readOnly()
-                        ->dehydrated(),
+                    Forms\Components\FileUpload::make('product_image')
+                        ->label('Product Image')
+                        ->image()
+                        ->disk('public')
+                        ->directory('inventory-products')
+                        ->visibility('public')
+                        ->imageEditor(),
                 ])->columns(2),
+
+            Forms\Components\Section::make('Current Warehouse Stock & Valuation')
+                ->schema([
+                    Forms\Components\Placeholder::make('total_stock')
+                        ->label('Total Received Stock (GRN)')
+                        ->content(fn (?InventoryProduct $record): string => ($record?->total_stock ?? 0) . ' units'),
+
+                    Forms\Components\Placeholder::make('sold_count')
+                        ->label('Total Quantity Sold')
+                        ->content(fn (?InventoryProduct $record): string => ($record?->sold_count ?? 0) . ' units'),
+
+                    Forms\Components\Placeholder::make('available_stock')
+                        ->label('Available Warehouse Stock')
+                        ->content(fn (?InventoryProduct $record): string => ($record?->available_stock ?? 0) . ' units'),
+
+                    Forms\Components\Placeholder::make('latest_selling_price')
+                        ->label('Storefront Latest Price')
+                        ->content(fn (?InventoryProduct $record): string => 'Rs. ' . number_format((float) ($record?->latest_price ?? 0), 2)),
+
+                    Forms\Components\Placeholder::make('latest_grn_price')
+                        ->label('Latest GRN Unit Cost')
+                        ->content(fn (?InventoryProduct $record): string => 'Rs. ' . number_format((float) ($record?->latest_grn_price ?? 0), 2)),
+                ])->columns(3),
         ];
     }
 }

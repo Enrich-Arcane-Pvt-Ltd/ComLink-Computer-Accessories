@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -67,7 +68,7 @@ class OrderController extends Controller
                         'productId' => (string) ($item->product_id ?? $item->id),
                         'name' => $item->product_name,
                         'image' => $item->product_image ?: '/images/placeholder.png',
-                        'category' => $item->category_name ?: 'Hardware',
+                        'category' => $item->category_name ?: ($item->product?->categories->firstWhere('parent_id', null)?->name ?: 'Accessories'),
                         'quantity' => (int) $item->quantity,
                         'unitPrice' => (float) $item->unit_price,
                         'totalPrice' => (float) $item->total_price,
@@ -79,5 +80,47 @@ class OrderController extends Controller
         return Inertia::render('Orders/Index', [
             'orders' => $orders,
         ]);
+    }
+
+    /**
+     * Download official PDF receipt for an order.
+     */
+    public function downloadReceipt(Request $request, $order)
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            abort(401, 'Please log in to download receipt.');
+        }
+
+        $orderModel = Order::with('items')
+            ->where(function ($q) use ($order) {
+                $q->where('id', $order)
+                    ->orWhere('order_number', $order);
+            })
+            ->firstOrFail();
+
+        $isAdmin = in_array($user->role ?? '', ['admin', 'super-admin']);
+        $isOwner = $orderModel->user_id === $user->id || strtolower((string) $orderModel->customer_email) === strtolower((string) $user->email);
+
+        if (! $isAdmin && ! $isOwner) {
+            abort(403, 'Unauthorized access to this order receipt.');
+        }
+
+        $pdf = Pdf::loadView('receipts.order-receipt', [
+            'order' => $orderModel,
+            'currency' => 'Rs. ',
+        ])
+            ->setPaper('a4', 'portrait')
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('dpi', 150);
+
+        $filename = "Receipt-{$orderModel->order_number}.pdf";
+
+        if ($request->query('preview')) {
+            return $pdf->stream($filename);
+        }
+
+        return $pdf->download($filename);
     }
 }

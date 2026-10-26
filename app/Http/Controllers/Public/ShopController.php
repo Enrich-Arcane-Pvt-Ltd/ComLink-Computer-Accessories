@@ -39,6 +39,78 @@ class ShopController extends Controller
     }
 
     /**
+     * Live search API for SearchModal
+     */
+    public function searchApi(Request $request)
+    {
+        $query = trim((string) ($request->query('q') ?: $request->query('search', '')));
+        $categorySlug = trim((string) $request->query('category', ''));
+        $limit = min(20, max(1, (int) $request->query('limit', 8)));
+
+        $productsQuery = Product::where('is_visible', true)
+            ->with(['brand', 'categories.parent']);
+
+        if (! empty($query)) {
+            $productsQuery->where(function ($q) use ($query) {
+                $q->where('name', 'like', "%{$query}%")
+                    ->orWhere('product_code', 'like', "%{$query}%")
+                    ->orWhere('sku', 'like', "%{$query}%")
+                    ->orWhere('description', 'like', "%{$query}%")
+                    ->orWhereHas('brand', fn ($b) => $b->where('name', 'like', "%{$query}%"))
+                    ->orWhereHas('categories', fn ($c) => $c->where('name', 'like', "%{$query}%"));
+            });
+        }
+
+        if (! empty($categorySlug) && $categorySlug !== 'all') {
+            $productsQuery->whereHas('categories', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug)
+                    ->orWhereHas('parent', fn ($p) => $p->where('slug', $categorySlug));
+            });
+        }
+
+        $totalCount = (clone $productsQuery)->count();
+
+        $results = $productsQuery->latest('id')
+            ->take($limit)
+            ->get()
+            ->map(function ($product) {
+                $images = is_array($product->images) ? $product->images : [];
+                $first = $images[0] ?? null;
+                $imageUrl = $first
+                    ? (str_starts_with($first, 'http') || str_starts_with($first, '/') ? $first : asset('storage/' . $first))
+                    : asset('images/placeholder.png');
+
+                $mainCat = $product->categories->firstWhere('parent_id', null);
+                $subCat = $product->categories->firstWhere('parent_id', '!=', null);
+
+                $price = (float) ($product->sale_price ?: $product->price ?: 0);
+                $originalPrice = (float) ($product->sale_price && $product->sale_price < $product->price ? $product->price : 0);
+                $qty = (int) ($product->quantity ?? $product->inventory_stock ?? 0);
+
+                return [
+                    'id' => (string) $product->id,
+                    'name' => $product->name,
+                    'slug' => $product->slug ?: (string) $product->id,
+                    'product_code' => $product->product_code,
+                    'price' => $price,
+                    'originalPrice' => $originalPrice > 0 ? $originalPrice : null,
+                    'category' => $mainCat?->name ?? ($product->categories->first()?->name ?? 'Accessories'),
+                    'subCategory' => $subCat?->name ?? null,
+                    'brand' => $product->brand?->name ?? null,
+                    'condition' => $product->condition ?? 'Brand New',
+                    'images' => [$imageUrl],
+                    'inStock' => $qty > 0,
+                    'quantity' => $qty,
+                ];
+            });
+
+        return response()->json([
+            'products' => $results,
+            'total' => $totalCount,
+        ]);
+    }
+
+    /**
      * Display single product view page
      */
     public function showProduct(Request $request, string $product): Response
@@ -162,12 +234,14 @@ class ShopController extends Controller
         }
 
         // 3. Filter by search query
-        $search = $request->query('q');
+        $search = trim((string) ($request->query('q') ?: $request->query('search', '')));
         if (! empty($search)) {
             $dbProductsQuery->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('product_code', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%")
                     ->orWhere('description', 'like', "%{$search}%")
-                    ->orWhere('sku', 'like', "%{$search}%");
+                    ->orWhereHas('brand', fn ($b) => $b->where('name', 'like', "%{$search}%"));
             });
         }
 
