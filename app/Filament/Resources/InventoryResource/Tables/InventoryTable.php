@@ -54,12 +54,6 @@ class InventoryTable
                     ->view('filament.tables.columns.inventory-stock-counts')
                     ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 160px;']),
 
-
-                Tables\Columns\ViewColumn::make('batch_status')
-                    ->label('Stock Batches')
-                    ->view('filament.tables.columns.inventory-batch-status')
-                    ->extraCellAttributes(['style' => 'vertical-align: top; padding-top: 10px; padding-bottom: 10px; min-width: 160px;']),
-
                 Tables\Columns\TextColumn::make('last_grn_date')
                     ->label('Last Stock Added')
                     ->getStateUsing(fn (InventoryProduct $record): string => $record->grnItems()->latest('id')->first()?->created_at?->format('M d, Y h:i A') ?? 'N/A')
