@@ -39,6 +39,10 @@ class StockManagementService
             ->orderBy('id', 'asc')
             ->get();
 
+        if ($batchRecords->isNotEmpty() && empty($latestGrnPrice)) {
+            $latestGrnPrice = (float) $batchRecords->last()->price_per_unit;
+        }
+
         // 2. Fetch all paid orders for this product in chronological order
         $orderItems = OrderItem::with(['order', 'variant'])
             ->where(function ($q) use ($product, $productCode, $productName) {
@@ -65,6 +69,8 @@ class StockManagementService
         $totalSold = 0;
         $totalAvailable = 0;
         $totalGrnCost = 0.0;
+        $totalSoldCost = 0.0;
+        $totalUnsoldCost = 0.0;
         $totalAchievedRevenue = 0.0;
         $totalExpectedRevenue = 0.0;
         $endedBatchesCount = 0;
@@ -75,6 +81,8 @@ class StockManagementService
             $totalSold += $batch['sold_quantity'];
             $totalAvailable += $batch['available_quantity'];
             $totalGrnCost += $batch['total_grn_cost'];
+            $totalSoldCost += $batch['realized_cogs'];
+            $totalUnsoldCost += round($batch['available_quantity'] * $batch['grn_unit_price'], 2);
             $totalAchievedRevenue += $batch['achieved_from_sale'];
             $totalExpectedRevenue += $batch['revenue_price'];
 
@@ -89,7 +97,10 @@ class StockManagementService
             }
         }
 
-        $totalProfitAchieved = round($totalAchievedRevenue - ($totalSold > 0 ? ($totalGrnCost / max(1, $totalStock) * $totalSold) : 0), 2);
+        $totalRealizedProfit = round($totalAchievedRevenue - $totalSoldCost, 2);
+        $realizedMarginPct = $totalAchievedRevenue > 0
+            ? round(($totalRealizedProfit / $totalAchievedRevenue) * 100, 1)
+            : 0.0;
 
         return [
             'product' => [
@@ -101,6 +112,7 @@ class StockManagementService
                 'condition' => $product?->condition ?? 'Brand New',
                 'latest_price' => $latestPrice,
                 'latest_grn_price' => $latestGrnPrice,
+                'retail_unit_margin' => round($latestPrice - $latestGrnPrice, 2),
                 'has_variants' => $product ? $product->hasColorVariants() : false,
             ],
             'summary' => [
@@ -108,9 +120,13 @@ class StockManagementService
                 'total_sold' => $totalSold,
                 'total_available' => $totalAvailable,
                 'total_grn_cost' => round($totalGrnCost, 2),
+                'total_sold_cost' => round($totalSoldCost, 2),
+                'total_unsold_cost' => round($totalUnsoldCost, 2),
                 'total_achieved_revenue' => round($totalAchievedRevenue, 2),
                 'total_expected_revenue' => round($totalExpectedRevenue, 2),
-                'total_profit_achieved' => $totalProfitAchieved,
+                'total_profit_achieved' => $totalRealizedProfit,
+                'total_realized_profit' => $totalRealizedProfit,
+                'realized_margin_pct' => $realizedMarginPct,
                 'total_batches_count' => count($batches),
                 'ended_batches_count' => $endedBatchesCount,
                 'active_batch_code' => ! empty($activeBatchCodes) ? implode(', ', $activeBatchCodes) : 'None (Out of Stock / No Batches)',
@@ -163,6 +179,10 @@ class StockManagementService
                 'available_quantity' => (int) $record->product_quantity,
                 'revenue_price' => round((float) $record->price_per_unit * (int) $record->product_quantity, 2),
                 'achieved_from_sale' => 0.0,
+                'realized_cogs' => 0.0,
+                'realized_profit' => 0.0,
+                'profit_achieved' => 0.0,
+                'realized_margin_pct' => 0.0,
                 'status' => 'QUEUED',
                 'sales_breakdown' => [], // Keyed by price: [price => [qty, revenue, date_range]]
             ];
@@ -245,7 +265,12 @@ class StockManagementService
         $activeAssignedPerColor = [];
         foreach ($batches as &$batch) {
             $batch['available_quantity'] = max(0, $batch['quantity'] - $batch['sold_quantity']);
-            $batch['profit_achieved'] = round($batch['achieved_from_sale'] - ($batch['sold_quantity'] * $batch['grn_unit_price']), 2);
+            $batch['realized_cogs'] = round($batch['sold_quantity'] * $batch['grn_unit_price'], 2);
+            $batch['realized_profit'] = round($batch['achieved_from_sale'] - $batch['realized_cogs'], 2);
+            $batch['profit_achieved'] = $batch['realized_profit'];
+            $batch['realized_margin_pct'] = $batch['achieved_from_sale'] > 0
+                ? round(($batch['realized_profit'] / $batch['achieved_from_sale']) * 100, 1)
+                : 0.0;
             $batch['sales_breakdown'] = array_values($batch['sales_breakdown']);
 
             // Color variant grouping key (or __default__ for non-variant products)

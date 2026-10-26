@@ -3,6 +3,10 @@
     $product = $report['product'] ?? [];
     $summary = $report['summary'] ?? [];
     $batches = $report['batches'] ?? [];
+
+    $allTimeProfit = (float) ($summary['total_realized_profit'] ?? 0);
+    $isAllTimeProfitable = $allTimeProfit >= 0;
+    $allTimeMargin = (float) ($summary['realized_margin_pct'] ?? 0);
 @endphp
 
 <div class="stock-report-wrapper" style="color: #f1f5f9; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
@@ -11,12 +15,14 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
             width: 100%;
         }
         .stock-report-wrapper * {
             box-sizing: border-box;
         }
+
+        /* 1. Header Banner */
         .sr-banner {
             display: flex;
             flex-wrap: wrap;
@@ -26,8 +32,8 @@
             padding: 16px 20px;
             background: linear-gradient(135deg, #090e17 0%, #111a28 60%, #0d2232 100%);
             border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 14px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         .sr-product-left {
             display: flex;
@@ -117,48 +123,111 @@
             color: #94a3b8;
         }
 
-        /* KPI Cards Grid */
-        .sr-kpi-grid {
+        /* 2. Top Summary Metrics Grid */
+        .sr-metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 10px;
             width: 100%;
         }
-        .sr-kpi-card {
+        .sr-metric-card {
             background: #111a28;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 12px 14px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 85px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            min-height: 80px;
         }
-        .sr-kpi-label {
+        .sr-metric-label {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: #94a3b8;
         }
-        .sr-kpi-val {
-            font-size: 18px;
+        .sr-metric-val {
+            font-size: 17px;
             font-weight: 800;
             font-family: ui-monospace, monospace;
             line-height: 1.2;
-            margin: 4px 0 2px 0;
+            margin: 3px 0 1px 0;
         }
-        .sr-kpi-sub {
+        .sr-metric-sub {
             font-size: 10px;
             color: #64748b;
         }
 
-        /* Table Box */
+        /* 3. Product All-Time Sales Profit & Loss Highlight Section */
+        .sr-profit-section {
+            background: linear-gradient(135deg, #0a1320 0%, #101c2e 100%);
+            border: 1px solid {{ $isAllTimeProfitable ? 'rgba(16, 185, 129, 0.35)' : 'rgba(239, 68, 68, 0.35)' }};
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        }
+        .sr-profit-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+        }
+        .sr-profit-title {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sr-profit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .sr-profit-item {
+            background: #090e17;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .sr-profit-item-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #94a3b8;
+        }
+        .sr-profit-item-val {
+            font-size: 18px;
+            font-weight: 800;
+            font-family: ui-monospace, monospace;
+            line-height: 1.25;
+            margin: 2px 0;
+        }
+        .sr-profit-item-sub {
+            font-size: 10px;
+            color: #64748b;
+        }
+
+        /* 4. Table Box */
         .sr-table-card {
             background: #0c1420;
             border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 14px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
         }
@@ -207,7 +276,7 @@
             border-collapse: collapse;
             text-align: left;
             font-size: 12px;
-            min-width: 900px;
+            min-width: 980px;
         }
         .sr-table th {
             padding: 10px 12px;
@@ -230,7 +299,7 @@
             background: rgba(16, 185, 129, 0.05);
         }
         .sr-row-ended {
-            opacity: 0.82;
+            opacity: 0.85;
         }
 
         /* Status Pills */
@@ -295,7 +364,7 @@
             background: #141c2b;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 6px;
-            padding: 3px 8px;
+            padding: 4px 9px;
             color: #cbd5e1;
             font-family: ui-monospace, monospace;
         }
@@ -356,56 +425,47 @@
         </div>
     </div>
 
-    {{-- 2. Summary KPI Metric Cards --}}
-    <div class="sr-kpi-grid">
-        {{-- Total Stock Received --}}
-        <div class="sr-kpi-card">
-            <span class="sr-kpi-label">Stock Received</span>
-            <div class="sr-kpi-val" style="color: #38bdf8;">
+    {{-- 2. Top Summary Metrics Grid (Inventory Flow) --}}
+    <div class="sr-metrics-grid">
+        {{-- Stock Received --}}
+        <div class="sr-metric-card">
+            <span class="sr-metric-label">Stock Received</span>
+            <div class="sr-metric-val" style="color: #38bdf8;">
                 {{ $summary['total_stock'] ?? 0 }} <span style="font-size: 11px; font-weight: normal; color: #64748b;">units</span>
             </div>
-            <span class="sr-kpi-sub">{{ $summary['total_batches_count'] ?? 0 }} GRN {{ ($summary['total_batches_count'] ?? 0) === 1 ? 'Batch' : 'Batches' }}</span>
+            <span class="sr-metric-sub">{{ $summary['total_batches_count'] ?? 0 }} GRN {{ ($summary['total_batches_count'] ?? 0) === 1 ? 'Batch' : 'Batches' }}</span>
         </div>
 
         {{-- Sold Quantity --}}
-        <div class="sr-kpi-card">
-            <span class="sr-kpi-label">Sold Quantity</span>
-            <div class="sr-kpi-val" style="color: #c084fc;">
+        <div class="sr-metric-card">
+            <span class="sr-metric-label">Sold Quantity</span>
+            <div class="sr-metric-val" style="color: #c084fc;">
                 {{ $summary['total_sold'] ?? 0 }} <span style="font-size: 11px; font-weight: normal; color: #64748b;">units</span>
             </div>
-            <span class="sr-kpi-sub">Paid Customer Orders</span>
+            <span class="sr-metric-sub">Paid Customer Orders</span>
         </div>
 
         {{-- Available Stock --}}
-        <div class="sr-kpi-card">
-            <span class="sr-kpi-label">Available Stock</span>
-            <div class="sr-kpi-val" style="color: {{ ($summary['total_available'] ?? 0) > 0 ? '#34d399' : '#f87171' }};">
+        <div class="sr-metric-card">
+            <span class="sr-metric-label">Available Stock</span>
+            <div class="sr-metric-val" style="color: {{ ($summary['total_available'] ?? 0) > 0 ? '#34d399' : '#f87171' }};">
                 {{ $summary['total_available'] ?? 0 }} <span style="font-size: 11px; font-weight: normal; color: #64748b;">units</span>
             </div>
-            <span class="sr-kpi-sub">{{ ($summary['total_available'] ?? 0) > 0 ? 'In Store & Warehouse' : 'Out of Stock' }}</span>
+            <span class="sr-metric-sub">{{ ($summary['total_available'] ?? 0) > 0 ? 'In Store & Warehouse' : 'Out of Stock' }}</span>
         </div>
 
-        {{-- Achieved from Sale --}}
-        <div class="sr-kpi-card">
-            <span class="sr-kpi-label">Achieved From Sale</span>
-            <div class="sr-kpi-val" style="color: #34d399; font-size: 16px;" title="Rs. {{ number_format((float) ($summary['total_achieved_revenue'] ?? 0), 2) }}">
-                Rs. {{ number_format((float) ($summary['total_achieved_revenue'] ?? 0), 2) }}
+        {{-- Total Stock Purchase Cost --}}
+        <div class="sr-metric-card">
+            <span class="sr-metric-label">Total Stock Cost</span>
+            <div class="sr-metric-val" style="color: #cbd5e1;" title="Rs. {{ number_format((float) ($summary['total_grn_cost'] ?? 0), 2) }}">
+                Rs. {{ number_format((float) ($summary['total_grn_cost'] ?? 0), 2) }}
             </div>
-            <span class="sr-kpi-sub">Collected Revenue</span>
+            <span class="sr-metric-sub">Batch Qty × GRN Unit Cost</span>
         </div>
 
-        {{-- Revenue Price for Stock --}}
-        <div class="sr-kpi-card">
-            <span class="sr-kpi-label">Total Revenue Price</span>
-            <div class="sr-kpi-val" style="color: #22d3ee; font-size: 16px;" title="Rs. {{ number_format((float) ($summary['total_expected_revenue'] ?? 0), 2) }}">
-                Rs. {{ number_format((float) ($summary['total_expected_revenue'] ?? 0), 2) }}
-            </div>
-            <span class="sr-kpi-sub">Batch Qty × GRN Unit Cost</span>
-        </div>
-
-        {{-- Active Selling Stock --}}
-        <div class="sr-kpi-card">
-            <span class="sr-kpi-label">Current Selling Stock</span>
+        {{-- Current Selling Stock --}}
+        <div class="sr-metric-card">
+            <span class="sr-metric-label">Current Selling Stock</span>
             <div style="margin: 4px 0 2px 0; display: flex; flex-wrap: wrap; gap: 4px;">
                 @if(!empty($summary['active_batch_codes']))
                     @foreach($summary['active_batch_codes'] as $actCode)
@@ -419,18 +479,80 @@
                     </span>
                 @endif
             </div>
-            <span class="sr-kpi-sub">FIFO Active Priority</span>
+            <span class="sr-metric-sub">FIFO Active Priority</span>
         </div>
     </div>
 
-    {{-- 3. Stock Wise Detailed History Table --}}
+    {{-- 3. Feature 1: Product Profits & Losses From All-Time Sales (Clean & Simple) --}}
+    <div class="sr-profit-section">
+        <div class="sr-profit-header">
+            <h3 class="sr-profit-title">
+                <svg style="width: 16px; height: 16px; color: {{ $isAllTimeProfitable ? '#34d399' : '#f87171' }};" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                Product Profit &amp; Loss From All-Time Sales
+            </h3>
+            @php
+                $statusText = $allTimeProfit > 0 ? 'Overall Profitable' : ($allTimeProfit < 0 ? 'Loss Position' : (($summary['total_sold'] ?? 0) > 0 ? 'Break-Even' : 'No Sales Yet'));
+                $statusColor = $allTimeProfit > 0 ? '#34d399' : ($allTimeProfit < 0 ? '#f87171' : '#94a3b8');
+                $statusBg = $allTimeProfit > 0 ? 'rgba(16, 185, 129, 0.18)' : ($allTimeProfit < 0 ? 'rgba(239, 68, 68, 0.18)' : 'rgba(148, 163, 184, 0.15)');
+                $statusBorder = $allTimeProfit > 0 ? 'rgba(16, 185, 129, 0.35)' : ($allTimeProfit < 0 ? 'rgba(239, 68, 68, 0.35)' : 'rgba(148, 163, 184, 0.25)');
+            @endphp
+            <span style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700; font-family: ui-monospace, monospace; background: {{ $statusBg }}; color: {{ $statusColor }}; border: 1px solid {{ $statusBorder }};">
+                <span style="width: 6px; height: 6px; border-radius: 50%; background: {{ $statusColor }};"></span>
+                {{ $statusText }} ({{ $allTimeMargin }}% Margin)
+            </span>
+        </div>
+
+        <div class="sr-profit-grid">
+            {{-- All-Time Sales Revenue --}}
+            <div class="sr-profit-item">
+                <span class="sr-profit-item-label">All-Time Sales Revenue</span>
+                <div class="sr-profit-item-val" style="color: #34d399;">
+                    Rs. {{ number_format((float) ($summary['total_achieved_revenue'] ?? 0), 2) }}
+                </div>
+                <span class="sr-profit-item-sub">Total revenue collected from {{ $summary['total_sold'] ?? 0 }} sold units</span>
+            </div>
+
+            {{-- Cost of Sold Goods (COGS) --}}
+            <div class="sr-profit-item">
+                <span class="sr-profit-item-label">Cost of Sold Stock (COGS)</span>
+                <div class="sr-profit-item-val" style="color: #94a3b8;">
+                    Rs. {{ number_format((float) ($summary['total_sold_cost'] ?? 0), 2) }}
+                </div>
+                <span class="sr-profit-item-sub">GRN purchase cost base of {{ $summary['total_sold'] ?? 0 }} sold units</span>
+            </div>
+
+            {{-- All-Time Net Profit / Loss --}}
+            <div class="sr-profit-item" style="border-color: {{ $isAllTimeProfitable ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)' }}; background: {{ $isAllTimeProfitable ? 'rgba(16, 185, 129, 0.06)' : 'rgba(239, 68, 68, 0.06)' }};">
+                <span class="sr-profit-item-label" style="color: {{ $isAllTimeProfitable ? '#34d399' : '#f87171' }};">All-Time Net Profit / Loss</span>
+                <div class="sr-profit-item-val" style="color: {{ $isAllTimeProfitable ? '#34d399' : '#f87171' }};">
+                    {{ $isAllTimeProfitable ? '+' : '' }}Rs. {{ number_format($allTimeProfit, 2) }}
+                </div>
+                <span class="sr-profit-item-sub" style="color: {{ $isAllTimeProfitable ? '#86efac' : '#fca5a5' }};">
+                    Revenue − Cost of Goods Sold ({{ $allTimeMargin }}% margin)
+                </span>
+            </div>
+
+            {{-- Unsold Stock Asset Value --}}
+            <div class="sr-profit-item">
+                <span class="sr-profit-item-label">Unsold Stock Asset Value</span>
+                <div class="sr-profit-item-val" style="color: #38bdf8;">
+                    Rs. {{ number_format((float) ($summary['total_unsold_cost'] ?? 0), 2) }}
+                </div>
+                <span class="sr-profit-item-sub">{{ $summary['total_available'] ?? 0 }} available units remaining in stock</span>
+            </div>
+        </div>
+    </div>
+
+    {{-- 4. Feature 2: Stock-Wise Batch Breakdown & Selling Price History Table --}}
     <div class="sr-table-card">
         <div class="sr-table-header">
             <h3 class="sr-table-title">
                 <svg style="width: 16px; height: 16px; color: #22d3ee;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
-                Stock-Wise Batch Breakdown & Selling Price History
+                Stock-Wise Batch Breakdown &amp; Realized Profits
             </h3>
             <div class="sr-legend">
                 <span class="sr-legend-pill" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35);">
@@ -456,7 +578,7 @@
                     <thead>
                         <tr>
                             <th>Stock Code</th>
-                            <th>GRN Invoice & Date</th>
+                            <th>GRN &amp; Date</th>
                             <th style="text-align: center;">Batch Qty</th>
                             <th style="text-align: right;">GRN Unit Cost</th>
                             <th style="text-align: right;">Latest Price</th>
@@ -464,7 +586,8 @@
                             <th style="text-align: center;">Available</th>
                             <th style="text-align: center;">Stock Status</th>
                             <th style="text-align: right;" title="Batch Qty × GRN Unit Cost">Revenue Price</th>
-                            <th style="text-align: right;" title="Total Revenue Collected from Sold Units">Achieved From Sale</th>
+                            <th style="text-align: right;" title="Total Revenue Collected from Sold Units">Achieved Sale</th>
+                            <th style="text-align: right;" title="Realized Profit = Achieved from Sale - Cost of Sold Units">Stock Profit / Loss</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -475,6 +598,9 @@
                                 $isActive = $status === 'ACTIVE';
                                 $isQueued = $status === 'QUEUED';
                                 $rowClass = $isActive ? 'sr-row-active' : ($isEnded ? 'sr-row-ended' : '');
+                                $batchSold = (int) ($batch['sold_quantity'] ?? 0);
+                                $batchRealizedProfit = (float) ($batch['realized_profit'] ?? 0);
+                                $isBatchProfit = $batchRealizedProfit >= 0;
                             @endphp
 
                             {{-- Main Batch Row --}}
@@ -515,8 +641,8 @@
                                 </td>
 
                                 {{-- Sold Quantity --}}
-                                <td style="text-align: center; font-family: ui-monospace, monospace; font-weight: 700; color: {{ $batch['sold_quantity'] > 0 ? '#c084fc' : '#64748b' }};">
-                                    {{ $batch['sold_quantity'] }}
+                                <td style="text-align: center; font-family: ui-monospace, monospace; font-weight: 700; color: {{ $batchSold > 0 ? '#c084fc' : '#64748b' }};">
+                                    {{ $batchSold }}
                                 </td>
 
                                 {{-- Available Quantity --}}
@@ -557,11 +683,29 @@
                                 <td style="text-align: right; font-family: ui-monospace, monospace; font-weight: 700; color: #34d399;">
                                     Rs. {{ number_format((float) $batch['achieved_from_sale'], 2) }}
                                 </td>
+
+                                {{-- Feature 2: Stock-Wise Profit / Loss --}}
+                                <td style="text-align: right; font-family: ui-monospace, monospace;">
+                                    @if($batchSold > 0)
+                                        <div style="font-weight: 800; font-size: 13px; color: {{ $isBatchProfit ? '#34d399' : '#f87171' }};">
+                                            {{ $isBatchProfit ? '+' : '' }}Rs. {{ number_format($batchRealizedProfit, 2) }}
+                                        </div>
+                                        <div style="font-size: 9px; color: #94a3b8;">
+                                            Cost: Rs. {{ number_format((float) ($batch['realized_cogs'] ?? 0), 2) }}
+                                            @if(($batch['realized_margin_pct'] ?? 0) > 0)
+                                                ({{ $batch['realized_margin_pct'] }}%)
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div style="color: #64748b; font-size: 12px;">Rs. 0.00</div>
+                                        <div style="font-size: 9px; color: #475569;">No sales yet</div>
+                                    @endif
+                                </td>
                             </tr>
 
                             {{-- Sub-row: Price Breakdown & Sold History --}}
                             <tr class="sr-sub-row">
-                                <td colspan="10">
+                                <td colspan="11">
                                     <div class="sr-breakdown-box">
                                         <span style="font-weight: 700; color: #64748b; text-transform: uppercase; font-size: 10px; letter-spacing: 0.04em;">
                                             Sales Breakdown by Selling Price:
@@ -581,7 +725,7 @@
                                                     <span style="color: #94a3b8;">Cost: Rs. {{ number_format((float) $sb['grn_price'], 2) }}</span>
                                                     <span style="color: #475569;">➔</span>
                                                     <span style="color: #34d399; font-weight: 700;">Rev: Rs. {{ number_format((float) $sb['total_revenue'], 2) }}</span>
-                                                    <span style="color: #34d399; font-size: 10px; background: rgba(16, 185, 129, 0.15); padding: 1px 5px; border-radius: 3px;">
+                                                    <span style="color: #34d399; font-size: 10px; background: rgba(16, 185, 129, 0.15); padding: 1px 6px; border-radius: 3px; border: 1px solid rgba(16, 185, 129, 0.3);">
                                                         Profit: +Rs. {{ number_format((float) $sb['achieved_profit'], 2) }}
                                                     </span>
                                                 </div>
@@ -603,8 +747,8 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <div>
-            <strong>FIFO (First-In, First-Out) Stock Principle:</strong>
-            Customer orders automatically consume stock starting from the oldest received batch. For products with color variants, each color variant maintains its own independent FIFO queue so that every active color is ready for purchase as <strong style="color: #34d399;">Current Selling Stock</strong>. Once an older batch of a color is depleted, it transitions to <strong style="color: #f87171;">Ended (Sold Out)</strong> and subsequent sales draw from the next queue batch for that color. When admin updates the Latest Price in Products, any subsequent sales are tracked under that new selling price while preserving the original GRN unit cost.
+            <strong>FIFO (First-In, First-Out) Sales &amp; Profit Tracking:</strong>
+            Customer orders automatically consume stock starting from the oldest received batch. For products with color variants, each color variant maintains its own independent FIFO queue so that every active color is ready for purchase as <strong style="color: #34d399;">Current Selling Stock</strong>. When prices change, sales are attributed to the exact price charged, preserving the original GRN unit cost to accurately report <strong style="color: #34d399;">Stock-Wise Profits</strong> and <strong style="color: #22d3ee;">All-Time Sales Performance</strong>.
         </div>
     </div>
 </div>
