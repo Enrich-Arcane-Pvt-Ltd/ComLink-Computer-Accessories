@@ -261,6 +261,67 @@ class Dashboard extends BaseDashboard
             'salesInfoUrl' => url('/admin/sales-section/sales-info'),
         ];
 
+        // 12. Top Low 6 Current Inventory Stock Products
+        $grnSums = GrnItem::groupBy('product_code')
+            ->selectRaw('product_code, SUM(product_quantity) as total_qty')
+            ->pluck('total_qty', 'product_code')
+            ->all();
+
+        $soldItems = OrderItem::whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+            ->select('product_id', 'product_name', 'quantity')
+            ->get();
+
+        $soldByProductId = [];
+        $soldByProductName = [];
+        foreach ($soldItems as $item) {
+            if ($item->product_id) {
+                $soldByProductId[$item->product_id] = ($soldByProductId[$item->product_id] ?? 0) + (int) $item->quantity;
+            }
+            if ($item->product_name) {
+                $soldByProductName[$item->product_name] = ($soldByProductName[$item->product_name] ?? 0) + (int) $item->quantity;
+            }
+        }
+
+        $allProducts = Product::with(['supplier', 'brand', 'variants', 'categories.parent'])->get();
+
+        $outOfStockCount = 0;
+        $lowStockCount = 0;
+        $inStockCount = 0;
+
+        foreach ($allProducts as $product) {
+            $fullCount = 0;
+            if ($product->product_code && isset($grnSums[$product->product_code])) {
+                $fullCount = (int) $grnSums[$product->product_code];
+            } else {
+                $fullCount = (int) ($product->inventory_stock ?? 0);
+            }
+
+            $soldCount = 0;
+            if (isset($soldByProductId[$product->id])) {
+                $soldCount = (int) $soldByProductId[$product->id];
+            } elseif ($product->product_code && isset($soldByProductName[$product->name])) {
+                $soldCount = (int) $soldByProductName[$product->name];
+            }
+
+            $currentStock = max(0, $fullCount - $soldCount);
+
+            $product->computed_inventory_full_count = $fullCount;
+            $product->computed_sold_count = $soldCount;
+            $product->computed_current_stock = $currentStock;
+
+            if ($currentStock === 0) {
+                $outOfStockCount++;
+            } elseif ($currentStock <= 5) {
+                $lowStockCount++;
+            } else {
+                $inStockCount++;
+            }
+        }
+
+        $topLowStockProducts = $allProducts->sortBy(function ($product) {
+            return $product->computed_current_stock;
+        })->take(6)->values();
+
         return [
             // Store Metrics
             'categoriesCount' => $categoriesCount,
@@ -306,6 +367,16 @@ class Dashboard extends BaseDashboard
 
             // Sales Analyzer
             'salesAnalyzer' => $salesAnalyzer,
+
+            // Top Low Stock Inventory Section
+            'topLowStockProducts' => $topLowStockProducts,
+            'stockCountUrl' => url('/admin/stock-count'),
+            'stockStats' => [
+                'outOfStock' => $outOfStockCount,
+                'lowStock' => $lowStockCount,
+                'inStock' => $inStockCount,
+                'total' => $allProducts->count(),
+            ],
         ];
     }
 }

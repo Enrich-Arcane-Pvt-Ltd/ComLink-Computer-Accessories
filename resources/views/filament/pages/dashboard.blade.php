@@ -140,6 +140,9 @@
 
             /* ============ Grids ============ */
             .cl-row { display: grid; gap: 16px; grid-template-columns: 1fr; }
+            @media (min-width: 1024px) {
+                .cl-row--charts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            }
             @media (min-width: 1100px) {
                 .cl-row--trend  { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
                 .cl-row--split  { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
@@ -147,8 +150,8 @@
             .cl-panel { padding: 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
             .cl-panel-head h3 { margin: 0; font-size: 15px; font-weight: 650; }
             .cl-panel-head p { margin: 3px 0 0; font-size: 12px; color: var(--cl-muted); }
-            .cl-canvas { position: relative; width: 100%; height: 280px; }
-            .cl-canvas--donut { height: 210px; }
+            .cl-canvas { position: relative; width: 100%; height: 270px; }
+            .cl-canvas--donut { height: 190px; }
 
             /* ============ Financial overview (gradient card) ============ */
             .cl-fin {
@@ -332,8 +335,9 @@
             </div>
         </div>
 
-        {{-- ============ 3. Trend + financial overview ============ --}}
-        <div class="cl-row cl-row--trend">
+        {{-- ============ 3. Analytics Charts (3 in one row) ============ --}}
+        <div class="cl-row cl-row--charts">
+            {{-- Chart 1: Monthly sales trend --}}
             <div class="cl-card cl-panel">
                 <div class="cl-panel-head">
                     <h3>Monthly sales trend</h3>
@@ -342,27 +346,7 @@
                 <div class="cl-canvas"><canvas id="comlinkChartTwo" aria-label="Monthly sales trend line chart" role="img"></canvas></div>
             </div>
 
-            <div class="cl-fin">
-                <div>
-                    <div class="cl-fin-title">Net profit</div>
-                    <div class="cl-fin-big">{{ $isProfitable ? '+' : '' }}Rs. {{ number_format($netProfit, 2) }}</div>
-                </div>
-                <span class="cl-fin-badge">{{ $profitMargin }}% margin on revenue</span>
-                <div class="cl-fin-rows">
-                    <div>
-                        <div class="cl-fin-row-top"><span>Revenue</span><span>Rs. {{ $compact($totalRevenue) }}</span></div>
-                        <div class="cl-track"><i style="width: {{ $revWidth }}%"></i></div>
-                    </div>
-                    <div>
-                        <div class="cl-fin-row-top"><span>Expenses</span><span>Rs. {{ $compact($totalExpenses) }}</span></div>
-                        <div class="cl-track is-exp"><i style="width: {{ $expWidth }}%"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- ============ 4. Expense vs income + category share ============ --}}
-        <div class="cl-row cl-row--split">
+            {{-- Chart 2: Stock expense vs income --}}
             <div class="cl-card cl-panel">
                 <div class="cl-panel-head">
                     <h3>Stock expense vs income</h3>
@@ -371,6 +355,7 @@
                 <div class="cl-canvas"><canvas id="comlinkChartOne" aria-label="Monthly stock expense versus sales income bar chart" role="img"></canvas></div>
             </div>
 
+            {{-- Chart 3: Sales by category --}}
             <div class="cl-card cl-panel">
                 <div class="cl-panel-head">
                     <h3>Sales by category</h3>
@@ -378,7 +363,7 @@
                 </div>
                 @if(count($donutLabels))
                     <div class="cl-canvas cl-canvas--donut"><canvas id="comlinkChartThree" aria-label="Category sales share donut chart" role="img"></canvas></div>
-                    <div class="cl-legend">
+                    <div class="cl-legend" style="margin-top: auto; padding-top: 10px;">
                         @foreach($donutLabels as $i => $label)
                             <div class="cl-legend-row">
                                 <span class="cl-dot" style="background: {{ $donutColors[$i % count($donutColors)] }}"></span>
@@ -389,8 +374,181 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="cl-empty">No category sales yet. Paid orders will appear here.</div>
+                    <div class="cl-empty" style="margin-top: auto;">No category sales yet. Paid orders will appear here.</div>
                 @endif
+            </div>
+        </div>
+
+        {{-- ============ TOP LOW 6 CURRENT INVENTORY STOCK SECTION ============ --}}
+        <div class="cl-card cl-table-card">
+            <div class="cl-table-head" style="border-bottom: 1px solid var(--cl-border); padding: 18px 20px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="cl-chip t-amber" style="width: 42px; height: 42px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 22px; height: 22px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </span>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            <h3 style="margin: 0; font-size: 16px; font-weight: 700;">Top Low Current Inventory Stock</h3>
+                            <span class="cl-pill t-red" style="font-size: 11px;">
+                                <i></i>Low Stock Alert
+                            </span>
+                        </div>
+                        <p style="margin: 3px 0 0; font-size: 12.5px; color: var(--cl-muted);">Top 6 products with the lowest remaining physical inventory stock quantities</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <a href="{{ $stockCountUrl }}" class="cl-btn cl-btn--primary" id="view-full-stock-details-btn">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                        </svg>
+                        View full Stock Details
+                    </a>
+                </div>
+            </div>
+
+            <!-- Inventory Stock Overview Badges -->
+            @if(isset($stockStats))
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 20px; background: var(--cl-card-alt); border-bottom: 1px solid var(--cl-border); font-size: 12px;">
+                    <span style="font-weight: 600; color: var(--cl-muted);">Catalog Stock Status:</span>
+                    <span class="cl-pill t-red" style="font-size: 11px; padding: 2px 8px;">
+                        <i></i><b>{{ $stockStats['outOfStock'] }}</b> Out of Stock (0 units)
+                    </span>
+                    <span class="cl-pill t-amber" style="font-size: 11px; padding: 2px 8px;">
+                        <i></i><b>{{ $stockStats['lowStock'] }}</b> Low Stock (1 - 5 units)
+                    </span>
+                    <span class="cl-pill t-green" style="font-size: 11px; padding: 2px 8px;">
+                        <i></i><b>{{ $stockStats['inStock'] }}</b> In Stock (&gt; 5 units)
+                    </span>
+                    <div style="margin-left: auto; color: var(--cl-muted); font-size: 12px;">
+                        Total Products Tracked: <b>{{ $stockStats['total'] }}</b>
+                    </div>
+                </div>
+            @endif
+
+            <div class="cl-scroll">
+                <table class="cl-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 48px; text-align: center;">#</th>
+                            <th>Product Details</th>
+                            <th class="cl-c">Inventory Full Count</th>
+                            <th class="cl-c">Sold Count</th>
+                            <th class="cl-c">Current Inventory Stock</th>
+                            <th class="cl-c">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($topLowStockProducts as $index => $prod)
+                            @php
+                                $thumb = null;
+                                if (!empty($prod->images)) {
+                                    $imgs = is_array($prod->images) ? $prod->images : [];
+                                    $first = $imgs[0] ?? null;
+                                    if ($first) {
+                                        $thumb = (str_starts_with($first, 'http') || str_starts_with($first, '/')) ? $first : asset('storage/' . $first);
+                                    }
+                                }
+                                $thumb = $thumb ?: '/images/placeholder.png';
+
+                                $condition = $prod->condition ?? 'Brand New';
+                                $mainCat = $prod->categories->firstWhere('parent_id', null);
+
+                                $fullCount = (int) ($prod->computed_inventory_full_count ?? $prod->inventory_full_count ?? 0);
+                                $soldCount = (int) ($prod->computed_sold_count ?? $prod->sold_count ?? 0);
+                                $currentStock = (int) ($prod->computed_current_stock ?? $prod->current_inventory_stock ?? 0);
+
+                                $stockTone = match(true) {
+                                    $currentStock === 0 => 'red',
+                                    $currentStock <= 5 => 'amber',
+                                    default => 'green',
+                                };
+
+                                $statusLabel = match(true) {
+                                    $currentStock === 0 => 'Out of Stock',
+                                    $currentStock <= 2 => 'Critical Low',
+                                    $currentStock <= 5 => 'Low Stock',
+                                    default => 'In Stock',
+                                };
+                            @endphp
+                            <tr>
+                                <td style="text-align: center;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--cl-card-alt); border: 1px solid var(--cl-border); display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--cl-muted);">
+                                        {{ $index + 1 }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="cl-prod">
+                                        <img src="{{ $thumb }}" alt="{{ $prod->name }}" onerror="this.src='/images/placeholder.png';" />
+                                        <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+                                            <div class="cl-prod-name" title="{{ $prod->name }}">{{ $prod->name }}</div>
+                                            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 5px;">
+                                                <span class="cl-pill t-slate" style="font-size: 10px; padding: 1px 6px;">{{ $condition }}</span>
+                                                @if($prod->product_code)
+                                                    <span class="cl-code" style="font-size: 10.5px; padding: 1px 6px;" title="Product Code">{{ $prod->product_code }}</span>
+                                                @endif
+                                                @if($mainCat)
+                                                    <span class="cl-pill t-cyan" style="font-size: 10px; padding: 1px 6px;">{{ $mainCat->name }}</span>
+                                                @endif
+                                                @if($prod->supplier)
+                                                    <span style="font-size: 11px; color: var(--cl-muted);" title="Supplier">
+                                                        &bull; {{ $prod->supplier->name }}
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cl-c">
+                                    <span class="cl-strong" style="color: var(--cl-text); font-size: 13px;">
+                                        {{ number_format($fullCount) }} {{ $fullCount === 1 ? 'unit' : 'units' }}
+                                    </span>
+                                    <div class="cl-sub">Total GRN Stock</div>
+                                </td>
+                                <td class="cl-c">
+                                    <span class="cl-pill t-violet" style="font-size: 11.5px; padding: 3px 9px;">
+                                        {{ number_format($soldCount) }} {{ $soldCount === 1 ? 'unit' : 'units' }}
+                                    </span>
+                                    <div class="cl-sub">Paid sales</div>
+                                </td>
+                                <td class="cl-c">
+                                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                                        <span class="cl-pill t-{{ $stockTone }}" style="font-size: 12px; font-weight: 700; padding: 4px 11px;">
+                                            <i></i>{{ number_format($currentStock) }} {{ $currentStock === 1 ? 'unit' : 'units' }}
+                                        </span>
+                                        @if($prod->hasColorVariants() && $prod->variants->isNotEmpty())
+                                            <div style="display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; max-width: 220px;" title="Variant Stock Breakdown">
+                                                @foreach($prod->variants as $variant)
+                                                    <span style="font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: 4px; background: rgba(56, 189, 248, 0.12); color: #0284c7; border: 1px solid rgba(56, 189, 248, 0.25);">
+                                                        {{ $variant->color_name }}: {{ (int) ($variant->inventory_stock ?? $variant->stock ?? 0) }}
+                                                    </span>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
+                                </td>
+                                 <td class="cl-c">
+                                    <span class="cl-pill t-{{ $stockTone }}">
+                                        <i></i>{{ $statusLabel }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="cl-empty">No products found in the catalog.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--cl-border); background: var(--cl-card-alt); font-size: 12px; color: var(--cl-muted); flex-wrap: wrap; gap: 8px;">
+                <span>Displaying top 6 low inventory stock products requiring immediate attention or replenishment.</span>
+                <a href="{{ $stockCountUrl }}" class="cl-link" style="font-size: 12px;">
+                    View full Stock Details
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
 
@@ -798,15 +956,15 @@
                         data: {
                             labels: data.one.labels,
                             datasets: [
-                                { label: 'Stock expenses (GRN)', data: data.one.expenses, backgroundColor: indigo, borderRadius: 6, borderSkipped: false, maxBarThickness: 26 },
-                                { label: 'Sales income', data: data.one.incomes, backgroundColor: brand, borderRadius: 6, borderSkipped: false, maxBarThickness: 26 }
+                                { label: 'Stock expenses (GRN)', data: data.one.expenses, backgroundColor: indigo, borderRadius: 6, borderSkipped: false, maxBarThickness: 18 },
+                                { label: 'Sales income', data: data.one.incomes, backgroundColor: brand, borderRadius: 6, borderSkipped: false, maxBarThickness: 18 }
                             ]
                         },
                         options: {
                             responsive: true, maintainAspectRatio: false,
                             interaction: { mode: 'index', intersect: false },
                             plugins: {
-                                legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8, padding: 16, color: tick } },
+                                legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', boxWidth: 7, boxHeight: 7, padding: 10, font: { size: 11 }, color: tick } },
                                 tooltip: Object.assign({}, tooltip, { callbacks: { label: function (c) { return ' ' + c.dataset.label + ': ' + money(c.raw); } } })
                             },
                             scales: { x: xAxis, y: yAxis }
