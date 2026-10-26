@@ -585,7 +585,7 @@
                             <th style="text-align: center;">Sold Qty</th>
                             <th style="text-align: center;">Available</th>
                             <th style="text-align: center;">Stock Status</th>
-                            <th style="text-align: right;" title="Batch Qty × GRN Unit Cost">Revenue Price</th>
+                            <th style="text-align: right;" title="Batch Qty × GRN Unit Cost">Expense</th>
                             <th style="text-align: right;" title="Total Revenue Collected from Sold Units">Achieved Sale</th>
                             <th style="text-align: right;" title="Realized Profit = Achieved from Sale - Cost of Sold Units">Stock Profit / Loss</th>
                         </tr>
@@ -674,7 +674,7 @@
                                     @endif
                                 </td>
 
-                                {{-- Revenue Price for the Stock (Batch Qty x GRN Cost) --}}
+                                {{-- Expense for the Stock (Batch Qty x GRN Cost) --}}
                                 <td style="text-align: right; font-family: ui-monospace, monospace; color: #cbd5e1;">
                                     Rs. {{ number_format((float) $batch['revenue_price'], 2) }}
                                 </td>
