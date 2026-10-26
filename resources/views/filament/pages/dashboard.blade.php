@@ -394,6 +394,179 @@
             </div>
         </div>
 
+        {{-- ============ SALES ANALYZER SECTION ============ --}}
+        <div class="cl-card cl-panel" style="padding: 24px; gap: 20px;">
+            <!-- Header with Title and Link to Sales Info -->
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--cl-border); padding-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="cl-chip t-cyan" style="width: 44px; height: 44px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 22px; height: 22px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    </div>
+                    <div>
+                        <h2 style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -.01em;">Sales Analyzer</h2>
+                        <p style="margin: 3px 0 0; font-size: 13px; color: var(--cl-muted);">Real-time revenue performance, order economics, and top-selling hardware analysis</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <a href="{{ $salesAnalyzer['salesInfoUrl'] }}" class="cl-btn cl-btn--primary" style="padding: 7px 14px; font-size: 12px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        View Sales Info Table
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4 Key Sales Insights Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+                <!-- 1. Average Order Value -->
+                <div style="background: var(--cl-card-alt); border: 1px solid var(--cl-border); border-radius: 12px; padding: 14px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--cl-muted);">Avg. Order Value (AOV)</span>
+                        <span class="cl-chip t-blue" style="width: 28px; height: 28px;"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></span>
+                    </div>
+                    <div style="font-size: 20px; font-weight: 800; color: var(--cl-text);">
+                        Rs. {{ number_format($salesAnalyzer['avgOrderValue'], 2) }}
+                    </div>
+                    <div style="font-size: 11px; color: var(--cl-faint); margin-top: 4px;">
+                        Average spend per paid customer
+                    </div>
+                </div>
+
+                <!-- 2. Total Hardware Units Sold -->
+                <div style="background: var(--cl-card-alt); border: 1px solid var(--cl-border); border-radius: 12px; padding: 14px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--cl-muted);">Total Units Sold</span>
+                        <span class="cl-chip t-green" style="width: 28px; height: 28px;"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></span>
+                    </div>
+                    <div style="font-size: 20px; font-weight: 800; color: var(--cl-text);">
+                        {{ $salesAnalyzer['totalPaidUnits'] }} <span style="font-size: 13px; font-weight: 600; color: var(--cl-muted);">Units</span>
+                    </div>
+                    <div style="font-size: 11px; color: var(--cl-faint); margin-top: 4px;">
+                        Across {{ $salesAnalyzer['paidOrdersCount'] }} successful orders
+                    </div>
+                </div>
+
+                <!-- 3. Highest Single Order -->
+                <div style="background: var(--cl-card-alt); border: 1px solid var(--cl-border); border-radius: 12px; padding: 14px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--cl-muted);">Highest Single Sale</span>
+                        <span class="cl-chip t-violet" style="width: 28px; height: 28px;"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg></span>
+                    </div>
+                    <div style="font-size: 20px; font-weight: 800; color: var(--cl-text);">
+                        Rs. {{ number_format($salesAnalyzer['highestOrderAmount'], 2) }}
+                    </div>
+                    <div style="font-size: 11px; color: var(--cl-faint); margin-top: 4px;">
+                        Order #{{ $salesAnalyzer['highestOrderNumber'] }}
+                    </div>
+                </div>
+
+                <!-- 4. This Month's Sales -->
+                <div style="background: var(--cl-card-alt); border: 1px solid var(--cl-border); border-radius: 12px; padding: 14px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--cl-muted);">This Month's Sales</span>
+                        <span class="cl-chip t-cyan" style="width: 28px; height: 28px;"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
+                    </div>
+                    <div style="font-size: 20px; font-weight: 800; color: var(--cl-brand);">
+                        Rs. {{ number_format($salesAnalyzer['thisMonthSales'], 2) }}
+                    </div>
+                    <div style="font-size: 11px; color: var(--cl-faint); margin-top: 4px;">
+                        Today: Rs. {{ number_format($salesAnalyzer['todaySales'], 2) }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Columns: Top Selling Products & Pipeline Fulfillment -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 4px;">
+                <!-- Left: Top Selling Hardware Products -->
+                <div style="border: 1px solid var(--cl-border); border-radius: 14px; padding: 16px; background: var(--cl-card);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                        <div>
+                            <h4 style="margin: 0; font-size: 14px; font-weight: 700;">Top 5 Best-Selling Hardware</h4>
+                            <p style="margin: 2px 0 0; font-size: 12px; color: var(--cl-muted);">Highest revenue generating products</p>
+                        </div>
+                        <span class="cl-pill t-cyan" style="font-size: 10px;">By Revenue</span>
+                    </div>
+
+                    @if(!empty($salesAnalyzer['topSellingProducts']))
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            @foreach($salesAnalyzer['topSellingProducts'] as $index => $prod)
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; border-radius: 10px; background: var(--cl-card-alt); border: 1px solid var(--cl-border);">
+                                    <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
+                                        <div style="width: 22px; height: 22px; border-radius: 50%; background: var(--cl-border); display: grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0;">
+                                            {{ $index + 1 }}
+                                        </div>
+                                        <img src="{{ $prod['image'] }}" alt="" onerror="this.src='/images/placeholder.png';" style="width: 34px; height: 34px; border-radius: 6px; object-fit: contain; background: #fff; padding: 2px; flex-shrink: 0;" />
+                                        <div style="min-width: 0;">
+                                            <div style="font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--cl-text);" title="{{ $prod['name'] }}">
+                                                {{ $prod['name'] }}
+                                            </div>
+                                            <div style="font-size: 11px; color: var(--cl-muted);">
+                                                {{ $prod['units'] }} {{ $prod['units'] === 1 ? 'unit' : 'units' }} sold • {{ $prod['category'] }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: right; flex-shrink: 0;">
+                                        <div style="font-size: 13px; font-weight: 700; color: var(--cl-brand);">
+                                            Rs. {{ number_format($prod['revenue'], 2) }}
+                                        </div>
+                                        <div style="font-size: 10.5px; color: var(--cl-muted); font-weight: 500;">
+                                            {{ $prod['percentage'] }}% of sales
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="cl-empty" style="padding: 24px;">No sold hardware recorded yet.</div>
+                    @endif
+                </div>
+
+                <!-- Right: Sales Order Status Pipeline -->
+                <div style="border: 1px solid var(--cl-border); border-radius: 14px; padding: 16px; background: var(--cl-card);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                        <div>
+                            <h4 style="margin: 0; font-size: 14px; font-weight: 700;">Paid Orders Fulfillment Pipeline</h4>
+                            <p style="margin: 2px 0 0; font-size: 12px; color: var(--cl-muted);">Revenue by current fulfillment stage</p>
+                        </div>
+                        <span class="cl-pill t-green" style="font-size: 10px;">{{ $salesAnalyzer['paymentSuccessRate'] }}% Paid Rate</span>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        @foreach($salesAnalyzer['salesPipeline'] as $pipe)
+                            @php
+                                $tone = match(strtolower($pipe['stage'])) {
+                                    'processing' => 't-blue',
+                                    'packaging'  => 't-violet',
+                                    'shipping'   => 't-cyan',
+                                    'delivered'  => 't-green',
+                                    default      => 't-slate',
+                                };
+                            @endphp
+                            <div style="padding: 10px 12px; border-radius: 10px; background: var(--cl-card-alt); border: 1px solid var(--cl-border);">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span class="cl-pill {{ $tone }}" style="font-size: 11px; padding: 2px 8px;">
+                                            <i></i>{{ $pipe['stage'] }}
+                                        </span>
+                                        <span style="font-size: 12px; color: var(--cl-muted);">
+                                            {{ $pipe['count'] }} {{ $pipe['count'] === 1 ? 'order' : 'orders' }}
+                                        </span>
+                                    </div>
+                                    <span style="font-size: 13px; font-weight: 700; color: var(--cl-text);">
+                                        Rs. {{ number_format($pipe['amount'], 2) }}
+                                    </span>
+                                </div>
+                                <!-- Progress line -->
+                                <div style="width: 100%; height: 6px; background: var(--cl-border); border-radius: 3px; overflow: hidden;">
+                                    <div style="width: {{ $pipe['percentage'] }}%; height: 100%; background: var(--cl-brand); border-radius: 3px; transition: width .4s ease;"></div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- ============ 5. Latest orders ============ --}}
         <div class="cl-card cl-table-card">
             <div class="cl-table-head">
