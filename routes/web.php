@@ -28,6 +28,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Shop & Category Pages
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/api/search-products', [ShopController::class, 'searchApi'])->name('api.search-products');
 Route::get('/category/{category}', [ShopController::class, 'category'])->name('category.show');
 Route::get('/category/{category}/{subcategory}', [ShopController::class, 'subcategory'])->name('category.subcategory');
 Route::get('/product/{product}', [ShopController::class, 'showProduct'])->name('product.show');
