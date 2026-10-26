@@ -229,6 +229,13 @@ class CheckoutController extends Controller
                     }
                 }
 
+                $resolvedCategory = null;
+                if (!empty($product)) {
+                    $resolvedCategory = $product->categories->firstWhere('parent_id', null)?->name
+                        ?: $product->categories->first()?->name;
+                }
+                $resolvedCategory = $resolvedCategory ?: ($item['category'] ?? 'Accessories');
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $prodId,
@@ -236,7 +243,7 @@ class CheckoutController extends Controller
                     'color' => $color,
                     'product_name' => $item['name'],
                     'product_image' => $item['image'] ?? '/images/placeholder.png',
-                    'category_name' => $item['category'] ?? 'Hardware',
+                    'category_name' => $resolvedCategory,
                     'unit_price' => $price,
                     'quantity' => $qty,
                     'total_price' => round($price * $qty, 2),

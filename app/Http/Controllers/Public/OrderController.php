@@ -67,7 +67,7 @@ class OrderController extends Controller
                         'productId' => (string) ($item->product_id ?? $item->id),
                         'name' => $item->product_name,
                         'image' => $item->product_image ?: '/images/placeholder.png',
-                        'category' => $item->category_name ?: 'Hardware',
+                        'category' => $item->category_name ?: ($item->product?->categories->firstWhere('parent_id', null)?->name ?: 'Accessories'),
                         'quantity' => (int) $item->quantity,
                         'unitPrice' => (float) $item->unit_price,
                         'totalPrice' => (float) $item->total_price,
