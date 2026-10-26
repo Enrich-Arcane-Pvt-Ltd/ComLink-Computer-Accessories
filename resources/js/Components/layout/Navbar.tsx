@@ -264,15 +264,11 @@ export default function Navbar() {
                     </button>
 
                     {/* Logo */}
-                    <Link href="/" className="flex-shrink-0 -my-2">
+                    <Link href="/" className="flex-shrink-0 -my-3 md:-my-4 flex items-center">
                         <img
-                            src={
-                                theme === "dark"
-                                    ? "/images/logo-white.png"
-                                    : "/images/logo.png"
-                            }
+                            src="/images/Comlink_logo.png"
                             alt="ComLink Logo"
-                            className="h-8 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                            className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105"
                         />
                     </Link>
 

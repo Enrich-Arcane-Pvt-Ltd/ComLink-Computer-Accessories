@@ -219,13 +219,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                         className="flex items-center gap-2 group"
                                     >
                                         <img
-                                            src={
-                                                theme === "dark"
-                                                    ? "/images/logo-white.png"
-                                                    : "/images/logo.png"
-                                            }
+                                            src="/images/Comlink_logo.png"
                                             alt="ComLink"
-                                            className="h-7 md:h-8 w-auto object-contain transition-transform group-hover:scale-105"
+                                            className="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105"
                                         />
                                     </Link>
                                 </div>

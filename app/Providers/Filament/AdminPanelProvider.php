@@ -70,7 +70,7 @@ class AdminPanelProvider extends PanelProvider
                 'gray' => Color::Zinc,
             ])
             ->font('Plus Jakarta Sans')
-            ->brandName('Wiki-Store')
+            ->brandName('ComLink')
             ->brandLogo(fn () => view('filament.components.brand'))
             ->brandLogoHeight('3.5rem')
             ->darkMode(true)
