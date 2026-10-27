@@ -18,8 +18,42 @@ class GrnForm
         return [
             // 1. GRN Header
             Forms\Components\Section::make('GRN Invoice Details')
-                ->description('Manage Goods Received Note invoice number, supplier, and purchase order linkage.')
+                ->description('Choose whether this GRN is linked to a system Purchase Order or is a Direct GRN (personal/direct supplier purchase).')
                 ->schema([
+                    Forms\Components\ToggleButtons::make('grn_type')
+                        ->label('GRN Mode / Purchase Order Type')
+                        ->options([
+                            'po'     => 'From Purchase Order',
+                            'direct' => 'Direct GRN (Without PO)',
+                        ])
+                        ->icons([
+                            'po'     => 'heroicon-m-document-check',
+                            'direct' => 'heroicon-m-bolt',
+                        ])
+                        ->colors([
+                            'po'     => 'primary',
+                            'direct' => 'warning',
+                        ])
+                        ->default('po')
+                        ->inline()
+                        ->live()
+                        ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                            if ($state === 'direct') {
+                                $set('purchase_order_id', null);
+                                if (! $get('direct_po_number')) {
+                                    $set('direct_po_number', Grn::generateDirectPoNumber());
+                                }
+                            } else {
+                                $set('direct_po_number', null);
+                            }
+                        })
+                        ->afterStateHydrated(function ($component, ?Grn $record) {
+                            if ($record) {
+                                $component->state($record->purchase_order_id ? 'po' : ($record->grn_type ?: 'direct'));
+                            }
+                        })
+                        ->columnSpanFull(),
+
                     Forms\Components\TextInput::make('grn_number')
                         ->label('Purchase GRN Invoice No')
                         ->default(fn () => Grn::generateGrnNumber())
@@ -36,9 +70,12 @@ class GrnForm
                         ->reactive()
                         ->required(),
 
+                    // Shown when GRN Mode = 'From Purchase Order'
                     Forms\Components\Select::make('purchase_order_id')
                         ->label('Purchase Order No')
-                        ->placeholder('Direct / Select Purchase Order')
+                        ->placeholder('Select Purchase Order')
+                        ->visible(fn (Get $get) => ($get('grn_type') ?? 'po') === 'po')
+                        ->required(fn (Get $get) => ($get('grn_type') ?? 'po') === 'po')
                         ->options(function (Get $get) {
                             $supplierId = $get('supplier_id');
                             $query = PurchaseOrder::query();
@@ -63,14 +100,14 @@ class GrnForm
                                     foreach ($po->items as $item) {
                                         $itemsData[(string) Str::uuid()] = [
                                             'inventory_product_id' => $item->inventory_product_id,
-                                            'product_variant_id' => $item->product_variant_id,
-                                            'color_name' => $item->color_name,
-                                            'product_code' => $item->product_code,
-                                            'product_name' => $item->product_name,
-                                            'product_condition' => $item->product_condition ?: 'Brandnew',
-                                            'product_quantity' => (int) ($item->product_quantity ?: 1),
-                                            'price_per_unit' => 0.00,
-                                            'total' => 0.00,
+                                            'product_variant_id'   => $item->product_variant_id,
+                                            'color_name'           => $item->color_name,
+                                            'product_code'         => $item->product_code,
+                                            'product_name'         => $item->product_name,
+                                            'product_condition'    => $item->product_condition ?: 'Brandnew',
+                                            'product_quantity'     => (int) ($item->product_quantity ?: 1),
+                                            'price_per_unit'       => 0.00,
+                                            'total'                => 0.00,
                                         ];
                                     }
                                     $set('items', $itemsData);
@@ -79,6 +116,16 @@ class GrnForm
                             }
                         })
                         ->helperText('Selecting a PO automatically loads its products into the table below.'),
+
+                    // Shown when GRN Mode = 'Direct GRN (Without PO)'
+                    Forms\Components\TextInput::make('direct_po_number')
+                        ->label('Direct Reference / PO No')
+                        ->default(fn () => Grn::generateDirectPoNumber())
+                        ->visible(fn (Get $get) => ($get('grn_type') ?? 'po') === 'direct')
+                        ->required(fn (Get $get) => ($get('grn_type') ?? 'po') === 'direct')
+                        ->readOnly()
+                        ->dehydrated()
+                        ->helperText('Auto-generated Direct Reference No (no system Purchase Order required).'),
 
                     Forms\Components\DateTimePicker::make('created_at')
                         ->label('Created Date & Time')

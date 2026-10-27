@@ -29,13 +29,22 @@ class GrnTable
                     ->iconColor('success')
                     ->weight('medium'),
 
-                Tables\Columns\TextColumn::make('purchaseOrder.po_number')
-                    ->label('Purchase Order No')
-                    ->searchable()
-                    ->sortable()
+                Tables\Columns\TextColumn::make('po_reference')
+                    ->label('Purchase Order / Direct Ref')
+                    ->getStateUsing(fn (Grn $record): string => $record->purchaseOrder?->po_number
+                        ?? $record->direct_po_number
+                        ?? 'Direct'
+                    )
+                    ->searchable(query: fn ($query, string $search) => $query
+                        ->where('direct_po_number', 'like', "%{$search}%")
+                        ->orWhereHas('purchaseOrder', fn ($q) => $q->where('po_number', 'like', "%{$search}%"))
+                    )
                     ->badge()
-                    ->color('gray')
-                    ->placeholder('Direct'),
+                    ->color(fn (Grn $record): string => $record->purchase_order_id ? 'info' : 'warning')
+                    ->tooltip(fn (Grn $record): string => $record->purchase_order_id
+                        ? 'Linked System Purchase Order'
+                        : 'Direct GRN (Without System Purchase Order)'
+                    ),
 
                 Tables\Columns\TextColumn::make('items_count')
                     ->counts('items')

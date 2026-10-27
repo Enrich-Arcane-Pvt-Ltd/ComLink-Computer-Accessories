@@ -15,8 +15,10 @@ class Grn extends Model
 
     protected $fillable = [
         'grn_number',
+        'grn_type',
         'supplier_id',
         'purchase_order_id',
+        'direct_po_number',
         'sub_total',
         'notes',
     ];
@@ -40,6 +42,13 @@ class Grn extends Model
         return $this->hasMany(GrnItem::class);
     }
 
+    public function getPoReferenceAttribute(): string
+    {
+        return $this->purchaseOrder?->po_number
+            ?? $this->direct_po_number
+            ?? 'Direct';
+    }
+
     public static function generateGrnNumber(): string
     {
         $year = date('Y');
@@ -47,6 +56,23 @@ class Grn extends Model
         $latest = self::where('grn_number', 'like', "{$prefix}%")
             ->orderBy('id', 'desc')
             ->value('grn_number');
+
+        if ($latest && preg_match('/'.preg_quote($prefix, '/').'(\d+)/', $latest, $matches)) {
+            $next = (int) $matches[1] + 1;
+        } else {
+            $next = 1;
+        }
+
+        return $prefix.str_pad((string) $next, 6, '0', STR_PAD_LEFT);
+    }
+
+    public static function generateDirectPoNumber(): string
+    {
+        $year = date('Y');
+        $prefix = "DIR-PO-{$year}-";
+        $latest = self::where('direct_po_number', 'like', "{$prefix}%")
+            ->orderBy('id', 'desc')
+            ->value('direct_po_number');
 
         if ($latest && preg_match('/'.preg_quote($prefix, '/').'(\d+)/', $latest, $matches)) {
             $next = (int) $matches[1] + 1;
@@ -66,7 +92,7 @@ class Grn extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['grn_number', 'supplier_id', 'purchase_order_id', 'sub_total'])
+            ->logOnly(['grn_number', 'grn_type', 'supplier_id', 'purchase_order_id', 'direct_po_number', 'sub_total'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
