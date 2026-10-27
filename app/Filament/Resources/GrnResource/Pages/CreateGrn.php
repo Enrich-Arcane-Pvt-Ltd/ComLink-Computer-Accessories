@@ -30,26 +30,28 @@ class CreateGrn extends CreateRecord
                 foreach ($po->items as $item) {
                     $itemsData[(string) Str::uuid()] = [
                         'inventory_product_id' => $item->inventory_product_id,
-                        'product_variant_id' => $item->product_variant_id,
-                        'color_name' => $item->color_name,
-                        'product_code' => $item->product_code,
-                        'product_name' => $item->product_name,
-                        'product_condition' => $item->product_condition ?: 'Brandnew',
-                        'product_quantity' => (int) ($item->product_quantity ?: 1),
-                        'price_per_unit' => 0.00,
-                        'total' => 0.00,
+                        'product_variant_id'   => $item->product_variant_id,
+                        'color_name'           => $item->color_name,
+                        'product_code'         => $item->product_code,
+                        'product_name'         => $item->product_name,
+                        'product_condition'    => $item->product_condition ?: 'Brandnew',
+                        'product_quantity'     => (int) ($item->product_quantity ?: 1),
+                        'price_per_unit'       => 0.00,
+                        'total'                => 0.00,
                     ];
                 }
 
                 $this->callHook('beforeFill');
 
                 $this->form->fill([
-                    'grn_number' => Grn::generateGrnNumber(),
-                    'supplier_id' => $po->supplier_id,
+                    'grn_type'          => 'po',
+                    'grn_number'        => Grn::generateGrnNumber(),
+                    'supplier_id'       => $po->supplier_id,
                     'purchase_order_id' => $po->id,
-                    'sub_total' => 0.00,
-                    'created_at' => now(),
-                    'items' => $itemsData,
+                    'direct_po_number'  => null,
+                    'sub_total'         => 0.00,
+                    'created_at'        => now(),
+                    'items'             => $itemsData,
                 ]);
 
                 $this->callHook('afterFill');
@@ -63,6 +65,18 @@ class CreateGrn extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        $grnType = $data['grn_type'] ?? (! empty($data['purchase_order_id']) ? 'po' : 'direct');
+        $data['grn_type'] = $grnType;
+
+        if ($grnType === 'direct' || empty($data['purchase_order_id'])) {
+            $data['purchase_order_id'] = null;
+            if (empty($data['direct_po_number'])) {
+                $data['direct_po_number'] = Grn::generateDirectPoNumber();
+            }
+        } else {
+            $data['direct_po_number'] = null;
+        }
+
         // Calculate sub total from items if not already set
         $subTotal = 0;
         if (isset($data['items']) && is_array($data['items'])) {

@@ -31,6 +31,18 @@ class EditGrn extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
+        $grnType = $data['grn_type'] ?? (! empty($data['purchase_order_id']) ? 'po' : 'direct');
+        $data['grn_type'] = $grnType;
+
+        if ($grnType === 'direct' || empty($data['purchase_order_id'])) {
+            $data['purchase_order_id'] = null;
+            if (empty($data['direct_po_number'])) {
+                $data['direct_po_number'] = $this->record->direct_po_number ?: \App\Models\Grn::generateDirectPoNumber();
+            }
+        } else {
+            $data['direct_po_number'] = null;
+        }
+
         $subTotal = 0;
         if (isset($data['items']) && is_array($data['items'])) {
             foreach ($data['items'] as &$item) {

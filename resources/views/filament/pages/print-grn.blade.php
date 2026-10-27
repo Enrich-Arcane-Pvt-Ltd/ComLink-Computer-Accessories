@@ -64,6 +64,8 @@
                 <p class="text-xs text-gray-500 mt-1">Date: {{ $grn->created_at->format('M d, Y h:i A') }}</p>
                 @if($grn->purchaseOrder)
                     <p class="text-xs text-gray-600 mt-1">PO Ref: <span class="font-mono font-semibold">{{ $grn->purchaseOrder->po_number }}</span></p>
+                @elseif($grn->direct_po_number)
+                    <p class="text-xs text-gray-600 mt-1">Direct Ref: <span class="font-mono font-semibold">{{ $grn->direct_po_number }}</span></p>
                 @endif
             </div>
         </div>
@@ -80,7 +82,7 @@
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200/80">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">GRN Metadata</h3>
                 <p class="text-xs text-gray-700"><span class="font-semibold text-gray-500">Invoice Number:</span> {{ $grn->grn_number }}</p>
-                <p class="text-xs text-gray-700 mt-1"><span class="font-semibold text-gray-500">Linked Purchase Order:</span> {{ $grn->purchaseOrder?->po_number ?? 'Direct Receipt' }}</p>
+                <p class="text-xs text-gray-700 mt-1"><span class="font-semibold text-gray-500">Purchase Order / Direct Ref:</span> {{ $grn->purchaseOrder?->po_number ?? $grn->direct_po_number ?? 'Direct Receipt' }}</p>
                 <p class="text-xs text-gray-700 mt-1"><span class="font-semibold text-gray-500">Items Count:</span> {{ $grn->items->count() }} items ({{ $grn->items->sum('product_quantity') }} total units)</p>
                 <p class="text-xs text-gray-700 mt-1"><span class="font-semibold text-gray-500">Status:</span> Received & Verified</p>
             </div>
