@@ -194,6 +194,134 @@ class Dashboard extends BaseDashboard
             ->take(6)
             ->get();
 
+        // 11. Sales Analyzer Data (Key insights, top-selling items, and fulfillment pipeline)
+        $avgOrderValue = $paidOrdersCount > 0 ? round($totalSales / $paidOrdersCount, 2) : 0.0;
+        $highestOrder = Order::where('payment_status', 'Paid')->orderByDesc('total_amount')->first();
+        $totalPaidUnits = (int) OrderItem::whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))->sum('quantity');
+        $todaySales = (float) Order::where('payment_status', 'Paid')->whereDate('created_at', Carbon::today())->sum('total_amount');
+        $thisMonthSales = (float) Order::where('payment_status', 'Paid')->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->sum('total_amount');
+        $paymentSuccessRate = $ordersCount > 0 ? round(($paidOrdersCount / $ordersCount) * 100, 1) : 100.0;
+
+        // Top 5 Selling Products by revenue
+        $topSellingRaw = OrderItem::whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+            ->select(
+                'product_name',
+                'product_image',
+                'category_name',
+                DB::raw('SUM(quantity) as total_sold'),
+                DB::raw('SUM(total_price) as total_revenue'),
+                DB::raw('AVG(unit_price) as avg_price')
+            )
+            ->groupBy('product_name', 'product_image', 'category_name')
+            ->orderByDesc('total_revenue')
+            ->take(5)
+            ->get();
+
+        $topSellingProducts = $topSellingRaw->map(function ($row) use ($totalSales) {
+            $rev = (float) $row->total_revenue;
+            $pct = $totalSales > 0 ? round(($rev / $totalSales) * 100, 1) : 0;
+            return [
+                'name' => $row->product_name,
+                'image' => $row->product_image ?: '/images/placeholder.png',
+                'category' => $row->category_name ?: 'Accessories',
+                'units' => (int) $row->total_sold,
+                'revenue' => $rev,
+                'percentage' => $pct,
+                'avg_price' => (float) $row->avg_price,
+            ];
+        })->values()->all();
+
+        // Fulfillment stages breakdown
+        $pipelineStages = ['Processing', 'Packaging', 'Shipping', 'Delivered'];
+        $salesPipeline = [];
+        foreach ($pipelineStages as $stage) {
+            $stageOrders = Order::where('payment_status', 'Paid')->where('status', $stage);
+            $stageCount = $stageOrders->count();
+            $stageAmount = (float) $stageOrders->sum('total_amount');
+            $salesPipeline[] = [
+                'stage' => $stage,
+                'count' => $stageCount,
+                'amount' => $stageAmount,
+                'percentage' => $totalSales > 0 ? round(($stageAmount / $totalSales) * 100, 1) : 0,
+            ];
+        }
+
+        $salesAnalyzer = [
+            'totalSales' => $totalSales,
+            'paidOrdersCount' => $paidOrdersCount,
+            'avgOrderValue' => $avgOrderValue,
+            'highestOrderAmount' => $highestOrder ? (float) $highestOrder->total_amount : 0.0,
+            'highestOrderNumber' => $highestOrder ? $highestOrder->order_number : 'N/A',
+            'totalPaidUnits' => $totalPaidUnits,
+            'todaySales' => $todaySales,
+            'thisMonthSales' => $thisMonthSales,
+            'paymentSuccessRate' => $paymentSuccessRate,
+            'topSellingProducts' => $topSellingProducts,
+            'salesPipeline' => $salesPipeline,
+            'salesInfoUrl' => url('/admin/sales-section/sales-info'),
+        ];
+
+        // 12. Top Low 6 Current Inventory Stock Products
+        $grnSums = GrnItem::groupBy('product_code')
+            ->selectRaw('product_code, SUM(product_quantity) as total_qty')
+            ->pluck('total_qty', 'product_code')
+            ->all();
+
+        $soldItems = OrderItem::whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+            ->select('product_id', 'product_name', 'quantity')
+            ->get();
+
+        $soldByProductId = [];
+        $soldByProductName = [];
+        foreach ($soldItems as $item) {
+            if ($item->product_id) {
+                $soldByProductId[$item->product_id] = ($soldByProductId[$item->product_id] ?? 0) + (int) $item->quantity;
+            }
+            if ($item->product_name) {
+                $soldByProductName[$item->product_name] = ($soldByProductName[$item->product_name] ?? 0) + (int) $item->quantity;
+            }
+        }
+
+        $allProducts = Product::with(['supplier', 'brand', 'variants', 'categories.parent'])->get();
+
+        $outOfStockCount = 0;
+        $lowStockCount = 0;
+        $inStockCount = 0;
+
+        foreach ($allProducts as $product) {
+            $fullCount = 0;
+            if ($product->product_code && isset($grnSums[$product->product_code])) {
+                $fullCount = (int) $grnSums[$product->product_code];
+            } else {
+                $fullCount = (int) ($product->inventory_stock ?? 0);
+            }
+
+            $soldCount = 0;
+            if (isset($soldByProductId[$product->id])) {
+                $soldCount = (int) $soldByProductId[$product->id];
+            } elseif ($product->product_code && isset($soldByProductName[$product->name])) {
+                $soldCount = (int) $soldByProductName[$product->name];
+            }
+
+            $currentStock = max(0, $fullCount - $soldCount);
+
+            $product->computed_inventory_full_count = $fullCount;
+            $product->computed_sold_count = $soldCount;
+            $product->computed_current_stock = $currentStock;
+
+            if ($currentStock === 0) {
+                $outOfStockCount++;
+            } elseif ($currentStock <= 5) {
+                $lowStockCount++;
+            } else {
+                $inStockCount++;
+            }
+        }
+
+        $topLowStockProducts = $allProducts->sortBy(function ($product) {
+            return $product->computed_current_stock;
+        })->take(6)->values();
+
         return [
             // Store Metrics
             'categoriesCount' => $categoriesCount,
@@ -236,6 +364,19 @@ class Dashboard extends BaseDashboard
             'latestOrders' => $latestOrders,
             'allProductsUrl' => url('/admin/product-resource/products'),
             'allOrdersUrl' => url('/admin/order-resource/orders'),
+
+            // Sales Analyzer
+            'salesAnalyzer' => $salesAnalyzer,
+
+            // Top Low Stock Inventory Section
+            'topLowStockProducts' => $topLowStockProducts,
+            'stockCountUrl' => url('/admin/stock-count'),
+            'stockStats' => [
+                'outOfStock' => $outOfStockCount,
+                'lowStock' => $lowStockCount,
+                'inStock' => $inStockCount,
+                'total' => $allProducts->count(),
+            ],
         ];
     }
 }

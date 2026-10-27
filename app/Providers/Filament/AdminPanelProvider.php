@@ -81,12 +81,13 @@ class AdminPanelProvider extends PanelProvider
                 \App\Filament\Pages\Dashboard::class,
             ])
             ->navigationGroups([
-                'User Management',
+                'Sales Section',
                 'Catalog Management',
                 'Order Management',
                 'Inventory Management',
                 'Stock Management',
                 'Supplier Management',
+                'User Management',
                 'Marketing',
                 'System Management',
             ])
