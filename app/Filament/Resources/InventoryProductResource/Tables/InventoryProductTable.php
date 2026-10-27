@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\InventoryProductResource\Tables;
 
+use App\Models\InventoryProduct;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -10,6 +11,7 @@ class InventoryProductTable
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn ($query) => $query->with(['storefrontProduct.categories', 'storefrontProduct.brand', 'storefrontProduct.variants']))
             ->columns([
                 Tables\Columns\TextColumn::make('index')
                     ->label('No')
@@ -17,6 +19,10 @@ class InventoryProductTable
 
                 Tables\Columns\ImageColumn::make('product_image')
                     ->label('Product Image')
+                    ->getStateUsing(fn (InventoryProduct $record): ?string => $record->product_image
+                        ?? $record->storefrontProduct?->images[0]
+                        ?? null
+                    )
                     ->disk('public')
                     ->defaultImageUrl('/images/placeholder.png')
                     ->circular(false)
@@ -38,14 +44,35 @@ class InventoryProductTable
                     ->weight('semibold')
                     ->wrap(),
 
-                Tables\Columns\TextColumn::make('supplier.name')
-                    ->label('Supplier Name')
-                    ->searchable()
-                    ->sortable()
-                    ->icon('heroicon-o-truck')
-                    ->iconColor('success')
+                Tables\Columns\TextColumn::make('category_info')
+                    ->label('Category / Sub Category')
+                    ->getStateUsing(function (InventoryProduct $record): string {
+                        $product = $record->storefrontProduct;
+                        if (! $product) {
+                            return '—';
+                        }
+                        $main = $product->categories->firstWhere('parent_id', null);
+                        $sub = $product->categories->firstWhere('parent_id', '!=', null);
+                        if ($main && $sub) {
+                            return "{$main->name} › {$sub->name}";
+                        }
+
+                        return $main?->name ?? $sub?->name ?? '—';
+                    })
+                    ->badge()
+                    ->color('info'),
+
+                Tables\Columns\TextColumn::make('storefrontProduct.brand.name')
+                    ->label('Brand')
+                    ->placeholder('—')
                     ->badge()
                     ->color('gray'),
+
+                Tables\Columns\TextColumn::make('storefrontProduct.condition')
+                    ->label('Condition')
+                    ->default('Brand New')
+                    ->badge()
+                    ->color(fn (?string $state): string => $state === 'Used' ? 'warning' : 'success'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Added Date')
@@ -54,16 +81,14 @@ class InventoryProductTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at', 'desc')
-            ->filters([
-                Tables\Filters\SelectFilter::make('supplier_id')
-                    ->label('Filter by Supplier')
-                    ->relationship('supplier', 'name')
-                    ->searchable()
-                    ->preload(),
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->after(function (InventoryProduct $record) {
+                        if ($record->product_code) {
+                            \App\Models\Product::where('product_code', $record->product_code)->delete();
+                        }
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

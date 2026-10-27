@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource\ProductResource;
+use App\Models\GrnItem;
+use App\Models\InventoryProduct;
+use App\Models\Supplier;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -25,17 +28,17 @@ class EditProduct extends EditRecord
             $data['has_color_variants'] = true;
             $data['color_variants'] = $this->record->variants->map(function ($variant) {
                 return [
-                    'id' => $variant->id,
-                    'color_name' => $variant->color_name,
-                    'variant_name' => $variant->variant_name ?? "{$this->record->name} - {$variant->color_name}",
-                    'image' => $variant->image,
-                    'condition' => $variant->condition ?? 'Brand New',
-                    'inventory_stock' => $variant->inventory_stock ?? 0,
-                    'show_quantity' => $variant->show_quantity ?? $variant->stock ?? 0,
-                    'grn_price' => $variant->grn_price,
-                    'price' => $variant->price,
+                    'id'                  => $variant->id,
+                    'color_name'          => $variant->color_name,
+                    'variant_name'        => $variant->variant_name ?? "{$this->record->name} - {$variant->color_name}",
+                    'image'               => $variant->image,
+                    'condition'           => $variant->condition ?? 'Brand New',
+                    'inventory_stock'     => $variant->inventory_stock ?? 0,
+                    'show_quantity'       => $variant->show_quantity ?? $variant->stock ?? 0,
+                    'grn_price'           => $variant->grn_price,
+                    'price'               => $variant->price,
                     'discount_percentage' => $variant->discount_percentage ?? 0,
-                    'sale_price' => $variant->sale_price,
+                    'sale_price'          => $variant->sale_price,
                 ];
             })->toArray();
         } else {
@@ -89,8 +92,8 @@ class EditProduct extends EditRecord
             }
 
             $code = $data['product_code'] ?? $this->record->product_code;
-            $invStock = $code 
-                ? (int) \App\Models\GrnItem::where('product_code', $code)->sum('product_quantity') 
+            $invStock = $code
+                ? (int) GrnItem::where('product_code', $code)->sum('product_quantity')
                 : (int) ($data['quantity'] ?? $this->record->quantity ?? 0);
 
             $sold = (int) $this->record->sold_count;
@@ -143,18 +146,18 @@ class EditProduct extends EditRecord
                 $vAvail = max(0, $vInv - $vSold);
 
                 $variantData = [
-                    'color_name' => $v['color_name'],
-                    'variant_name' => $v['variant_name'] ?? "{$this->record->name} - {$v['color_name']}",
-                    'attributes' => ['color' => $v['color_name']],
-                    'image' => $image,
-                    'condition' => $v['condition'] ?? 'Brand New',
-                    'inventory_stock' => $vInv,
-                    'show_quantity' => $vInv,
-                    'stock' => $vAvail,
-                    'grn_price' => ! empty($v['grn_price']) ? (float) $v['grn_price'] : null,
-                    'price' => (float) ($v['price'] ?? 0),
+                    'color_name'          => $v['color_name'],
+                    'variant_name'        => $v['variant_name'] ?? "{$this->record->name} - {$v['color_name']}",
+                    'attributes'          => ['color' => $v['color_name']],
+                    'image'               => $image,
+                    'condition'           => $v['condition'] ?? 'Brand New',
+                    'inventory_stock'     => $vInv,
+                    'show_quantity'       => $vInv,
+                    'stock'               => $vAvail,
+                    'grn_price'           => ! empty($v['grn_price']) ? (float) $v['grn_price'] : null,
+                    'price'               => (float) ($v['price'] ?? 0),
                     'discount_percentage' => (int) ($v['discount_percentage'] ?? 0),
-                    'sale_price' => ! empty($v['sale_price']) ? (float) $v['sale_price'] : null,
+                    'sale_price'          => ! empty($v['sale_price']) ? (float) $v['sale_price'] : null,
                 ];
 
                 if (! empty($v['id'])) {
@@ -176,6 +179,39 @@ class EditProduct extends EditRecord
         } elseif (empty($this->data['has_color_variants'])) {
             // Switched back to standard product: remove variants
             $this->record->variants()->delete();
+        }
+
+        // Keep InventoryProduct in sync with storefront product
+        $this->syncToInventoryProduct();
+    }
+
+    /**
+     * Ensures the product's code is registered in inventory_products table.
+     */
+    protected function syncToInventoryProduct(): void
+    {
+        $productCode = $this->record->product_code;
+        if (! $productCode) {
+            return;
+        }
+
+        try {
+            $images = $this->record->images ?? [];
+            $productImage = ! empty($images) ? (is_array($images) ? $images[0] : $images) : null;
+
+            $supplierId = InventoryProduct::where('product_code', $productCode)->value('supplier_id')
+                ?? Supplier::first()?->id;
+
+            InventoryProduct::firstOrCreate(
+                ['product_code' => $productCode],
+                [
+                    'product_name'  => $this->record->name,
+                    'supplier_id'   => $supplierId,
+                    'product_image' => $productImage,
+                ]
+            );
+        } catch (\Throwable $e) {
+            // Non-critical
         }
     }
 
