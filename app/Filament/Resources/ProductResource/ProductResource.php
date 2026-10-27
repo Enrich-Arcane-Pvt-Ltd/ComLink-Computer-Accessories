@@ -15,11 +15,14 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-bolt';
+    // Hidden from Product Catalog sidebar navigation (Products are now added via Inventory Products & shown on web from Inventory)
+    protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?string $navigationGroup = 'Product Catalog';
+    // protected static ?string $navigationIcon = 'heroicon-o-bolt';
 
-    protected static ?int $navigationSort = 4;
+    // protected static ?string $navigationGroup = 'Product Catalog';
+
+    // protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

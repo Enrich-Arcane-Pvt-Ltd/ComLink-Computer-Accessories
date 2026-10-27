@@ -105,14 +105,31 @@ class GrnItem extends Model
             return;
         }
 
+        $latestGrnItem = static::with('grn')->where('product_code', $productCode)->latest('id')->first();
+        $latestSupplierId = $latestGrnItem?->grn?->supplier_id;
+
+        if ($latestSupplierId) {
+            InventoryProduct::where('product_code', $productCode)->update([
+                'supplier_id' => $latestSupplierId,
+            ]);
+        }
+
         // 1. Sync specific color variant if applicable
         if ($productVariantId) {
             $variant = ProductVariant::find($productVariantId);
             if ($variant) {
                 $variantStock = (int) static::where('product_variant_id', $productVariantId)->sum('product_quantity');
                 $variantLatestPrice = static::where('product_variant_id', $productVariantId)->latest('id')->value('price_per_unit');
+                $vSold = (int) OrderItem::where('variant_id', $variant->id)
+                    ->whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+                    ->sum('quantity');
+                $vAvail = max(0, $variantStock - $vSold);
 
-                $variantUpdate = ['inventory_stock' => $variantStock];
+                $variantUpdate = [
+                    'inventory_stock' => $variantStock,
+                    'show_quantity'   => $variantStock,
+                    'stock'           => $vAvail,
+                ];
                 if ($variantLatestPrice !== null) {
                     $variantUpdate['grn_price'] = $variantLatestPrice;
                 }
@@ -130,8 +147,16 @@ class GrnItem extends Model
                         ->where('color_name', $colorName)
                         ->latest('id')
                         ->value('price_per_unit');
+                    $vSold = (int) OrderItem::where('variant_id', $variant->id)
+                        ->whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+                        ->sum('quantity');
+                    $vAvail = max(0, $variantStock - $vSold);
 
-                    $variantUpdate = ['inventory_stock' => $variantStock];
+                    $variantUpdate = [
+                        'inventory_stock' => $variantStock,
+                        'show_quantity'   => $variantStock,
+                        'stock'           => $vAvail,
+                    ];
                     if ($variantLatestPrice !== null) {
                         $variantUpdate['grn_price'] = $variantLatestPrice;
                     }
@@ -142,15 +167,24 @@ class GrnItem extends Model
 
         // 2. Sync parent product total
         $totalStock = (int) static::where('product_code', $productCode)->sum('product_quantity');
-        $latestPrice = static::where('product_code', $productCode)->latest('id')->value('price_per_unit');
+        $latestPrice = $latestGrnItem?->price_per_unit;
 
         $parent = Product::where('product_code', $productCode)->first();
         if ($parent) {
+            $sold = (int) $parent->sold_count;
+            $avail = max(0, $totalStock - $sold);
+
             $updates = [
                 'inventory_stock' => $totalStock,
+                'show_quantity'   => $totalStock,
+                'quantity'        => $avail,
             ];
             if ($latestPrice !== null) {
                 $updates['grn_price'] = $latestPrice;
+                $updates['cost_price'] = $latestPrice;
+            }
+            if ($latestSupplierId) {
+                $updates['supplier_id'] = $latestSupplierId;
             }
             $parent->update($updates);
         }

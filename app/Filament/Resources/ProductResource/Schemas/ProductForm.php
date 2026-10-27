@@ -8,8 +8,6 @@ use App\Models\GrnItem;
 use App\Models\InventoryProduct;
 use App\Models\Product;
 use App\Models\ProductSpecification;
-use App\Models\PurchaseOrderItem;
-use App\Models\Supplier;
 use Filament\Forms;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -71,7 +69,14 @@ class ProductForm
                         ->searchable()
                         ->preload()
                         ->live()
-                        ->afterStateUpdated(fn (Set $set) => $set('sub_category_id', null))
+                        ->afterStateUpdated(function (Set $set, Get $get, ?string $state) {
+                            $set('sub_category_id', null);
+                            // Regenerate product code when category changes
+                            $name = $get('name');
+                            if ($name && $state) {
+                                self::maybeGenerateProductCode($set, $get, $name, (int) $state, null);
+                            }
+                        })
                         ->afterStateHydrated(function (Set $set, ?Product $record) {
                             if ($record) {
                                 $main = $record->categories->firstWhere('parent_id', null);
@@ -110,6 +115,14 @@ class ProductForm
                         ->searchable()
                         ->preload()
                         ->live()
+                        ->afterStateUpdated(function (Set $set, Get $get, ?string $state) {
+                            // Regenerate product code when sub-category changes
+                            $name = $get('name');
+                            $catId = $get('category_id');
+                            if ($name && $catId) {
+                                self::maybeGenerateProductCode($set, $get, $name, (int) $catId, $state ? (int) $state : null);
+                            }
+                        })
                         ->afterStateHydrated(function (Set $set, ?Product $record) {
                             if ($record) {
                                 $sub = $record->categories->firstWhere('parent_id', '!=', null);
@@ -130,107 +143,21 @@ class ProductForm
             // 2. Primary Information
             Forms\Components\Section::make('General Information')
                 ->schema([
-                    Forms\Components\Select::make('supplier_id')
-                        ->label('Supplier Name')
-                        ->relationship('supplier', 'name')
-                        ->searchable()
-                        ->preload()
-                        ->placeholder('Select Supplier')
-                        ->live()
-                        ->createOptionForm([
-                            Forms\Components\TextInput::make('name')
-                                ->label('Supplier Name')
-                                ->required(),
-                            Forms\Components\TextInput::make('contact_no')
-                                ->label('Contact No'),
-                            Forms\Components\TextInput::make('email')
-                                ->label('Email')
-                                ->email(),
-                            Forms\Components\Textarea::make('address')
-                                ->label('Address'),
-                        ])
-                        ->columnSpan(1),
-
-                    Forms\Components\Select::make('product_code')
+                    // Auto-generated editable product code
+                    Forms\Components\TextInput::make('product_code')
                         ->label('Product Code')
-                        ->searchable()
-                        ->preload()
-                        ->placeholder('Select Product Code from Inventory')
-                        ->options(function (Get $get) {
-                            $supplierId = $get('supplier_id');
-
-                            $query = InventoryProduct::query();
-                            if ($supplierId) {
-                                $query->where('supplier_id', $supplierId);
-                            }
-                            $inventoryCodes = $query->pluck('product_name', 'product_code')->toArray();
-
-                            $grnQuery = GrnItem::query();
-                            if ($supplierId) {
-                                $grnQuery->whereHas('grn', fn ($q) => $q->where('supplier_id', $supplierId));
-                            }
-                            $grnCodes = $grnQuery->pluck('product_name', 'product_code')->toArray();
-
-                            $all = array_merge($inventoryCodes, $grnCodes);
-                            $options = [];
-                            foreach ($all as $code => $name) {
-                                $options[$code] = "{$code} - {$name}";
-                            }
-
-                            return $options;
+                        ->placeholder('Auto-generated from name + category (editable)')
+                        ->required()
+                        ->unique(Product::class, 'product_code', ignoreRecord: true)
+                        ->maxLength(50)
+                        ->helperText('Auto-generated unique code. You can edit it. Format: {Name}-{Cat}-{SubCat}')
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(function (Set $set, Get $get, ?string $state) {
+                            // On blur, ensure uniqueness (UI feedback via validation)
                         })
-                        ->live()
-                        ->afterStateUpdated(function (Set $set, ?string $state, Get $get) {
-                            if (! $state) {
-                                return;
-                            }
-
-                            // 1. Product Name
-                            $name = GrnItem::where('product_code', $state)->latest('id')->value('product_name')
-                                ?? InventoryProduct::where('product_code', $state)->value('product_name');
-                            if ($name) {
-                                $set('name', $name);
-                                $set('slug', Str::slug($name));
-                                if (! $get('technical_specifications.model_series')) {
-                                    $set('technical_specifications.model_series', $name);
-                                }
-                            }
-
-                            // 2. Product Condition
-                            $rawCondition = GrnItem::where('product_code', $state)->latest('id')->value('product_condition');
-                            if ($rawCondition) {
-                                $normalizedCondition = (strtolower($rawCondition) === 'used') ? 'Used' : 'Brand New';
-                                $set('condition', $normalizedCondition);
-                            }
-
-                            // 3. Inventory Stock & Quantity (Full amount moved to storefront)
-                            $inventoryStock = (int) GrnItem::where('product_code', $state)->sum('product_quantity');
-                            $set('inventory_stock', $inventoryStock);
-                            $set('quantity', $inventoryStock);
-                            $set('show_quantity', $inventoryStock);
-
-                            // 4. GRN Price
-                            $grnPrice = GrnItem::where('product_code', $state)->latest('id')->value('price_per_unit');
-                            if ($grnPrice !== null) {
-                                $set('grn_price', round((float) $grnPrice, 2));
-                                $set('cost_price', round((float) $grnPrice, 2));
-                            }
-
-                            // 5. Supplier (auto-populate if not selected)
-                            if (! $get('supplier_id')) {
-                                $supId = InventoryProduct::where('product_code', $state)->value('supplier_id')
-                                    ?? GrnItem::where('product_code', $state)->latest('id')->first()?->grn?->supplier_id;
-                                if ($supId) {
-                                    $set('supplier_id', $supId);
-                                }
-                            }
-
-                            // 6. Auto-populate Color Variants if in variant mode
-                            if ((bool) $get('has_color_variants')) {
-                                self::autoPopulateColorVariants($set, $state, $name);
-                            }
-                        })
-                        ->columnSpan(1),
+                        ->afterStateHydrated(function ($component, ?Product $record) {
+                            // Keep existing code when editing
+                        }),
 
                     Forms\Components\TextInput::make('name')
                         ->label('Product Name')
@@ -242,6 +169,9 @@ class ProductForm
                             if (! $get('technical_specifications.model_series')) {
                                 $set('technical_specifications.model_series', $state);
                             }
+
+                            // Auto-generate product code if not set or if it looks like a default
+                            self::maybeGenerateProductCode($set, $get, $state, null, null);
 
                             if ((bool) $get('has_color_variants')) {
                                 $variants = $get('color_variants');
@@ -265,23 +195,6 @@ class ProductForm
                         ->default('Brand New')
                         ->required(fn (Get $get) => ! (bool) $get('has_color_variants'))
                         ->hidden(fn (Get $get) => (bool) $get('has_color_variants'))
-                        ->columnSpan(1),
-
-                    Forms\Components\TextInput::make('quantity')
-                        ->label('Product Stock / Quantity')
-                        ->numeric()
-                        ->default(0)
-                        ->readOnly()
-                        ->dehydrated()
-                        ->hidden(fn (Get $get) => (bool) $get('has_color_variants'))
-                        ->helperText('Full quantity automatically loaded from GRN Inventory.')
-                        ->afterStateHydrated(function (Forms\Components\TextInput $component, ?Product $record) {
-                            if ($record && $record->product_code) {
-                                $stock = (int) GrnItem::where('product_code', $record->product_code)->sum('product_quantity');
-                                $sold = (int) $record->sold_count;
-                                $component->state(max(0, $stock - $sold));
-                            }
-                        })
                         ->columnSpan(1),
 
                     Forms\Components\Hidden::make('inventory_stock')
@@ -451,20 +364,19 @@ class ProductForm
 
             // 5. Pricing & Promotion
             Forms\Components\Section::make('Pricing & Promotion')
-                ->description('Specify original price and latest sale price. Discount percentage calculates automatically.')
+                ->description('Specify original price and latest sale price. Discount percentage calculates automatically. You can also set pricing later after stock is received via GRN.')
                 ->schema([
                     Forms\Components\TextInput::make('grn_price')
-                        ->label('GRN Price')
+                        ->label('GRN / Cost Price')
                         ->numeric()
                         ->prefix($currency)
-                        ->readOnly()
                         ->dehydrated()
                         ->hidden(fn (Get $get) => (bool) $get('has_color_variants'))
                         ->helperText('Inventory GRN unit cost (Admin reference only, not shown to customers)')
                         ->afterStateHydrated(function (Forms\Components\TextInput $component, ?Product $record) {
                             if ($record && $record->product_code) {
                                 $price = GrnItem::where('product_code', $record->product_code)->latest('id')->value('price_per_unit');
-                                $component->state($price ? round((float) $price, 2) : 0);
+                                $component->state($price ? round((float) $price, 2) : $component->getState());
                             }
                         }),
 
@@ -472,7 +384,6 @@ class ProductForm
                         ->label('Original Price')
                         ->numeric()
                         ->prefix($currency)
-                        ->required(fn (Get $get) => ! (bool) $get('has_color_variants'))
                         ->hidden(fn (Get $get) => (bool) $get('has_color_variants'))
                         ->live(onBlur: true)
                         ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
@@ -514,7 +425,6 @@ class ProductForm
                         ->label('Latest Price')
                         ->numeric()
                         ->prefix($currency)
-                        ->required(fn (Get $get) => ! (bool) $get('has_color_variants'))
                         ->hidden(fn (Get $get) => (bool) $get('has_color_variants'))
                         ->live(onBlur: true)
                         ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
@@ -613,7 +523,7 @@ class ProductForm
                                                 if (! empty($previousValues)) {
                                                     $preview = implode(', ', array_slice($previousValues, 0, 6));
                                                     if (count($previousValues) > 6) {
-                                                        $preview .= ' (+'.(count($previousValues) - 6).' more)';
+                                                        $preview .= ' (+'. (count($previousValues) - 6).' more)';
                                                     }
                                                     $input->helperText("Previously used in this subcategory: {$preview}");
                                                 } else {
@@ -739,6 +649,94 @@ class ProductForm
     }
 
     /**
+     * Auto-generates the product_code from name + category + sub-category.
+     * Only sets the code if it is currently empty (new product create flow).
+     * Never overwrites an existing code in edit mode.
+     */
+    public static function maybeGenerateProductCode(Set $set, Get $get, ?string $name, ?int $catId, ?int $subCatId): void
+    {
+        // Do not overwrite if a code is already set (editing or user typed one manually)
+        $existing = $get('product_code');
+        if (! empty($existing)) {
+            return;
+        }
+
+        $catId    = $catId    ?? (int) $get('category_id') ?: null;
+        $subCatId = $subCatId ?? (int) $get('sub_category_id') ?: null;
+
+        if (! $name) {
+            return;
+        }
+
+        $code = self::generateProductCode($name, $catId, $subCatId);
+        $set('product_code', $code);
+    }
+
+    /**
+     * Generate a short, unique product code.
+     * Format: {NameAbbr}-{CatAbbr}-{SubCatAbbr}[-NNN]
+     * Max ~30 chars, uppercase.
+     */
+    public static function generateProductCode(?string $name, ?int $catId, ?int $subCatId): string
+    {
+        // Build name abbreviation (max 10 chars from first letters of words)
+        $words = preg_split('/\s+/', trim((string) $name));
+        $namePart = '';
+        foreach ($words as $word) {
+            $clean = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $word));
+            if (strlen($clean) === 0) {
+                continue;
+            }
+            // Use first word up to 6 chars, then first letter of rest
+            if ($namePart === '') {
+                $namePart .= substr($clean, 0, 6);
+            } else {
+                $namePart .= substr($clean, 0, 1);
+            }
+        }
+        $namePart = substr($namePart, 0, 8); // cap at 8
+
+        // Category abbreviation (first 3 chars, uppercase)
+        $catPart = '';
+        if ($catId) {
+            $cat = Category::find($catId);
+            if ($cat) {
+                $catPart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $cat->name), 0, 4));
+            }
+        }
+
+        // Sub-category abbreviation (first 3 chars, uppercase)
+        $subPart = '';
+        if ($subCatId) {
+            $sub = Category::find($subCatId);
+            if ($sub) {
+                $subPart = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $sub->name), 0, 4));
+            }
+        }
+
+        // Build base code
+        $parts = array_filter([$namePart, $catPart, $subPart]);
+        $base  = implode('-', $parts);
+
+        if (empty($base)) {
+            $base = strtoupper(Str::random(8));
+        }
+
+        // Ensure uniqueness
+        $code = $base;
+        $counter = 1;
+        while (
+            Product::where('product_code', $code)->exists() ||
+            InventoryProduct::where('product_code', $code)->exists()
+        ) {
+            $code = $base . '-' . str_pad((string) $counter, 3, '0', STR_PAD_LEFT);
+            $counter++;
+        }
+
+        return $code;
+    }
+
+    /**
      * Auto-populates the color_variants repeater based on GRN/PO records for a given product_code.
      */
     public static function autoPopulateColorVariants(Set|callable $set, ?string $productCode, ?string $productName = null): void
@@ -757,98 +755,30 @@ class ProductForm
         $grnItems = GrnItem::where('product_code', $productCode)
             ->whereNotNull('color_name')
             ->where('color_name', '!=', '')
-            ->get();
+            ->get()
+            ->groupBy('color_name');
 
-        // 2. Fallback to PurchaseOrderItems if no GrnItems have color specified
-        $poItems = collect();
         if ($grnItems->isEmpty()) {
-            $poItems = PurchaseOrderItem::where('product_code', $productCode)
-                ->whereNotNull('color_name')
-                ->where('color_name', '!=', '')
-                ->get();
+            return;
         }
 
-        $colorVariantsData = [];
+        $variantsData = [];
+        foreach ($grnItems as $colorName => $items) {
+            $totalQty = $items->sum('product_quantity');
+            $latestItem = $items->sortByDesc('id')->first();
 
-        if ($grnItems->isNotEmpty()) {
-            // Group by normalized color name
-            $grouped = $grnItems->groupBy(fn ($item) => strtolower(trim((string) $item->color_name)));
-
-            foreach ($grouped as $normColor => $items) {
-                $firstItem = $items->last();
-                $displayName = trim((string) $firstItem->color_name);
-                $totalStock = (int) $items->sum('product_quantity');
-
-                $latestPrice = $items->reverse()->first(fn ($item) => (float) $item->price_per_unit > 0)?->price_per_unit;
-                if ($latestPrice === null) {
-                    $latestPrice = GrnItem::where('product_code', $productCode)->latest('id')->value('price_per_unit');
-                }
-
-                $rawCondition = $firstItem->product_condition
-                    ?? GrnItem::where('product_code', $productCode)->latest('id')->value('product_condition');
-                $condition = (strtolower((string) $rawCondition) === 'used') ? 'Used' : 'Brand New';
-
-                $colorVariantsData[(string) Str::uuid()] = [
-                    'color_name' => $displayName,
-                    'variant_name' => $productName ? "{$productName} - {$displayName}" : $displayName,
-                    'condition' => $condition,
-                    'inventory_stock' => $totalStock,
-                    'show_quantity' => null,
-                    'grn_price' => $latestPrice !== null ? round((float) $latestPrice, 2) : null,
-                    'image' => null,
-                    'price' => null,
-                    'sale_price' => null,
-                    'discount_percentage' => null,
-                ];
-            }
-        } elseif ($poItems->isNotEmpty()) {
-            $grouped = $poItems->groupBy(fn ($item) => strtolower(trim((string) $item->color_name)));
-            $fallbackPrice = GrnItem::where('product_code', $productCode)->latest('id')->value('price_per_unit');
-
-            foreach ($grouped as $normColor => $items) {
-                $firstItem = $items->last();
-                $displayName = trim((string) $firstItem->color_name);
-                $totalStock = (int) $items->sum('product_quantity');
-
-                $rawCondition = $firstItem->product_condition;
-                $condition = (strtolower((string) $rawCondition) === 'used') ? 'Used' : 'Brand New';
-
-                $colorVariantsData[(string) Str::uuid()] = [
-                    'color_name' => $displayName,
-                    'variant_name' => $productName ? "{$productName} - {$displayName}" : $displayName,
-                    'condition' => $condition,
-                    'inventory_stock' => $totalStock,
-                    'show_quantity' => null,
-                    'grn_price' => $fallbackPrice !== null ? round((float) $fallbackPrice, 2) : null,
-                    'image' => null,
-                    'price' => null,
-                    'sale_price' => null,
-                    'discount_percentage' => null,
-                ];
-            }
-        } else {
-            // No specific colors recorded in GRN/PO for this product code
-            $totalStock = (int) GrnItem::where('product_code', $productCode)->sum('product_quantity');
-            $grnPrice = GrnItem::where('product_code', $productCode)->latest('id')->value('price_per_unit');
-            $rawCondition = GrnItem::where('product_code', $productCode)->latest('id')->value('product_condition');
-            $condition = (strtolower((string) $rawCondition) === 'used') ? 'Used' : 'Brand New';
-
-            $colorVariantsData[(string) Str::uuid()] = [
-                'color_name' => '',
-                'variant_name' => $productName ?: '',
-                'condition' => $condition,
-                'inventory_stock' => $totalStock,
-                'show_quantity' => null,
-                'grn_price' => $grnPrice !== null ? round((float) $grnPrice, 2) : null,
-                'image' => null,
-                'price' => null,
-                'sale_price' => null,
-                'discount_percentage' => null,
+            $variantsData[] = [
+                'color_name'      => $colorName,
+                'variant_name'    => "{$productName} - {$colorName}",
+                'condition'       => 'Brand New',
+                'inventory_stock' => $totalQty,
+                'grn_price'       => $latestItem ? (float) $latestItem->price_per_unit : null,
+                'price'           => 0,
+                'sale_price'      => 0,
+                'discount_percentage' => 0,
             ];
         }
 
-        if (! empty($colorVariantsData)) {
-            $set('color_variants', $colorVariantsData);
-        }
+        $set('color_variants', $variantsData);
     }
 }

@@ -65,16 +65,12 @@ class PurchaseOrderForm
 
                             Forms\Components\Select::make('product_code')
                                 ->label('Product Code')
-                                ->options(function (Get $get) {
-                                    $supplierId = $get('../../supplier_id');
-                                    $query = InventoryProduct::query();
-                                    if ($supplierId) {
-                                        $query->where('supplier_id', $supplierId);
-                                    }
-
-                                    return $query->get()->mapWithKeys(fn ($p) => [
-                                        $p->product_code => "{$p->product_code} — {$p->product_name}",
-                                    ]);
+                                ->options(function () {
+                                    return InventoryProduct::orderBy('product_name')
+                                        ->get()
+                                        ->mapWithKeys(fn ($p) => [
+                                            $p->product_code => "{$p->product_code} — {$p->product_name}",
+                                        ]);
                                 })
                                 ->searchable()
                                 ->reactive()

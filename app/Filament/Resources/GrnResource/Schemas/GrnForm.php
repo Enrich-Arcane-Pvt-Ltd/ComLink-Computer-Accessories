@@ -101,23 +101,13 @@ class GrnForm
 
                             Forms\Components\Select::make('product_code')
                                 ->label('Product Code')
-                                ->options(function (Get $get) {
-                                    $supplierId = $get('../../supplier_id');
-                                    $query = InventoryProduct::query();
-                                    if ($supplierId) {
-                                        $query->where('supplier_id', $supplierId);
-                                    }
-                                    $options = $query->get()->mapWithKeys(fn ($p) => [
-                                        $p->product_code => "{$p->product_code} — {$p->product_name}",
-                                    ])->toArray();
-
-                                    if (empty($options)) {
-                                        $options = InventoryProduct::all()->mapWithKeys(fn ($p) => [
+                                ->options(function () {
+                                    return InventoryProduct::orderBy('product_name')
+                                        ->get()
+                                        ->mapWithKeys(fn ($p) => [
                                             $p->product_code => "{$p->product_code} — {$p->product_name}",
-                                        ])->toArray();
-                                    }
-
-                                    return $options;
+                                        ])
+                                        ->toArray();
                                 })
                                 ->searchable()
                                 ->reactive()
