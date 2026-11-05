@@ -1125,13 +1125,14 @@ class ShopController extends Controller
             }
         }
 
-        if (empty($images)) {
-            $rawImages = is_array($p->images) ? array_values(array_filter($p->images)) : [];
-            foreach ($rawImages as $img) {
-                if (empty($img)) {
-                    continue;
-                }
-                $images[] = (str_starts_with($img, 'http') || str_starts_with($img, '/')) ? $img : asset('storage/'.$img);
+        $rawImages = is_array($p->images) ? array_values(array_filter($p->images)) : [];
+        foreach ($rawImages as $img) {
+            if (empty($img)) {
+                continue;
+            }
+            $imgUrl = (str_starts_with($img, 'http') || str_starts_with($img, '/')) ? $img : asset('storage/'.$img);
+            if (! in_array($imgUrl, $images, true)) {
+                $images[] = $imgUrl;
             }
         }
 
