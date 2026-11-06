@@ -1288,7 +1288,7 @@ class ShopController extends Controller
                 'subCategory' => $subCatName,
                 'originalPrice' => (float) $p->price,
                 'latestPrice' => $p->sale_price !== null ? (float) $p->sale_price : (float) $p->price,
-                'discountPercent' => $p->sale_price ? max(0, round((($p->price - $p->sale_price) / $p->price) * 100)) : 0,
+                'discountPercent' => ($p->sale_price && $p->price > 0 && $p->sale_price < $p->price) ? max(0, round((($p->price - $p->sale_price) / $p->price) * 100)) : 0,
                 'inStock' => ($p->quantity ?? 0) > 0,
                 'brand' => $p->brand?->name ?? 'ComLink',
                 'rating' => 4.8,
