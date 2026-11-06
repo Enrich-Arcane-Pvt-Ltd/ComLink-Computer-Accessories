@@ -120,7 +120,11 @@ class ShopController extends Controller
         // 1. Try to find in database
         $dbProduct = Product::where('is_visible', true)
             ->where(function ($q) use ($product) {
-                $q->where('id', $product)->orWhere('slug', $product);
+                if (is_numeric($product)) {
+                    $q->where('id', (int) $product)->orWhere('slug', $product);
+                } else {
+                    $q->where('slug', $product);
+                }
             })
             ->with(['brand', 'categories', 'variants'])
             ->first();
@@ -408,7 +412,7 @@ class ShopController extends Controller
         $dbProducts = $dbProductsQuery->get()->map(function ($p) {
             $cat = $p->categories->firstWhere('parent_id', null) ?? $p->categories->first();
             $catName = $cat?->name ?? 'Accessories';
-            $isMainCatWithoutSubs = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
+            $isMainCatWithoutSubs = in_array(strtolower($catName), ['laptops', 'software']);
             $hasSubCat = $p->categories->count() > 1 && ! $isMainCatWithoutSubs;
             $subCat = $hasSubCat ? $p->categories->last() : null;
             $subCatName = $subCat?->name;
@@ -962,8 +966,8 @@ class ShopController extends Controller
         $brand = $item['brand'] ?? 'ComLink';
         $category = $item['category'] ?? 'PC Components';
         $categorySlug = $item['categorySlug'] ?? \Illuminate\Support\Str::slug($category);
-        $isStandaloneCategory = in_array($categorySlug, ['laptops', 'monitors-displays', 'software']) ||
-            in_array(strtolower($category), ['laptops', 'monitors & displays', 'software']);
+        $isStandaloneCategory = in_array($categorySlug, ['laptops', 'software']) ||
+            in_array(strtolower($category), ['laptops', 'software']);
         $subCategory = $isStandaloneCategory ? null : ($item['subCategory'] ?? null);
         $subCategorySlug = $isStandaloneCategory ? null : ($item['subCategorySlug'] ?? ($subCategory ? \Illuminate\Support\Str::slug($subCategory) : null));
         $targetSlug = $subCategorySlug ?: $categorySlug;
@@ -1094,7 +1098,7 @@ class ShopController extends Controller
         $cat = $p->categories->firstWhere('parent_id', null) ?? $p->categories->first();
         $catName = $cat?->name ?? 'PC Components';
         $catSlug = $cat?->slug ?? 'pc-components';
-        $isStandaloneCategory = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
+        $isStandaloneCategory = in_array(strtolower($catName), ['laptops', 'software']);
         $subCat = ! $isStandaloneCategory ? ($p->categories->firstWhere('parent_id', '!=', null) ?? ($p->categories->count() > 1 ? $p->categories->last() : null)) : null;
 
         $subCatName = $subCat?->name;
@@ -1270,7 +1274,7 @@ class ShopController extends Controller
         return $dbRelated->map(function ($p) {
             $cat = $p->categories->firstWhere('parent_id', null) ?? $p->categories->first();
             $catName = $cat?->name ?? 'Accessories';
-            $isMainWithoutSub = in_array(strtolower($catName), ['laptops', 'monitors & displays', 'software']);
+            $isMainWithoutSub = in_array(strtolower($catName), ['laptops', 'software']);
             $subCatName = ! $isMainWithoutSub && $p->categories->count() > 1 ? $p->categories->last()?->name : null;
 
             $rawImg = ! empty($p->images) && is_array($p->images) ? $p->images[0] : null;
