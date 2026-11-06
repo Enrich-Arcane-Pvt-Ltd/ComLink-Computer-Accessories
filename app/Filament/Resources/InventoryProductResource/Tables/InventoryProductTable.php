@@ -86,103 +86,79 @@ class InventoryProductTable
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                Tables\Filters\Filter::make('product_filter')
-                    ->columnSpanFull()
-                    ->form([
-                        Forms\Components\Grid::make([
-                            'default' => 1,
-                            'sm' => 2,
-                            'lg' => 4,
-                        ])->schema([
-                            Forms\Components\Select::make('category_id')
-                                ->label('Category')
-                                ->placeholder('All Categories')
-                                ->options(fn () => Category::whereNull('parent_id')->orderBy('sort_order')->pluck('name', 'id'))
-                                ->searchable()
-                                ->preload()
-                                ->live()
-                                ->afterStateUpdated(fn (Forms\Set $set) => $set('sub_category_id', null)),
-
-                            Forms\Components\Select::make('sub_category_id')
-                                ->label('Sub Category')
-                                ->placeholder('All Sub Categories')
-                                ->options(function (Forms\Get $get) {
-                                    $parentId = $get('category_id');
-                                    if ($parentId) {
-                                        return Category::where('parent_id', $parentId)->orderBy('name')->pluck('name', 'id');
-                                    }
-
-                                    return Category::whereNotNull('parent_id')->orderBy('name')->pluck('name', 'id');
-                                })
-                                ->searchable()
-                                ->preload(),
-
-                            Forms\Components\Select::make('brand_id')
-                                ->label('Brand')
-                                ->placeholder('All Brands')
-                                ->options(fn () => Brand::orderBy('name')->pluck('name', 'id'))
-                                ->searchable()
-                                ->preload(),
-
-                            Forms\Components\Select::make('condition')
-                                ->label('Condition')
-                                ->placeholder('All Conditions')
-                                ->options([
-                                    'Brand New' => 'Brand New',
-                                    'Used' => 'Used',
-                                ]),
-                        ]),
-                    ])
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label('Category')
+                    ->placeholder('All Categories')
+                    ->options(fn () => Category::whereNull('parent_id')->orderBy('sort_order')->pluck('name', 'id'))
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
                     ->query(function ($query, array $data) {
-                        return $query
-                            ->when($data['sub_category_id'] ?? null, function ($q, $subId) {
-                                $q->whereHas('storefrontProduct.categories', fn ($sq) => $sq->where('categories.id', $subId));
-                            })
-                            ->when(($data['category_id'] ?? null) && empty($data['sub_category_id']), function ($q, $catId) {
-                                $q->whereHas('storefrontProduct.categories', function ($sq) use ($catId) {
-                                    $sq->where('categories.id', $catId)
-                                        ->orWhere('categories.parent_id', $catId);
-                                });
-                            })
-                            ->when($data['brand_id'] ?? null, function ($q, $brandId) {
-                                $q->whereHas('storefrontProduct', fn ($sq) => $sq->where('brand_id', $brandId));
-                            })
-                            ->when($data['condition'] ?? null, function ($q, $cond) {
-                                $q->whereHas('storefrontProduct', fn ($sq) => $sq->where('condition', $cond));
+                        if (! empty($data['value'])) {
+                            $catId = $data['value'];
+                            $query->whereHas('storefrontProduct.categories', function ($sq) use ($catId) {
+                                $sq->where('categories.id', $catId)
+                                    ->orWhere('categories.parent_id', $catId);
                             });
-                    })
-                    ->indicateUsing(function (array $data): array {
-                        $indicators = [];
-                        if ($data['category_id'] ?? null) {
-                            $catName = Category::find($data['category_id'])?->name;
-                            if ($catName) {
-                                $indicators[] = Tables\Filters\Indicator::make("Category: {$catName}")
-                                    ->removeField('category_id');
-                            }
                         }
-                        if ($data['sub_category_id'] ?? null) {
-                            $subName = Category::find($data['sub_category_id'])?->name;
-                            if ($subName) {
-                                $indicators[] = Tables\Filters\Indicator::make("Sub Category: {$subName}")
-                                    ->removeField('sub_category_id');
-                            }
-                        }
-                        if ($data['brand_id'] ?? null) {
-                            $brandName = Brand::find($data['brand_id'])?->name;
-                            if ($brandName) {
-                                $indicators[] = Tables\Filters\Indicator::make("Brand: {$brandName}")
-                                    ->removeField('brand_id');
-                            }
-                        }
-                        if ($data['condition'] ?? null) {
-                            $indicators[] = Tables\Filters\Indicator::make("Condition: {$data['condition']}")
-                                ->removeField('condition');
-                        }
+                    }),
 
-                        return $indicators;
+                Tables\Filters\SelectFilter::make('sub_category_id')
+                    ->label('Sub Category')
+                    ->placeholder('All Sub Categories')
+                    ->options(function () {
+                        return Category::whereNotNull('parent_id')
+                            ->with('parent')
+                            ->get()
+                            ->mapWithKeys(function ($sub) {
+                                $prefix = $sub->parent ? "{$sub->parent->name} › " : '';
+
+                                return [$sub->id => "{$prefix}{$sub->name}"];
+                            })
+                            ->sort()
+                            ->all();
+                    })
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
+                    ->query(function ($query, array $data) {
+                        if (! empty($data['value'])) {
+                            $query->whereHas('storefrontProduct.categories', fn ($sq) => $sq->where('categories.id', $data['value']));
+                        }
+                    }),
+
+                Tables\Filters\SelectFilter::make('brand_id')
+                    ->label('Brand')
+                    ->placeholder('All Brands')
+                    ->options(fn () => Brand::orderBy('name')->pluck('name', 'id'))
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
+                    ->query(function ($query, array $data) {
+                        if (! empty($data['value'])) {
+                            $query->whereHas('storefrontProduct', fn ($sq) => $sq->where('brand_id', $data['value']));
+                        }
+                    }),
+
+                Tables\Filters\SelectFilter::make('condition')
+                    ->label('Condition')
+                    ->placeholder('All Conditions')
+                    ->options([
+                        'Brand New' => 'Brand New',
+                        'Used' => 'Used',
+                    ])
+                    ->native(false)
+                    ->query(function ($query, array $data) {
+                        if (! empty($data['value'])) {
+                            $query->whereHas('storefrontProduct', fn ($sq) => $sq->where('condition', $data['value']));
+                        }
                     }),
             ], layout: FiltersLayout::AboveContent)
-            ->filtersFormColumns(1)
+            ->filtersFormColumns([
+                'default' => 1,
+                'sm' => 2,
+                'lg' => 4,
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
