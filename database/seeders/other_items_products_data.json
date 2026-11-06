@@ -1,0 +1,812 @@
+[
+  {
+    "name": "Hikvision DS-1LN6UU/CCA Cat6 UTP 4-Pair Network Cable (1M)",
+    "product_code": "DS-1LN6UU/CCA",
+    "slug": "hikvision-ds-1ln6uu-cca-network-cable-1m",
+    "brand_slug": "hikvision",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "HIKVISION DS-1LN6UUCCA NETWORK CABLE",
+    "sale_price": 88.0,
+    "price": 99.0,
+    "cost_price": 75.0,
+    "stock": 500,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The Hikvision DS-1LN6UU/CCA is a high-performance Cat6 UTP 4-pair unshielded twisted pair network cable engineered for reliable CCTV IP camera networking and high-speed data transmission.\n\nKey Features:\n\n- Cat6 Gigabit Data Transmission: Supports transmission frequencies up to 250 MHz.\n- Copper Clad Aluminum (CCA) 24 AWG Conductor: Cost-effective high conductivity performance.\n- Heavy-Duty PVC Outer Sheath: Flexible, durable, and wear-resistant for indoor cable routing.\n- Verified Standards Compliance: ANSI/TIA-568-C.2, ISO/IEC 11801, and RoHS compliant.",
+    "main_specs": {
+      "Resolution": "Gigabit Ethernet (Up to 1000 Mbps)",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Cat6 UTP 4-Pair 8-Core",
+      "Audio": "Supports Digital Audio Streaming over IP",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "Hikvision DS-1LN6UU/CCA",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Solid 24 AWG (0.50 mm) CCA Conductor",
+        "Architecture": "4 Unshielded Twisted Pairs with HDPE Core Separator",
+        "Thermal Efficiency": "Operating Temperature: -20 °C to 60 °C",
+        "Power Consumption": "Supports IEEE 802.3af PoE Power Delivery"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with all RJ45 Network Equipment, IP Cameras, and NVRs",
+        "Certification": "ANSI/TIA-568-C.2, ISO/IEC 11801, RoHS Compliant",
+        "Dimensions & Weight": "Outer Sheath Diameter: 5.3 ± 0.2 mm, PVC Sheath",
+        "Included in Box": "1x Meter DS-1LN6UU/CCA Network Cable (Supplied in continuous length)"
+      }
+    }
+  },
+  {
+    "name": "Hikvision DS-1LN6UZC0 Solid Bare Copper Cat6 Network Cable (1M)",
+    "product_code": "DS-1LN6UZC0",
+    "slug": "hikvision-ds-1ln6uzc0-solid-copper-cat6-cable-1m",
+    "brand_slug": "hikvision",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "HIKVISION DS-1LN6UZC0 NETWORK CABLE",
+    "sale_price": 170.0,
+    "price": 190.0,
+    "cost_price": 145.0,
+    "stock": 500,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The Hikvision DS-1LN6UZC0 is a premium enterprise-grade Cat6 100% Solid Oxygen-Free Bare Copper network cable designed for long-distance PoE camera installations, data centers, and mission-critical surveillance networks.\n\nKey Features:\n\n- 100% Solid Oxygen-Free Copper (OFC): Ensures maximum electrical conductivity and lowest voltage drop over long PoE runs.\n- Fluke Test Passed: Certified performance across full 305-meter drum lengths.\n- Low Smoke Zero Halogen (LSZH) Jacket: High flame retardancy with zero toxic acid gas emissions during fire conditions.\n- Superior Shielding & Cross Divider: Cross PE skeleton isolates pairs to eliminate crosstalk and signal degradation.",
+    "main_specs": {
+      "Resolution": "Gigabit Ethernet (Up to 1000 Mbps / 250 MHz Bandwidth)",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Cat6 Solid Bare Copper 4-Pair",
+      "Audio": "Supports High-Bitrate Digital Audio over PoE",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "Hikvision DS-1LN6UZC0",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Solid Bare Copper 23 AWG (0.565 mm) Conductor",
+        "Architecture": "4-Pair Solid Copper with Internal Cross Isolator",
+        "Thermal Efficiency": "Flame Retardant LSZH Compound (-20 °C to 75 °C)",
+        "Power Consumption": "Optimized for High-Power IEEE 802.3at / 802.3bt PoE+ / PoE++"
+      },
+      "compatibility": {
+        "Operating Systems": "Fully compatible with all Enterprise Switches, NVRs, and CCTV PoE gear",
+        "Certification": "ISO/IEC 11801, TIA-568-C.2, Fluke Channel/Permanent Link Passed",
+        "Dimensions & Weight": "Outer Diameter: 6.0 ± 0.3 mm, High-Density LSZH Sheath",
+        "Included in Box": "1x Meter DS-1LN6UZC0 Solid Copper Cable (Cut to ordered length)"
+      }
+    }
+  },
+  {
+    "name": "Hikvision RG59 High-Performance Coaxial Cable with Power (1M)",
+    "product_code": "HIK-RG59-CABLE",
+    "slug": "hikvision-rg59-high-performance-coaxial-cable-1m",
+    "brand_slug": "hikvision",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "HIKVISION RG 59 COAXIAL CABLE",
+    "sale_price": 48.0,
+    "price": 55.0,
+    "cost_price": 40.0,
+    "stock": 500,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The Hikvision RG59 75-Ohm coaxial cable provides clean, interference-free analog video signal transmission for TVI, AHD, and CVI surveillance systems, preserving razor-sharp image quality over long distances.\n\nKey Features:\n\n- 75-Ohm Precision Video Impedance: Minimizes signal attenuation and ghosting artifacts.\n- High-Density Braided Shielding: Protects video signals from electromagnetic (EMI) and radio-frequency (RFI) interference.\n- Tough Weatherproof PVC Jacket: Flexible construction suitable for conduit piping or indoor runs.\n- Compatible with All 4-in-1 Analog Security Systems: Works seamlessly with HD-TVI, AHD, CVI, and CVBS cameras.",
+    "main_specs": {
+      "Resolution": "Supports Analog Full HD 1080p, 3K, 4MP, & 4K Video Transmission",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "75 Ohm RG59 Coaxial Video Line",
+      "Audio": "Supports Audio over Coaxial (AoC) Signaling",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "Hikvision RG59 CCTV Series",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Solid Center Conductor with Solid PE Dielectric",
+        "Architecture": "Aluminum Foil + High-Coverage Tinned Braid Shielding",
+        "Thermal Efficiency": "Flame Retardant PVC (-20 °C to 70 °C)",
+        "Power Consumption": "Standard Passive Coaxial Transmission"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with standard BNC crimp and twist-on connectors",
+        "Certification": "RoHS, ISO9001 Compliant",
+        "Dimensions & Weight": "Nominal Outer Diameter: 6.1 mm",
+        "Included in Box": "1x Meter Hikvision RG59 Coaxial Cable"
+      }
+    }
+  },
+  {
+    "name": "Pelcco PLC-64CCA 75-Ohm Copper Coated Coaxial Cable (1M)",
+    "product_code": "PELCCO-PLC-64CCA",
+    "slug": "pelcco-plc-64cca-copper-coated-coaxial-cable-1m",
+    "brand_slug": "pelcco",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "PELCCO PLC-64CCA COPPER COATED COAXIAL",
+    "sale_price": 40.0,
+    "price": 45.0,
+    "cost_price": 34.0,
+    "stock": 500,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The Pelcco PLC-64CCA is an economical, reliable 75-ohm coaxial cable featuring a 64-strand braided copper-coated conductor designed for affordable home and small business CCTV installations.\n\nKey Features:\n\n- 64-Strand Braided Shield: Provides dependable noise rejection against ambient electrical hum.\n- Copper Coated Aluminum Core: Delivers clear video signaling with low overall cable weight.\n- Flexible PVC Sheath: Easy to pull through tight electrical conduits and ceiling tracks.\n- Universal Analog CCTV Compatibility: Supports standard 720p, 1080p, and analog video.",
+    "main_specs": {
+      "Resolution": "Supports 720p, 1080p Full HD Analog Video",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "75 Ohm RG59 Coaxial Conductor",
+      "Audio": "Supports Analog Audio Signaling",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "Pelcco PLC-64CCA",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "CCA Center Conductor with 64-strand Shielding",
+        "Architecture": "Foam Polyethylene Dielectric with Protective Outer PVC",
+        "Thermal Efficiency": "Operating Temperature: -15 °C to 60 °C",
+        "Power Consumption": "Passive Signal Transmission"
+      },
+      "compatibility": {
+        "Operating Systems": "Standard BNC Crimp, Twist-on, or Compression Connectors",
+        "Certification": "CE, RoHS Compliant",
+        "Dimensions & Weight": "Outer Diameter: 5.8 mm",
+        "Included in Box": "1x Meter Pelcco PLC-64CCA Coaxial Cable"
+      }
+    }
+  },
+  {
+    "name": "ACL Twin Twisted (TT) Flexible CCTV Power Cable (1M)",
+    "product_code": "ACL-TT-CABLE",
+    "slug": "acl-twin-twisted-tt-flexible-power-cable-1m",
+    "brand_slug": "acl",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "ACL TT CABLE",
+    "sale_price": 99.0,
+    "price": 110.0,
+    "cost_price": 84.0,
+    "stock": 500,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "Manufactured by Sri Lanka's leading cable brand, ACL Twin Twisted (TT) flexible cable features 100% pure electrolytic copper conductors engineered for 12V DC power lines, lighting circuits, and electrical terminations.\n\nKey Features:\n\n- 100% Pure Electrolytic Annealed Copper: Exceptional electrical conductivity and low voltage drop.\n- Twin Twisted Flexible Configuration: Easy to maneuver, strip, and terminate in junction boxes.\n- High-Grade PVC Insulation: Certified flame-retardant formulation for safety in residential and industrial walls.\n- Sri Lanka Standards Certified: SLS 1504 / SLS 733 compliant with guaranteed reliability.",
+    "main_specs": {
+      "Resolution": "Not Applicable (Power Cable)",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Twin Twisted 2-Core Flexible Copper",
+      "Audio": "Not Applicable",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "ACL Twin Twisted (TT) Series",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Multi-strand Flexible Annealed Pure Copper",
+        "Architecture": "Twin Twisted Parallel / Spiral Flexible Layout",
+        "Thermal Efficiency": "Continuous 70 °C Rated Flame-Retardant PVC",
+        "Power Consumption": "Rated for 300/500V Operation, Ideal for 12V DC Power Distribution"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with standard screw terminals, DC jacks, and power distribution boxes",
+        "Certification": "SLS Certified, ISO 9001:2015",
+        "Dimensions & Weight": "High flexibility stranded core",
+        "Included in Box": "1x Meter ACL TT Cable"
+      }
+    }
+  },
+  {
+    "name": "12V 2A Regulated Switching Power Supply Adapter",
+    "product_code": "PSU-12V-2A",
+    "slug": "12v-2a-regulated-switching-power-supply-adapter",
+    "brand_slug": "others",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "2A POWER SUPPLY",
+    "sale_price": 400.0,
+    "price": 450.0,
+    "cost_price": 340.0,
+    "stock": 50,
+    "condition": "Brand New",
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "The 12V 2A Regulated Power Supply provides a steady, ripple-free direct current output specifically designed to power CCTV bullet and turret cameras, Wi-Fi routers, optical network terminals (ONT), and LED strips.\n\nKey Features:\n\n- Stable 12V 2A (24W) DC Output: High-efficiency switch-mode power regulation.\n- Universal 100V - 240V AC Input: Wide voltage tolerance protects against utility power fluctuations.\n- Standard 5.5mm × 2.1mm DC Barrel Plug: Universal fit for all major CCTV cameras and networking gear.\n- Built-In Comprehensive Protection: Over-voltage, over-current, and short-circuit auto-recovery circuitry.",
+    "main_specs": {
+      "Resolution": "Not Applicable",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Input: AC 100-240V | Output: DC 12V 2.0A",
+      "Audio": "Not Applicable",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "Generic 12V 2A CCTV Power Supply",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "5.5mm × 2.1mm DC Center Positive Barrel Jack",
+        "Architecture": "High Frequency SMPS Switching Regulator Circuit",
+        "Thermal Efficiency": "Low heat emission flame-retardant ABS enclosure",
+        "Power Consumption": "Input: 100-240V ~ 50/60Hz, Output: 12V DC @ 2A (24W Max)"
+      },
+      "compatibility": {
+        "Operating Systems": "Universal compatibility with CCTV Cameras, Routers, Modems, and DVRs",
+        "Certification": "CE, FCC, RoHS Compliant",
+        "Dimensions & Weight": "Approx. 75 × 40 × 30 mm, Weight: 110g",
+        "Included in Box": "1x 12V 2A DC Power Supply Adapter"
+      }
+    }
+  },
+  {
+    "name": "12V 2A Mini DC UPS Power Supply with Battery Backup",
+    "product_code": "PSU-12V-2A-UPS",
+    "slug": "12v-2a-mini-dc-ups-power-supply-with-battery-backup",
+    "brand_slug": "others",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "2A POWER SUPPLY WITH BATTERY BACKUP",
+    "sale_price": 1580.0,
+    "price": 1630.0,
+    "cost_price": 1340.0,
+    "stock": 30,
+    "condition": "Brand New",
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "The 12V 2A Mini DC UPS Power Supply is an essential backup power unit designed to maintain uninterrupted operation for CCTV surveillance cameras, Wi-Fi routers, and access control terminals during power cuts.\n\nKey Features:\n\n- Zero-Second Transfer Time: Instant battery transition during outages prevents camera reboot or signal drop.\n- Built-In Rechargeable Lithium Battery Slot: Smart float charging circuitry extends battery longevity.\n- Intelligent Battery Protection: Prevents over-charging, deep over-discharging, and short circuit hazards.\n- Compact Wall-Mountable Form Factor: Clean installation inside DVR cabinets or wall mount points.",
+    "main_specs": {
+      "Resolution": "Not Applicable",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "AC 110-240V Input, 12V DC 2A Output with Battery Backup",
+      "Audio": "Not Applicable",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "12V 2A Mini DC UPS Backup Unit",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "DC 5.5mm × 2.1mm Plug, Terminal Block for Battery Leads",
+        "Architecture": "Continuous Online Float-Charge DC Micro-UPS Architecture",
+        "Thermal Efficiency": "Cool operating temperature with passive heat dissipation",
+        "Power Consumption": "Input: 100-240V AC, Output: 12V DC ± 5%, Max. 2A"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with CCTV Cameras, Routers, Biometric Clocks, and Alarm Sensors",
+        "Certification": "CE, RoHS Compliant",
+        "Dimensions & Weight": "Compact ABS housing, Approx. 180g",
+        "Included in Box": "1x 12V 2A Battery Backup UPS Unit, 1x DC Output Lead, 1x User Guide"
+      }
+    }
+  },
+  {
+    "name": "Heavy-Duty Metal Male BNC Coaxial Connector with Spring Relief",
+    "product_code": "BNC-GOOD-METAL",
+    "slug": "heavy-duty-metal-male-bnc-coaxial-connector-spring-relief",
+    "brand_slug": "others",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "BNC GOOD METAL",
+    "sale_price": 145.0,
+    "price": 150.0,
+    "cost_price": 120.0,
+    "stock": 200,
+    "condition": "Brand New",
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "High-durability all-metal BNC male connector engineered for crisp analog video transmission. Features a screw-type center terminal for solderless termination and a protective spring strain-relief.\n\nKey Features:\n\n- Solid Zinc Alloy Body: Heavy brass nickel plating delivers maximum corrosion resistance and durability.\n- Gold-Plated Center Pin: Ensures superior contact conductivity with virtually zero video signal drop.\n- Spring Strain Relief: Prevents RG59 coaxial cables from sharp bending, fatigue, and conductor breakage.\n- Solderless Screw Terminal: Fast, secure, and hassle-free field installation using a standard screwdriver.",
+    "main_specs": {
+      "Resolution": "Supports All HD Analog Video Formats (TVI, AHD, CVI, CVBS)",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "BNC Male 75-Ohm Twist-Lock Interface",
+      "Audio": "Supports Audio over Coaxial (AoC)",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "BNC Metal Spring Connector",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Screw Terminal Positive, Outer Clamping Ground",
+        "Architecture": "Full-Metal Shielded Body with Flexible Steel Spring Tail",
+        "Thermal Efficiency": "-40 °C to 85 °C Operating Range",
+        "Power Consumption": "Passive Signal Component"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with all standard RG59, RG6, and RG58 coaxial cables and DVR ports",
+        "Certification": "RoHS Compliant",
+        "Dimensions & Weight": "Length: 55 mm, Weight: Approx. 15g per piece",
+        "Included in Box": "1x Heavy-Duty Metal BNC Connector"
+      }
+    }
+  },
+  {
+    "name": "Passive HD Video Balun Transceiver Pair for Cat5e/Cat6",
+    "product_code": "VIDEO-BALUN-HD",
+    "slug": "passive-hd-video-balun-transceiver-pair",
+    "brand_slug": "others",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "VIDEO BALUN",
+    "sale_price": 285.0,
+    "price": 300.0,
+    "cost_price": 240.0,
+    "stock": 100,
+    "condition": "Brand New",
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "The Passive HD Video Balun pair converts balanced 75-ohm coaxial signals to unbalanced 100-ohm UTP signals, allowing you to transmit 1080p, 4MP, and 4K analog video up to 300 meters over inexpensive twisted pair network cable.\n\nKey Features:\n\n- Transmits Video over Cat5e / Cat6 UTP: Eliminates bulky and costly coaxial cable runs.\n- Compatible with All HD Formats: Full support for HD-TVI, HD-CVI, AHD, and standard CVBS cameras.\n- Tool-Less Push-Pin Terminal: Fast push-to-lock wire connection without needing a screwdriver.\n- Built-In Transient Voltage & ESD Protection: Protects connected DVRs and cameras from electrical surges.",
+    "main_specs": {
+      "Resolution": "Supports 720p, 1080p, 4MP, 5MP, and 4K Analog Video",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "BNC Male Connector to 2-Pin Push-In UTP Terminal",
+      "Audio": "Supports Audio over Coax on compatible cameras",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "HD Passive Video Balun Pair",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "BNC Male to Press-Fit Toolless Terminal Block",
+        "Architecture": "Passive Impedance Matching Transformer with Built-in TVS Suppressor",
+        "Thermal Efficiency": "Operating Temperature: -20 °C to 70 °C",
+        "Power Consumption": "Passive (No external power required)"
+      },
+      "compatibility": {
+        "Operating Systems": "Works with all standard analog DVRs and analog security cameras",
+        "Certification": "CE, FCC, RoHS Compliant",
+        "Dimensions & Weight": "Compact pigtail style, approx. 40g per pair",
+        "Included in Box": "1x Pair (2 Units) HD Video Baluns (Transmitter + Receiver)"
+      }
+    }
+  },
+  {
+    "name": "12V DC Male Power Pigtail Connector Jack (2.1mm x 5.5mm)",
+    "product_code": "DC-JACK-MALE",
+    "slug": "12v-dc-male-power-pigtail-connector-jack",
+    "brand_slug": "others",
+    "category_slug": "cameras",
+    "sub_category_slug": "cctv-accessories",
+    "sub_category_name": "CCTV Accessories",
+    "folder": "DC JACK",
+    "sale_price": 50.0,
+    "price": 65.0,
+    "cost_price": 40.0,
+    "stock": 200,
+    "condition": "Brand New",
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "Standard 12V DC Male power jack featuring clear screw-down terminal blocks for fast, dependable termination of power cables to security cameras and LED lights without soldering.\n\nKey Features:\n\n- Universal 5.5mm × 2.1mm Male Barrel Plug: Standard DC socket specification across surveillance equipment.\n- Clearly Labeled Polarities: Marked with '+' and '-' symbols to prevent accidental polarity reversals.\n- Heavy-Duty Screw Clamp Terminals: Accommodates stranded or solid power wires securely.\n- Durable Molded PVC Housing: Impact-resistant and insulated for safe, long-term deployments.",
+    "main_specs": {
+      "Resolution": "Not Applicable",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "5.5mm × 2.1mm Male DC Plug to 2-Screw Terminal",
+      "Audio": "Not Applicable",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "DC Male Screw Terminal Plug",
+        "Category Segment": "CCTV Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "5.5mm Outer / 2.1mm Inner Male Barrel",
+        "Architecture": "Phosphor Bronze Nickel-Plated Contact Pins with ABS Insulator",
+        "Thermal Efficiency": "-20 °C to 70 °C Rated",
+        "Power Consumption": "Rated for 12V - 24V DC up to 5A Continuous Current"
+      },
+      "compatibility": {
+        "Operating Systems": "Universal fit for all 12V DC security cameras, routers, and power leads",
+        "Certification": "RoHS Compliant",
+        "Dimensions & Weight": "Length: 38 mm, Weight: Approx. 7g",
+        "Included in Box": "1x 12V DC Male Power Connector Jack"
+      }
+    }
+  },
+  {
+    "name": "17-24\" Ultra-Slim Fixed Monitor & TV Wall Mount Bracket",
+    "product_code": "WM-17-24-FIXED",
+    "slug": "17-24-inch-ultra-slim-fixed-monitor-tv-wall-mount-bracket",
+    "brand_slug": "others",
+    "category_slug": "products",
+    "sub_category_slug": "wall-mounts",
+    "sub_category_name": "Wall Mounts",
+    "folder": "17-24 WALL MOUNT",
+    "sale_price": 420.0,
+    "price": 450.0,
+    "cost_price": 350.0,
+    "stock": 25,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "Constructed from high-tensile cold-rolled steel, the 17-24\" Ultra-Slim Wall Mount Bracket provides a rock-solid, low-profile wall installation for office PC monitors, point-of-sale displays, and small television screens.\n\nKey Features:\n\n- Fits 17\" to 24\" Screens: Accommodates computer monitors and compact LED/LCD televisions.\n- Low Profile Design: Sits exceptionally close to the wall for a sleek, clutter-free desk setup.\n- VESA Compliant Mounting: Supports standard VESA 75 × 75 mm and 100 × 100 mm hole patterns.\n- Solid Steel Load Rating: Safely holds displays weighing up to 20 kg (44 lbs).",
+    "main_specs": {
+      "Resolution": "Supports 17\" to 24\" Displays",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "VESA 75×75mm, 100×100mm",
+      "Audio": "Not Applicable",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Fixed Wall Mounting"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "17-24\" Fixed Monitor Wall Bracket",
+        "Category Segment": "Wall Mounts",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "VESA 75×75, 100×100 mm Compatibility",
+        "Architecture": "High-Grade SPCC Cold-Rolled Steel Construction",
+        "Thermal Efficiency": "Electrostatically applied scratch-resistant black powder coat",
+        "Power Consumption": "Passive Mechanical Wall Mount (Rated up to 20kg)"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with Samsung, LG, Dell, HP, Acer, ViewSonic, and standard VESA screens",
+        "Certification": "ISO9001, RoHS Compliant",
+        "Dimensions & Weight": "Chassis Thickness: 1.2 mm Steel, Weight: Approx. 450g",
+        "Included in Box": "1x Wall Mount Bracket, 1x Mounting Screw Kit with Wall Plugs, 1x Installation Sheet"
+      }
+    }
+  },
+  {
+    "name": "17-27\" Tilt-Adjustable Ergonomic Monitor & TV Wall Mount",
+    "product_code": "WM-17-27-TILT",
+    "slug": "17-27-inch-tilt-adjustable-monitor-tv-wall-mount",
+    "brand_slug": "others",
+    "category_slug": "products",
+    "sub_category_slug": "wall-mounts",
+    "sub_category_name": "Wall Mounts",
+    "folder": "17-27 WALL MOUNT",
+    "sale_price": 780.0,
+    "price": 880.0,
+    "cost_price": 650.0,
+    "stock": 25,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The 17-27\" Tilt-Adjustable Wall Mount allows you to mount computer monitors and television displays securely while providing ±15 degrees of vertical tilt to eliminate overhead light glare and achieve ideal ergonomic viewing angles.\n\nKey Features:\n\n- Supports 17\" to 27\" Displays: Ideal for gaming monitors, CCTV security monitoring screens, and work PCs.\n- Glare-Free Vertical Tilt: Effortlessly tilt screen up or down by ±15° to optimize sightlines.\n- Universal VESA Compatibility: Supports VESA 75 × 75 mm and 100 × 100 mm mounting holes.\n- Heavy-Duty 25kg Weight Capacity: Engineered from thick stamped steel with reinforced pivot joints.",
+    "main_specs": {
+      "Resolution": "Supports 17\" to 27\" Displays",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "VESA 75×75mm, 100×100mm",
+      "Audio": "Not Applicable",
+      "Storage Support": "Not Applicable",
+      "Field of View": "±15° Vertical Tilt Angle Adjustment"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "17-27\" Tilting Wall Mount",
+        "Category Segment": "Wall Mounts",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "VESA 75×75, 100×100 mm",
+        "Architecture": "Reinforced Cold-Rolled Steel Plate with Heavy Pivot Screws",
+        "Thermal Efficiency": "Matte Black Powder Coating",
+        "Power Consumption": "Mechanical Mount (Max Load: 25 kg / 55 lbs)"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with all flat & curved monitors with standard rear VESA holes",
+        "Certification": "CE, RoHS Compliant",
+        "Dimensions & Weight": "Steel Thickness: 1.5 mm, Weight: Approx. 720g",
+        "Included in Box": "1x Tilting Bracket, 1x Mounting Hardware Pack (screws, spacers, anchors)"
+      }
+    }
+  },
+  {
+    "name": "14-42\" Universal Heavy-Duty Flat Panel TV Wall Mount Bracket",
+    "product_code": "WM-14-42-UNIVERSAL",
+    "slug": "14-42-inch-universal-heavy-duty-tv-wall-mount-bracket",
+    "brand_slug": "others",
+    "category_slug": "products",
+    "sub_category_slug": "wall-mounts",
+    "sub_category_name": "Wall Mounts",
+    "folder": "14-42 WALL MOUNT",
+    "sale_price": 1350.0,
+    "price": 1450.0,
+    "cost_price": 1150.0,
+    "stock": 25,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "Engineered for medium-size living room and bedroom displays, the 14-42\" Universal Heavy-Duty TV Wall Mount supports screens up to 42 inches with reinforced dual-hook hanging rails and broad VESA compatibility up to 200 × 200 mm.\n\nKey Features:\n\n- Wide Screen Compatibility: Fits flat and curved LED, LCD, OLED, and Plasma TVs from 14\" up to 42\".\n- Heavy 35kg (77 lbs) Safe Load Rating: Robust solid steel backplate spreads weight evenly across wall studs.\n- Flexible VESA Patterns: Compatible with 75×75, 100×100, and 200×200 mm mounting configurations.\n- Safety Lock Bar System: Prevents accidental unhooking, slipping, or screen dislodgement.",
+    "main_specs": {
+      "Resolution": "Supports 14\" to 42\" TVs and Displays",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "VESA 75×75, 100×100, 200×200 mm",
+      "Audio": "Not Applicable",
+      "Storage Support": "Not Applicable",
+      "Field of View": "Fixed Flush Wall Installation"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "14-42\" Universal TV Wall Mount",
+        "Category Segment": "Wall Mounts",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "VESA up to 200 × 200 mm",
+        "Architecture": "Reinforced 1.5mm Heavy Gauge Cold-Rolled Steel",
+        "Thermal Efficiency": "Premium anti-rust electrostatic black finish",
+        "Power Consumption": "Safe Working Load: 35 kg (77 lbs)"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with Sony, Samsung, LG, TCL, Hisense, Panasonic, Singer, Innovex, and Abans TVs",
+        "Certification": "CE, RoHS, ISO9001 Certified",
+        "Dimensions & Weight": "Backplate Width: 280 mm, Weight: Approx. 1.1 kg",
+        "Included in Box": "1x Wall Mount Baseplate, 2x Vertical TV Hanging Brackets, 1x Full Bolt & Anchor Kit"
+      }
+    }
+  },
+  {
+    "name": "Standard Metal Security DVR Enclosure Box with Key Lock",
+    "product_code": "DVR-BOX-STD",
+    "slug": "standard-metal-security-dvr-enclosure-box-key-lock",
+    "brand_slug": "others",
+    "category_slug": "cameras",
+    "sub_category_slug": "dvr-accessories",
+    "sub_category_name": "DVR Accessories",
+    "folder": "DVR BOX",
+    "sale_price": 1700.0,
+    "price": 1850.0,
+    "cost_price": 1450.0,
+    "stock": 20,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The Standard Metal Security DVR Box is an anti-theft, tamper-proof lockable enclosure engineered to protect 4-channel and 8-channel CCTV DVRs and NVRs from unauthorized access, vandalism, and theft.\n\nKey Features:\n\n- Heavy Steel Lockable Casing: Features a robust front cam key lock to securely safeguard recorded footage.\n- Passive Cooling Ventilation Slots: Louvered side and top vents ensure optimal airflow to prevent DVR overheating.\n- Rear & Side Cable Knockout Ports: Multiple pass-through knockouts allow tidy cable entry for BNC, HDMI, and power.\n- Pre-Drilled Wall Mounting Holes: Easy wall or desktop anchoring for retail, warehouse, and residential locations.",
+    "main_specs": {
+      "Resolution": "Fits 4-Channel & 8-Channel DVRs/NVRs",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Cable Knockout Ports for Power, HDMI, VGA, and Coaxial Bundles",
+      "Audio": "Not Applicable",
+      "Storage Support": "Secures DVR Internal Hard Disks from Physical Theft",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "Standard CCTV Security DVR Enclosure",
+        "Category Segment": "DVR Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Key Cam Lock with 2 Keys Included",
+        "Architecture": "0.8 mm Gauge Electro-Galvanized Steel Sheet",
+        "Thermal Efficiency": "Perforated Air Flow Ventilation Panels",
+        "Power Consumption": "Passive Enclosure"
+      },
+      "compatibility": {
+        "Operating Systems": "Fits Hikvision, Dahua, Uniview, and standard compact mini 1U DVR chassis",
+        "Certification": "ISO9001 Compliant",
+        "Dimensions & Weight": "Approx. 400 × 350 × 120 mm, Weight: Approx. 2.8 kg",
+        "Included in Box": "1x Metal DVR Enclosure Box, 2x Security Keys, Wall Mounting Hardware"
+      }
+    }
+  },
+  {
+    "name": "Heavy-Duty Reinforced Metal DVR Security Lockbox Enclosure",
+    "product_code": "DVR-BOX-HVY",
+    "slug": "heavy-duty-reinforced-metal-dvr-security-lockbox-enclosure",
+    "brand_slug": "others",
+    "category_slug": "cameras",
+    "sub_category_slug": "dvr-accessories",
+    "sub_category_name": "DVR Accessories",
+    "folder": "DVR BOX HEAVY",
+    "sale_price": 1800.0,
+    "price": 1950.0,
+    "cost_price": 1530.0,
+    "stock": 20,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "Constructed from extra-thick reinforced steel plate with reinforced hinge welds, the Heavy-Duty DVR Security Lockbox provides fortress-like protection for 16-channel DVRs, power supply units, and backup battery accessories.\n\nKey Features:\n\n- Extra-Thick Gauge Steel Fabrication: Resists prying, crowbar tampering, and aggressive physical impacts.\n- Dual Key Security Mechanism: High-precision cylindrical lock keeps sensitive security recordings impenetrable.\n- Spacious Interior Capacity: Easily accommodates large 16-channel 1U DVRs alongside multiple 12V power supply bricks.\n- High-Flow Ventilation Grilles: Prevents heat accumulation around high-capacity hard drives.",
+    "main_specs": {
+      "Resolution": "Fits 8-Channel & 16-Channel Professional DVRs/NVRs",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Multi-Port Cable Grommets & Knockouts",
+      "Audio": "Not Applicable",
+      "Storage Support": "Heavy-Duty Tamper-Proof Storage Protection",
+      "Field of View": "Not Applicable"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "Heavy-Duty Reinforced Security DVR Lockbox",
+        "Category Segment": "DVR Accessories",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Reinforced Cam Lock System with 2 Heavy Brass Keys",
+        "Architecture": "1.2 mm Heavy Cold-Rolled SPCC Steel Plate",
+        "Thermal Efficiency": "High-Efficiency Dual-Sided Passive Ventilation Slots",
+        "Power Consumption": "Passive Enclosure"
+      },
+      "compatibility": {
+        "Operating Systems": "Compatible with all full-size 1U and desktop DVR/NVR models from Hikvision, Dahua, etc.",
+        "Certification": "ISO9001, RoHS Compliant",
+        "Dimensions & Weight": "Approx. 450 × 400 × 150 mm, Weight: Approx. 4.2 kg",
+        "Included in Box": "1x Heavy-Duty DVR Box, 2x Keys, Wall Anchors and Heavy Washers"
+      }
+    }
+  },
+  {
+    "name": "3U 19-Inch Wall Mount Server & Network Rack Cabinet",
+    "product_code": "NET-CAB-3U",
+    "slug": "3u-19-inch-wall-mount-server-network-rack-cabinet",
+    "brand_slug": "others",
+    "category_slug": "networking",
+    "sub_category_slug": "network-cabinets",
+    "sub_category_name": "Network Cabinets",
+    "folder": "3U NETWORK CABING",
+    "sale_price": 9900.0,
+    "price": 10800.0,
+    "cost_price": 8400.0,
+    "stock": 15,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The 3U 19-Inch Wall Mount Network Rack Cabinet offers a compact, secure enclosure for 19\" rackmount network switches, patch panels, optical termination drawers, and small DVRs in homes, offices, and small business server rooms.\n\nKey Features:\n\n- Standard 19\" Rackmount 3U Capacity: Accommodates standard 19-inch rack equipment up to 3 units high.\n- Toughened Glass Front Door with Lock: Crystal clear equipment visibility with complete key-locking security.\n- Removable Quick-Release Side Panels: Enables hassle-free access during wiring termination and maintenance.\n- Top and Bottom Cable Entry: Brush grommets prevent dust ingress while organizing dense patch cables.\n- Sturdy SPCC Cold-Rolled Steel Construction: Powder-coated frame supports static loads up to 40 kg.",
+    "main_specs": {
+      "Resolution": "Standard 19-Inch 3U Equipment Enclosure",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Top & Bottom Cable Entry Knockouts with Dust Seal",
+      "Audio": "Not Applicable",
+      "Storage Support": "Supports 19\" Rack Shelves and Rackmount DVRs",
+      "Field of View": "Wall Mount / Desktop Placement"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "3U 19\" Wall Mount Data Enclosure",
+        "Category Segment": "Network Cabinets",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Standard 19\" EIA-310-D Compliant Vertical Mounting Rails",
+        "Architecture": "High-Grade SPCC Steel Frame with Tempered Safety Glass Door",
+        "Thermal Efficiency": "Vented Top Panel with Slot for Optional 120mm Exhaust Fan",
+        "Power Consumption": "Passive Enclosure (Static Load Rating: 40 kg / 88 lbs)"
+      },
+      "compatibility": {
+        "Operating Systems": "Fits all 19\" standard switches (TP-Link, Cisco, D-Link, Ruijie), patch panels, and PDUs",
+        "Certification": "EIA/ECA-310-E, IEC 60297-3-100, RoHS Compliant",
+        "Dimensions & Weight": "Width: 540 mm, Depth: 400 mm, Height: Approx. 200 mm, Weight: ~6.5 kg",
+        "Included in Box": "1x 3U Network Cabinet, 2x Door Keys, 10x M6 Cage Nuts & Screws, Wall Expansion Bolts"
+      }
+    }
+  },
+  {
+    "name": "5U 19-Inch Wall Mount Server & Network Rack Cabinet",
+    "product_code": "NET-CAB-5U",
+    "slug": "5u-19-inch-wall-mount-server-network-rack-cabinet",
+    "brand_slug": "others",
+    "category_slug": "networking",
+    "sub_category_slug": "network-cabinets",
+    "sub_category_name": "Network Cabinets",
+    "folder": "5U NETWORK CABING",
+    "sale_price": 12490.0,
+    "price": 13700.0,
+    "cost_price": 10600.0,
+    "stock": 15,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The 5U 19-Inch Network Rack Cabinet is a versatile wall-mounted enclosure designed to house 19\" patch panels, managed PoE switches, routers, NVRs, and power distribution units (PDU) with high aesthetic appeal and robust protection.\n\nKey Features:\n\n- 5U 19\" Standard Rackmount Capacity: Ample room for multiple network switches, DVRs, and cable managers.\n- Tinted Tempered Glass Door with Lock: Protects sensitive networking infrastructure from unauthorized tampering.\n- Adjustable Vertical Mounting Rails: Clearly marked rack units (U) with front-to-back depth adjustment.\n- Superior Thermal Management: Perforated side ventilation plus top roof panel ready for 120mm cooling fan.\n- Heavy-Gauge Steel Body: Robust rigid structure supports up to 50 kg equipment payload.",
+    "main_specs": {
+      "Resolution": "Standard 19-Inch 5U Equipment Enclosure",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Top & Bottom Cable Ingress Ports with Rubber Protection",
+      "Audio": "Not Applicable",
+      "Storage Support": "Supports 19\" Rack Shelves, NVRs, and Storage NAS",
+      "Field of View": "Wall Mount / Floor Placement"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "5U 19\" Wall Mount Data Enclosure",
+        "Category Segment": "Network Cabinets",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Adjustable 19\" Mounting Rails with Pre-Punched Cage Nut Holes",
+        "Architecture": "Electrostatic Powder-Coated SPCC Cold-Rolled Steel",
+        "Thermal Efficiency": "Multi-Directional Heat Venting, Optional 120mm Fan Mount",
+        "Power Consumption": "Passive Enclosure (Static Load Rating: 50 kg / 110 lbs)"
+      },
+      "compatibility": {
+        "Operating Systems": "Universally compatible with standard 19-inch networking and telecom gear",
+        "Certification": "ANSI/EIA RS-310-D, DIN41491, IEC297-2, RoHS Compliant",
+        "Dimensions & Weight": "Width: 540 mm, Depth: 400 mm, Height: Approx. 300 mm, Weight: ~8.5 kg",
+        "Included in Box": "1x 5U Cabinet, 2x Door Keys, 15x M6 Cage Nuts & Bolts, Heavy Wall Mounting Bracket"
+      }
+    }
+  },
+  {
+    "name": "7U 19-Inch Wall Mount Server & Network Rack Cabinet",
+    "product_code": "NET-CAB-7U",
+    "slug": "7u-19-inch-wall-mount-server-network-rack-cabinet",
+    "brand_slug": "others",
+    "category_slug": "networking",
+    "sub_category_slug": "network-cabinets",
+    "sub_category_name": "Network Cabinets",
+    "folder": "7U NETWORK CABING",
+    "sale_price": 18100.0,
+    "price": 19900.0,
+    "cost_price": 15300.0,
+    "stock": 15,
+    "condition": "Brand New",
+    "warranty_duration": 1,
+    "warranty_unit": "Years",
+    "description": "The 7U 19-Inch Professional Network Rack Cabinet provides generous capacity for commercial data installations, accommodating rackmount servers, high-density PoE switches, CCTV NVRs/DVRs, patch panels, and backup UPS units.\n\nKey Features:\n\n- Spacious 7U 19\" Rack Space: High-capacity cabinet for complete multi-switch and multi-DVR installations.\n- Lockable Tempered Glass Front Door: Provides 180° swing radius and uncompromised physical security.\n- Detachable Side Panels with Latch: Easy 360-degree maintenance access to cabling and rear ports.\n- Dual Fan Mounting Positions: Top plate accommodates twin 120mm exhaust fans for continuous cooling.\n- Heavy-Duty 60kg Weight Capacity: Engineered from premium 1.5mm cold-rolled steel with reinforced welded seams.",
+    "main_specs": {
+      "Resolution": "Standard 19-Inch 7U Equipment Enclosure",
+      "Night Vision": "Not Applicable",
+      "Connectivity": "Multiple Large Cable Entry Ports Top and Bottom",
+      "Audio": "Not Applicable",
+      "Storage Support": "Supports 19\" Cantilever Shelves, Multiple NVRs, and Battery UPS",
+      "Field of View": "Wall Mount / Telecom Closet"
+    },
+    "tech_specs": {
+      "general": {
+        "Model / Series": "7U 19\" Enterprise Wall Mount Cabinet",
+        "Category Segment": "Network Cabinets",
+        "Condition": "Brand New"
+      },
+      "performance": {
+        "Interface / Connection": "Dual Pair 19\" Adjustable Depth Mounting Posts with Unit Markers",
+        "Architecture": "Reinforced SPCC Heavy-Gauge Cold-Rolled Steel Construction",
+        "Thermal Efficiency": "Advanced Dual Exhaust Fan Mount System with Louvered Vents",
+        "Power Consumption": "Passive Enclosure (Static Load Rating: 60 kg / 132 lbs)"
+      },
+      "compatibility": {
+        "Operating Systems": "Full compatibility with all 19\" enterprise rack equipment and CCTV systems",
+        "Certification": "ANSI/EIA-310-D, IEC 60297-2, RoHS, ISO9001 Compliant",
+        "Dimensions & Weight": "Width: 540 mm, Depth: 450 mm, Height: Approx. 400 mm, Weight: ~11.5 kg",
+        "Included in Box": "1x 7U Network Cabinet, 2x Keys, 20x M6 Cage Nuts & Screws, Wall Anchor Bolts"
+      }
+    }
+  }
+]
