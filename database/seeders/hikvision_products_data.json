@@ -348,7 +348,7 @@
         "product_code": "DS-2CE16DOT-EXIPF",
         "slug": "hikvision-ds-2ce16d0t-exipf-2mp-bullet-camera",
         "brand_slug": "hikvision",
-        "sub_category_slug": "tvi-cameras",
+        "sub_category_slug": "value-series-tvi-cameras",
         "section": "2.MP TVI CAMERA",
         "folder": "HIKVISION DS-2CE16DOT-EXIPF CAMERA",
         "sale_price": 5081.0,
@@ -369,7 +369,7 @@
         "tech_specs": {
             "general": {
                 "Model / Series": "Hikvision DS-2CE16D0T-EXIPF (Value Turbo HD Series)",
-                "Category Segment": "TVI Cameras",
+                "Category Segment": "Value Series TVI Cameras",
                 "Condition": "Brand New"
             },
             "performance": {
@@ -391,7 +391,7 @@
         "product_code": "DS-2CE76D0T-EXIPF",
         "slug": "hikvision-ds-2ce76d0t-exipf-2mp-turret-camera",
         "brand_slug": "hikvision",
-        "sub_category_slug": "tvi-cameras",
+        "sub_category_slug": "value-series-tvi-cameras",
         "section": "2.MP TVI CAMERA",
         "folder": "HIKVISION DS-2CE76D0T-EXIPF CAMERA",
         "sale_price": 5081.0,
@@ -412,7 +412,7 @@
         "tech_specs": {
             "general": {
                 "Model / Series": "Hikvision DS-2CE76D0T-EXIPF (Value Turbo HD Series)",
-                "Category Segment": "TVI Cameras",
+                "Category Segment": "Value Series TVI Cameras",
                 "Condition": "Brand New"
             },
             "performance": {
@@ -434,7 +434,7 @@
         "product_code": "DS-2CE16DOT-EXLPF",
         "slug": "hikvision-ds-2ce16d0t-exlpf-2mp-bullet-camera",
         "brand_slug": "hikvision",
-        "sub_category_slug": "tvi-cameras",
+        "sub_category_slug": "value-series-tvi-cameras",
         "section": "2.MP TVI CAMERA",
         "folder": "HIKVISION DS-2CE16DOT-EXLPF CAMERA",
         "sale_price": 6333.0,
@@ -455,7 +455,7 @@
         "tech_specs": {
             "general": {
                 "Model / Series": "Hikvision DS-2CE16D0T-EXLPF (Smart Hybrid Light Series)",
-                "Category Segment": "TVI Cameras",
+                "Category Segment": "Value Series TVI Cameras",
                 "Condition": "Brand New"
             },
             "performance": {
@@ -477,7 +477,7 @@
         "product_code": "DS-2CE76D0T-EXLPF",
         "slug": "hikvision-ds-2ce76d0t-exlpf-2mp-turret-camera",
         "brand_slug": "hikvision",
-        "sub_category_slug": "tvi-cameras",
+        "sub_category_slug": "value-series-tvi-cameras",
         "section": "2.MP TVI CAMERA",
         "folder": "HIKVISION DS-2CE76D0T-EXLPF CAMERA",
         "sale_price": 5889.0,
@@ -498,7 +498,7 @@
         "tech_specs": {
             "general": {
                 "Model / Series": "Hikvision DS-2CE76D0T-EXLPF (Smart Hybrid Light Series)",
-                "Category Segment": "TVI Cameras",
+                "Category Segment": "Value Series TVI Cameras",
                 "Condition": "Brand New"
             },
             "performance": {
@@ -520,7 +520,7 @@
         "product_code": "DS-2CE16DOT-LPFS",
         "slug": "hikvision-ds-2ce16d0t-lpfs-2mp-audio-bullet-camera",
         "brand_slug": "hikvision",
-        "sub_category_slug": "tvi-cameras",
+        "sub_category_slug": "value-series-tvi-cameras",
         "section": "2.MP TVI CAMERA",
         "folder": "HIKVISION DS-2CE16DOT-LPFS CAMERA",
         "sale_price": 7143.0,
@@ -541,7 +541,7 @@
         "tech_specs": {
             "general": {
                 "Model / Series": "Hikvision DS-2CE16D0T-LPFS (Audio Dual-Light Series)",
-                "Category Segment": "TVI Cameras",
+                "Category Segment": "Value Series TVI Cameras",
                 "Condition": "Brand New"
             },
             "performance": {
@@ -563,7 +563,7 @@
         "product_code": "DS-2CE76D0T-LPFS",
         "slug": "hikvision-ds-2ce76d0t-lpfs-2mp-audio-turret-camera",
         "brand_slug": "hikvision",
-        "sub_category_slug": "tvi-cameras",
+        "sub_category_slug": "value-series-tvi-cameras",
         "section": "2.MP TVI CAMERA",
         "folder": "HIKVISION DS-2CE76D0T-LPFS CAMERA",
         "sale_price": 6862.0,
@@ -584,7 +584,7 @@
         "tech_specs": {
             "general": {
                 "Model / Series": "Hikvision DS-2CE76D0T-LPFS (Audio Dual-Light Series)",
-                "Category Segment": "TVI Cameras",
+                "Category Segment": "Value Series TVI Cameras",
                 "Condition": "Brand New"
             },
             "performance": {

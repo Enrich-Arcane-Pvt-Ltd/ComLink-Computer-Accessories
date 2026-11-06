@@ -70,9 +70,9 @@ class HikvisionCameraProductsSeeder extends Seeder
                 'image' => 'images/categories/nvr.webp',
                 'sort_order' => 1,
             ],
-            'tvi-cameras' => [
-                'name' => 'TVI Cameras',
-                'description' => 'Hikvision 2.0MP Turbo HD TVI Cameras (Indoor & Outdoor Bullet & Turret Cameras)',
+            'value-series-tvi-cameras' => [
+                'name' => 'Value Series TVI Cameras',
+                'description' => 'Hikvision 2.0MP Turbo HD Value Series TVI Cameras (Indoor & Outdoor Bullet & Turret Cameras)',
                 'image' => 'images/categories/bullet-cameras.webp',
                 'sort_order' => 2,
             ],
@@ -94,7 +94,10 @@ class HikvisionCameraProductsSeeder extends Seeder
         foreach ($subCategoriesDef as $slug => $def) {
             $subCat = Category::where('parent_id', $camerasCat->id)
                 ->where(function ($q) use ($slug, $def) {
-                    $q->where('slug', $slug)->orWhere('name', $def['name']);
+                    $q->where('slug', $slug)
+                        ->orWhere('name', $def['name'])
+                        ->orWhere('slug', 'tvi-cameras')
+                        ->orWhere('name', 'TVI Cameras');
                 })
                 ->first();
 
@@ -118,6 +121,9 @@ class HikvisionCameraProductsSeeder extends Seeder
                 ]);
             }
             $subCategoryModels[$slug] = $subCat;
+            if ($slug === 'value-series-tvi-cameras') {
+                $subCategoryModels['tvi-cameras'] = $subCat;
+            }
         }
 
         // 5. Ensure Product Specification Definitions for Cameras & Subcategories
