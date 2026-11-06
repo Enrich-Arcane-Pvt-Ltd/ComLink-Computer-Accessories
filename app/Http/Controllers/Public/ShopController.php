@@ -1146,7 +1146,19 @@ class ShopController extends Controller
 
         // Build specifications from database technical_specifications if available
         $rawTech = is_array($p->technical_specifications) ? $p->technical_specifications : [];
-        $tech = array_filter($rawTech, fn ($v) => ! is_null($v) && trim((string) $v) !== '');
+        $flattenTech = function ($arr, $prefix = '') use (&$flattenTech) {
+            $flat = [];
+            foreach ($arr as $k => $v) {
+                if (is_array($v)) {
+                    $flat = array_merge($flat, $flattenTech($v, ''));
+                } elseif (! is_null($v) && trim((string) $v) !== '') {
+                    $key = \Illuminate\Support\Str::slug((string) $k, '_');
+                    $flat[$key] = trim((string) $v);
+                }
+            }
+            return $flat;
+        };
+        $tech = $flattenTech($rawTech);
 
         if (! empty($tech)) {
             $catId = $cat?->id;

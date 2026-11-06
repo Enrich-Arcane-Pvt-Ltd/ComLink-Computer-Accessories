@@ -1,0 +1,1077 @@
+[
+    {
+        "name": "Hikvision DS-7104HGHI-M1/T 4-Channel 1080p Lite Mini 1U DVR",
+        "product_code": "DS-7104HGHI-M1/T",
+        "slug": "hikvision-ds-7104hghi-m1-t-4ch-dvr",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "dvrs",
+        "section": "1080P LITE DVR",
+        "folder": "HIKVISION DS-7104HGHI-M1T DVR",
+        "sale_price": 11947.0,
+        "price": 13142.0,
+        "cost_price": 10154.95,
+        "stock": 12,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-7104HGHI-M1/T 4-Channel 1080p Lite Mini 1U DVR</h3><p>The <strong>Hikvision DS-7104HGHI-M1/T</strong> is a compact and reliable 4-channel Digital Video Recorder supporting 1080p Lite resolution recording. Utilizing efficient H.265 Pro+ video compression, it significantly minimizes network bandwidth and storage overhead without compromising video fidelity.</p><h4>Key Features</h4><ul><li><strong>Deep Learning Audio over Coaxial:</strong> Transmits high-quality audio directly via coaxial cable, eliminating extra audio wiring.</li><li><strong>H.265 Pro+ Compression:</strong> Reduces bandwidth and storage capacity requirements by up to 75% compared to standard H.264.</li><li><strong>5-Signal Adaptive Input:</strong> Seamlessly connects HDTVI, AHD, CVI, CVBS, and IP cameras.</li><li><strong>High Capacity Storage:</strong> Supports 1 SATA internal hard drive up to 4TB.</li><li><strong>Simultaneous Video Outputs:</strong> HDMI and VGA outputs for versatile monitor display setups.</li></ul>",
+        "main_specs": {
+            "Resolution": "1080p Lite / 720p Lite @ 15 fps",
+            "Night Vision": "Supports Day/Night IR & ColorVu Inputs",
+            "Connectivity": "1 RJ45 10M/100M Ethernet, 2x USB 2.0",
+            "Audio": "Audio over Coaxial (AoC) & 1-ch RCA",
+            "Storage Support": "1 SATA Interface (Up to 4TB HDD)",
+            "Field of View": "System Dependent (Multi-camera Display)"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-7104HGHI-M1/T (Turbo HD Series)",
+                "Category Segment": "DVRs (1080P Lite)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "4 BNC Channels, 1 HDMI, 1 VGA, 2 USB 2.0, 1 RJ45",
+                "Architecture": "H.265 Pro+ / H.265 Pro / H.265 / H.264+ / H.264 Hardware Encoding",
+                "Thermal Efficiency": "Low power silent fanless design (< 16W without HDD)",
+                "Power Consumption": "12 VDC, 1.5 A, Max. 16 W (without HDD)"
+            },
+            "compatibility": {
+                "Operating Systems": "Hik-Connect Mobile App (iOS / Android), iVMS-4200 (Windows / macOS)",
+                "Certification": "CE, FCC, RoHS, ISO9001 Compliant",
+                "Dimensions & Weight": "200 × 200 × 45 mm (7.9 × 7.9 × 1.8 inch), ≤ 0.8 kg",
+                "Included in Box": "1x DS-7104HGHI-M1/T DVR, 1x Power Adapter, 1x USB Mouse, 1x SATA Cable Set, 1x Quick Start Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-7108HGHI-M1/T 8-Channel 1080p Lite Mini 1U DVR",
+        "product_code": "DS-7108HGHI-M1/T",
+        "slug": "hikvision-ds-7108hghi-m1-t-8ch-dvr",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "dvrs",
+        "section": "1080P LITE DVR",
+        "folder": "HIKVISION DS-7108HGHI-M1T DVR",
+        "sale_price": 15960.0,
+        "price": 17556.0,
+        "cost_price": 13566.0,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-7108HGHI-M1/T 8-Channel 1080p Lite Mini 1U DVR</h3><p>The <strong>Hikvision DS-7108HGHI-M1/T</strong> is an 8-channel high-performance digital surveillance recorder. Engineered for residential and commercial security deployments, it features advanced H.265 Pro+ encoding, 1080p Lite recording across all channels, and integrated Audio over Coaxial support.</p><h4>Key Features</h4><ul><li><strong>8 Analog Channels + Up to 2 IP Channels:</strong> Flexible hybrid setup supporting 10 total camera streams.</li><li><strong>Audio over Coaxial (AoC):</strong> High-clarity audio recording synchronized with video over existing coaxial wiring.</li><li><strong>Smart Search:</strong> Fast and intelligent footage search for quick incident retrieval.</li><li><strong>Energy Efficient:</strong> Fanless low-noise chassis engineered for 24/7 continuous operation.</li></ul>",
+        "main_specs": {
+            "Resolution": "1080p Lite / 720p Lite @ 15 fps",
+            "Night Vision": "Supports Day/Night IR & ColorVu Inputs",
+            "Connectivity": "1 RJ45 10M/100M Ethernet, 2x USB 2.0",
+            "Audio": "Audio over Coaxial (AoC) on all channels & 1-ch RCA",
+            "Storage Support": "1 SATA Interface (Up to 4TB HDD)",
+            "Field of View": "8-Channel Synchronous Playback"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-7108HGHI-M1/T (Turbo HD Series)",
+                "Category Segment": "DVRs (1080P Lite)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "8 BNC Channels, 1 HDMI, 1 VGA, 2 USB 2.0, 1 RJ45",
+                "Architecture": "H.265 Pro+ / H.265 Pro / H.265 / H.264+ / H.264 Multi-Stream Processing",
+                "Thermal Efficiency": "Low heat dissipation eco design (< 17W without HDD)",
+                "Power Consumption": "12 VDC, 1.5 A, Max. 17 W (without HDD)"
+            },
+            "compatibility": {
+                "Operating Systems": "Hik-Connect Mobile App (iOS / Android), iVMS-4200 (Windows / macOS)",
+                "Certification": "CE, FCC, RoHS, ISO9001 Compliant",
+                "Dimensions & Weight": "200 × 200 × 45 mm (7.9 × 7.9 × 1.8 inch), ≤ 0.8 kg",
+                "Included in Box": "1x DS-7108HGHI-M1/T DVR, 1x Power Adapter, 1x USB Mouse, 1x SATA Cable Set, 1x Quick Start Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-7116HGHI-M1/T 16-Channel 1080p Lite Mini 1U DVR",
+        "product_code": "DS-7116HGHI-M1/T",
+        "slug": "hikvision-ds-7116hghi-m1-t-16ch-dvr",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "dvrs",
+        "section": "1080P LITE DVR",
+        "folder": "HIKVISION DS-7116HGHI-M1T DVR",
+        "sale_price": 33225.0,
+        "price": 36548.0,
+        "cost_price": 28241.25,
+        "stock": 8,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-7116HGHI-M1/T 16-Channel 1080p Lite Mini 1U DVR</h3><p>Manage large premises with ease using the <strong>Hikvision DS-7116HGHI-M1/T</strong> 16-channel DVR. Supporting up to 16 analog video inputs plus up to 2 network IP cameras, this unit delivers crystal-clear 1080p Lite recording, expanded 10TB HDD storage support, and reliable remote access via the Hik-Connect cloud platform.</p><h4>Key Features</h4><ul><li><strong>16 High-Definition Channels:</strong> Comprehensive coverage for offices, stores, and warehouses.</li><li><strong>Huge Storage Support:</strong> Accommodates 1 SATA hard drive up to 10TB capacity.</li><li><strong>Audio over Coaxial (AoC):</strong> Enables broadcast-quality sound recording over coaxial infrastructure.</li><li><strong>Remote Access Anywhere:</strong> Instant live viewing and push alerts via Hik-Connect mobile and desktop apps.</li></ul>",
+        "main_specs": {
+            "Resolution": "1080p Lite / 720p Lite @ 15 fps",
+            "Night Vision": "Supports Day/Night IR & ColorVu Inputs",
+            "Connectivity": "1 RJ45 10M/100M Ethernet, 2x USB 2.0",
+            "Audio": "Audio over Coaxial (AoC) on 16 channels & 1-ch RCA",
+            "Storage Support": "1 SATA Interface (Up to 10TB HDD)",
+            "Field of View": "16-Channel Synchronous Playback"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-7116HGHI-M1/T (Turbo HD Series)",
+                "Category Segment": "DVRs (1080P Lite)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "16 BNC Channels, 1 HDMI, 1 VGA, 2 USB 2.0, 1 RJ45",
+                "Architecture": "H.265 Pro+ / H.265 Pro / H.265 / H.264 Dual-Stream Video Encoder",
+                "Thermal Efficiency": "Engineered for 24/7 continuous thermal reliability (< 20W without HDD)",
+                "Power Consumption": "12 VDC, 2.0 A, Max. 20 W (without HDD)"
+            },
+            "compatibility": {
+                "Operating Systems": "Hik-Connect Mobile App (iOS / Android), iVMS-4200 (Windows / macOS)",
+                "Certification": "CE, FCC, RoHS, ISO9001 Compliant",
+                "Dimensions & Weight": "285 × 210 × 45 mm (11.2 × 8.3 × 1.8 inch), ≤ 1.0 kg",
+                "Included in Box": "1x DS-7116HGHI-M1/T DVR, 1x Power Adapter, 1x USB Mouse, 1x SATA Data & Power Cable, 1x Quick Start Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-7232HGHI-M2 32-Channel 1080p Lite 1U DVR",
+        "product_code": "DS-7232HGHI-M2",
+        "slug": "hikvision-ds-7232hghi-m2-32ch-dvr",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "dvrs",
+        "section": "1080P LITE DVR",
+        "folder": "HIKVISION DS-7232HGHI-M2 DVR",
+        "sale_price": 79460.0,
+        "price": 87406.0,
+        "cost_price": 67541.0,
+        "stock": 5,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-7232HGHI-M2 32-Channel 1080p Lite 1U DVR</h3><p>The enterprise-grade <strong>Hikvision DS-7232HGHI-M2</strong> provides a robust 32-channel analog surveillance architecture. Featuring dual SATA drive bays supporting up to 20TB total storage and high-definition HDMI/VGA outputs, it is the ultimate recording powerhouse for expansive installations, schools, hotels, and industrial facilities.</p><h4>Key Features</h4><ul><li><strong>32 Video Channels:</strong> Massive multi-camera handling in a single 1U rack-mountable chassis.</li><li><strong>Dual SATA Interfaces:</strong> Supports 2 SATA hard disks up to 10TB each (20TB total storage capacity).</li><li><strong>Gigabit Ethernet Connectivity:</strong> 1 RJ45 10M/100M/1000M self-adaptive port for smooth remote streaming.</li><li><strong>Audio over Coaxial:</strong> Full AoC integration across all 32 channels.</li></ul>",
+        "main_specs": {
+            "Resolution": "1080p Lite / 720p Lite @ 15 fps",
+            "Night Vision": "Supports Day/Night IR & ColorVu Inputs",
+            "Connectivity": "1 RJ45 10M/100M/1000M Gigabit Ethernet, 2x USB 2.0",
+            "Audio": "Audio over Coaxial (AoC) on 32 channels, 1-ch RCA in/out",
+            "Storage Support": "2 SATA Interfaces (Up to 10TB per HDD, 20TB Total)",
+            "Field of View": "32-Channel Synchronous Playback"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-7232HGHI-M2 (Turbo HD Enterprise Series)",
+                "Category Segment": "DVRs (1080P Lite)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "32 BNC Channels, 1 HDMI (4K), 1 VGA, 2 USB 2.0, 1 Gigabit RJ45",
+                "Architecture": "H.265 Pro+ / H.265 Pro Hardware Video Processing",
+                "Thermal Efficiency": "Active smart cooling fan system (< 40W without HDD)",
+                "Power Consumption": "12 VDC, 5.0 A, Max. 40 W (without HDD)"
+            },
+            "compatibility": {
+                "Operating Systems": "Hik-Connect Mobile App (iOS / Android), iVMS-4200 (Windows / macOS)",
+                "Certification": "CE, FCC, RoHS, ISO9001 Compliant",
+                "Dimensions & Weight": "380 × 320 × 48 mm (15.0 × 12.6 × 1.9 inch), ≤ 2.2 kg",
+                "Included in Box": "1x DS-7232HGHI-M2 DVR, 1x Power Supply, 1x USB Mouse, 2x SATA Cable Sets, 1x Mounting Hardware, 1x Manual"
+            }
+        }
+    },
+    {
+        "name": "Hikvision iDS-7104HQHI-K1 4-Channel 4MP Lite AcuSense DVR",
+        "product_code": "IDS-7104HQHI-K1",
+        "slug": "hikvision-ids-7104hqhi-k1-4ch-dvr",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "dvrs",
+        "section": "4.0MP LITE DVR",
+        "folder": "HIKVISION IDS-7104HQHI-K1 DVR",
+        "sale_price": 15300.0,
+        "price": 16830.0,
+        "cost_price": 13005.0,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision iDS-7104HQHI-K1 4-Channel 4MP Lite AcuSense DVR</h3><p>Empower your security system with artificial intelligence using the <strong>Hikvision iDS-7104HQHI-K1</strong> AcuSense DVR. Powered by deep-learning algorithms, it intelligently classifies humans and vehicles while filtering out false alarms caused by rain, leaves, and animals.</p><h4>Key Features</h4><ul><li><strong>Deep Learning Motion Detection 2.0:</strong> Accurate human and vehicle target classification for fast target searches.</li><li><strong>4MP Lite Resolution:</strong> High-definition video recording capturing superior details compared to standard 1080p.</li><li><strong>H.265 Pro+ Compression:</strong> Maximum recording longevity with minimal hard drive consumption.</li><li><strong>AoC Audio Transmission:</strong> Transmits synchronized audio over coaxial cables.</li></ul>",
+        "main_specs": {
+            "Resolution": "4 MP Lite / 3 MP / 1080p @ 15 fps",
+            "Night Vision": "Supports Smart Night Vision & AcuSense Analysis",
+            "Connectivity": "1 RJ45 10M/100M Ethernet, 2x USB 2.0",
+            "Audio": "Audio over Coaxial (AoC) & 1-ch RCA",
+            "Storage Support": "1 SATA Interface (Up to 6TB HDD)",
+            "Field of View": "4-Channel Synchronous Playback"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision iDS-7104HQHI-K1 (AcuSense Series)",
+                "Category Segment": "DVRs (4.0MP Lite)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "4 BNC Channels, 1 HDMI, 1 VGA, 2 USB 2.0, 1 RJ45",
+                "Architecture": "AI Deep Learning AcuSense Processor + H.265 Pro+ Compression Engine",
+                "Thermal Efficiency": "Fanless low acoustic design (< 18W without HDD)",
+                "Power Consumption": "12 VDC, 1.5 A, Max. 18 W (without HDD)"
+            },
+            "compatibility": {
+                "Operating Systems": "Hik-Connect Mobile App (iOS / Android), iVMS-4200 (Windows / macOS)",
+                "Certification": "CE, FCC, RoHS, ISO9001 Compliant",
+                "Dimensions & Weight": "200 × 200 × 45 mm (7.9 × 7.9 × 1.8 inch), ≤ 0.8 kg",
+                "Included in Box": "1x iDS-7104HQHI-K1 DVR, 1x Power Adapter, 1x USB Mouse, 1x SATA Cable Set, 1x User Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision iDS-7108HQHI-M1/T 8-Channel 4MP Lite AcuSense DVR",
+        "product_code": "IDS-7108HQHI-M1/T",
+        "slug": "hikvision-ids-7108hqhi-m1-t-8ch-dvr",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "dvrs",
+        "section": "4.0MP LITE DVR",
+        "folder": "HIKVISION IDS-7108HQHI-M1T DVR",
+        "sale_price": 23473.0,
+        "price": 25820.0,
+        "cost_price": 19952.05,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision iDS-7108HQHI-M1/T 8-Channel 4MP Lite AcuSense DVR</h3><p>The <strong>Hikvision iDS-7108HQHI-M1/T</strong> brings deep-learning intelligence to 8 camera channels. Equipped with AcuSense Motion Detection 2.0 and facial detection or perimeter protection capabilities, it provides unparalleled surveillance accuracy and fast event verification.</p><h4>Key Features</h4><ul><li><strong>8-Channel 4MP Lite Recording:</strong> Rich detail and high dynamic contrast across all video streams.</li><li><strong>AI AcuSense Human/Vehicle Filtering:</strong> Significantly reduces false alarms caused by non-threatening movements.</li><li><strong>Audio over Coaxial (AoC):</strong> Plug-and-play sound pickup directly over standard coaxial lines.</li><li><strong>Up to 10TB HDD Support:</strong> Extended video archiving capability for weeks of footage retention.</li></ul>",
+        "main_specs": {
+            "Resolution": "4 MP Lite / 3 MP / 1080p @ 15 fps",
+            "Night Vision": "Supports Smart Night Vision & AcuSense Analysis",
+            "Connectivity": "1 RJ45 10M/100M Ethernet, 2x USB 2.0",
+            "Audio": "Audio over Coaxial (AoC) on 8 channels & 1-ch RCA",
+            "Storage Support": "1 SATA Interface (Up to 10TB HDD)",
+            "Field of View": "8-Channel Synchronous Playback"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision iDS-7108HQHI-M1/T (AcuSense Series)",
+                "Category Segment": "DVRs (4.0MP Lite)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "8 BNC Channels, 1 HDMI, 1 VGA, 2 USB 2.0, 1 RJ45",
+                "Architecture": "Deep Learning AcuSense Engine + H.265 Pro+ Video Encoder",
+                "Thermal Efficiency": "Low heat dissipation design (< 18W without HDD)",
+                "Power Consumption": "12 VDC, 1.5 A, Max. 18 W (without HDD)"
+            },
+            "compatibility": {
+                "Operating Systems": "Hik-Connect Mobile App (iOS / Android), iVMS-4200 (Windows / macOS)",
+                "Certification": "CE, FCC, RoHS, ISO9001 Compliant",
+                "Dimensions & Weight": "200 × 200 × 45 mm (7.9 × 7.9 × 1.8 inch), ≤ 0.8 kg",
+                "Included in Box": "1x iDS-7108HQHI-M1/T DVR, 1x Power Adapter, 1x USB Mouse, 1x SATA Cable Set, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision iDS-7116HQHI-M1/T 16-Channel 4MP Lite AcuSense DVR",
+        "product_code": "IDS-7116HQHI-M1/T",
+        "slug": "hikvision-ids-7116hqhi-m1-t-16ch-dvr",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "dvrs",
+        "section": "4.0MP LITE DVR",
+        "folder": "HIKVISION IDS-7116HQHI-M1T DVR",
+        "sale_price": 39945.0,
+        "price": 43940.0,
+        "cost_price": 33953.25,
+        "stock": 7,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision iDS-7116HQHI-M1/T 16-Channel 4MP Lite AcuSense DVR</h3><p>The <strong>Hikvision iDS-7116HQHI-M1/T</strong> is a high-density 16-channel smart DVR featuring state-of-the-art AcuSense deep-learning technology. Ideal for commercial perimeters, it delivers intelligent motion detection, 4MP Lite crisp recording, and seamless cloud monitoring.</p><h4>Key Features</h4><ul><li><strong>16 AcuSense Channels:</strong> Real-time human and vehicle classification on all analog channels.</li><li><strong>High-Efficiency H.265 Pro+:</strong> Maximizes surveillance storage efficiency up to 4x over traditional compression.</li><li><strong>Audio over Coaxial (AoC):</strong> Crystal clear audio on every channel without running separate cables.</li><li><strong>10TB Storage Capacity:</strong> Accommodates 1 SATA high-capacity surveillance hard disk.</li></ul>",
+        "main_specs": {
+            "Resolution": "4 MP Lite / 3 MP / 1080p @ 15 fps",
+            "Night Vision": "Supports Smart Night Vision & AcuSense Analysis",
+            "Connectivity": "1 RJ45 10M/100M Ethernet, 2x USB 2.0",
+            "Audio": "Audio over Coaxial (AoC) on 16 channels & 1-ch RCA",
+            "Storage Support": "1 SATA Interface (Up to 10TB HDD)",
+            "Field of View": "16-Channel Synchronous Playback"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision iDS-7116HQHI-M1/T (AcuSense Series)",
+                "Category Segment": "DVRs (4.0MP Lite)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "16 BNC Channels, 1 HDMI, 1 VGA, 2 USB 2.0, 1 RJ45",
+                "Architecture": "Dual Core AI Deep Learning Processor + H.265 Pro+ Video Codec",
+                "Thermal Efficiency": "Optimized airflow architecture (< 24W without HDD)",
+                "Power Consumption": "12 VDC, 2.0 A, Max. 24 W (without HDD)"
+            },
+            "compatibility": {
+                "Operating Systems": "Hik-Connect Mobile App (iOS / Android), iVMS-4200 (Windows / macOS)",
+                "Certification": "CE, FCC, RoHS, ISO9001 Compliant",
+                "Dimensions & Weight": "285 × 210 × 45 mm (11.2 × 8.3 × 1.8 inch), ≤ 1.0 kg",
+                "Included in Box": "1x iDS-7116HQHI-M1/T DVR, 1x Power Adapter, 1x USB Mouse, 1x SATA Cable Set, 1x User Manual"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-7232HQHI-M2/XT 32-Channel 4MP Lite AcuSense DVR",
+        "product_code": "DS-7232HQHI-M2/XT",
+        "slug": "hikvision-ds-7232hqhi-m2-xt-32ch-dvr",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "dvrs",
+        "section": "4.0MP LITE DVR",
+        "folder": "HIKVISION DS-7232HQHI-M2XT DVR",
+        "sale_price": 118876.0,
+        "price": 130764.0,
+        "cost_price": 101044.6,
+        "stock": 4,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-7232HQHI-M2/XT 32-Channel 4MP Lite AcuSense DVR</h3><p>The pinnacle of Turbo HD surveillance, the <strong>Hikvision DS-7232HQHI-M2/XT</strong> delivers 32 channels of 4MP Lite high-definition video with deep learning AcuSense false-alarm reduction. Featuring dual SATA drive bays (up to 20TB), 4K UHD HDMI output, and Gigabit networking, it fulfills the most demanding enterprise surveillance demands.</p><h4>Key Features</h4><ul><li><strong>32 AcuSense Turbo HD Channels:</strong> Comprehensive smart perimeter protection and object classification.</li><li><strong>4K UHD HDMI Video Output:</strong> Display ultra-crisp multi-view camera matrices on 4K commercial screens.</li><li><strong>Dual SATA Storage (20TB):</strong> 2 drive bays supporting up to 10TB per disk for months of archived surveillance.</li><li><strong>Gigabit Ethernet Connectivity:</strong> High-bandwidth network pipeline ensuring uninterrupted remote viewing.</li></ul>",
+        "main_specs": {
+            "Resolution": "4 MP Lite / 3 MP / 1080p @ 15 fps",
+            "Night Vision": "Supports Smart Night Vision & AcuSense Analysis",
+            "Connectivity": "1 RJ45 10M/100M/1000M Gigabit Ethernet, 1x USB 2.0, 1x USB 3.0",
+            "Audio": "Audio over Coaxial (AoC) on 32 channels, 1-ch RCA in/out",
+            "Storage Support": "2 SATA Interfaces (Up to 10TB per HDD, 20TB Total)",
+            "Field of View": "32-Channel Synchronous Playback"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-7232HQHI-M2/XT (Enterprise AcuSense Series)",
+                "Category Segment": "DVRs (4.0MP Lite)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "32 BNC Channels, 1 HDMI (4K UHD), 1 VGA, 1 USB 3.0, 1 USB 2.0, 1 Gigabit RJ45",
+                "Architecture": "Enterprise AcuSense Deep Learning Engine + H.265 Pro+ Compression",
+                "Thermal Efficiency": "Dual active cooling fans with intelligent temperature throttling (< 40W without HDD)",
+                "Power Consumption": "12 VDC, 5.0 A, Max. 40 W (without HDD)"
+            },
+            "compatibility": {
+                "Operating Systems": "Hik-Connect Mobile App (iOS / Android), iVMS-4200 (Windows / macOS)",
+                "Certification": "CE, FCC, RoHS, ISO9001 Compliant",
+                "Dimensions & Weight": "380 × 320 × 48 mm (15.0 × 12.6 × 1.9 inch), ≤ 2.2 kg",
+                "Included in Box": "1x DS-7232HQHI-M2/XT DVR, 1x Power Supply, 1x USB Mouse, 2x SATA Cable Kits, 1x Rackmount Hardware, 1x Manual"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE16D0T-EXIPF 2MP Indoor Fixed Mini Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE16DOT-EXIPF",
+        "slug": "hikvision-ds-2ce16d0t-exipf-2mp-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "tvi-cameras",
+        "section": "2.MP TVI CAMERA",
+        "folder": "HIKVISION DS-2CE16DOT-EXIPF CAMERA",
+        "sale_price": 5081.0,
+        "price": 5589.0,
+        "cost_price": 4318.85,
+        "stock": 15,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE16D0T-EXIPF 2MP Indoor Fixed Mini Bullet Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE16D0T-EXIPF</strong> is an ultra-affordable 2MP Turbo HD mini bullet camera designed for sharp indoor surveillance. Featuring a 3.6mm fixed lens, Smart IR illumination up to 20 meters, and 4-in-1 switchable video outputs, it seamlessly integrates with virtually any analog DVR.</p><h4>Key Features</h4><ul><li><strong>2.0 Megapixel High-Performance CMOS:</strong> Full HD 1080p resolution at 25/30 fps.</li><li><strong>Smart IR Illumination:</strong> Automatically adjusts infrared intensity to prevent overexposure up to 20 meters.</li><li><strong>4-in-1 Switchable Output:</strong> One port switchable between TVI, AHD, CVI, and CVBS formats.</li><li><strong>Compact Lightweight Design:</strong> Unobtrusive mini bullet form factor ideal for indoor ceilings and walls.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "Smart IR Night Vision up to 20m",
+            "Connectivity": "1 BNC HD-TVI/AHD/CVI/CVBS switchable output",
+            "Audio": "Standard Video Transmission via Coaxial",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 79.6°, Vertical FOV: 43.5°, Diagonal FOV: 93.7°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE16D0T-EXIPF (Value Turbo HD Series)",
+                "Category Segment": "TVI Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Video Output (4-in-1 switchable), 12 VDC Power Jack",
+                "Architecture": "2 MP CMOS Image Sensor, Digital WDR, 2D DNR",
+                "Thermal Efficiency": "Passive heatsink casing (-40 °C to 60 °C operating range)",
+                "Power Consumption": "12 VDC ± 25%, Max. 2.7 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "138.8 × 60.9 × 57.9 mm (5.46 × 2.40 × 2.28 inch), Approx. 145 g",
+                "Included in Box": "1x DS-2CE16D0T-EXIPF Camera, 1x Drill Template, 1x Mounting Screws & Wall Plugs, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE76D0T-EXIPF 2MP Indoor Fixed Turret Camera (3.6mm)",
+        "product_code": "DS-2CE76D0T-EXIPF",
+        "slug": "hikvision-ds-2ce76d0t-exipf-2mp-turret-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "tvi-cameras",
+        "section": "2.MP TVI CAMERA",
+        "folder": "HIKVISION DS-2CE76D0T-EXIPF CAMERA",
+        "sale_price": 5081.0,
+        "price": 5589.0,
+        "cost_price": 4318.85,
+        "stock": 15,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE76D0T-EXIPF 2MP Indoor Fixed Turret Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE76D0T-EXIPF</strong> is an indoor turret dome camera delivering clean 1080p surveillance video. Equipped with a 3.6mm lens, 3-axis pan/tilt adjustment, and Smart IR up to 20 meters, it is the go-to aesthetic camera choice for homes, shops, and classrooms.</p><h4>Key Features</h4><ul><li><strong>2.0 Megapixel Clarity:</strong> Full 1080p high definition output at smooth 30 fps.</li><li><strong>Smart IR Night Vision:</strong> Uniform illumination up to 20m without center hot spots.</li><li><strong>3-Axis Adjustment:</strong> Effortless pan (0° to 360°), tilt (0° to 75°), and rotation (0° to 360°) positioning.</li><li><strong>4-in-1 Compatibility:</strong> Easily toggles between HDTVI, AHD, HDCVI, and CVBS modes.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "Smart IR Night Vision up to 20m",
+            "Connectivity": "1 BNC HD-TVI/AHD/CVI/CVBS switchable output",
+            "Audio": "Standard Video Transmission via Coaxial",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 79.6°, Vertical FOV: 43.5°, Diagonal FOV: 93.7°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE76D0T-EXIPF (Value Turbo HD Series)",
+                "Category Segment": "TVI Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output, 12 VDC Coaxial Power Plug",
+                "Architecture": "2 MP CMOS Sensor, Digital WDR, 2D Noise Reduction",
+                "Thermal Efficiency": "Low power consumption thermal casing (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 2.7 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "Ø 84.6 × 78.9 mm (Ø 3.33 × 3.11 inch), Approx. 135 g",
+                "Included in Box": "1x DS-2CE76D0T-EXIPF Turret Camera, 1x Drill Template, 1x Screws & Plugs Pack, 1x User Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE16D0T-EXLPF 2MP Smart Hybrid Light Mini Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE16DOT-EXLPF",
+        "slug": "hikvision-ds-2ce16d0t-exlpf-2mp-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "tvi-cameras",
+        "section": "2.MP TVI CAMERA",
+        "folder": "HIKVISION DS-2CE16DOT-EXLPF CAMERA",
+        "sale_price": 6333.0,
+        "price": 6966.0,
+        "cost_price": 5383.05,
+        "stock": 14,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE16D0T-EXLPF 2MP Smart Hybrid Light Mini Bullet Camera (3.6mm)</h3><p>Experience intelligent dual-light night surveillance with the <strong>Hikvision DS-2CE16D0T-EXLPF</strong>. This versatile bullet camera integrates Smart Hybrid Light technology, providing discreet IR black-and-white night vision that switches dynamically to warm white light upon human or vehicle motion detection.</p><h4>Key Features</h4><ul><li><strong>Smart Hybrid Light Technology:</strong> Choose between Infrared, Warm White Light, or Smart Auto-switch mode.</li><li><strong>20m IR & 20m White Light:</strong> Flexible illumination distance for every night condition.</li><li><strong>Water and Dust Resistant (IP67):</strong> Rugged outdoor construction withstands rain, sun, and dirt.</li><li><strong>4-in-1 Video Signal:</strong> Compatible with TVI, AHD, CVI, and CVBS recorders.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "Smart Hybrid Light: 20m IR + 20m Warm White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable)",
+            "Audio": "Standard Coaxial Video Connection",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 80°, Vertical FOV: 45°, Diagonal FOV: 96°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE16D0T-EXLPF (Smart Hybrid Light Series)",
+                "Category Segment": "TVI Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output (TVI/AHD/CVI/CVBS), 12 VDC Power Jack",
+                "Architecture": "2 MP CMOS Sensor with Smart Hybrid Dual Light Array",
+                "Thermal Efficiency": "Weatherproof enclosed housing (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 3.3 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "138.8 × 60.9 × 57.9 mm (5.46 × 2.40 × 2.28 inch), Approx. 145 g",
+                "Included in Box": "1x DS-2CE16D0T-EXLPF Bullet Camera, 1x Mounting Hardware, 1x Drill Template, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE76D0T-EXLPF 2MP Smart Hybrid Light Turret Camera (3.6mm)",
+        "product_code": "DS-2CE76D0T-EXLPF",
+        "slug": "hikvision-ds-2ce76d0t-exlpf-2mp-turret-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "tvi-cameras",
+        "section": "2.MP TVI CAMERA",
+        "folder": "HIKVISION DS-2CE76D0T-EXLPF CAMERA",
+        "sale_price": 5889.0,
+        "price": 6478.0,
+        "cost_price": 5005.65,
+        "stock": 14,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE76D0T-EXLPF 2MP Smart Hybrid Light Turret Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE76D0T-EXLPF</strong> turret camera combines aesthetic dome design with innovative Smart Hybrid Light technology. When triggered by target detection, it instantly switches from invisible IR night vision to bright white light, capturing crucial color details while deterring intruders.</p><h4>Key Features</h4><ul><li><strong>Intelligent Dual Light:</strong> 20m IR distance plus 20m warm white light distance.</li><li><strong>Crystal Clear 2MP 1080p Video:</strong> Crisp image rendering with digital noise reduction.</li><li><strong>Discreet Dome Silhouette:</strong> Blends seamlessly into ceilings of stores, offices, and verandas.</li><li><strong>4-in-1 Versatility:</strong> Direct switch for TVI, AHD, CVI, and CVBS signal formats.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "Smart Hybrid Light: 20m IR + 20m Warm White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable)",
+            "Audio": "Standard Coaxial Video Connection",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 80°, Vertical FOV: 45°, Diagonal FOV: 96°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE76D0T-EXLPF (Smart Hybrid Light Series)",
+                "Category Segment": "TVI Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output, 12 VDC Coaxial Power Plug",
+                "Architecture": "2 MP CMOS Sensor with Smart Hybrid Dual Light Array",
+                "Thermal Efficiency": "Low energy thermal management (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 3.3 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "Ø 84.6 × 78.9 mm (Ø 3.33 × 3.11 inch), Approx. 135 g",
+                "Included in Box": "1x DS-2CE76D0T-EXLPF Turret Camera, 1x Drill Template, 1x Screws & Plugs Pack, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE16D0T-LPFS 2MP Dual Light Audio Mini Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE16DOT-LPFS",
+        "slug": "hikvision-ds-2ce16d0t-lpfs-2mp-audio-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "tvi-cameras",
+        "section": "2.MP TVI CAMERA",
+        "folder": "HIKVISION DS-2CE16DOT-LPFS CAMERA",
+        "sale_price": 7143.0,
+        "price": 7857.0,
+        "cost_price": 6071.55,
+        "stock": 12,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE16D0T-LPFS 2MP Dual Light Audio Mini Bullet Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE16D0T-LPFS</strong> is an all-in-one outdoor security solution combining 1080p video, Smart Hybrid Light, IP67 weatherproof protection, and an integrated microphone with Audio over Coaxial (AoC) transmission.</p><h4>Key Features</h4><ul><li><strong>Built-in Microphone & Audio over Coax:</strong> High-fidelity audio transmitted over the same coaxial cable as video.</li><li><strong>Smart Hybrid Light:</strong> 20m IR distance plus 20m warm white light for vivid color upon event detection.</li><li><strong>IP67 Weatherproof Rating:</strong> Fully protected against harsh rain, snow, and extreme outdoor environments.</li><li><strong>4-in-1 Switchable:</strong> Connects to TVI, AHD, CVI, and CVBS recorders effortlessly.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "Smart Hybrid Light: 20m IR + 20m White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 80°, Vertical FOV: 45°, Diagonal FOV: 96°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE16D0T-LPFS (Audio Dual-Light Series)",
+                "Category Segment": "TVI Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Power Jack",
+                "Architecture": "2 MP CMOS Sensor + AoC Audio Processing Chip",
+                "Thermal Efficiency": "Weatherproof sealed body (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 3.3 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "138.8 × 60.9 × 57.9 mm (5.46 × 2.40 × 2.28 inch), Approx. 145 g",
+                "Included in Box": "1x DS-2CE16D0T-LPFS Bullet Camera, 1x Mounting Kit, 1x Drill Template, 1x User Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE76D0T-LPFS 2MP Dual Light Audio Turret Camera (3.6mm)",
+        "product_code": "DS-2CE76D0T-LPFS",
+        "slug": "hikvision-ds-2ce76d0t-lpfs-2mp-audio-turret-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "tvi-cameras",
+        "section": "2.MP TVI CAMERA",
+        "folder": "HIKVISION DS-2CE76D0T-LPFS CAMERA",
+        "sale_price": 6862.0,
+        "price": 7548.0,
+        "cost_price": 5832.7,
+        "stock": 12,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE76D0T-LPFS 2MP Dual Light Audio Turret Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE76D0T-LPFS</strong> is an indoor/sheltered turret camera featuring a built-in microphone for synchronized audio and video recording. Featuring Smart Hybrid Light technology, it delivers silent IR night monitoring that illuminates with warm white light upon motion detection.</p><h4>Key Features</h4><ul><li><strong>Built-in Mic & Audio over Coaxial:</strong> Real-time audio evidence captured directly across coaxial cable.</li><li><strong>Smart Hybrid Light:</strong> Dual IR (20m) and Warm White Light (20m) illumination modes.</li><li><strong>1080p Full HD:</strong> Vivid details and sharp daytime/nighttime rendering.</li><li><strong>4-in-1 Switchable:</strong> Works with all major DVR formats (TVI/AHD/CVI/CVBS).</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "Smart Hybrid Light: 20m IR + 20m White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 80°, Vertical FOV: 45°, Diagonal FOV: 96°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE76D0T-LPFS (Audio Dual-Light Series)",
+                "Category Segment": "TVI Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Coaxial Power Plug",
+                "Architecture": "2 MP CMOS Sensor + AoC Audio Processing Chip",
+                "Thermal Efficiency": "Low power indoor thermal chassis (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 3.3 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "Ø 84.6 × 78.9 mm (Ø 3.33 × 3.11 inch), Approx. 140 g",
+                "Included in Box": "1x DS-2CE76D0T-LPFS Turret Camera, 1x Mounting Template, 1x Screws & Plugs, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE10DF0T-PFS 2MP ColorVu Audio Fixed Mini Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE10DF0T-PFS",
+        "slug": "hikvision-ds-2ce10df0t-pfs-2mp-colorvu-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "silver-color-view-cameras",
+        "section": "2.0MP SILVER COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE10DF0T-PFS CAMERA",
+        "sale_price": 8575.0,
+        "price": 9433.0,
+        "cost_price": 7288.75,
+        "stock": 12,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE10DF0T-PFS 2MP ColorVu Audio Fixed Mini Bullet Camera (3.6mm)</h3><p>Never lose color in the dark with the <strong>Hikvision DS-2CE10DF0T-PFS</strong> ColorVu bullet camera. Featuring a large F1.0 aperture and advanced sensor, it produces full-color vivid images 24 hours a day, 7 days a week, augmented by a built-in microphone for complete audiovisual coverage.</p><h4>Key Features</h4><ul><li><strong>24/7 Full Color Imaging:</strong> F1.0 super aperture captures up to 4x more light than ordinary cameras.</li><li><strong>Built-in Microphone (Audio over Coax):</strong> High-fidelity audio recording without additional audio wiring.</li><li><strong>20m Warm White Supplement Light:</strong> Gentle warm light illumination for pitch-black environments.</li><li><strong>IP67 Weatherproof Construction:</strong> Built to endure severe rain, dust, and outdoor weather.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "ColorVu 24/7 Full Color Night Vision up to 20m",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 76°, Vertical FOV: 41°, Diagonal FOV: 89°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE10DF0T-PFS (ColorVu Series)",
+                "Category Segment": "Silver ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Power Jack",
+                "Architecture": "2 MP CMOS Image Sensor, F1.0 Super Aperture, Digital WDR, 3D DNR",
+                "Thermal Efficiency": "Weatherproof sealed body (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 2.4 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "161.1 × 70 × 70 mm (6.34 × 2.76 × 2.76 inch), Approx. 229 g",
+                "Included in Box": "1x DS-2CE10DF0T-PFS Bullet Camera, 1x Mounting Hardware, 1x Drill Template, 1x User Manual"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE70DF0T-PFS 2MP ColorVu Audio Fixed Turret Camera (3.6mm)",
+        "product_code": "DS-2CE70DF0T-PFS",
+        "slug": "hikvision-ds-2ce70df0t-pfs-2mp-colorvu-turret-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "silver-color-view-cameras",
+        "section": "2.0MP SILVER COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE70DF0T-PFS CAMERA",
+        "sale_price": 7992.0,
+        "price": 8791.0,
+        "cost_price": 6793.2,
+        "stock": 12,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE70DF0T-PFS 2MP ColorVu Audio Fixed Turret Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE70DF0T-PFS</strong> brings round-the-clock color surveillance to an indoor/outdoor turret dome format. Featuring an F1.0 aperture lens, built-in microphone for coaxial audio, and 20-meter warm light, it guarantees clear identification of faces, clothing colors, and vehicle models even in total darkness.</p><h4>Key Features</h4><ul><li><strong>ColorVu 24/7 Color Imaging:</strong> Brilliant color reproduction day and night.</li><li><strong>Built-in Microphone:</strong> Coaxial audio transmission delivers clear synchronized sound.</li><li><strong>20m Warm Light Distance:</strong> Gentle, non-glare white light supplement.</li><li><strong>IP67 Water & Dust Protection:</strong> Ideal for indoor ceilings, porch eaves, and doorways.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "ColorVu 24/7 Full Color Night Vision up to 20m",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 76°, Vertical FOV: 41°, Diagonal FOV: 89°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE70DF0T-PFS (ColorVu Series)",
+                "Category Segment": "Silver ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Coaxial Power Plug",
+                "Architecture": "2 MP CMOS Image Sensor, F1.0 Super Aperture, Digital WDR, 3D DNR",
+                "Thermal Efficiency": "Weatherproof sealed housing (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 2.4 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "Ø 85.1 × 77.6 mm (Ø 3.35 × 3.05 inch), Approx. 182 g",
+                "Included in Box": "1x DS-2CE70DF0T-PFS Turret Camera, 1x Mounting Template, 1x Screws & Plugs, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE70DF0T-LPFS 2MP Smart Hybrid Light ColorVu Audio Turret Camera (3.6mm)",
+        "product_code": "DS-2CE70DF0T-LPFS",
+        "slug": "hikvision-ds-2ce70df0t-lpfs-2mp-colorvu-turret-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "silver-color-view-cameras",
+        "section": "2.0MP SILVER COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE70DF0T-LPFS CAMERA",
+        "sale_price": 8819.0,
+        "price": 9701.0,
+        "cost_price": 7496.15,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE70DF0T-LPFS 2MP Smart Hybrid Light ColorVu Audio Turret Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE70DF0T-LPFS</strong> represents the next evolution of ColorVu, uniting Smart Hybrid Light intelligence with 24/7 color rendering and built-in audio. Set it to discreet IR mode at night, and let the camera automatically illuminate with warm white light when an intrusion occurs.</p><h4>Key Features</h4><ul><li><strong>Smart Hybrid Light + ColorVu:</strong> Seamless transition between covert IR and brilliant ColorVu warm light.</li><li><strong>Integrated Audio over Coaxial:</strong> High quality mic recording on the same video line.</li><li><strong>F1.0 Super Large Aperture:</strong> Captures incredible low-light detail even before illumination turns on.</li><li><strong>IP67 Weatherproof:</strong> Reliable indoor and outdoor protection against rain and dust.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "Smart Hybrid ColorVu: 20m IR + 20m Warm White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 76°, Vertical FOV: 41°, Diagonal FOV: 89°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE70DF0T-LPFS (ColorVu Smart Hybrid Series)",
+                "Category Segment": "Silver ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Coaxial Power Plug",
+                "Architecture": "2 MP CMOS Sensor, F1.0 Super Aperture, Smart Dual Light Engine",
+                "Thermal Efficiency": "Low power consumption thermal casing (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 2.9 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "Ø 85.1 × 77.6 mm (Ø 3.35 × 3.05 inch), Approx. 185 g",
+                "Included in Box": "1x DS-2CE70DF0T-LPFS Turret Camera, 1x Drill Template, 1x Screws & Plugs, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE12DF0T-FS 2MP ColorVu Audio Long-Range Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE12DF0T-FS",
+        "slug": "hikvision-ds-2ce12df0t-fs-2mp-colorvu-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "silver-color-view-cameras",
+        "section": "2.0MP SILVER COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE12DF0T-FS CAMERA",
+        "sale_price": 10558.0,
+        "price": 11614.0,
+        "cost_price": 8974.3,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE12DF0T-FS 2MP ColorVu Audio Long-Range Bullet Camera (3.6mm)</h3><p>Designed for large outdoor parameters, yards, and driveways, the <strong>Hikvision DS-2CE12DF0T-FS</strong> features an upgraded 40-meter white light supplement illumination distance. Its robust all-metal IP67 housing, high-performance F1.0 lens, and integrated mic make it a top choice for commercial perimeter surveillance.</p><h4>Key Features</h4><ul><li><strong>Extended 40m ColorVu Night Range:</strong> Illuminates long driveways, perimeter fences, and open parking lots in vivid color.</li><li><strong>Solid All-Metal Construction:</strong> Durable heavy-duty metal housing rated IP67 weatherproof.</li><li><strong>Built-in Microphone (AoC):</strong> High-definition sound capture over coaxial cable without separate audio lines.</li><li><strong>F1.0 Super Aperture:</strong> Gathers maximum ambient light for vivid nighttime recording.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "ColorVu 24/7 Full Color Night Vision up to 40m",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 76°, Vertical FOV: 41°, Diagonal FOV: 89°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE12DF0T-FS (ColorVu Long-Range Series)",
+                "Category Segment": "Silver ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Power Jack",
+                "Architecture": "2 MP CMOS Sensor, F1.0 Aperture, 40m High-Power White Light Array",
+                "Thermal Efficiency": "Metal heat-dissipating housing (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 4.2 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "194.2 × 78 × 74.5 mm (7.65 × 3.07 × 2.93 inch), Approx. 515 g",
+                "Included in Box": "1x DS-2CE12DF0T-FS Metal Bullet Camera, 1x Mounting Hardware, 1x Drill Template, 1x User Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE12DF0T-LFS 2MP Smart Hybrid Light ColorVu Audio Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE12DF0T-LFS",
+        "slug": "hikvision-ds-2ce12df0t-lfs-2mp-colorvu-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "silver-color-view-cameras",
+        "section": "2.0MP SILVER COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE12DF0T-LFS CAMERA",
+        "sale_price": 11814.0,
+        "price": 12995.0,
+        "cost_price": 10041.9,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE12DF0T-LFS 2MP Smart Hybrid Light ColorVu Audio Bullet Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE12DF0T-LFS</strong> is the premier silver-series long-range bullet camera, featuring an impressive 40-meter Smart Hybrid Light system (40m IR + 40m White Light), an integrated mic for audio over coax, and a robust IP67 metal enclosure.</p><h4>Key Features</h4><ul><li><strong>40m Smart Hybrid Dual Light:</strong> Covers up to 40 meters with invisible IR or vibrant warm white light.</li><li><strong>Audio over Coaxial (AoC):</strong> High-definition sound capture directly over standard coaxial lines.</li><li><strong>F1.0 Super Aperture:</strong> Exceptional low-light performance delivering rich color even in near darkness.</li><li><strong>Rugged Metal IP67 Housing:</strong> Engineered to withstand storms, heavy rain, dust, and direct sunlight.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p",
+            "Night Vision": "Smart Hybrid Light: 40m IR + 40m Warm White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 76°, Vertical FOV: 41°, Diagonal FOV: 89°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE12DF0T-LFS (ColorVu Smart Hybrid Long-Range)",
+                "Category Segment": "Silver ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Power Jack",
+                "Architecture": "2 MP CMOS Sensor, F1.0 Aperture, 40m Smart Hybrid Dual Light Array",
+                "Thermal Efficiency": "Metal body thermal dissipation architecture (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 4.6 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "194.2 × 78 × 74.5 mm (7.65 × 3.07 × 2.93 inch), Approx. 515 g",
+                "Included in Box": "1x DS-2CE12DF0T-LFS Bullet Camera, 1x Mounting Hardware, 1x Drill Template, 1x User Manual"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE10DF3T-PF 2MP Premium Gold ColorVu Fixed Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE10DF3T-PF",
+        "slug": "hikvision-ds-2ce10df3t-pf-2mp-gold-colorvu-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "gold-color-view-cameras",
+        "section": "2.0MP GOLD COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE10DF3T-PF CAMERA",
+        "sale_price": 11735.0,
+        "price": 12909.0,
+        "cost_price": 9974.75,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE10DF3T-PF 2MP Premium Gold ColorVu Fixed Bullet Camera (3.6mm)</h3><p>Part of Hikvision's flagship ColorVu Gold series, the <strong>Hikvision DS-2CE10DF3T-PF</strong> delivers unrivaled 24/7 full-color imaging thanks to its 130 dB True WDR technology and an ultra-sensitive F1.0 super aperture lens. Perfectly resolves harsh backlighting and shadows while delivering vivid true colors 24 hours a day.</p><h4>Key Features</h4><ul><li><strong>130 dB True WDR:</strong> Clear imaging against strong back light and high contrast scenes.</li><li><strong>F1.0 Super Aperture:</strong> Captures extreme low-light scenes with lifelike color and clarity.</li><li><strong>3D Digital Noise Reduction:</strong> Crystal-clear sharp video frames free of grain and noise.</li><li><strong>20m Warm White Supplement Light:</strong> Ensures continuous illumination in zero-lux pitch darkness.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p (130 dB True WDR)",
+            "Night Vision": "ColorVu 24/7 Full Color Night Vision up to 20m",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Standard Coaxial Video Connection",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 77°, Vertical FOV: 42°, Diagonal FOV: 91°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE10DF3T-PF (ColorVu Gold Series)",
+                "Category Segment": "Gold ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output (TVI/AHD/CVI/CVBS), 12 VDC Power Jack",
+                "Architecture": "2 MP High Performance CMOS Sensor, 130 dB True WDR, 3D DNR",
+                "Thermal Efficiency": "Weatherproof sealed body (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 2.9 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "161.1 × 70 × 70 mm (6.34 × 2.76 × 2.76 inch), Approx. 229 g",
+                "Included in Box": "1x DS-2CE10DF3T-PF Bullet Camera, 1x Mounting Hardware, 1x Drill Template, 1x User Manual"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE70DF3T-PF 2MP Premium Gold ColorVu Fixed Turret Camera (3.6mm)",
+        "product_code": "DS-2CE70DF3T-PF",
+        "slug": "hikvision-ds-2ce70df3t-pf-2mp-gold-colorvu-turret-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "gold-color-view-cameras",
+        "section": "2.0MP GOLD COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE70DF3T-PF CAMERA",
+        "sale_price": 11735.0,
+        "price": 12909.0,
+        "cost_price": 9974.75,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE70DF3T-PF 2MP Premium Gold ColorVu Fixed Turret Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE70DF3T-PF</strong> combines the elite ColorVu Gold series optics into an elegant turret dome form factor. Boasting 130 dB True WDR, 3D DNR, and an F1.0 aperture, it provides true-to-life 24/7 color security with no blind spots or washouts.</p><h4>Key Features</h4><ul><li><strong>Flagship 130 dB True WDR:</strong> Uncompromising clarity in sun-drenched doorways, glass entrances, and shadowed porches.</li><li><strong>F1.0 Super Aperture:</strong> Massive light intake generating color video even without auxiliary lighting.</li><li><strong>20m Warm White Night Illumination:</strong> Soft, gentle illumination providing vivid night details.</li><li><strong>IP67 Weatherproof:</strong> Suitable for indoor luxury spaces and exposed outdoor eaves.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p (130 dB True WDR)",
+            "Night Vision": "ColorVu 24/7 Full Color Night Vision up to 20m",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Standard Coaxial Video Connection",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 77°, Vertical FOV: 42°, Diagonal FOV: 91°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE70DF3T-PF (ColorVu Gold Series)",
+                "Category Segment": "Gold ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output, 12 VDC Coaxial Power Plug",
+                "Architecture": "2 MP High Performance CMOS Sensor, 130 dB True WDR, 3D DNR",
+                "Thermal Efficiency": "Low energy thermal management (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 2.9 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "Ø 85.1 × 77.6 mm (Ø 3.35 × 3.05 inch), Approx. 182 g",
+                "Included in Box": "1x DS-2CE70DF3T-PF Turret Camera, 1x Mounting Hardware, 1x Drill Template, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE10DF3T-LPFS 2MP Premium Gold ColorVu Smart Hybrid Light Audio Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE10DF3T-LPFS",
+        "slug": "hikvision-ds-2ce10df3t-lpfs-2mp-gold-colorvu-audio-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "gold-color-view-cameras",
+        "section": "2.0MP GOLD COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE10DF3T-LPFS CAMERA",
+        "sale_price": 12628.0,
+        "price": 13891.0,
+        "cost_price": 10733.8,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE10DF3T-LPFS 2MP Premium Gold ColorVu Smart Hybrid Light Audio Bullet Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE10DF3T-LPFS</strong> is the ultimate compact security camera, uniting 130 dB True WDR, ColorVu F1.0 super aperture, Smart Hybrid Light (20m IR + 20m White Light), and a high-clarity microphone for Audio over Coaxial (AoC).</p><h4>Key Features</h4><ul><li><strong>Flagship Gold ColorVu Optics:</strong> 130 dB True WDR eliminates dark shadows and blinding highlights.</li><li><strong>Smart Hybrid Light (20m IR / 20m White Light):</strong> Stealthy infrared surveillance switching to vivid white light on trigger.</li><li><strong>Built-in Microphone (AoC):</strong> Broadcast-level sound streaming directly through coaxial cable.</li><li><strong>IP67 Weatherproof:</strong> Complete resilience against heavy storms, extreme temperatures, and dust.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p (130 dB True WDR)",
+            "Night Vision": "Smart Hybrid ColorVu: 20m IR + 20m Warm White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 77°, Vertical FOV: 42°, Diagonal FOV: 91°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE10DF3T-LPFS (ColorVu Gold Smart Hybrid Series)",
+                "Category Segment": "Gold ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Power Jack",
+                "Architecture": "2 MP High Performance CMOS, 130 dB True WDR, Smart Dual Light Engine",
+                "Thermal Efficiency": "Weatherproof sealed body (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 3.2 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "161.1 × 70 × 70 mm (6.34 × 2.76 × 2.76 inch), Approx. 229 g",
+                "Included in Box": "1x DS-2CE10DF3T-LPFS Bullet Camera, 1x Mounting Hardware, 1x Drill Template, 1x User Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE70DF3T-LPFS 2MP Premium Gold ColorVu Smart Hybrid Light Audio Turret Camera (3.6mm)",
+        "product_code": "DS-2CE70DF3T-LPFS",
+        "slug": "hikvision-ds-2ce70df3t-lpfs-2mp-gold-colorvu-audio-turret-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "gold-color-view-cameras",
+        "section": "2.0MP GOLD COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE70DF3T-LPFS CAMERA",
+        "sale_price": 12628.0,
+        "price": 13891.0,
+        "cost_price": 10733.8,
+        "stock": 10,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE70DF3T-LPFS 2MP Premium Gold ColorVu Smart Hybrid Light Audio Turret Camera (3.6mm)</h3><p>The <strong>Hikvision DS-2CE70DF3T-LPFS</strong> is a premium gold-grade turret camera featuring 130 dB True WDR, an ultra-fast F1.0 aperture, Smart Hybrid dual lighting (20m IR + 20m White Light), and an integrated microphone for high-definition coaxial audio.</p><h4>Key Features</h4><ul><li><strong>130 dB True WDR:</strong> Outstanding image balance under intense direct sunlight or deep shadow.</li><li><strong>Built-in Microphone (AoC):</strong> Captures audio alongside video over coaxial connection.</li><li><strong>Smart Hybrid Light:</strong> Discreet IR night monitoring transitioning to warm white light on detection.</li><li><strong>IP67 Weatherproof:</strong> Precision-sealed construction suited for indoor and outdoor mounting.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p (130 dB True WDR)",
+            "Night Vision": "Smart Hybrid ColorVu: 20m IR + 20m Warm White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 77°, Vertical FOV: 42°, Diagonal FOV: 91°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE70DF3T-LPFS (ColorVu Gold Smart Hybrid Series)",
+                "Category Segment": "Gold ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Coaxial Power Plug",
+                "Architecture": "2 MP High Performance CMOS, 130 dB True WDR, Smart Dual Light Engine",
+                "Thermal Efficiency": "Low power consumption thermal casing (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 3.2 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "Ø 85.1 × 77.6 mm (Ø 3.35 × 3.05 inch), Approx. 185 g",
+                "Included in Box": "1x DS-2CE70DF3T-LPFS Turret Camera, 1x Mounting Template, 1x Screws & Plugs, 1x User Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE12DF3T-F 2MP Premium Gold ColorVu 40m Long-Range Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE12DF3T-F",
+        "slug": "hikvision-ds-2ce12df3t-f-2mp-gold-colorvu-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "gold-color-view-cameras",
+        "section": "2.0MP GOLD COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE12DF3T-F CAMERA",
+        "sale_price": 13266.0,
+        "price": 14593.0,
+        "cost_price": 11276.1,
+        "stock": 8,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE12DF3T-F 2MP Premium Gold ColorVu 40m Long-Range Bullet Camera (3.6mm)</h3><p>Engineered for high-security commercial and estate applications, the <strong>Hikvision DS-2CE12DF3T-F</strong> delivers phenomenal 40-meter full-color night illumination. Combined with 130 dB True WDR and a heavy-duty metal IP67 casing, it guarantees vivid daytime and nighttime forensic video evidence.</p><h4>Key Features</h4><ul><li><strong>40m ColorVu Night Vision:</strong> High-powered warm white light illuminates up to 40 meters in full color.</li><li><strong>130 dB True WDR:</strong> Crystal clear image quality in challenging back-lit environments.</li><li><strong>F1.0 Super Aperture:</strong> Captures rich color details even in extreme low-light conditions.</li><li><strong>Heavy-Duty All-Metal Housing:</strong> Rugged IP67 weatherproof shell for maximum durability.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p (130 dB True WDR)",
+            "Night Vision": "ColorVu 24/7 Full Color Night Vision up to 40m",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Standard Coaxial Video Connection",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 77°, Vertical FOV: 42°, Diagonal FOV: 91°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE12DF3T-F (ColorVu Gold Long-Range)",
+                "Category Segment": "Gold ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output (TVI/AHD/CVI/CVBS), 12 VDC Power Jack",
+                "Architecture": "2 MP High Performance CMOS, 130 dB True WDR, 40m White Light Engine",
+                "Thermal Efficiency": "Heavy metal heat-dissipating housing (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 4.2 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "194.2 × 78 × 74.5 mm (7.65 × 3.07 × 2.93 inch), Approx. 515 g",
+                "Included in Box": "1x DS-2CE12DF3T-F Metal Bullet Camera, 1x Mounting Hardware, 1x Drill Template, 1x Quick Guide"
+            }
+        }
+    },
+    {
+        "name": "Hikvision DS-2CE12DF3T-LFS 2MP Premium Gold ColorVu Smart Hybrid Light 40m Audio Bullet Camera (3.6mm)",
+        "product_code": "DS-2CE12DF3T-LFS",
+        "slug": "hikvision-ds-2ce12df3t-lfs-2mp-gold-colorvu-audio-bullet-camera",
+        "brand_slug": "hikvision",
+        "sub_category_slug": "gold-color-view-cameras",
+        "section": "2.0MP GOLD COLOR VIEW CAMERA",
+        "folder": "HIKVISION DS-2CE12DF3T-LFS CAMERA",
+        "sale_price": 15602.0,
+        "price": 17162.0,
+        "cost_price": 13261.7,
+        "stock": 8,
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "<h3>Hikvision DS-2CE12DF3T-LFS 2MP Premium Gold ColorVu Smart Hybrid Light 40m Audio Bullet Camera (3.6mm)</h3><p>The ultimate flagship of the Turbo HD lineup, the <strong>Hikvision DS-2CE12DF3T-LFS</strong> represents the complete zenith of surveillance technology. Featuring 130 dB True WDR, 40m Smart Hybrid dual lighting (40m IR + 40m White Light), an integrated microphone with Audio over Coaxial, and an all-metal IP67 chassis, it provides unparalleled security intelligence and evidence capture.</p><h4>Key Features</h4><ul><li><strong>40m Smart Hybrid Dual Light:</strong> 40m invisible IR + 40m warm white light for smart event triggering.</li><li><strong>130 dB True WDR:</strong> Flawless rendering under high-contrast sun and dark glare.</li><li><strong>Built-in Microphone (AoC):</strong> High-definition audio transmitted through coaxial cable without extra lines.</li><li><strong>All-Metal IP67 Weatherproof Body:</strong> Engineered for industrial-grade resilience in all climates.</li></ul>",
+        "main_specs": {
+            "Resolution": "1920 (H) × 1080 (V) Full HD 1080p (130 dB True WDR)",
+            "Night Vision": "Smart Hybrid Light: 40m IR + 40m Warm White Light",
+            "Connectivity": "1 BNC Video Output (4-in-1 switchable TVI/AHD/CVI/CVBS)",
+            "Audio": "Built-in Microphone (Audio over Coaxial - AoC)",
+            "Storage Support": "Managed via DVR / NVR Storage",
+            "Field of View": "Horizontal FOV: 77°, Vertical FOV: 42°, Diagonal FOV: 91°"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-2CE12DF3T-LFS (ColorVu Gold Smart Hybrid Flagship)",
+                "Category Segment": "Gold ColorVu Cameras",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1 BNC Output with AoC Audio, 12 VDC Power Jack",
+                "Architecture": "2 MP High Performance CMOS, 130 dB True WDR, 40m Smart Dual Light Array",
+                "Thermal Efficiency": "Heavy metal body thermal dissipation architecture (-40 °C to 60 °C)",
+                "Power Consumption": "12 VDC ± 25%, Max. 4.6 W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Hikvision & standard 4-in-1 TVI/AHD/CVI DVRs",
+                "Certification": "IP67 Weatherproof, CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "194.2 × 78 × 74.5 mm (7.65 × 3.07 × 2.93 inch), Approx. 515 g",
+                "Included in Box": "1x DS-2CE12DF3T-LFS Metal Bullet Camera, 1x Mounting Hardware, 1x Drill Template, 1x User Manual"
+            }
+        }
+    }
+]
