@@ -8,7 +8,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -37,19 +39,32 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'user', // Default role එක සාමාන්‍ය පාරිභෝගිකයෙක් ලෙස
-            'status' => 'active',
-        ]);
+        try {
+            $user = DB::transaction(function () use ($request) {
+                return User::create([
+                    'first_name' => trim($request->first_name),
+                    'last_name' => trim($request->last_name),
+                    'email' => strtolower(trim($request->email)),
+                    'password' => Hash::make($request->password),
+                    'role' => 'user', // Default role එක සාමාන්‍ය පාරිභෝගිකයෙක් ලෙස
+                    'status' => 'active',
+                ]);
+            });
 
-        event(new Registered($user));
+            event(new Registered($user));
 
-        Auth::login($user);
+            Auth::login($user);
 
-        return redirect('/')->with('success', 'Your account has been created successfully! Welcome to Wiki Store.');
+            return redirect('/')->with('success', 'Your account has been created successfully! Welcome to Wiki Store.');
+        } catch (\Throwable $e) {
+            Log::error('User registration error: ' . $e->getMessage(), [
+                'email' => $request->email,
+                'ip' => $request->ip(),
+            ]);
+
+            return back()->withInput()->withErrors([
+                'email' => __('An error occurred while creating your account. Please try again or contact support.'),
+            ]);
+        }
     }
 }

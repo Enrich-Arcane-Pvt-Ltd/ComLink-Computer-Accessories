@@ -42,25 +42,11 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-        $user = User::where('email', $this->input('email'))
-            ->first();
 
-        // Account not found
-        if (! $user) {
-            RateLimiter::hit($this->throttleKey());
-            throw ValidationException::withMessages([
-                'email' => __('Invalid credentials or account does not exist.'),
-            ]);
-        }
+        $user = User::where('email', $this->input('email'))->first();
 
-        // // Soft-deleted account
-        // if ($user->trashed()) {
-        //     throw ValidationException::withMessages([
-        //         'email' => __('Your account has been deleted. Please contact support.'),
-        //     ]);
-        // }
-
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        // Account not found or wrong password (unified to prevent user enumeration attacks)
+        if (! $user || ! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -68,10 +54,13 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Inactive account check
         if ($user->status !== 'active') {
             Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+
             throw ValidationException::withMessages([
-                'identifier' => __('Your account is inactive. Please contact support.'),
+                'email' => __('Your account is inactive. Please contact support.'),
             ]);
         }
 
