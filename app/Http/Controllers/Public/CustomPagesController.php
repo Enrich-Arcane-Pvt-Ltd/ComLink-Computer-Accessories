@@ -15,27 +15,24 @@ class CustomPagesController extends Controller
     {
         $terms = [
             'title' => 'TERMS & CONDITIONS',
-            'last_updated' => 'Last updated: October 1, 2026',
+            'last_updated' => 'Last updated: November 2026',
             'content' => '
-                <p>Welcome to VICKY STORE. These Terms and Conditions govern your use of our website and the purchase of products from us. By accessing or using our website, you agree to be bound by these Terms.</p>
+                <p>Welcome to ComLink Computer Accessories. These Terms and Conditions govern your use of our website, computer hardware, surveillance systems, networking products, and accessories purchased from us. By accessing or using our platform, you agree to be bound by these terms.</p>
 
                 <h2>1. General Conditions</h2>
-                <p>We reserve the right to refuse service to anyone for any reason at any time. You understand that your content (not including credit card information), may be transferred unencrypted and involve transmissions over various networks.</p>
+                <p>We provide genuine IT equipment, computer accessories, networking solutions, and security cameras across Sri Lanka. We reserve the right to refuse service or cancel orders in cases of suspicious transactions or fraudulent activity.</p>
 
-                <h2>2. Products and Pricing</h2>
-                <p>Prices for our products are subject to change without notice. We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time.</p>
+                <h2>2. Products, Pricing & Availability</h2>
+                <p>All prices are listed in Sri Lankan Rupees (LKR) and are subject to change without prior notice based on currency fluctuations or manufacturer updates. We strive to maintain accurate inventory levels; however, if an ordered item is out of stock, our customer care team will notify you promptly.</p>
 
-                <h2>3. User Comments and Feedback</h2>
-                <p>If, at our request, you send certain specific submissions or without a request from us you send creative ideas, suggestions, proposals, plans, or other materials, whether online, by email, by postal mail, or otherwise, you agree that we may, at any time, without restriction, edit, copy, publish, distribute, translate and otherwise use in any medium any comments that you forward to us.</p>
+                <h2>3. Warranty & Product Authenticity</h2>
+                <p>All products sold on ComLink are 100% brand new and covered by official distributor warranties unless specifically indicated otherwise. Warranty claims require the original invoice and serial number intact on the equipment.</p>
 
-                <h2>4. Personal Information</h2>
-                <p>Your submission of personal information through the store is governed by our Privacy Policy.</p>
+                <h2>4. Orders & Deliveries</h2>
+                <p>Once an order is placed and confirmed, tracking information will be provided. Deliveries are carried out via trusted courier partners across Sri Lanka.</p>
 
-                <h2>5. Errors, Inaccuracies and Omissions</h2>
-                <p>Occasionally there may be information on our site or in the Service that contains typographical errors, inaccuracies or omissions that may relate to product descriptions, pricing, promotions, offers, product shipping charges, transit times and availability. We reserve the right to correct any errors, inaccuracies or omissions, and to change or update information or cancel orders if any information in the Service or on any related website is inaccurate at any time without prior notice.</p>
-
-                <h2>6. Contact Information</h2>
-                <p>Questions about the Terms of Service should be sent to us at legal@wikistore.com.</p>
+                <h2>5. Contact Information</h2>
+                <p>For questions regarding our terms and policies, please reach out to us at support@comlink.lk or call our hotline.</p>
             ',
         ];
 
@@ -51,30 +48,24 @@ class CustomPagesController extends Controller
     {
         $privacy = [
             'title' => 'PRIVACY POLICY',
-            'last_updated' => 'Last updated: October 1, 2026',
+            'last_updated' => 'Last updated: November 2026',
             'content' => '
-                <p>At VICKY STORE, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or make a purchase.</p>
+                <p>At ComLink, protecting your privacy and securing your personal information is our priority. This Privacy Policy outlines how we collect, store, and utilize your personal details when browsing or shopping on our website.</p>
 
                 <h2>1. Information We Collect</h2>
-                <p>We collect information that you provide directly to us when you create an account, make a purchase, sign up for our newsletter, or contact customer support. This information may include your name, email address, shipping address, billing address, phone number, and payment details.</p>
+                <p>When you register an account, place an order, or submit an inquiry, we collect necessary information including your full name, contact numbers, delivery address, and email address.</p>
 
-                <h2>2. How We Use Your Information</h2>
-                <p>We use the information we collect to process your orders, manage your account, send you promotional emails (if you opted in), and improve our overall services.</p>
+                <h2>2. Use of Your Information</h2>
+                <p>Your details are strictly used to process customer orders, arrange islandwide deliveries, communicate order status updates, and provide after-sales warranty support.</p>
 
-                <h2>3. Sharing Your Information</h2>
-                <p>We may share your information with third-party service providers who help us operate our business, such as payment processors, shipping carriers, and email marketing platforms. These providers are obligated to protect your information.</p>
+                <h2>3. Data Protection & Security</h2>
+                <p>We implement industry-standard encryption, secure session protocols, and authentication safeguards to protect your personal data from unauthorized access.</p>
 
-                <h2>4. Cookies and Tracking</h2>
-                <p>We use cookies and similar tracking technologies to track activity on our website and hold certain information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.</p>
+                <h2>4. Third-Party Services</h2>
+                <p>We do not sell or rent customer data to third parties. We only share essential delivery information (name, address, phone number) with verified courier partners to fulfill your orders.</p>
 
-                <h2>5. Your Rights</h2>
-                <p>Depending on your location, you may have the right to access, correct, or delete your personal information. If you wish to exercise these rights, please contact us at privacy@wikistore.com.</p>
-
-                <h2>6. Changes to This Policy</h2>
-                <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.</p>
-
-                <h2>7. Contact Us</h2>
-                <p>If you have any questions about this Privacy Policy, please contact us at:<br>Email: privacy@wikistore.com<br>Address: 368 Ocean Ave, Seaside, CA 12345</p>
+                <h2>5. Contact Us</h2>
+                <p>If you have any questions or requests regarding your personal data, please contact us at privacy@comlink.lk.</p>
             ',
         ];
 
@@ -90,21 +81,22 @@ class CustomPagesController extends Controller
     {
         $shipping = [
             'title' => 'SHIPPING & DELIVERY',
-            'last_updated' => 'Last updated: October 1, 2026',
+            'last_updated' => 'Last updated: November 2026',
             'content' => '
-                <p>Thank you for shopping at VICKY STORE. Here is the information regarding our shipping and delivery timelines, rates, and policies.</p>
+                <p>ComLink offers safe and reliable island-wide delivery for all computer parts, CCTV equipment, accessories, and system builds.</p>
 
-                <h2>1. Processing Timelines</h2>
-                <p>All orders are processed within 1-2 business days. Orders are not shipped or delivered on weekends or holidays.</p>
+                <h2>1. Order Processing Time</h2>
+                <p>Orders placed on business days are verified and dispatched within 24 to 48 hours. Custom PC builds may require an additional 24 hours for hardware testing and quality inspection.</p>
 
-                <h2>2. Shipping Rates & Delivery Estimates</h2>
+                <h2>2. Delivery Timelines & Charges</h2>
                 <ul>
-                    <li><strong>Standard Shipping:</strong> 3-5 business days ($5.99, or FREE on orders over $100).</li>
-                    <li><strong>Express Shipping:</strong> 1-2 business days ($14.99).</li>
+                    <li><strong>Colombo & Suburbs:</strong> 1 - 2 business days.</li>
+                    <li><strong>Island-wide Delivery:</strong> 2 - 4 business days.</li>
+                    <li>Delivery charges are calculated at checkout based on weight and destination.</li>
                 </ul>
 
-                <h2>3. Shipment Confirmation & Order Tracking</h2>
-                <p>You will receive a Shipment Confirmation email and a WhatsApp alert containing your tracking number(s) once your order has shipped.</p>
+                <h2>3. Secure Packaging & Tracking</h2>
+                <p>All sensitive electronic components (hard drives, motherboards, processors, monitors) are bubble-wrapped and packaged in shock-proof boxes. You will receive a tracking link via SMS/Email once dispatched.</p>
             ',
         ];
 
@@ -119,19 +111,22 @@ class CustomPagesController extends Controller
     public function refunds(): Response
     {
         $refunds = [
-            'title' => 'RETURNS, REFUNDS & CANCELLATIONS',
-            'last_updated' => 'Last updated: October 1, 2026',
+            'title' => 'RETURNS, REFUNDS & WARRANTY',
+            'last_updated' => 'Last updated: November 2026',
             'content' => '
-                <p>Our priority is your complete satisfaction. If you are not entirely satisfied with your purchase, we are here to help.</p>
+                <p>We stand behind the quality and authenticity of every product we sell. Please review our return and warranty procedure below.</p>
 
-                <h2>1. 30-Day Return Policy</h2>
-                <p>You have 30 calendar days to return an item from the date you received it. To be eligible for a return, your item must be unused, unwashed, and in the same condition that you received it with all original tags attached.</p>
+                <h2>1. Return Eligibility</h2>
+                <p>Items may be returned within 7 calendar days of receipt if unopened, unused, with all seals, serial numbers, manuals, and original packaging undamaged.</p>
 
-                <h2>2. Refund Process</h2>
-                <p>Once we receive your item, we will inspect it and notify you that we have received your returned item. If your return is approved, we will initiate a refund to your original method of payment within 5-7 business days.</p>
+                <h2>2. Defective or Damaged on Arrival</h2>
+                <p>If an item arrives damaged or defective, please contact our support team within 48 hours of delivery with photos of the package and product. We will arrange a replacement or refund immediately.</p>
 
-                <h2>3. Cancellations</h2>
-                <p>You can cancel an order within 1 hour of placing it. Please contact customer support immediately to request a cancellation.</p>
+                <h2>3. Warranty Claims</h2>
+                <p>For items experiencing issues after the 7-day initial return period, claims fall under the manufacturer\'s official warranty. Our service center assists in processing all manufacturer warranty claims.</p>
+
+                <h2>4. Refund Processing</h2>
+                <p>Approved refunds are processed to your original payment method or bank account within 3 - 5 business days.</p>
             ',
         ];
 

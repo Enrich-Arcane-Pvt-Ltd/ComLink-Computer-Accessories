@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -28,10 +30,23 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): \Symfony\Component\HttpFoundation\Response
     {
-        $request->authenticate();
-        $request->session()->regenerate();
+        try {
+            $request->authenticate();
+            $request->session()->regenerate();
 
-        return $this->redirectByRole();
+            return $this->redirectByRole();
+        } catch (ValidationException $e) {
+            throw $e;
+        } catch (\Throwable $e) {
+            Log::error('Login processing error: ' . $e->getMessage(), [
+                'email' => $request->input('email'),
+                'ip' => $request->ip(),
+            ]);
+
+            return back()->withInput($request->only('email'))->withErrors([
+                'email' => __('Authentication service is temporarily unavailable. Please try again shortly.'),
+            ]);
+        }
     }
 
     /**
