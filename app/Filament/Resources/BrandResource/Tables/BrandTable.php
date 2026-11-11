@@ -13,11 +13,12 @@ class BrandTable
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
                     ->label('Brand Image')
-                    ->disk('public')
-                    ->visibility('public')
                     ->circular()
-                    ->defaultImageUrl(asset('images/placeholder.png'))
-                    ->extraImgAttributes(['onerror' => "this.src='" . asset('images/placeholder.png') . "';"]),
+                    ->state(fn (\App\Models\Brand $record): ?string => $record->logo_url)
+                    ->defaultImageUrl(fn (\App\Models\Brand $record): string => $record->getInitialsAvatarSvgUrl())
+                    ->extraImgAttributes(fn (\App\Models\Brand $record): array => [
+                        'onerror' => "this.src='" . $record->getInitialsAvatarSvgUrl() . "';",
+                    ]),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Brand Name')
