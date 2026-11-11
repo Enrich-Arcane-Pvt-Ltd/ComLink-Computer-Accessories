@@ -347,9 +347,27 @@ class PostProductsSeeder extends Seeder
 
             // Copy Image
             $imageFile = $data['image_file'] ?? null;
+            $imageFiles = $data['image_files'] ?? [];
+            $imageFolder = $data['image_folder'] ?? null;
             $images = [];
 
-            if ($imageFile) {
+            if (!empty($imageFiles) && is_array($imageFiles)) {
+                $destFolder = $targetStorageBase . DIRECTORY_SEPARATOR . $data['slug'];
+                if (!File::isDirectory($destFolder)) {
+                    File::makeDirectory($destFolder, 0755, true, true);
+                }
+
+                foreach ($imageFiles as $imgIdx => $imgName) {
+                    $sourceFilePath = $sourceImagesDir . ($imageFolder ? DIRECTORY_SEPARATOR . $imageFolder : '') . DIRECTORY_SEPARATOR . $imgName;
+                    if (File::exists($sourceFilePath)) {
+                        $ext = strtolower(pathinfo($imgName, PATHINFO_EXTENSION));
+                        $cleanName = 'image_' . ($imgIdx + 1) . '.' . $ext;
+                        $destPath = $destFolder . DIRECTORY_SEPARATOR . $cleanName;
+                        File::copy($sourceFilePath, $destPath);
+                        $images[] = 'products/post_products/' . $data['slug'] . '/' . $cleanName;
+                    }
+                }
+            } elseif ($imageFile) {
                 $sourceFilePath = $sourceImagesDir . DIRECTORY_SEPARATOR . $imageFile;
                 if (File::exists($sourceFilePath)) {
                     $destFolder = $targetStorageBase . DIRECTORY_SEPARATOR . $data['slug'];
