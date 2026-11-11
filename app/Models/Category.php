@@ -128,23 +128,22 @@ class Category extends Model
             if (str_starts_with($this->image, '/')) {
                 $clean = ltrim($this->image, '/');
                 if (file_exists(public_path($clean))) {
-                    return url($this->image);
+                    return asset($clean);
                 }
                 if (file_exists(public_path(strtolower($clean)))) {
-                    return url('/' . strtolower($clean));
+                    return asset(strtolower($clean));
                 }
-                return url($this->image);
             }
 
             // Check if file exists directly in public/ (e.g. images/categories/...)
             if (file_exists(public_path($this->image))) {
-                return url($this->image);
+                return asset($this->image);
             }
 
             // Check case-insensitive / lowercase version (crucial for Linux production environments)
             $lowerImage = strtolower($this->image);
             if (file_exists(public_path($lowerImage))) {
-                return url($lowerImage);
+                return asset($lowerImage);
             }
 
             // Check if file exists in public/images/categories/{slug}.{ext}
@@ -152,18 +151,15 @@ class Category extends Model
                 foreach (['png', 'webp', 'jpg', 'jpeg', 'svg'] as $ext) {
                     $slugImg = "images/categories/{$this->slug}.{$ext}";
                     if (file_exists(public_path($slugImg))) {
-                        return url($slugImg);
+                        return asset($slugImg);
                     }
                 }
             }
 
             // Check if file exists in storage disk
             if (Storage::disk('public')->exists($this->image)) {
-                return Storage::url($this->image);
+                return asset(Storage::url($this->image));
             }
-
-            // Fallback to storage URL (e.g. categories/filename.jpg)
-            return Storage::url($this->image);
         }
 
         // Check if there is an image with matching slug in images/categories
@@ -171,12 +167,12 @@ class Category extends Model
             foreach (['png', 'webp', 'jpg', 'jpeg', 'svg'] as $ext) {
                 $slugImg = "images/categories/{$this->slug}.{$ext}";
                 if (file_exists(public_path($slugImg))) {
-                    return url($slugImg);
+                    return asset($slugImg);
                 }
             }
         }
 
-        return url('/images/placeholder.png');
+        return asset('images/default-category-image.png');
     }
 
     public function getActivitylogOptions(): LogOptions
