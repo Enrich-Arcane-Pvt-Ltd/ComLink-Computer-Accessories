@@ -30,6 +30,11 @@ class Brand extends Model
         'logo_url',
     ];
 
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function getLogoUrlAttribute(): ?string
     {
         if (!$this->logo) {

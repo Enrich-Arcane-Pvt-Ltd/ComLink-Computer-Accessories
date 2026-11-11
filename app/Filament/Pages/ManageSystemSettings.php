@@ -14,6 +14,7 @@ class ManageSystemSettings extends Page
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
     protected static ?string $navigationGroup = 'System Management';
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $navigationLabel = 'System Settings';
 

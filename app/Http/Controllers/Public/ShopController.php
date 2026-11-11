@@ -355,10 +355,34 @@ class ShopController extends Controller
                 }
 
                 $key = \Illuminate\Support\Str::slug($spec->title, '_');
+                $title = trim($spec->title);
                 $values = [];
 
                 foreach ($baseCategoryProducts as $bp) {
-                    $rawVal = $bp->main_specifications[$key] ?? null;
+                    $specs = $bp->main_specifications ?? [];
+                    $tech = $bp->technical_specifications ?? [];
+
+                    // Resilient lookup: exact title, slug key, or case-insensitive matching
+                    $rawVal = $specs[$title] ?? $specs[$key] ?? $tech[$title] ?? $tech[$key] ?? null;
+
+                    if ($rawVal === null) {
+                        foreach ($specs as $k => $v) {
+                            if (strcasecmp((string) $k, $title) === 0 || strcasecmp(\Illuminate\Support\Str::slug((string) $k, '_'), $key) === 0) {
+                                $rawVal = $v;
+                                break;
+                            }
+                        }
+                    }
+
+                    if ($rawVal === null) {
+                        foreach ($tech as $k => $v) {
+                            if (strcasecmp((string) $k, $title) === 0 || strcasecmp(\Illuminate\Support\Str::slug((string) $k, '_'), $key) === 0) {
+                                $rawVal = $v;
+                                break;
+                            }
+                        }
+                    }
+
                     if ($rawVal !== null && trim((string) $rawVal) !== '') {
                         $values[] = trim((string) $rawVal);
                     }
@@ -381,10 +405,16 @@ class ShopController extends Controller
                     $selectedOptions = array_filter(array_map('trim', $selectedOptions));
 
                     if (! empty($selectedOptions)) {
-                        $dbProductsQuery->where(function ($sq) use ($key, $selectedOptions) {
+                        $dbProductsQuery->where(function ($sq) use ($key, $title, $selectedOptions) {
                             foreach ($selectedOptions as $opt) {
                                 $sq->orWhere("main_specifications->{$key}", $opt)
-                                    ->orWhere("main_specifications->{$key}", 'like', "%{$opt}%");
+                                    ->orWhere("main_specifications->{$key}", 'like', "%{$opt}%")
+                                    ->orWhere("main_specifications->{$title}", $opt)
+                                    ->orWhere("main_specifications->{$title}", 'like', "%{$opt}%")
+                                    ->orWhere("technical_specifications->{$key}", $opt)
+                                    ->orWhere("technical_specifications->{$key}", 'like', "%{$opt}%")
+                                    ->orWhere("technical_specifications->{$title}", $opt)
+                                    ->orWhere("technical_specifications->{$title}", 'like', "%{$opt}%");
                             }
                         });
                     }
@@ -409,7 +439,10 @@ class ShopController extends Controller
                 break;
         }
 
-        $dbProducts = $dbProductsQuery->get()->map(function ($p) {
+        $perPage = 12;
+        $paginated = $dbProductsQuery->paginate($perPage)->withQueryString();
+
+        $products = $paginated->getCollection()->map(function ($p) {
             $cat = $p->categories->firstWhere('parent_id', null) ?? $p->categories->first();
             $catName = $cat?->name ?? 'Accessories';
             $isMainCatWithoutSubs = in_array(strtolower($catName), ['laptops', 'software']);
@@ -439,10 +472,46 @@ class ShopController extends Controller
                 'main_specifications' => $p->main_specifications ?? [],
                 'technical_specifications' => $p->technical_specifications ?? [],
             ];
-        });
+        })->values()->all();
 
-        // Real brands added by admin in database
-        $brands = \App\Models\Brand::where('is_visible', true)
+        $pagination = [
+            'current_page' => $paginated->currentPage(),
+            'last_page' => $paginated->lastPage(),
+            'per_page' => $paginated->perPage(),
+            'total' => $paginated->total(),
+            'from' => $paginated->firstItem(),
+            'to' => $paginated->lastItem(),
+            'prev_page_url' => $paginated->previousPageUrl(),
+            'next_page_url' => $paginated->nextPageUrl(),
+            'links' => $paginated->linkCollection()->map(function ($link) {
+                return [
+                    'url' => $link['url'],
+                    'label' => $link['label'],
+                    'active' => (bool) $link['active'],
+                ];
+            })->values()->all(),
+        ];
+
+        // Real brands added by admin in database (scoped to active category/subcategory if present)
+        $brandsQuery = \App\Models\Brand::where('is_visible', true);
+
+        if ($activeSubCategory) {
+            $subId = $activeSubCategory['id'];
+            $brandsQuery->whereHas('products', function ($pq) use ($subId) {
+                $pq->where('is_visible', true)
+                    ->whereHas('categories', fn ($cq) => $cq->where('categories.id', $subId));
+            });
+        } elseif ($activeCategory) {
+            $catId = $activeCategory['id'];
+            $subIds = collect($activeCategory['subcategories'])->pluck('id')->all();
+            $targetCategoryIds = array_merge([$catId], $subIds);
+            $brandsQuery->whereHas('products', function ($pq) use ($targetCategoryIds) {
+                $pq->where('is_visible', true)
+                    ->whereHas('categories', fn ($cq) => $cq->whereIn('categories.id', $targetCategoryIds));
+            });
+        }
+
+        $brands = $brandsQuery
             ->orderBy('sort_order', 'asc')
             ->orderBy('name', 'asc')
             ->get(['id', 'name', 'slug'])
@@ -454,14 +523,29 @@ class ShopController extends Controller
             ->values()
             ->all();
 
+        // If scoping yielded no brand rows, fallback to all visible brands so filter is never empty
+        if (empty($brands)) {
+            $brands = \App\Models\Brand::where('is_visible', true)
+                ->orderBy('sort_order', 'asc')
+                ->orderBy('name', 'asc')
+                ->get(['id', 'name', 'slug'])
+                ->map(fn ($b) => [
+                    'id' => $b->id,
+                    'name' => $b->name,
+                    'slug' => $b->slug,
+                ])
+                ->values()
+                ->all();
+        }
+
         $allQueryParams = $request->all();
-        $products = $dbProducts->values()->all();
 
         return Inertia::render('Shop/Index', [
             'categories' => $categories,
             'activeCategory' => $activeCategory,
             'activeSubCategory' => $activeSubCategory,
             'products' => $products,
+            'pagination' => $pagination,
             'brands' => $brands,
             'dynamicFacets' => $dynamicFacets,
             'pageMaxPrice' => $pageMaxPrice,
