@@ -50,6 +50,7 @@ class SubCategoryForm
                         ->rules(['image', 'max:1024'])
                         ->validationMessages([
                             'max' => 'The subcategory image size must not exceed 1MB. Please compress or resize your image before uploading.',
+                            'uploaded' => 'The subcategory image failed to upload. The file size exceeds the allowed limit (maximum 1MB). Please upload a smaller or compressed image.',
                             'image' => 'The uploaded file must be a valid image.',
                             'mimes' => 'The subcategory image must be a JPG, PNG, WebP, or SVG format.',
                         ])
