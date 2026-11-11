@@ -34,10 +34,18 @@ class CategoryForm
                     Forms\Components\FileUpload::make('image')
                         ->label('Category Image')
                         ->image()
-                        ->directory('categories')
                         ->imageEditor()
-                        ->columnSpanFull()
-                        ->helperText('Upload an icon or banner image representing this category.'),
+                        ->directory('categories')
+                        ->maxSize(1024) // Maximum 1 MB (Safe for standard PHP 2MB upload limits)
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+                        ->rules(['image', 'max:1024'])
+                        ->validationMessages([
+                            'max' => 'The category image size must not exceed 1MB. Please compress or resize your image before uploading.',
+                            'image' => 'The uploaded file must be a valid image.',
+                            'mimes' => 'The category image must be a JPG, PNG, WebP, or SVG format.',
+                        ])
+                        ->helperText('Upload an icon or banner image representing this category. Maximum file size: 1MB (JPG, PNG, WebP, SVG). Please use compressed web-ready images.')
+                        ->columnSpanFull(),
 
                     Forms\Components\Toggle::make('is_visible')
                         ->label('Visible on Storefront')
