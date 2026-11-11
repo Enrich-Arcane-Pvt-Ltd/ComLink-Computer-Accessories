@@ -22,8 +22,8 @@ class SubCategoryTable
                     ->label('Sub Category Image')
                     ->circular()
                     ->state(fn (\App\Models\Category $record): ?string => $record->image_url)
-                    ->defaultImageUrl(asset('images/default-category-image.png'))
-                    ->extraImgAttributes(['onerror' => "this.src='" . asset('images/default-category-image.png') . "';"]),
+                    ->defaultImageUrl(asset('images/default-subcategory-image.png'))
+                    ->extraImgAttributes(['onerror' => "this.src='" . asset('images/default-subcategory-image.png') . "';"]),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Sub Category Name')

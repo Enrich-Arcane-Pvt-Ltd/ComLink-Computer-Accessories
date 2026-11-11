@@ -172,6 +172,11 @@ class Category extends Model
             }
         }
 
+        // Subcategory fallback vs Main Category fallback
+        if ($this->parent_id !== null) {
+            return asset('images/default-subcategory-image.png');
+        }
+
         return asset('images/default-category-image.png');
     }
 
