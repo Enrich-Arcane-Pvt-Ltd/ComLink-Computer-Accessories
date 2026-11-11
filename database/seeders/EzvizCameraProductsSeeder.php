@@ -2392,7 +2392,10 @@ class EzvizCameraProductsSeeder extends Seeder
         ];
 
         // 8. Create Direct GRN Record to back Inventory
-        $grn = Grn::updateOrCreate(
+        $seedGrns = env('SEED_MOCK_GRNS', app()->environment('local'));
+        $grn = null;
+        if ($seedGrns) {
+            $grn = Grn::updateOrCreate(
             ['grn_number' => 'GRN-2026-EZVIZ001'],
             [
                 'grn_type' => 'direct',
@@ -2402,6 +2405,7 @@ class EzvizCameraProductsSeeder extends Seeder
                 'sub_total' => 0.00,
             ]
         );
+        }
 
         $totalGrnAmount = 0.00;
         $seededCount = 0;
@@ -2448,10 +2452,10 @@ class EzvizCameraProductsSeeder extends Seeder
                     'sale_price' => $salePrice,
                     'cost_price' => $grnPrice,
                     'grn_price' => $grnPrice,
-                    'quantity' => $stockCount,
-                    'inventory_stock' => $stockCount,
-                    'show_quantity' => $stockCount,
-                    'stock_added_count' => $stockCount,
+                    'quantity' => ($seedGrns ? $stockCount : 0),
+                    'inventory_stock' => ($seedGrns ? $stockCount : 0),
+                    'show_quantity' => ($seedGrns ? $stockCount : 0),
+                    'stock_added_count' => ($seedGrns ? $stockCount : 0),
                     'stock_added_date' => now(),
                     'security_stock' => 5,
                     'is_visible' => true,
@@ -2516,7 +2520,8 @@ class EzvizCameraProductsSeeder extends Seeder
             );
 
             // Create GrnItem so /admin/inventory calculates stock & GRN price properly
-            GrnItem::updateOrCreate(
+            if ($seedGrns && $grn) {
+                GrnItem::updateOrCreate(
                 [
                     'grn_id' => $grn->id,
                     'product_code' => $data['product_code'],
@@ -2532,10 +2537,11 @@ class EzvizCameraProductsSeeder extends Seeder
             );
 
             $totalGrnAmount += ($grnPrice * $stockCount);
+            }
             $seededCount++;
         }
 
-        $grn->update(['sub_total' => $totalGrnAmount]);
+        if ($grn) { $grn->update(['sub_total' => $totalGrnAmount]); }
 
         $this->command->info("Successfully seeded {$seededCount} EZVIZ products into system with full specifications, images, inventory, and GRN!");
     }

@@ -206,7 +206,10 @@ class LaptopDisplayProductsSeeder extends Seeder
         $this->command->info("Loaded " . count($items) . " items from laptop_display_products_data.json");
 
         // 8. Create Direct GRN Record to back Inventory
-        $grn = Grn::updateOrCreate(
+        $seedGrns = env('SEED_MOCK_GRNS', app()->environment('local'));
+        $grn = null;
+        if ($seedGrns) {
+            $grn = Grn::updateOrCreate(
             ['grn_number' => 'GRN-2026-DISP001'],
             [
                 'grn_type' => 'direct',
@@ -216,6 +219,7 @@ class LaptopDisplayProductsSeeder extends Seeder
                 'sub_total' => 0.00,
             ]
         );
+        }
 
         $totalGrnAmount = 0.00;
         $stockCount = 25;
@@ -262,10 +266,10 @@ class LaptopDisplayProductsSeeder extends Seeder
                     'sale_price' => $salePrice,
                     'cost_price' => $costPrice,
                     'grn_price' => $costPrice,
-                    'quantity' => $stockCount,
-                    'inventory_stock' => $stockCount,
-                    'show_quantity' => $stockCount,
-                    'stock_added_count' => $stockCount,
+                    'quantity' => ($seedGrns ? $stockCount : 0),
+                    'inventory_stock' => ($seedGrns ? $stockCount : 0),
+                    'show_quantity' => ($seedGrns ? $stockCount : 0),
+                    'stock_added_count' => ($seedGrns ? $stockCount : 0),
                     'stock_added_date' => now(),
                     'security_stock' => 5,
                     'is_visible' => true,
@@ -294,7 +298,8 @@ class LaptopDisplayProductsSeeder extends Seeder
             );
 
             // Create GrnItem for Inventory & Stock Analysis
-            GrnItem::updateOrCreate(
+            if ($seedGrns && $grn) {
+                GrnItem::updateOrCreate(
                 [
                     'grn_id' => $grn->id,
                     'product_code' => $data['product_code'],
@@ -312,10 +317,11 @@ class LaptopDisplayProductsSeeder extends Seeder
             );
 
             $totalGrnAmount += ($costPrice * $stockCount);
+            }
             $seededCount++;
         }
 
-        $grn->update(['sub_total' => $totalGrnAmount]);
+        if ($grn) { $grn->update(['sub_total' => $totalGrnAmount]); }
 
         // Sync all product stock levels across system
         Product::syncAllProductAvailableQuantities();

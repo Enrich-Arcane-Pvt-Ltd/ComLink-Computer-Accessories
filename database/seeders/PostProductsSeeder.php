@@ -300,17 +300,21 @@ class PostProductsSeeder extends Seeder
             }
         }
 
-        // 6. Direct GRN for Inventory
-        $grn = Grn::updateOrCreate(
-            ['grn_number' => 'GRN-2026-POST01'],
-            [
-                'grn_type' => 'direct',
-                'direct_po_number' => 'DIR-PO-2026-POST01',
-                'supplier_id' => $supplier->id,
-                'notes' => 'Direct batch GRN for 58 Smart PC flyer products (SSDs, Monitors, Motherboards, Printers, Laptops, Accessories)',
-                'sub_total' => 0.00,
-            ]
-        );
+        // 6. Direct GRN for Inventory (Only in local environment or if SEED_MOCK_GRNS is enabled)
+        $seedGrns = env('SEED_MOCK_GRNS', app()->environment('local'));
+        $grn = null;
+        if ($seedGrns) {
+            $grn = Grn::updateOrCreate(
+                ['grn_number' => 'GRN-2026-POST01'],
+                [
+                    'grn_type' => 'direct',
+                    'direct_po_number' => 'DIR-PO-2026-POST01',
+                    'supplier_id' => $supplier->id,
+                    'notes' => 'Direct batch GRN for 58 Smart PC flyer products (SSDs, Monitors, Motherboards, Printers, Laptops, Accessories)',
+                    'sub_total' => 0.00,
+                ]
+            );
+        }
 
         // 7. Load Product Data JSON
         $dataPath = database_path('seeders/post_products_data.json');
@@ -387,6 +391,8 @@ class PostProductsSeeder extends Seeder
                 $images = ['images/categories/default.webp'];
             }
 
+            $stockQty = $seedGrns ? $initialStock : 0;
+
             // Create / Update Product
             $product = Product::where('slug', $data['slug'])
                 ->orWhere('product_code', $data['product_code'])
@@ -410,10 +416,10 @@ class PostProductsSeeder extends Seeder
                 'sale_price' => $salePrice,
                 'cost_price' => $costPrice,
                 'grn_price' => $costPrice,
-                'quantity' => $initialStock,
-                'inventory_stock' => $initialStock,
-                'show_quantity' => $initialStock,
-                'stock_added_count' => $initialStock,
+                'quantity' => $stockQty,
+                'inventory_stock' => $stockQty,
+                'show_quantity' => $stockQty,
+                'stock_added_count' => $stockQty,
                 'stock_added_date' => now(),
                 'security_stock' => 5,
                 'warranty_duration' => $data['warranty_duration'] ?? 1,
@@ -449,40 +455,44 @@ class PostProductsSeeder extends Seeder
             // Clean up variants if any
             ProductVariant::where('product_id', $product->id)->delete();
 
-            // Create or Update GrnItem
-            $grnItem = GrnItem::where('grn_id', $grn->id)
-                ->where(function ($q) use ($data, $invProduct) {
-                    $q->where('product_code', $data['product_code'])
-                        ->orWhere('inventory_product_id', $invProduct->id);
-                })->first();
+            // Create or Update GrnItem (Only in local environment or if SEED_MOCK_GRNS is enabled)
+            if ($seedGrns && $grn) {
+                $grnItem = GrnItem::where('grn_id', $grn->id)
+                    ->where(function ($q) use ($data, $invProduct) {
+                        $q->where('product_code', $data['product_code'])
+                            ->orWhere('inventory_product_id', $invProduct->id);
+                    })->first();
 
-            if (!$grnItem) {
-                $grnItem = new GrnItem();
-                $grnItem->grn_id = $grn->id;
+                if (!$grnItem) {
+                    $grnItem = new GrnItem();
+                    $grnItem->grn_id = $grn->id;
+                }
+
+                $grnItem->fill([
+                    'inventory_product_id' => $invProduct->id,
+                    'product_code' => $data['product_code'],
+                    'product_variant_id' => null,
+                    'product_name' => $data['name'],
+                    'color_name' => null,
+                    'product_quantity' => $initialStock,
+                    'price_per_unit' => $costPrice,
+                    'total' => $costPrice * $initialStock,
+                    'product_condition' => 'Brand New',
+                ]);
+                $grnItem->save();
+
+                $totalGrnAmount += ($costPrice * $initialStock);
             }
-
-            $grnItem->fill([
-                'inventory_product_id' => $invProduct->id,
-                'product_code' => $data['product_code'],
-                'product_variant_id' => null,
-                'product_name' => $data['name'],
-                'color_name' => null,
-                'product_quantity' => $initialStock,
-                'price_per_unit' => $costPrice,
-                'total' => $costPrice * $initialStock,
-                'product_condition' => 'Brand New',
-            ]);
-            $grnItem->save();
-
-            $totalGrnAmount += ($costPrice * $initialStock);
             $seededCount++;
 
             $priceText = $salePrice > 0 ? "LKR " . number_format($salePrice, 2) : "LKR 0.00";
-            $this->command->line("  [OK] Seeded: {$data['name']} [{$parentCat->name} > {$subCatObj->name}] (Price: {$priceText} | Stock: {$initialStock} | Img: {$images[0]})");
+            $this->command->line("  [OK] Seeded: {$data['name']} [{$parentCat->name} > {$subCatObj->name}] (Price: {$priceText} | Stock: {$stockQty} | Img: {$images[0]})");
         }
 
         // Update GRN total
-        $grn->update(['sub_total' => $totalGrnAmount]);
+        if ($grn) {
+            $grn->update(['sub_total' => $totalGrnAmount]);
+        }
 
         // Sync Product Available Quantities across the system
         if (method_exists(Product::class, 'syncAllProductAvailableQuantities')) {

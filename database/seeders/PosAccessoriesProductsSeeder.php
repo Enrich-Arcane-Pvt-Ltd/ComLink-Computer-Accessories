@@ -190,7 +190,10 @@ class PosAccessoriesProductsSeeder extends Seeder
         }
 
         // 6. Direct GRN for Inventory
-        $grn = Grn::updateOrCreate(
+        $seedGrns = env('SEED_MOCK_GRNS', app()->environment('local'));
+        $grn = null;
+        if ($seedGrns) {
+            $grn = Grn::updateOrCreate(
             ['grn_number' => 'GRN-2026-POS001'],
             [
                 'grn_type' => 'direct',
@@ -200,6 +203,7 @@ class PosAccessoriesProductsSeeder extends Seeder
                 'sub_total' => 0.00,
             ]
         );
+        }
 
         // 7. Load Product Data JSON
         $dataPath = database_path('seeders/pos_accessories_products_data.json');
@@ -404,16 +408,17 @@ class PosAccessoriesProductsSeeder extends Seeder
                             'sale_price' => $salePrice,
                             'grn_price' => $costPrice,
                             'discount_percentage' => ($price > 0 && $salePrice < $price) ? (int) round((($price - $salePrice) / $price) * 100) : 0,
-                            'stock' => $vStock,
-                            'inventory_stock' => $vStock,
-                            'show_quantity' => $vStock,
+                            'stock' => ($seedGrns ? $vStock : 0),
+                            'inventory_stock' => ($seedGrns ? $vStock : 0),
+                            'show_quantity' => ($seedGrns ? $vStock : 0),
                             'sku' => $vSku,
                             'image' => $vImg,
                         ]
                     );
 
                     // Create GrnItem for this variant
-                    GrnItem::updateOrCreate(
+                    if ($seedGrns && $grn) {
+                        GrnItem::updateOrCreate(
                         [
                             'grn_id' => $grn->id,
                             'product_code' => $data['product_code'],
@@ -431,20 +436,22 @@ class PosAccessoriesProductsSeeder extends Seeder
                     );
 
                     $totalGrnAmount += ($costPrice * $vStock);
+                    }
                 }
 
                 // Remove legacy non-variant item if exists
-                GrnItem::where('grn_id', $grn->id)
+                if ($grn) { GrnItem::where('grn_id', $grn->id)
                     ->where('product_code', $data['product_code'])
                     ->whereNull('product_variant_id')
                     ->whereNull('color_name')
-                    ->delete();
+                    ->delete(); }
             } else {
                 // Remove any leftover variants if simple
                 ProductVariant::where('product_id', $product->id)->delete();
 
                 // Create GrnItem
-                GrnItem::updateOrCreate(
+                if ($seedGrns && $grn) {
+                    GrnItem::updateOrCreate(
                     [
                         'grn_id' => $grn->id,
                         'product_code' => $data['product_code'],
@@ -462,13 +469,14 @@ class PosAccessoriesProductsSeeder extends Seeder
                 );
 
                 $totalGrnAmount += ($costPrice * $initialStock);
+                }
             }
 
             $this->command->line("  ✓ Seeded: {$data['name']} [{$brandObj->name}] (" . ($hasVariants ? count($data['variants']) . ' variants' : 'Stock: ' . $initialStock) . ")");
         }
 
         // Update GRN total
-        $grn->update(['sub_total' => $totalGrnAmount]);
+        if ($grn) { $grn->update(['sub_total' => $totalGrnAmount]); }
 
         // Sync Product Available Quantities across the system
         if (method_exists(Product::class, 'syncAllProductAvailableQuantities')) {

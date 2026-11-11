@@ -255,7 +255,10 @@ class AoasWeiboProductsSeeder extends Seeder
         $this->command->info("Loaded " . count($items) . " items from aoas_weibo_products_data.json");
 
         // 8. Create Direct GRN Record to back Inventory
-        $grn = Grn::updateOrCreate(
+        $seedGrns = env('SEED_MOCK_GRNS', app()->environment('local'));
+        $grn = null;
+        if ($seedGrns) {
+            $grn = Grn::updateOrCreate(
             ['grn_number' => 'GRN-2026-AOAS001'],
             [
                 'grn_type' => 'direct',
@@ -265,6 +268,7 @@ class AoasWeiboProductsSeeder extends Seeder
                 'sub_total' => 0.00,
             ]
         );
+        }
 
         $totalGrnAmount = 0.00;
         $seededCount = 0;
@@ -397,16 +401,17 @@ class AoasWeiboProductsSeeder extends Seeder
                             'sale_price' => $salePrice,
                             'grn_price' => $costPrice,
                             'discount_percentage' => ($price > 0 && $salePrice < $price) ? (int) round((($price - $salePrice) / $price) * 100) : 0,
-                            'stock' => $vStock,
-                            'inventory_stock' => $vStock,
-                            'show_quantity' => $vStock,
+                            'stock' => ($seedGrns ? $vStock : 0),
+                            'inventory_stock' => ($seedGrns ? $vStock : 0),
+                            'show_quantity' => ($seedGrns ? $vStock : 0),
                             'sku' => $vSku,
                             'image' => $vImg,
                         ]
                     );
 
                     // Create GrnItem for this variant
-                    GrnItem::updateOrCreate(
+                    if ($seedGrns && $grn) {
+                        GrnItem::updateOrCreate(
                         [
                             'grn_id' => $grn->id,
                             'product_code' => $data['product_code'],
@@ -424,20 +429,22 @@ class AoasWeiboProductsSeeder extends Seeder
                     );
 
                     $totalGrnAmount += ($costPrice * $vStock);
+                    }
                 }
 
                 // Remove legacy generic GRN item without variant ID for this product
-                GrnItem::where('grn_id', $grn->id)
+                if ($grn) { GrnItem::where('grn_id', $grn->id)
                     ->where('product_code', $data['product_code'])
                     ->whereNull('product_variant_id')
                     ->whereNull('color_name')
-                    ->delete();
+                    ->delete(); }
             } else {
                 // Remove any leftover variants if not variable
                 ProductVariant::where('product_id', $product->id)->delete();
 
                 // Create GrnItem so /admin/inventory calculates stock & GRN purchase cost
-                GrnItem::updateOrCreate(
+                if ($seedGrns && $grn) {
+                    GrnItem::updateOrCreate(
                     [
                         'grn_id' => $grn->id,
                         'product_code' => $data['product_code'],
@@ -455,12 +462,13 @@ class AoasWeiboProductsSeeder extends Seeder
                 );
 
                 $totalGrnAmount += ($costPrice * $stockCount);
+                }
             }
 
             $seededCount++;
         }
 
-        $grn->update(['sub_total' => $totalGrnAmount]);
+        if ($grn) { $grn->update(['sub_total' => $totalGrnAmount]); }
 
         // Sync all product stock levels across system
         Product::syncAllProductAvailableQuantities();

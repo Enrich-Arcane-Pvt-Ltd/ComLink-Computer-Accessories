@@ -224,7 +224,10 @@ class NetworkAccessoriesProductsSeeder extends Seeder
         }
 
         // 5. Direct GRN for Inventory
-        $grn = Grn::updateOrCreate(
+        $seedGrns = env('SEED_MOCK_GRNS', app()->environment('local'));
+        $grn = null;
+        if ($seedGrns) {
+            $grn = Grn::updateOrCreate(
             ['grn_number' => 'GRN-2026-NET001'],
             [
                 'grn_type' => 'direct',
@@ -234,6 +237,7 @@ class NetworkAccessoriesProductsSeeder extends Seeder
                 'sub_total' => 0.00,
             ]
         );
+        }
 
         // 6. Load Product Data JSON
         $dataPath = database_path('seeders/network_accessories_products_data.json');
@@ -362,7 +366,8 @@ class NetworkAccessoriesProductsSeeder extends Seeder
             ProductVariant::where('product_id', $product->id)->delete();
 
             // Create GrnItem
-            GrnItem::updateOrCreate(
+            if ($seedGrns && $grn) {
+                GrnItem::updateOrCreate(
                 [
                     'grn_id' => $grn->id,
                     'product_code' => $data['product_code'],
@@ -380,12 +385,13 @@ class NetworkAccessoriesProductsSeeder extends Seeder
             );
 
             $totalGrnAmount += ($costPrice * $initialStock);
+            }
 
             $this->command->line("  ✓ Seeded: {$data['name']} [{$brandObj->name}] (Subcat: {$subCategory->name} | Stock: {$initialStock})");
         }
 
         // Update GRN total
-        $grn->update(['sub_total' => $totalGrnAmount]);
+        if ($grn) { $grn->update(['sub_total' => $totalGrnAmount]); }
 
         // Sync Product Available Quantities across the system
         if (method_exists(Product::class, 'syncAllProductAvailableQuantities')) {
