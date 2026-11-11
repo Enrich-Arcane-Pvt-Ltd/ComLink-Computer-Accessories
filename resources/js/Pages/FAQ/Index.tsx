@@ -105,7 +105,7 @@ export default function FAQs({ faqs = [], title = "FAQs" }: FAQsProps) {
                                                     }}
                                                 >
                                                     <div
-                                                        className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 bg-muted/5-prose prose-sm max-w-none"
+                                                        className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 bg-muted/5 whitespace-pre-line prose prose-sm dark:prose-invert max-w-none"
                                                         dangerouslySetInnerHTML={{
                                                             __html: faq.answer,
                                                         }}
@@ -178,7 +178,7 @@ export default function FAQs({ faqs = [], title = "FAQs" }: FAQsProps) {
                                                                 }}
                                                             >
                                                                 <div
-                                                                    className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 bg-muted/5-prose prose-sm max-w-none"
+                                                                    className="px-6 pb-6 text-muted leading-relaxed border-t border-border pt-4 bg-muted/5 whitespace-pre-line prose prose-sm dark:prose-invert max-w-none"
                                                                     dangerouslySetInnerHTML={{
                                                                         __html: faq.answer,
                                                                     }}
