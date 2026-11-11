@@ -4,6 +4,7 @@ namespace App\Filament\Resources\NavbarControllerResource\Tables;
 
 use App\Models\Category;
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -16,7 +17,7 @@ class NavbarControllerTable
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Icon/Image')
                     ->circular()
-                    ->defaultImageUrl(url('/images/placeholder.png')),
+                    ->defaultImageUrl(asset('images/default-category-image.png')),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Category in Navbar')
@@ -176,6 +177,11 @@ class NavbarControllerTable
                                 ]);
                             }
                         }
+
+                        Notification::make()
+                            ->title('Navbar Submenu Order Updated Successfully')
+                            ->success()
+                            ->send();
                     }),
 
                 Tables\Actions\EditAction::make()
