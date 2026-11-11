@@ -130,8 +130,10 @@ class GrnForm
                     Forms\Components\DateTimePicker::make('created_at')
                         ->label('Created Date & Time')
                         ->default(now())
-                        ->disabled(fn (string $operation) => $operation === 'edit')
-                        ->dehydrated(),
+                        ->native(false)
+                        ->seconds(false)
+                        ->dehydrated()
+                        ->helperText('Local date and time when the goods are received.'),
                 ])->columns(2),
 
             // 2. Received Items
