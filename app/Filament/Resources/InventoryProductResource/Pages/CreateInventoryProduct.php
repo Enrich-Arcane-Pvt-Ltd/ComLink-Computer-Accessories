@@ -6,6 +6,8 @@ use App\Filament\Resources\InventoryProductResource\InventoryProductResource;
 use App\Filament\Resources\InventoryProductResource\Schemas\InventoryProductForm;
 use App\Models\Product;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class CreateInventoryProduct extends CreateRecord
@@ -13,6 +15,11 @@ class CreateInventoryProduct extends CreateRecord
     protected static string $resource = InventoryProductResource::class;
 
     protected static ?string $title = 'Add Product';
+
+    public function getHeading(): string | Htmlable
+    {
+        return new HtmlString('Add <span style="display:inline-block; width: 0.35em;"></span>Product');
+    }
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {

@@ -6,6 +6,8 @@ use App\Filament\Resources\InventoryProductResource\InventoryProductResource;
 use App\Models\Product;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class EditInventoryProduct extends EditRecord
@@ -13,6 +15,11 @@ class EditInventoryProduct extends EditRecord
     protected static string $resource = InventoryProductResource::class;
 
     protected static ?string $title = 'Edit Product';
+
+    public function getHeading(): string | Htmlable
+    {
+        return new HtmlString('Edit <span style="display:inline-block; width: 0.35em;"></span>Product');
+    }
 
     protected function getHeaderActions(): array
     {
