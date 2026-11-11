@@ -21,10 +21,12 @@ class Grn extends Model
         'direct_po_number',
         'sub_total',
         'notes',
+        'created_at',
     ];
 
     protected $casts = [
         'sub_total' => 'decimal:2',
+        'created_at' => 'datetime',
     ];
 
     public function supplier(): BelongsTo

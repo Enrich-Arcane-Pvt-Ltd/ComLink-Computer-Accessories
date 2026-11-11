@@ -16,7 +16,7 @@ class PurchaseOrderForm
         return [
             // 1. Order Header Info
             Forms\Components\Section::make('Purchase Order Information')
-                ->description('Manage purchase order number, supplier selection, and approval status.')
+                ->description('Manage purchase order number, supplier selection, approval status, and creation date.')
                 ->schema([
                     Forms\Components\TextInput::make('po_number')
                         ->label('Purchase Order No')
@@ -24,7 +24,8 @@ class PurchaseOrderForm
                         ->disabled(fn (string $operation) => $operation === 'edit')
                         ->dehydrated()
                         ->required()
-                        ->helperText('Auto-generated sequence: COM-P-{Year}-000001'),
+                        ->helperText('Auto-generated sequence: COM-P-{Year}-000001')
+                        ->columnSpan(1),
 
                     Forms\Components\Select::make('supplier_id')
                         ->label('Select Supplier')
@@ -32,7 +33,8 @@ class PurchaseOrderForm
                         ->searchable()
                         ->preload()
                         ->reactive()
-                        ->required(),
+                        ->required()
+                        ->columnSpan(1),
 
                     Forms\Components\Select::make('status')
                         ->label('Purchase Order Status')
@@ -43,13 +45,23 @@ class PurchaseOrderForm
                         ])
                         ->default('Planning')
                         ->native(false)
-                        ->required(),
+                        ->required()
+                        ->columnSpan(1),
+
+                    Forms\Components\DateTimePicker::make('created_at')
+                        ->label('Order Created Date & Time')
+                        ->default(now())
+                        ->native(false)
+                        ->seconds(false)
+                        ->dehydrated()
+                        ->helperText('Local date and time when the purchase order is issued.')
+                        ->columnSpan(1),
 
                     Forms\Components\Textarea::make('notes')
                         ->label('Order Notes / Remarks')
                         ->placeholder('Optional delivery instructions or notes for supplier...')
                         ->columnSpanFull(),
-                ])->columns(3),
+                ])->columns(2),
 
             // 2. Order Items
             Forms\Components\Section::make('Order Items')
