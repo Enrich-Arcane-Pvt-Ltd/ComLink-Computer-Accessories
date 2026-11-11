@@ -22,6 +22,36 @@ class Dashboard extends BaseDashboard
     protected static string $view = 'filament.pages.dashboard';
 
     /**
+     * Profit & Loss Interactive Filter Properties
+     */
+    public ?int $profitLossCategory = null;
+
+    public ?int $profitLossSubCategory = null;
+
+    public ?int $profitLossProduct = null;
+
+    /**
+     * Livewire hooks when filters change
+     */
+    public function updatedProfitLossCategory(): void
+    {
+        $this->profitLossSubCategory = null;
+        $this->profitLossProduct = null;
+    }
+
+    public function updatedProfitLossSubCategory(): void
+    {
+        $this->profitLossProduct = null;
+    }
+
+    public function resetProfitLossFilters(): void
+    {
+        $this->profitLossCategory = null;
+        $this->profitLossSubCategory = null;
+        $this->profitLossProduct = null;
+    }
+
+    /**
      * Disable default Filament widgets so only our custom dashboard is displayed.
      */
     public function getWidgets(): array
@@ -61,7 +91,23 @@ class Dashboard extends BaseDashboard
 
         $cogs = 0.0;
         foreach ($paidOrderItems as $item) {
-            $unitCost = (float) ($item->product?->grn_price ?: $item->product?->cost_price ?: 0);
+            $unitCost = 0.0;
+            if ($item->product) {
+                $unitCost = (float) ($item->product->grn_price ?: $item->product->cost_price ?: 0);
+                if ($unitCost <= 0 && $item->product->product_code) {
+                    $unitCost = (float) (GrnItem::where('product_code', $item->product->product_code)->latest()->value('price_per_unit') ?? 0);
+                }
+            }
+            if ($unitCost <= 0 && $item->product_name) {
+                $matchedProduct = Product::where('name', $item->product_name)->first();
+                $unitCost = (float) ($matchedProduct?->grn_price ?: $matchedProduct?->cost_price ?: 0);
+                if ($unitCost <= 0) {
+                    $unitCost = (float) (GrnItem::where('product_name', $item->product_name)->latest()->value('price_per_unit') ?? 0);
+                }
+            }
+            if ($unitCost <= 0 && $item->unit_price > 0) {
+                $unitCost = round((float) $item->unit_price * 0.75, 2);
+            }
             $cogs += round($item->quantity * $unitCost, 2);
         }
 
@@ -322,6 +368,39 @@ class Dashboard extends BaseDashboard
             return $product->computed_current_stock;
         })->take(6)->values();
 
+        // Profit & Loss Analysis Section
+        $profitLossAnalysis = app(\App\Services\ProfitLossAnalysisService::class)->calculate(
+            $this->profitLossCategory ? (int) $this->profitLossCategory : null,
+            $this->profitLossSubCategory ? (int) $this->profitLossSubCategory : null,
+            $this->profitLossProduct ? (int) $this->profitLossProduct : null
+        );
+
+        $plCategories = Category::whereNull('parent_id')->orderBy('name')->get(['id', 'name']);
+
+        if ($this->profitLossCategory) {
+            $plSubCategories = Category::where('parent_id', $this->profitLossCategory)->orderBy('name')->get(['id', 'name']);
+        } else {
+            $plSubCategories = Category::whereNotNull('parent_id')->orderBy('name')->get(['id', 'name']);
+        }
+
+        $plProductsQuery = Product::query()->orderBy('name');
+        if ($this->profitLossSubCategory) {
+            $plProductsQuery->whereHas('categories', fn ($q) => $q->where('categories.id', $this->profitLossSubCategory));
+        } elseif ($this->profitLossCategory) {
+            $childCatIds = Category::where('parent_id', $this->profitLossCategory)->pluck('id')->toArray();
+            $allowedCatIds = array_merge([$this->profitLossCategory], $childCatIds);
+            $plProductsQuery->whereHas('categories', fn ($q) => $q->whereIn('categories.id', $allowedCatIds));
+        }
+        $plProducts = $plProductsQuery->get(['id', 'name', 'product_code']);
+
+        $reportQueryParams = array_filter([
+            'category_id' => $this->profitLossCategory,
+            'subcategory_id' => $this->profitLossSubCategory,
+            'product_id' => $this->profitLossProduct,
+        ]);
+        $profitLossPdfUrl = route('admin.profit-loss.pdf', $reportQueryParams);
+        $profitLossPrintUrl = route('admin.profit-loss.print', $reportQueryParams);
+
         return [
             // Store Metrics
             'categoriesCount' => $categoriesCount,
@@ -377,6 +456,14 @@ class Dashboard extends BaseDashboard
                 'inStock' => $inStockCount,
                 'total' => $allProducts->count(),
             ],
+
+            // Profit & Loss Analysis
+            'profitLossAnalysis' => $profitLossAnalysis,
+            'plCategories' => $plCategories,
+            'plSubCategories' => $plSubCategories,
+            'plProducts' => $plProducts,
+            'profitLossPdfUrl' => $profitLossPdfUrl,
+            'profitLossPrintUrl' => $profitLossPrintUrl,
         ];
     }
 }

@@ -239,6 +239,52 @@
             }
             .cl-row-btn:hover { border-color: var(--cl-brand); color: var(--cl-brand); }
             .cl-row-btn:focus-visible { outline: 2px solid var(--cl-brand); outline-offset: 2px; }
+
+            /* Products Profit / Loss Breakdown specific compact full-width layout */
+            .cl-scroll--breakdown {
+                width: 100%;
+                overflow-x: hidden !important;
+                overflow-y: auto;
+            }
+            .cl-table--breakdown {
+                width: 100% !important;
+                min-width: 0 !important;
+                border-collapse: collapse;
+                font-size: 12px;
+                table-layout: auto;
+            }
+            .cl-table--breakdown th {
+                padding: 10px 8px !important;
+                font-size: 11px !important;
+                font-weight: 650;
+                letter-spacing: 0.3px;
+                color: var(--cl-muted);
+                background: var(--cl-card-alt);
+                border-top: 1px solid var(--cl-border);
+                border-bottom: 1px solid var(--cl-border);
+                white-space: nowrap;
+            }
+            .cl-table--breakdown td {
+                padding: 9px 8px !important;
+                border-bottom: 1px solid var(--cl-border);
+                vertical-align: middle;
+                font-size: 12px;
+            }
+            .cl-table--breakdown .cl-prod {
+                gap: 8px;
+            }
+            .cl-table--breakdown .cl-prod img,
+            .cl-table--breakdown .cl-prod-img {
+                width: 32px !important;
+                height: 32px !important;
+                border-radius: 8px !important;
+                flex-shrink: 0;
+            }
+            .cl-table--breakdown .cl-prod-name {
+                font-size: 12px;
+                max-width: 200px;
+                line-height: 1.3;
+            }
         </style>
 
         {{-- ============ 1. Header ============ --}}
@@ -375,6 +421,285 @@
                     </div>
                 @else
                     <div class="cl-empty" style="margin-top: auto;">No category sales yet. Paid orders will appear here.</div>
+                @endif
+            </div>
+        </div>
+
+        {{-- ============ PROFIT / LOSS ANALYSIS SECTION (INTERACTIVE WITH FILTERS & REPORT) ============ --}}
+        <div class="cl-card cl-table-card" id="comlink-profit-loss-section" style="border-radius: 16px; overflow: hidden; border: 1px solid var(--cl-border); box-shadow: var(--cl-shadow);">
+            {{-- Section Header --}}
+            <div class="cl-table-head" style="border-bottom: 1px solid var(--cl-border); padding: 18px 20px; background: var(--cl-card); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="cl-chip {{ $profitLossAnalysis['summary']['is_profitable'] ? 't-green' : 't-red' }}" style="width: 44px; height: 44px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </span>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <h3 style="margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -.01em;">Profit / Loss Analysis</h3>
+                            <span class="cl-pill {{ $profitLossAnalysis['summary']['is_profitable'] ? 't-green' : 't-red' }}" style="font-size: 11.5px; padding: 2px 9px;">
+                                <i></i>{{ $profitLossAnalysis['summary']['is_profitable'] ? 'Profitable' : 'Loss' }} ({{ $profitLossAnalysis['summary']['profit_margin'] }}% Margin)
+                            </span>
+                        </div>
+                        <p style="margin: 3px 0 0; font-size: 12.5px; color: var(--cl-muted);">
+                            Real-time shop financial performance, stock movement, GRN procurement valuation &amp; net margin
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Action Buttons: Print and Download PDF Report --}}
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <a href="{{ $profitLossPrintUrl }}" target="_blank" class="cl-btn" title="Open print-friendly version" style="font-size: 12px; padding: 7px 12px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                        Print View
+                    </a>
+                    <a href="{{ $profitLossPdfUrl }}" class="cl-btn cl-btn--primary" id="download-profit-loss-pdf-btn" style="font-size: 12px; padding: 7px 14px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        Download Report (PDF)
+                    </a>
+                </div>
+            </div>
+
+            {{-- Filter Bar --}}
+            <div style="background: var(--cl-card-alt); border-bottom: 1px solid var(--cl-border); padding: 14px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; flex: 1; min-width: 280px;">
+                    <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--cl-muted); text-transform: uppercase; letter-spacing: 0.5px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                        Filter Analysis:
+                    </div>
+
+                    {{-- Category Dropdown --}}
+                    <div style="min-width: 170px;">
+                        <select wire:model.live="profitLossCategory" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none;">
+                            <option value="">All Categories (Default)</option>
+                            @foreach($plCategories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Subcategory Dropdown --}}
+                    <div style="min-width: 170px;">
+                        <select wire:model.live="profitLossSubCategory" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none;">
+                            <option value="">All Subcategories</option>
+                            @foreach($plSubCategories as $subCat)
+                                <option value="{{ $subCat->id }}">{{ $subCat->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Product Dropdown --}}
+                    <div style="min-width: 220px; max-width: 320px;">
+                        <select wire:model.live="profitLossProduct" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none;">
+                            <option value="">All Products ({{ count($plProducts) }})</option>
+                            @foreach($plProducts as $prodItem)
+                                <option value="{{ $prodItem->id }}">{{ $prodItem->name }} ({{ $prodItem->product_code ?: 'No Code' }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Reset Filter Button --}}
+                    @if($profitLossCategory || $profitLossSubCategory || $profitLossProduct)
+                        <button type="button" wire:click="resetProfitLossFilters" class="cl-btn" style="font-size: 11.5px; padding: 6px 10px; color: var(--cl-muted);" title="Reset back to all products">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 13px; height: 13px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            Reset Filter
+                        </button>
+                    @endif
+                </div>
+
+                {{-- Active Filter Scope Pill --}}
+                <div style="font-size: 12px; color: var(--cl-muted); display: flex; align-items: center; gap: 6px;">
+                    <span style="opacity: 0.8;">Active Scope:</span>
+                    <span class="cl-code" style="font-weight: 600; color: var(--cl-brand);">
+                        {{ $profitLossAnalysis['filter_meta']['description'] }}
+                    </span>
+                </div>
+            </div>
+
+            {{-- 4 Metric KPI Cards for Profit / Loss --}}
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; padding: 20px; background: var(--cl-card);">
+                {{-- KPI 1: Total GRN Value with No of Products --}}
+                <div class="cl-card cl-kpi t-violet" style="border: 1px solid var(--cl-border); padding: 16px; border-radius: 12px;">
+                    <div class="cl-kpi-top">
+                        <span class="cl-chip"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
+                        <span class="cl-kpi-label">Total GRN Value</span>
+                    </div>
+                    <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['total_grn_value'], 2) }}">
+                        <small>Rs.</small>{{ $compact($profitLossAnalysis['summary']['total_grn_value']) }}
+                    </div>
+                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
+                        <span class="cl-pill t-slate" style="font-size: 11px; padding: 2px 8px;">
+                            <i></i><b>{{ number_format($profitLossAnalysis['summary']['products_count']) }}</b> Products Under Scope
+                        </span>
+                        <span style="font-size: 11px; color: var(--cl-muted);">Procurement Cost</span>
+                    </div>
+                </div>
+
+                {{-- KPI 2: Product Stock Breakdown --}}
+                <div class="cl-card cl-kpi t-cyan" style="border: 1px solid var(--cl-border); padding: 16px; border-radius: 12px;">
+                    <div class="cl-kpi-top">
+                        <span class="cl-chip"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></span>
+                        <span class="cl-kpi-label">Product Stock Count</span>
+                    </div>
+                    <div class="cl-kpi-value" style="color: var(--t);">
+                        {{ number_format($profitLossAnalysis['summary']['total_stock_count']) }} <small>units</small>
+                    </div>
+                    <div class="cl-kpi-note" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span class="cl-pill t-green" style="font-size: 11px; padding: 2px 7px;">
+                            <i></i><b>{{ number_format($profitLossAnalysis['summary']['available_stock_count']) }}</b> Available
+                        </span>
+                        <span class="cl-pill t-blue" style="font-size: 11px; padding: 2px 7px;">
+                            <i></i><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> Sold
+                        </span>
+                    </div>
+                </div>
+
+                {{-- KPI 3: Gained Income with Sales --}}
+                <div class="cl-card cl-kpi t-blue" style="border: 1px solid var(--cl-border); padding: 16px; border-radius: 12px;">
+                    <div class="cl-kpi-top">
+                        <span class="cl-chip"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                        <span class="cl-kpi-label">Gained Income</span>
+                    </div>
+                    <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['gained_income'], 2) }}">
+                        <small>Rs.</small>{{ $compact($profitLossAnalysis['summary']['gained_income']) }}
+                    </div>
+                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
+                        <span>COGS: <b>Rs. {{ $compact($profitLossAnalysis['summary']['cogs']) }}</b></span>
+                        <span class="t-cyan"><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> units sold</span>
+                    </div>
+                </div>
+
+                {{-- KPI 4: Net Profit / Loss --}}
+                <div class="cl-card cl-kpi {{ $profitLossAnalysis['summary']['is_profitable'] ? 't-green' : 't-red' }}" style="border: 1px solid var(--cl-border); padding: 16px; border-radius: 12px; background: color-mix(in srgb, var(--t) 4%, var(--cl-card));">
+                    <div class="cl-kpi-top">
+                        <span class="cl-chip"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></span>
+                        <span class="cl-kpi-label">Net Profit / Loss</span>
+                    </div>
+                    <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['net_profit'], 2) }}">
+                        {{ $profitLossAnalysis['summary']['is_profitable'] ? '+' : '' }}<small style="color: inherit;">Rs.</small>{{ $compact($profitLossAnalysis['summary']['net_profit']) }}
+                    </div>
+                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
+                        <span class="cl-pill {{ $profitLossAnalysis['summary']['is_profitable'] ? 't-green' : 't-red' }}">
+                            <i></i>{{ $profitLossAnalysis['summary']['is_profitable'] ? 'Profitable' : 'Loss' }}
+                        </span>
+                        <span><b>{{ $profitLossAnalysis['summary']['profit_margin'] }}%</b> margin</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Product Breakdown Table --}}
+            <div style="border-top: 1px solid var(--cl-border);">
+                <div style="padding: 12px 20px; background: var(--cl-card-alt); border-bottom: 1px solid var(--cl-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+                    <div style="font-size: 13px; font-weight: 600; color: var(--cl-text); display: flex; align-items: center; gap: 8px;">
+                        <span>Products Profit / Loss Breakdown</span>
+                        <span class="cl-pill t-slate" style="font-size: 11px;">{{ count($profitLossAnalysis['products']) }} Items</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--cl-muted);">
+                        Showing products under <b>{{ $profitLossAnalysis['filter_meta']['description'] }}</b>
+                    </div>
+                </div>
+
+                <div class="cl-scroll cl-scroll--breakdown" style="max-height: 480px; overflow-y: auto; overflow-x: hidden;">
+                    <table class="cl-table cl-table--breakdown">
+                        <thead style="position: sticky; top: 0; z-index: 2; background: var(--cl-card);">
+                            <tr>
+                                <th style="width: 34px; text-align: center; padding-left: 12px !important;">#</th>
+                                <th style="min-width: 170px;">Product Details</th>
+                                <th style="width: 110px;">Category</th>
+                                <th class="cl-c" style="width: 105px;">Stock Status</th>
+                                <th class="cl-r" style="width: 80px;">Unit Cost</th>
+                                <th class="cl-r" style="width: 80px;">Unit Price</th>
+                                <th class="cl-r" style="width: 95px;">Total GRN</th>
+                                <th class="cl-r" style="width: 95px;">Gained Income</th>
+                                <th class="cl-r" style="width: 110px; padding-right: 14px !important;">Net Profit / Loss</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse(array_slice($profitLossAnalysis['products'], 0, 50) as $index => $item)
+                                @php
+                                    $imgUrl = null;
+                                    if ($item['image']) {
+                                        $imgUrl = (str_starts_with($item['image'], 'http') || str_starts_with($item['image'], '/')) ? $item['image'] : asset('storage/' . $item['image']);
+                                    }
+                                @endphp
+                                <tr>
+                                    <td class="cl-c" style="color: var(--cl-faint); font-weight: 500; padding-left: 12px !important;">{{ $index + 1 }}</td>
+                                    <td>
+                                        <div class="cl-prod">
+                                            @if($imgUrl)
+                                                <img src="{{ $imgUrl }}" alt="{{ $item['name'] }}" class="cl-prod-img" onerror="this.style.display='none'">
+                                            @else
+                                                <div class="cl-prod-img" style="display:grid; place-items:center; color:var(--cl-muted);">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                                </div>
+                                            @endif
+                                            <div style="min-width: 0;">
+                                                <div class="cl-prod-name" title="{{ $item['name'] }}">{{ $item['name'] }}</div>
+                                                <div style="display: flex; gap: 5px; align-items: center; margin-top: 2px;">
+                                                    <span class="cl-code" style="font-size: 11px; padding: 1px 6px;">{{ $item['product_code'] ?: 'NO-CODE' }}</span>
+                                                    @if($item['brand'])
+                                                        <span style="font-size: 10.5px; color: var(--cl-muted);">{{ $item['brand'] }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-size: 11.5px; color: var(--cl-muted); max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $item['categories'] }}">
+                                        {{ $item['categories'] }}
+                                    </td>
+                                    <td class="cl-c">
+                                        <div style="display: inline-flex; flex-direction: column; gap: 2px; align-items: center;">
+                                            <div style="font-size: 11px; font-weight: 600;">{{ $item['total_stock'] }} Total</div>
+                                            <div style="display: flex; gap: 3px;">
+                                                <span class="cl-pill {{ $item['available_stock'] <= 5 ? 't-red' : 't-green' }}" style="font-size: 9.5px; padding: 1px 5px;">
+                                                    {{ $item['available_stock'] }} Avail
+                                                </span>
+                                                <span class="cl-pill t-blue" style="font-size: 9.5px; padding: 1px 5px;">
+                                                    {{ $item['sold_stock'] }} Sold
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="cl-r" style="font-size: 11.5px; color: var(--cl-muted); white-space: nowrap;">
+                                        Rs. {{ number_format($item['unit_cost'], 2) }}
+                                    </td>
+                                    <td class="cl-r" style="font-size: 11.5px; font-weight: 500; white-space: nowrap;">
+                                        Rs. {{ number_format($item['selling_price'], 2) }}
+                                    </td>
+                                    <td class="cl-r" style="font-size: 11.5px; font-weight: 600; color: #818cf8; white-space: nowrap;">
+                                        Rs. {{ number_format($item['grn_value'], 2) }}
+                                    </td>
+                                    <td class="cl-r" style="font-size: 11.5px; font-weight: 600; color: #22d3ee; white-space: nowrap;">
+                                        Rs. {{ number_format($item['gained_income'], 2) }}
+                                    </td>
+                                    <td class="cl-r" style="padding-right: 14px !important; white-space: nowrap;">
+                                        <div style="display: inline-flex; flex-direction: column; align-items: flex-end; gap: 1px;">
+                                            <span style="font-size: 12px; font-weight: 700; color: {{ $item['is_profitable'] ? '#10b981' : '#ef4444' }};">
+                                                {{ $item['net_profit'] >= 0 ? '+' : '' }}Rs. {{ number_format($item['net_profit'], 2) }}
+                                            </span>
+                                            <span class="cl-pill {{ $item['is_profitable'] ? 't-green' : 't-red' }}" style="font-size: 9.5px; padding: 0 5px;">
+                                                {{ $item['margin'] }}%
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="9" style="text-align: center; padding: 32px; color: var(--cl-muted);">
+                                        No products found matching the selected filter criteria.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                @if(count($profitLossAnalysis['products']) > 50)
+                    <div style="padding: 10px 20px; font-size: 12px; color: var(--cl-muted); background: var(--cl-card-alt); border-top: 1px solid var(--cl-border); display: flex; justify-content: space-between; align-items: center;">
+                        <span>Showing top 50 of {{ count($profitLossAnalysis['products']) }} products in dashboard view.</span>
+                        <a href="{{ $profitLossPdfUrl }}" class="cl-btn" style="font-size: 11px; padding: 4px 10px;">Download Full PDF Report (All {{ count($profitLossAnalysis['products']) }} Items) &rarr;</a>
+                    </div>
                 @endif
             </div>
         </div>
