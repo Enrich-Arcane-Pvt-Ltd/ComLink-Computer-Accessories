@@ -269,6 +269,16 @@ class ProductForm
                                         ->image()
                                         ->directory('products/variants')
                                         ->imageEditor()
+                                        ->maxSize(1024)
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+                                        ->rules(['image', 'max:1024'])
+                                        ->validationMessages([
+                                            'max' => 'The color variant image must not exceed 1MB. Please compress or resize your image before uploading.',
+                                            'uploaded' => 'The color variant image failed to upload. The file size exceeds the allowed limit (maximum 1MB). Please upload a smaller or compressed image.',
+                                            'image' => 'The uploaded file must be a valid image.',
+                                            'mimes' => 'The image must be a JPG, PNG, WebP, or SVG format.',
+                                        ])
+                                        ->helperText('Maximum 1MB (JPG, PNG, WebP).')
                                         ->required()
                                         ->columnSpan(1),
 
@@ -358,6 +368,16 @@ class ProductForm
                         ->directory('products')
                         ->imageEditor()
                         ->panelLayout('grid')
+                        ->maxSize(1024)
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+                        ->rules(['max:1024'])
+                        ->validationMessages([
+                            'max' => 'Each product photo must not exceed 1MB. Please compress or resize your image before uploading.',
+                            'uploaded' => 'One or more product photos failed to upload. The file size exceeds the allowed limit (maximum 1MB). Please upload a smaller or compressed image.',
+                            'image' => 'Each uploaded file must be a valid image.',
+                            'mimes' => 'The photos must be in JPG, PNG, WebP, or SVG format.',
+                        ])
+                        ->helperText('Upload up to 4 photos. Maximum 1MB per photo (JPG, PNG, WebP). Please use compressed web-ready images.')
                         ->columnSpanFull()
                         ->required(fn (Get $get) => ! (bool) $get('has_color_variants')),
                 ]),
