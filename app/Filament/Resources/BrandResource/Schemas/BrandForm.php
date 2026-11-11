@@ -38,8 +38,17 @@ class BrandForm
                         ->visibility('public')
                         ->directory('brands')
                         ->imageEditor()
-                        ->columnSpanFull()
-                        ->helperText('Upload a clean PNG or SVG logo for this brand.'),
+                        ->maxSize(1024) // Maximum 1 MB (Safe for standard PHP 2MB upload limits)
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+                        ->rules(['image', 'max:1024'])
+                        ->validationMessages([
+                            'max' => 'The brand image size must not exceed 1MB. Please compress or resize your image before uploading.',
+                            'uploaded' => 'The brand image failed to upload. The file size exceeds the allowed limit (maximum 1MB). Please upload a smaller or compressed image.',
+                            'image' => 'The uploaded file must be a valid image.',
+                            'mimes' => 'The brand image must be a JPG, PNG, WebP, or SVG format.',
+                        ])
+                        ->helperText('Upload a clean logo for this brand. Maximum file size: 1MB (JPG, PNG, WebP, SVG). Please use compressed web-ready images.')
+                        ->columnSpanFull(),
 
                     Forms\Components\Toggle::make('is_visible')
                         ->label('Visible on Storefront')

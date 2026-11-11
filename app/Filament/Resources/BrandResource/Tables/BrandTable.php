@@ -16,7 +16,8 @@ class BrandTable
                     ->disk('public')
                     ->visibility('public')
                     ->circular()
-                    ->defaultImageUrl(url('/images/placeholder.png')),
+                    ->defaultImageUrl(asset('images/placeholder.png'))
+                    ->extraImgAttributes(['onerror' => "this.src='" . asset('images/placeholder.png') . "';"]),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Brand Name')
