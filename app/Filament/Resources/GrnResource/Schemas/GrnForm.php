@@ -104,7 +104,7 @@ class GrnForm
                                             'color_name'           => $item->color_name,
                                             'product_code'         => $item->product_code,
                                             'product_name'         => $item->product_name,
-                                            'product_condition'    => $item->product_condition ?: 'Brandnew',
+                                            'product_condition'    => ($item->product_condition === 'Brandnew' || ! $item->product_condition) ? 'Brand New' : $item->product_condition,
                                             'product_quantity'     => (int) ($item->product_quantity ?: 1),
                                             'price_per_unit'       => 0.00,
                                             'total'                => 0.00,
@@ -225,10 +225,11 @@ class GrnForm
                             Forms\Components\Select::make('product_condition')
                                 ->label('Condition')
                                 ->options([
-                                    'Brandnew' => 'Brandnew',
+                                    'Brand New' => 'Brand New',
                                     'Used' => 'Used',
                                 ])
-                                ->default('Brandnew')
+                                ->default('Brand New')
+                                ->formatStateUsing(fn ($state) => $state === 'Brandnew' ? 'Brand New' : ($state ?? 'Brand New'))
                                 ->native(false)
                                 ->required()
                                 ->columnSpan(['sm' => 1, 'md' => 2]),
@@ -265,10 +266,17 @@ class GrnForm
                         ->columns(['sm' => 2, 'md' => 15])
                         ->defaultItems(fn () => request()->query('purchase_order_id') ? 0 : 1)
                         ->collapsible()
-                        ->itemLabel(fn (array $state): ?string => isset($state['product_name']) && ! empty($state['product_name'])
-                                ? "{$state['product_name']}".(! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '')." [{$state['product_condition']}] × {$state['product_quantity']} — Rs. ".number_format((float) ($state['total'] ?? 0), 2)
-                                : 'Product Item'
-                        )
+                        ->itemLabel(function (array $state): ?string {
+                            if (! isset($state['product_name']) || empty($state['product_name'])) {
+                                return 'Product Item';
+                            }
+                            $cond = ($state['product_condition'] ?? '') === 'Brandnew' ? 'Brand New' : ($state['product_condition'] ?? 'Brand New');
+                            $color = ! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '';
+                            $qty = $state['product_quantity'] ?? 1;
+                            $total = number_format((float) ($state['total'] ?? 0), 2);
+
+                            return "{$state['product_name']}{$color} [{$cond}] × {$qty} — Rs. {$total}";
+                        })
                         ->columnSpanFull(),
 
                     // 3. Sub Total Footer

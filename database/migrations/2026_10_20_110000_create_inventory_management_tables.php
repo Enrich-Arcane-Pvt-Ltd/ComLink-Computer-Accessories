@@ -39,7 +39,7 @@ return new class extends Migration
             $table->string('product_code');
             $table->string('product_name');
             $table->integer('product_quantity')->default(1);
-            $table->string('product_condition')->default('Brandnew'); // Brandnew, Used
+            $table->string('product_condition')->default('Brand New'); // Brand New, Used
             $table->timestamps();
         });
 
@@ -61,7 +61,7 @@ return new class extends Migration
             $table->foreignId('inventory_product_id')->nullable()->constrained('inventory_products')->nullOnDelete();
             $table->string('product_code');
             $table->string('product_name');
-            $table->string('product_condition')->default('Brandnew'); // Brandnew, Used
+            $table->string('product_condition')->default('Brand New'); // Brand New, Used
             $table->decimal('price_per_unit', 14, 2)->default(0.00);
             $table->integer('product_quantity')->default(1);
             $table->decimal('total', 14, 2)->default(0.00);

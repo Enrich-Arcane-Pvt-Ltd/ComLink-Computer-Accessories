@@ -34,7 +34,7 @@ class CreateGrn extends CreateRecord
                         'color_name'           => $item->color_name,
                         'product_code'         => $item->product_code,
                         'product_name'         => $item->product_name,
-                        'product_condition'    => $item->product_condition ?: 'Brandnew',
+                        'product_condition'    => ($item->product_condition === 'Brandnew' || ! $item->product_condition) ? 'Brand New' : $item->product_condition,
                         'product_quantity'     => (int) ($item->product_quantity ?: 1),
                         'price_per_unit'       => 0.00,
                         'total'                => 0.00,

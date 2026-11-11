@@ -347,7 +347,7 @@ class StockAnalysisService
                 'quantity' => (int) $item->product_quantity,
                 'unit_price' => (float) $item->price_per_unit,
                 'total' => (float) $item->total,
-                'condition' => $item->product_condition ?? 'Brandnew',
+                'condition' => ($item->product_condition === 'Brandnew' || ! $item->product_condition) ? 'Brand New' : $item->product_condition,
             ];
         })->toArray();
 

@@ -115,8 +115,8 @@
                             @endif
                         </td>
                         <td class="py-3.5 px-3 text-center">
-                            <span class="inline-block px-2 py-0.5 text-[11px] font-semibold rounded {{ $item->product_condition === 'Brandnew' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                {{ $item->product_condition }}
+                            <span class="inline-block px-2 py-0.5 text-[11px] font-semibold rounded {{ in_array($item->product_condition, ['Brandnew', 'Brand New']) ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                {{ $item->product_condition === 'Brandnew' ? 'Brand New' : $item->product_condition }}
                             </span>
                         </td>
                         <td class="py-3.5 px-3 text-right font-mono text-gray-700">Rs. {{ number_format((float) $item->price_per_unit, 2) }}</td>

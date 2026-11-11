@@ -148,10 +148,11 @@ class PurchaseOrderForm
                             Forms\Components\Select::make('product_condition')
                                 ->label('Condition')
                                 ->options([
-                                    'Brandnew' => 'Brandnew',
+                                    'Brand New' => 'Brand New',
                                     'Used' => 'Used',
                                 ])
-                                ->default('Brandnew')
+                                ->default('Brand New')
+                                ->formatStateUsing(fn ($state) => $state === 'Brandnew' ? 'Brand New' : ($state ?? 'Brand New'))
                                 ->native(false)
                                 ->required()
                                 ->columnSpan(['sm' => 1, 'md' => 2]),
@@ -159,10 +160,16 @@ class PurchaseOrderForm
                         ->columns(['sm' => 2, 'md' => 12])
                         ->defaultItems(1)
                         ->collapsible()
-                        ->itemLabel(fn (array $state): ?string => isset($state['product_name']) && ! empty($state['product_name'])
-                                ? "{$state['product_name']}".(! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '')." [{$state['product_condition']}] × {$state['product_quantity']}"
-                                : 'New Item'
-                        )
+                        ->itemLabel(function (array $state): ?string {
+                            if (! isset($state['product_name']) || empty($state['product_name'])) {
+                                return 'New Item';
+                            }
+                            $cond = ($state['product_condition'] ?? '') === 'Brandnew' ? 'Brand New' : ($state['product_condition'] ?? 'Brand New');
+                            $color = ! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '';
+                            $qty = $state['product_quantity'] ?? 1;
+
+                            return "{$state['product_name']}{$color} [{$cond}] × {$qty}";
+                        })
                         ->columnSpanFull(),
                 ]),
         ];

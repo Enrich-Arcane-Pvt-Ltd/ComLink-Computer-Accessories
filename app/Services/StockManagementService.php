@@ -168,7 +168,7 @@ class StockManagementService
                 'supplier_name' => $record->grn?->supplier?->name ?? $record->inventoryProduct?->supplier?->name ?? 'Direct Stock',
                 'created_at' => $record->created_at,
                 'added_date' => $record->created_at ? $record->created_at->format('M d, Y h:i A') : 'N/A',
-                'condition' => $record->product_condition ?: 'Brandnew',
+                'condition' => ($record->product_condition === 'Brandnew' || ! $record->product_condition) ? 'Brand New' : $record->product_condition,
                 'color_name' => $record->color_name,
                 'quantity' => (int) $record->product_quantity,
                 'remaining_capacity' => (int) $record->product_quantity,
