@@ -1,0 +1,4197 @@
+[
+  {
+    "name": "Intel Core i3 2nd Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i3-2nd-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I3-2ND",
+    "sku": "USD-SYS-I3-2ND",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 14250.0,
+    "sale_price": 13750.0,
+    "cost_price": 11687.5,
+    "description": "Reliable desktop computer powered by an Intel Core 2nd Gen processor, 4GB DDR3 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 2nd Gen processing efficiency with 2 Cores / 4 Threads.\n- 4GB DDR3 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 2nd Gen (2 Cores / 4 Threads)",
+      "Memory (RAM)": "4GB DDR3",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1155",
+        "CPU Cores / Threads": "2 Cores / 4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 2000",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I3 2ND",
+    "images": [
+      "Gemini_Generated_Image_eh690teh690teh69-removebg-preview.png",
+      "Gemini_Generated_Image_eh690teh690teh69__1_-removebg-preview.png",
+      "Gemini_Generated_Image_eh690teh690teh69__2_-removebg-preview.png",
+      "I3_2ND-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3 3rd Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i3-3rd-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I3-3RD",
+    "sku": "USD-SYS-I3-3RD",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 14750.0,
+    "sale_price": 14250.0,
+    "cost_price": 12112.5,
+    "description": "Reliable desktop computer powered by an Intel Core 3rd Gen processor, 4GB DDR3 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 3rd Gen processing efficiency with 2 Cores / 4 Threads.\n- 4GB DDR3 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 3rd Gen (2 Cores / 4 Threads)",
+      "Memory (RAM)": "4GB DDR3",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1155",
+        "CPU Cores / Threads": "2 Cores / 4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 2500",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I3 3RD",
+    "images": [
+      "Gemini_Generated_Image_92tspx92tspx92ts-removebg-preview.png",
+      "Gemini_Generated_Image_92tspx92tspx92ts__1_-removebg-preview.png",
+      "Gemini_Generated_Image_92tspx92tspx92ts__2_-removebg-preview.png",
+      "I3_3RD-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3 4th Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i3-4th-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I3-4TH",
+    "sku": "USD-SYS-I3-4TH",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 15500.0,
+    "sale_price": 15000.0,
+    "cost_price": 12750.0,
+    "description": "Reliable desktop computer powered by an Intel Core 4th Gen processor, 4GB DDR3 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 4th Gen processing efficiency with 2 Cores / 4 Threads.\n- 4GB DDR3 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 4th Gen (2 Cores / 4 Threads)",
+      "Memory (RAM)": "4GB DDR3",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1150",
+        "CPU Cores / Threads": "2 Cores / 4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 4400",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I3 4TH",
+    "images": [
+      "Gemini_Generated_Image_sc840rsc840rsc84-removebg-preview.png",
+      "Gemini_Generated_Image_sc840rsc840rsc84__1_-removebg-preview.png",
+      "Gemini_Generated_Image_sc840rsc840rsc84__2_-removebg-preview.png",
+      "I3_4TH-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3 6th Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i3-6th-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I3-6TH",
+    "sku": "USD-SYS-I3-6TH",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 20900.0,
+    "sale_price": 20400.0,
+    "cost_price": 17340.0,
+    "description": "Reliable desktop computer powered by an Intel Core 6th Gen processor, 4GB DDR4 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 6th Gen processing efficiency with 2 Cores / 4 Threads.\n- 4GB DDR4 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 6th Gen (2 Cores / 4 Threads)",
+      "Memory (RAM)": "4GB DDR4",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1151",
+        "CPU Cores / Threads": "2 Cores / 4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 530",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I3 6TH",
+    "images": [
+      "Gemini_Generated_Image_30x5go30x5go30x5-removebg-preview.png",
+      "Gemini_Generated_Image_30x5go30x5go30x5__1_-removebg-preview.png",
+      "Gemini_Generated_Image_30x5go30x5go30x5__2_-removebg-preview.png",
+      "I3_6TH-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5 2nd Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i5-2nd-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I5-2ND",
+    "sku": "USD-SYS-I5-2ND",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable desktop computer powered by an Intel Core 2nd Gen processor, 4GB DDR3 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 2nd Gen processing efficiency with 4 Cores / 4 Threads.\n- 4GB DDR3 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 2nd Gen (4 Cores / 4 Threads)",
+      "Memory (RAM)": "4GB DDR3",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1155",
+        "CPU Cores / Threads": "4 Cores / 4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 2000",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I5 2ND",
+    "images": [
+      "Gemini_Generated_Image_gk8ka6gk8ka6gk8k-removebg-preview.png",
+      "Gemini_Generated_Image_gk8ka6gk8ka6gk8k__1_-removebg-preview.png",
+      "Gemini_Generated_Image_gk8ka6gk8ka6gk8k__2_-removebg-preview.png",
+      "I5_2ND-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5 3rd Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i5-3rd-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I5-3RD",
+    "sku": "USD-SYS-I5-3RD",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable desktop computer powered by an Intel Core 3rd Gen processor, 4GB DDR3 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 3rd Gen processing efficiency with 4 Cores / 4 Threads.\n- 4GB DDR3 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 3rd Gen (4 Cores / 4 Threads)",
+      "Memory (RAM)": "4GB DDR3",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1155",
+        "CPU Cores / Threads": "4 Cores / 4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 2500",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I5 3RD",
+    "images": [
+      "Gemini_Generated_Image_cph8occph8occph8-removebg-preview.png",
+      "Gemini_Generated_Image_cph8occph8occph8__1_-removebg-preview.png",
+      "Gemini_Generated_Image_cph8occph8occph8__2_-removebg-preview.png",
+      "I5_3RD-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5 4th Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i5-4th-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I5-4TH",
+    "sku": "USD-SYS-I5-4TH",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable desktop computer powered by an Intel Core 4th Gen processor, 4GB DDR3 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 4th Gen processing efficiency with 4 Cores / 4 Threads.\n- 4GB DDR3 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 4th Gen (4 Cores / 4 Threads)",
+      "Memory (RAM)": "4GB DDR3",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1150",
+        "CPU Cores / Threads": "4 Cores / 4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 4600",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I5 4TH",
+    "images": [
+      "Gemini_Generated_Image_4jpbd14jpbd14jpb-removebg-preview.png",
+      "Gemini_Generated_Image_4jpbd14jpbd14jpb__1_-removebg-preview.png",
+      "Gemini_Generated_Image_4jpbd14jpbd14jpb__2_-removebg-preview.png",
+      "I5_4TH-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5 6th Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i5-6th-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I5-6TH",
+    "sku": "USD-SYS-I5-6TH",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 26500.0,
+    "sale_price": 26000.0,
+    "cost_price": 22100.0,
+    "description": "Reliable desktop computer powered by an Intel Core 6th Gen processor, 4GB DDR4 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 6th Gen processing efficiency with 4 Cores / 4 Threads.\n- 4GB DDR4 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 6th Gen (4 Cores / 4 Threads)",
+      "Memory (RAM)": "4GB DDR4",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1151",
+        "CPU Cores / Threads": "4 Cores / 4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 530",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I5 6TH",
+    "images": [
+      "Gemini_Generated_Image_32clcz32clcz32cl-removebg-preview.png",
+      "Gemini_Generated_Image_32clcz32clcz32cl__1_-removebg-preview.png",
+      "Gemini_Generated_Image_32clcz32clcz32cl__2_-removebg-preview.png",
+      "I5_6TH-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5 8th Gen Desktop PC (4GB RAM / 500GB HDD / DVD-RW) - Used",
+    "slug": "intel-core-i5-8th-gen-desktop-pc-used",
+    "product_code": "USED-SYS-I5-8TH",
+    "sku": "USD-SYS-I5-8TH",
+    "category_slug": "products",
+    "subcategory_slug": "system-units",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable desktop computer powered by an Intel Core 8th Gen processor, 4GB DDR4 RAM, and 500GB high-speed storage. Pre-tested, cleaned, and certified for office applications, web browsing, schooling, and retail shop billing.\n\nKey Features:\n\n- Intel Core 8th Gen processing efficiency with 6 Cores / 6 Threads.\n- 4GB DDR4 system memory for responsive daily productivity.\n- 500GB 7200 RPM SATA internal hard drive storage.\n- Integrated DVD-RW optical drive and versatile front/rear connectivity.\n- 1 Month complete hardware warranty support.",
+    "main_specifications": {
+      "Processor": "Intel Core 8th Gen (6 Cores / 6 Threads)",
+      "Memory (RAM)": "4GB DDR4",
+      "Storage": "500GB SATA HDD",
+      "Optical Drive": "DVD-RW Multi-Format",
+      "Form Factor": "Tower / Desktop"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Tested",
+        "Chassis Type": "Tower / Desktop ATX",
+        "Operating System": "Windows 10 Ready",
+        "Power Supply": "Standard ATX PSU"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1151 v2",
+        "CPU Cores / Threads": "6 Cores / 6 Threads",
+        "Integrated Graphics": "Intel UHD Graphics 630",
+        "Audio / LAN": "HD Audio & Gigabit Ethernet"
+      },
+      "Compatibility & Standards": {
+        "I/O Ports": "VGA, USB 2.0/3.0, Audio In/Out, RJ-45",
+        "Internal Expansion": "PCIe x16 GPU Slot, SATA Ports",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "SYSTEM UNIT/I5 8TH",
+    "images": [
+      "Gemini_Generated_Image_n889zun889zun889-removebg-preview.png",
+      "Gemini_Generated_Image_n889zun889zun889__1_-removebg-preview.png",
+      "Gemini_Generated_Image_n889zun889zun889__2_-removebg-preview.png",
+      "I5_8TH-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "17\" Square LCD Monitor - Used",
+    "slug": "17-inch-square-lcd-monitor-used",
+    "product_code": "USED-MON-17-SQ-LCD",
+    "sku": "USD-MON-17-SQ-LCD",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 5700.0,
+    "sale_price": 5500.0,
+    "cost_price": 4675.0,
+    "description": "Crisp visual display with 17\" screen size, offering sharp image clarity at 1280 x 1024 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 17\" viewable display with Square (5:4) aspect ratio.\n- Clear 1280 x 1024 visual output at 60Hz refresh rate.\n- Reliable VGA (D-Sub) video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "17\"",
+      "Resolution": "1280 x 1024",
+      "Panel Technology": "LCD CCFL",
+      "Input Ports": "VGA (D-Sub)",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Square (5:4)",
+        "Backlight Type": "LCD CCFL",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1280 x 1024",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA (D-Sub)",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/17 SQ LCD",
+    "images": [
+      "Gemini_Generated_Image_ar02b9ar02b9ar02-removebg-preview (1).png",
+      "Gemini_Generated_Image_ar02b9ar02b9ar02-removebg-preview.png",
+      "Gemini_Generated_Image_e9axhwe9axhwe9ax-removebg-preview.png",
+      "square-17-inch-monitor.png"
+    ]
+  },
+  {
+    "name": "19\" Square LCD Monitor - Used",
+    "slug": "19-inch-square-lcd-monitor-used",
+    "product_code": "USED-MON-19-SQ-LCD",
+    "sku": "USD-MON-19-SQ-LCD",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 6250.0,
+    "sale_price": 6000.0,
+    "cost_price": 5100.0,
+    "description": "Crisp visual display with 19\" screen size, offering sharp image clarity at 1280 x 1024 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 19\" viewable display with Square (5:4) aspect ratio.\n- Clear 1280 x 1024 visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "19\"",
+      "Resolution": "1280 x 1024",
+      "Panel Technology": "LCD CCFL",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Square (5:4)",
+        "Backlight Type": "LCD CCFL",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1280 x 1024",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/19 SQ LCD",
+    "images": [
+      "Gemini_Generated_Image_ebkdv0ebkdv0ebkd-removebg-preview.png",
+      "Gemini_Generated_Image_eoemnreoemnreoem-removebg-preview.png",
+      "Gemini_Generated_Image_eoemnreoemnreoem__1_-removebg-preview.png",
+      "Gemini_Generated_Image_eoemnreoemnreoem__2_-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "19\" Square LED Monitor - Used",
+    "slug": "19-inch-square-led-monitor-used",
+    "product_code": "USED-MON-19-SQ-LED",
+    "sku": "USD-MON-19-SQ-LED",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 6900.0,
+    "sale_price": 6600.0,
+    "cost_price": 5610.0,
+    "description": "Crisp visual display with 19\" screen size, offering sharp image clarity at 1280 x 1024 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 19\" viewable display with Square (5:4) aspect ratio.\n- Clear 1280 x 1024 visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "19\"",
+      "Resolution": "1280 x 1024",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Square (5:4)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1280 x 1024",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/19 SQ LED",
+    "images": [
+      "Gemini_Generated_Image_cryu30cryu30cryu-removebg-preview.png",
+      "Gemini_Generated_Image_wg3yx3wg3yx3wg3y-removebg-preview.png",
+      "Gemini_Generated_Image_wg3yx3wg3yx3wg3y__1_-removebg-preview.png",
+      "Gemini_Generated_Image_wg3yx3wg3yx3wg3y__2_-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "19\" Wide LCD Monitor - Used",
+    "slug": "19-inch-wide-lcd-monitor-used",
+    "product_code": "USED-MON-19-WIDE-LCD",
+    "sku": "USD-MON-19-WIDE-LCD",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 7750.0,
+    "sale_price": 7500.0,
+    "cost_price": 6375.0,
+    "description": "Crisp visual display with 19\" screen size, offering sharp image clarity at 1366 x 768 / 1440 x 900 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 19\" viewable display with Widescreen (16:9 / 16:10) aspect ratio.\n- Clear 1366 x 768 / 1440 x 900 visual output at 60Hz refresh rate.\n- Reliable VGA (D-Sub) video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "19\"",
+      "Resolution": "1366 x 768 / 1440 x 900",
+      "Panel Technology": "LCD CCFL",
+      "Input Ports": "VGA (D-Sub)",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9 / 16:10)",
+        "Backlight Type": "LCD CCFL",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1366 x 768 / 1440 x 900",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA (D-Sub)",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/19 WIDE LCD",
+    "images": [
+      "Gemini_Generated_Image_nxr9janxr9janxr9-removebg-preview.png",
+      "Gemini_Generated_Image_nxr9janxr9janxr9__1_-removebg-preview.png",
+      "Gemini_Generated_Image_nxr9janxr9janxr9__2_-removebg-preview.png",
+      "Gemini_Generated_Image_v7xln4v7xln4v7xl-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "19\" Wide LED Monitor - Used",
+    "slug": "19-inch-wide-led-monitor-used",
+    "product_code": "USED-MON-19-WIDE-LED",
+    "sku": "USD-MON-19-WIDE-LED",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 8000.0,
+    "sale_price": 7750.0,
+    "cost_price": 6587.5,
+    "description": "Crisp visual display with 19\" screen size, offering sharp image clarity at 1366 x 768 / 1440 x 900 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 19\" viewable display with Widescreen (16:9) aspect ratio.\n- Clear 1366 x 768 / 1440 x 900 visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "19\"",
+      "Resolution": "1366 x 768 / 1440 x 900",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1366 x 768 / 1440 x 900",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/19 WIDE LED",
+    "images": [
+      "979af395ea2d28ef8d724a2af5b9fba5.png_720x720q80-removebg-preview.png",
+      "Gemini_Generated_Image_ejiy3bejiy3bejiy-removebg-preview.png",
+      "Gemini_Generated_Image_hgnt1vhgnt1vhgnt-removebg-preview.png",
+      "Gemini_Generated_Image_hgnt1vhgnt1vhgnt__1_-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "20\" Wide LCD Monitor - Used",
+    "slug": "20-inch-wide-lcd-monitor-used",
+    "product_code": "USED-MON-20-WIDE-LCD",
+    "sku": "USD-MON-20-WIDE-LCD",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 8000.0,
+    "sale_price": 7750.0,
+    "cost_price": 6587.5,
+    "description": "Crisp visual display with 20\" screen size, offering sharp image clarity at 1600 x 900 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 20\" viewable display with Widescreen (16:9) aspect ratio.\n- Clear 1600 x 900 visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "20\"",
+      "Resolution": "1600 x 900",
+      "Panel Technology": "LCD CCFL",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9)",
+        "Backlight Type": "LCD CCFL",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1600 x 900",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/20 WIDE LCD",
+    "images": [
+      "Gemini_Generated_Image_q8h4cmq8h4cmq8h4-removebg-preview.png",
+      "Gemini_Generated_Image_q8h4cmq8h4cmq8h4__1_-removebg-preview.png",
+      "Gemini_Generated_Image_q8h4cmq8h4cmq8h4__2_-removebg-preview.png",
+      "Gemini_Generated_Image_vvefanvvefanvvef-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "20\" Wide LED Monitor - Used",
+    "slug": "20-inch-wide-led-monitor-used",
+    "product_code": "USED-MON-20-WIDE-LED",
+    "sku": "USD-MON-20-WIDE-LED",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 8500.0,
+    "sale_price": 8200.0,
+    "cost_price": 6970.0,
+    "description": "Crisp visual display with 20\" screen size, offering sharp image clarity at 1600 x 900 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 20\" viewable display with Widescreen (16:9) aspect ratio.\n- Clear 1600 x 900 visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "20\"",
+      "Resolution": "1600 x 900",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1600 x 900",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/20 WIDE LED",
+    "images": [
+      "Gemini_Generated_Image_kytrvckytrvckytr-removebg-preview.png",
+      "Gemini_Generated_Image_vkj2hivkj2hivkj2-removebg-preview.png",
+      "Gemini_Generated_Image_w2yvqow2yvqow2yv-removebg-preview.png",
+      "Gemini_Generated_Image_xqf6xgxqf6xgxqf6-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "21\" Wide LED Monitor with HDMI - Used",
+    "slug": "21-inch-wide-led-monitor-hdmi-used",
+    "product_code": "USED-MON-21-WIDE-LED-HDMI",
+    "sku": "USD-MON-21-WIDE-LED-HDMI",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Crisp visual display with 21\" screen size, offering sharp image clarity at 1920 x 1080 (FHD) resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 21\" viewable display with Widescreen (16:9) aspect ratio.\n- Clear 1920 x 1080 (FHD) visual output at 60Hz refresh rate.\n- Reliable HDMI & VGA video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "21\"",
+      "Resolution": "1920 x 1080 (FHD)",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "HDMI & VGA",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1920 x 1080 (FHD)",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "HDMI & VGA",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/21 WIDE LED- HDMI",
+    "images": [
+      "Gemini_Generated_Image_1nepzo1nepzo1nep-removebg-preview.png",
+      "Gemini_Generated_Image_68p10t68p10t68p1-removebg-preview.png",
+      "Gemini_Generated_Image_afpzzcafpzzcafpz-removebg-preview.png",
+      "Gemini_Generated_Image_slzfqyslzfqyslzf-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "22\" Wide LED Monitor - Used",
+    "slug": "22-inch-wide-led-monitor-used",
+    "product_code": "USED-MON-22-WIDE-LED",
+    "sku": "USD-MON-22-WIDE-LED",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 8800.0,
+    "sale_price": 8500.0,
+    "cost_price": 7225.0,
+    "description": "Crisp visual display with 22\" screen size, offering sharp image clarity at 1680 x 1050 / 1920 x 1080 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 22\" viewable display with Widescreen (16:9 / 16:10) aspect ratio.\n- Clear 1680 x 1050 / 1920 x 1080 visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "22\"",
+      "Resolution": "1680 x 1050 / 1920 x 1080",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9 / 16:10)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1680 x 1050 / 1920 x 1080",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/22 WIDE LED",
+    "images": [
+      "Gemini_Generated_Image_kytrvckytrvckytr-removebg-preview.png",
+      "Gemini_Generated_Image_vkj2hivkj2hivkj2-removebg-preview.png",
+      "Gemini_Generated_Image_w2yvqow2yvqow2yv-removebg-preview.png",
+      "Gemini_Generated_Image_xqf6xgxqf6xgxqf6-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "22\" Wide LED Monitor with HDMI - Used",
+    "slug": "22-inch-wide-led-monitor-hdmi-used",
+    "product_code": "USED-MON-22-WIDE-LED-HDMI",
+    "sku": "USD-MON-22-WIDE-LED-HDMI",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Crisp visual display with 22\" screen size, offering sharp image clarity at 1920 x 1080 (FHD) resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 22\" viewable display with Widescreen (16:9) aspect ratio.\n- Clear 1920 x 1080 (FHD) visual output at 60Hz / 75Hz refresh rate.\n- Reliable HDMI & VGA video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "22\"",
+      "Resolution": "1920 x 1080 (FHD)",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "HDMI & VGA",
+      "Refresh Rate": "60Hz / 75Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1920 x 1080 (FHD)",
+        "Refresh Rate": "60Hz / 75Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "HDMI & VGA",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/22 WIDE LED- HDMI",
+    "images": [
+      "Gemini_Generated_Image_1nepzo1nepzo1nep-removebg-preview.png",
+      "Gemini_Generated_Image_68p10t68p10t68p1-removebg-preview.png",
+      "Gemini_Generated_Image_afpzzcafpzzcafpz-removebg-preview.png",
+      "Gemini_Generated_Image_slzfqyslzfqyslzf-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "22\" Wide IPS Frameless LED Monitor with HDMI - Used",
+    "slug": "22-inch-wide-ips-frameless-led-monitor-hdmi-used",
+    "product_code": "USED-MON-22-IPS-FRAMELESS",
+    "sku": "USD-MON-22-IPS-FRAMELESS",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 15600.0,
+    "sale_price": 15000.0,
+    "cost_price": 12750.0,
+    "description": "Crisp visual display with 22\" screen size, offering sharp image clarity at 1920 x 1080 (FHD) resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 22\" viewable display with Ultra-Slim Frameless (16:9) aspect ratio.\n- Clear 1920 x 1080 (FHD) visual output at 75Hz refresh rate.\n- Reliable HDMI & VGA video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "22\"",
+      "Resolution": "1920 x 1080 (FHD)",
+      "Panel Technology": "IPS LED",
+      "Input Ports": "HDMI & VGA",
+      "Refresh Rate": "75Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Ultra-Slim Frameless (16:9)",
+        "Backlight Type": "IPS LED",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1920 x 1080 (FHD)",
+        "Refresh Rate": "75Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "HDMI & VGA",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/22 WIDE LED- HDMI (IPS FRAMELESS)",
+    "images": [
+      "Gemini_Generated_Image_sng5rgsng5rgsng5-removebg-preview.png",
+      "Gemini_Generated_Image_sng5rgsng5rgsng5__1_-removebg-preview.png",
+      "Gemini_Generated_Image_sng5rgsng5rgsng5__2_-removebg-preview.png",
+      "Gemini_Generated_Image_snqkiqsnqkiqsnqk-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "23\" Wide LED Monitor - Used",
+    "slug": "23-inch-wide-led-monitor-used",
+    "product_code": "USED-MON-23-WIDE-LED",
+    "sku": "USD-MON-23-WIDE-LED",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 9000.0,
+    "sale_price": 8750.0,
+    "cost_price": 7437.5,
+    "description": "Crisp visual display with 23\" screen size, offering sharp image clarity at 1920 x 1080 (FHD) resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 23\" viewable display with Widescreen (16:9) aspect ratio.\n- Clear 1920 x 1080 (FHD) visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "23\"",
+      "Resolution": "1920 x 1080 (FHD)",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1920 x 1080 (FHD)",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/23 WIDE LED",
+    "images": [
+      "Gemini_Generated_Image_9tyu359tyu359tyu-removebg-preview.png",
+      "Gemini_Generated_Image_9tyu359tyu359tyu__1_-removebg-preview.png",
+      "Gemini_Generated_Image_hov594hov594hov5-removebg-preview.png",
+      "Gemini_Generated_Image_oidmqeoidmqeoidm-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "24\" Wide LCD Monitor - Used",
+    "slug": "24-inch-wide-lcd-monitor-used",
+    "product_code": "USED-MON-24-WIDE-LCD",
+    "sku": "USD-MON-24-WIDE-LCD",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 9500.0,
+    "sale_price": 9200.0,
+    "cost_price": 7820.0,
+    "description": "Crisp visual display with 24\" screen size, offering sharp image clarity at 1920 x 1080 / 1920 x 1200 resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 24\" viewable display with Widescreen (16:9 / 16:10) aspect ratio.\n- Clear 1920 x 1080 / 1920 x 1200 visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "24\"",
+      "Resolution": "1920 x 1080 / 1920 x 1200",
+      "Panel Technology": "LCD CCFL",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9 / 16:10)",
+        "Backlight Type": "LCD CCFL",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1920 x 1080 / 1920 x 1200",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/24 WIDE LCD",
+    "images": [
+      "Gemini_Generated_Image_2b9fs12b9fs12b9f-removebg-preview.png",
+      "Gemini_Generated_Image_j7n3wcj7n3wcj7n3-removebg-preview.png",
+      "Gemini_Generated_Image_o4padio4padio4pa-removebg-preview.png",
+      "Gemini_Generated_Image_otbzhdotbzhdotbz-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "24\" Wide LED Monitor - Used",
+    "slug": "24-inch-wide-led-monitor-used",
+    "product_code": "USED-MON-24-WIDE-LED",
+    "sku": "USD-MON-24-WIDE-LED",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 10300.0,
+    "sale_price": 10000.0,
+    "cost_price": 8500.0,
+    "description": "Crisp visual display with 24\" screen size, offering sharp image clarity at 1920 x 1080 (FHD) resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 24\" viewable display with Widescreen (16:9) aspect ratio.\n- Clear 1920 x 1080 (FHD) visual output at 60Hz refresh rate.\n- Reliable VGA / DVI video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "24\"",
+      "Resolution": "1920 x 1080 (FHD)",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "VGA / DVI",
+      "Refresh Rate": "60Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1920 x 1080 (FHD)",
+        "Refresh Rate": "60Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "VGA / DVI",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/24 WIDE LED",
+    "images": [
+      "Gemini_Generated_Image_d9yde4d9yde4d9yd-removebg-preview.png",
+      "Gemini_Generated_Image_f8jt3zf8jt3zf8jt-removebg-preview.png",
+      "Gemini_Generated_Image_f8jt3zf8jt3zf8jt__1_-removebg-preview.png",
+      "Gemini_Generated_Image_ypbcsgypbcsgypbc-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "24\" Wide LED Monitor with HDMI - Used",
+    "slug": "24-inch-wide-led-monitor-hdmi-used",
+    "product_code": "USED-MON-24-WIDE-LED-HDMI",
+    "sku": "USD-MON-24-WIDE-LED-HDMI",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Crisp visual display with 24\" screen size, offering sharp image clarity at 1920 x 1080 (FHD) resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 24\" viewable display with Widescreen (16:9) aspect ratio.\n- Clear 1920 x 1080 (FHD) visual output at 60Hz / 75Hz refresh rate.\n- Reliable HDMI & VGA video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "24\"",
+      "Resolution": "1920 x 1080 (FHD)",
+      "Panel Technology": "LED Backlit",
+      "Input Ports": "HDMI & VGA",
+      "Refresh Rate": "60Hz / 75Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Widescreen (16:9)",
+        "Backlight Type": "LED Backlit",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1920 x 1080 (FHD)",
+        "Refresh Rate": "60Hz / 75Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "HDMI & VGA",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/24 WIDE LED- HDMI",
+    "images": [
+      "Gemini_Generated_Image_1nepzo1nepzo1nep-removebg-preview.png",
+      "Gemini_Generated_Image_68p10t68p10t68p1-removebg-preview.png",
+      "Gemini_Generated_Image_afpzzcafpzzcafpz-removebg-preview.png",
+      "Gemini_Generated_Image_slzfqyslzfqyslzf-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "27\" Wide IPS Frameless LED Monitor with HDMI - Used",
+    "slug": "27-inch-wide-ips-frameless-led-monitor-hdmi-used",
+    "product_code": "USED-MON-27-IPS-FRAMELESS",
+    "sku": "USD-MON-27-IPS-FRAMELESS",
+    "category_slug": "monitors-displays",
+    "subcategory_slug": "monitors",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 27000.0,
+    "sale_price": 26000.0,
+    "cost_price": 22100.0,
+    "description": "Crisp visual display with 27\" screen size, offering sharp image clarity at 1920 x 1080 (FHD) resolution. Tested for zero dead pixels, solid brightness, and stable backlight. Perfect for workstations, CCTV monitors, retail cashier displays, and home entertainment.\n\nKey Features:\n\n- 27\" viewable display with Ultra-Slim Frameless (16:9) aspect ratio.\n- Clear 1920 x 1080 (FHD) visual output at 75Hz refresh rate.\n- Reliable HDMI, DisplayPort & VGA video connectivity.\n- VESA mountable design with adjustable tilt stand.\n- 1 Month comprehensive testing and warranty coverage.",
+    "main_specifications": {
+      "Screen Size": "27\"",
+      "Resolution": "1920 x 1080 (FHD)",
+      "Panel Technology": "IPS LED",
+      "Input Ports": "HDMI, DisplayPort & VGA",
+      "Refresh Rate": "75Hz"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Grade A Inspected",
+        "Aspect Ratio": "Ultra-Slim Frameless (16:9)",
+        "Backlight Type": "IPS LED",
+        "Mounting": "VESA Wall / Arm Mountable"
+      },
+      "Technical Performance": {
+        "Resolution Support": "1920 x 1080 (FHD)",
+        "Refresh Rate": "75Hz",
+        "Response Time": "5ms Typical",
+        "Color Support": "16.7 Million Colors"
+      },
+      "Compatibility & Standards": {
+        "Video Inputs": "HDMI, DisplayPort & VGA",
+        "Power Input": "AC 100-240V / DC Adapter",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MONITOR/27 WIDE LED- HDMI (IPS FRAMELESS)",
+    "images": [
+      "Gemini_Generated_Image_dcyvmhdcyvmhdcyv-removebg-preview.png",
+      "Gemini_Generated_Image_dcyvmhdcyvmhdcyv__1_-removebg-preview.png",
+      "Gemini_Generated_Image_dcyvmhdcyvmhdcyv__2_-removebg-preview.png",
+      "Gemini_Generated_Image_dcyvmhdcyvmhdcyv__3_-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3-2100 2nd Gen Processor (3.10 GHz, 3MB Cache) - Used",
+    "slug": "intel-core-i3-2100-2nd-gen-processor-used",
+    "product_code": "USED-CPU-I3-2ND",
+    "sku": "USD-CPU-I3-2ND",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1155, delivering reliable 2 Cores / 4 Threads computing performance at clock speeds up to 3.10 GHz. Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1155 compatibility with 2 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.10 GHz.\n- 3MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 2000 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i3-2100 2nd Gen Processor (3.10 GHz, 3MB Cache)",
+      "Socket Type": "LGA 1155",
+      "Cores / Threads": "2 Cores / 4 Threads",
+      "Clock Speed": "3.10 GHz",
+      "Cache Memory": "3MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "65W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1155",
+        "Core Count": "2 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 2000"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I3 2ND GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3-3220 3rd Gen Processor (3.30 GHz, 3MB Cache) - Used",
+    "slug": "intel-core-i3-3220-3rd-gen-processor-used",
+    "product_code": "USED-CPU-I3-3RD",
+    "sku": "USD-CPU-I3-3RD",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1155, delivering reliable 2 Cores / 4 Threads computing performance at clock speeds up to 3.30 GHz. Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1155 compatibility with 2 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.30 GHz.\n- 3MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 2500 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i3-3220 3rd Gen Processor (3.30 GHz, 3MB Cache)",
+      "Socket Type": "LGA 1155",
+      "Cores / Threads": "2 Cores / 4 Threads",
+      "Clock Speed": "3.30 GHz",
+      "Cache Memory": "3MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "55W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1155",
+        "Core Count": "2 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 2500"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I3 3RD GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3-4130 4th Gen Processor (3.40 GHz, 3MB Cache) - Used",
+    "slug": "intel-core-i3-4130-4th-gen-processor-used",
+    "product_code": "USED-CPU-I3-4TH",
+    "sku": "USD-CPU-I3-4TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 1500.0,
+    "sale_price": 1500.0,
+    "cost_price": 1275.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1150, delivering reliable 2 Cores / 4 Threads computing performance at clock speeds up to 3.40 GHz. Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1150 compatibility with 2 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.40 GHz.\n- 3MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 4400 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i3-4130 4th Gen Processor (3.40 GHz, 3MB Cache)",
+      "Socket Type": "LGA 1150",
+      "Cores / Threads": "2 Cores / 4 Threads",
+      "Clock Speed": "3.40 GHz",
+      "Cache Memory": "3MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "54W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1150",
+        "Core Count": "2 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 4400"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I3 4TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3-6100 6th Gen Processor (3.70 GHz, 3MB Cache) - Used",
+    "slug": "intel-core-i3-6100-6th-gen-processor-used",
+    "product_code": "USED-CPU-I3-6TH",
+    "sku": "USD-CPU-I3-6TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 2100.0,
+    "sale_price": 2100.0,
+    "cost_price": 1785.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1151, delivering reliable 2 Cores / 4 Threads computing performance at clock speeds up to 3.70 GHz. Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1151 compatibility with 2 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.70 GHz.\n- 3MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 530 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i3-6100 6th Gen Processor (3.70 GHz, 3MB Cache)",
+      "Socket Type": "LGA 1151",
+      "Cores / Threads": "2 Cores / 4 Threads",
+      "Clock Speed": "3.70 GHz",
+      "Cache Memory": "3MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "51W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1151",
+        "Core Count": "2 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 530"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I3 6TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3-7100 7th Gen Processor (3.90 GHz, 3MB Cache) - Used",
+    "slug": "intel-core-i3-7100-7th-gen-processor-used",
+    "product_code": "USED-CPU-I3-7TH",
+    "sku": "USD-CPU-I3-7TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1151, delivering reliable 2 Cores / 4 Threads computing performance at clock speeds up to 3.90 GHz. Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1151 compatibility with 2 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.90 GHz.\n- 3MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 630 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i3-7100 7th Gen Processor (3.90 GHz, 3MB Cache)",
+      "Socket Type": "LGA 1151",
+      "Cores / Threads": "2 Cores / 4 Threads",
+      "Clock Speed": "3.90 GHz",
+      "Cache Memory": "3MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "51W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1151",
+        "Core Count": "2 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 630"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I3 7TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i3-8100 8th Gen Processor (3.60 GHz, 6MB Cache) - Used",
+    "slug": "intel-core-i3-8100-8th-gen-processor-used",
+    "product_code": "USED-CPU-I3-8TH",
+    "sku": "USD-CPU-I3-8TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1151 v2, delivering reliable 4 Cores / 4 Threads computing performance at clock speeds up to 3.60 GHz. Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1151 v2 compatibility with 4 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.60 GHz.\n- 6MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel UHD Graphics 630 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i3-8100 8th Gen Processor (3.60 GHz, 6MB Cache)",
+      "Socket Type": "LGA 1151 v2",
+      "Cores / Threads": "4 Cores / 4 Threads",
+      "Clock Speed": "3.60 GHz",
+      "Cache Memory": "6MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "65W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1151 v2",
+        "Core Count": "4 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel UHD Graphics 630"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I3 8TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5-2400 2nd Gen Processor (3.10 GHz Turbo 3.40 GHz) - Used",
+    "slug": "intel-core-i5-2400-2nd-gen-processor-used",
+    "product_code": "USED-CPU-I5-2ND",
+    "sku": "USD-CPU-I5-2ND",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 3180.0,
+    "sale_price": 3180.0,
+    "cost_price": 2703.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1155, delivering reliable 4 Cores / 4 Threads computing performance at clock speeds up to 3.10 GHz (Turbo 3.40 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1155 compatibility with 4 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.10 GHz (Turbo 3.40 GHz).\n- 6MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 2000 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i5-2400 2nd Gen Processor (3.10 GHz Turbo 3.40 GHz)",
+      "Socket Type": "LGA 1155",
+      "Cores / Threads": "4 Cores / 4 Threads",
+      "Clock Speed": "3.10 GHz (Turbo 3.40 GHz)",
+      "Cache Memory": "6MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "95W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1155",
+        "Core Count": "4 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 2000"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I5 2ND GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5-3470 3rd Gen Processor (3.20 GHz Turbo 3.60 GHz) - Used",
+    "slug": "intel-core-i5-3470-3rd-gen-processor-used",
+    "product_code": "USED-CPU-I5-3RD",
+    "sku": "USD-CPU-I5-3RD",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 4140.0,
+    "sale_price": 4140.0,
+    "cost_price": 3519.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1155, delivering reliable 4 Cores / 4 Threads computing performance at clock speeds up to 3.20 GHz (Turbo 3.60 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1155 compatibility with 4 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.20 GHz (Turbo 3.60 GHz).\n- 6MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 2500 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i5-3470 3rd Gen Processor (3.20 GHz Turbo 3.60 GHz)",
+      "Socket Type": "LGA 1155",
+      "Cores / Threads": "4 Cores / 4 Threads",
+      "Clock Speed": "3.20 GHz (Turbo 3.60 GHz)",
+      "Cache Memory": "6MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "77W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1155",
+        "Core Count": "4 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 2500"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I5 3RD GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5-4570 4th Gen Processor (3.20 GHz Turbo 3.60 GHz) - Used",
+    "slug": "intel-core-i5-4570-4th-gen-processor-used",
+    "product_code": "USED-CPU-I5-4TH",
+    "sku": "USD-CPU-I5-4TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 6440.0,
+    "sale_price": 6440.0,
+    "cost_price": 5474.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1150, delivering reliable 4 Cores / 4 Threads computing performance at clock speeds up to 3.20 GHz (Turbo 3.60 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1150 compatibility with 4 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.20 GHz (Turbo 3.60 GHz).\n- 6MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 4600 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i5-4570 4th Gen Processor (3.20 GHz Turbo 3.60 GHz)",
+      "Socket Type": "LGA 1150",
+      "Cores / Threads": "4 Cores / 4 Threads",
+      "Clock Speed": "3.20 GHz (Turbo 3.60 GHz)",
+      "Cache Memory": "6MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "84W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1150",
+        "Core Count": "4 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 4600"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I5 4TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5-6500 6th Gen Processor (3.20 GHz Turbo 3.60 GHz) - Used",
+    "slug": "intel-core-i5-6500-6th-gen-processor-used",
+    "product_code": "USED-CPU-I5-6TH",
+    "sku": "USD-CPU-I5-6TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 6750.0,
+    "sale_price": 6750.0,
+    "cost_price": 5737.5,
+    "description": "Genuine Intel desktop processor built on socket LGA 1151, delivering reliable 4 Cores / 4 Threads computing performance at clock speeds up to 3.20 GHz (Turbo 3.60 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1151 compatibility with 4 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.20 GHz (Turbo 3.60 GHz).\n- 6MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 530 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i5-6500 6th Gen Processor (3.20 GHz Turbo 3.60 GHz)",
+      "Socket Type": "LGA 1151",
+      "Cores / Threads": "4 Cores / 4 Threads",
+      "Clock Speed": "3.20 GHz (Turbo 3.60 GHz)",
+      "Cache Memory": "6MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "65W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1151",
+        "Core Count": "4 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 530"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I5 6TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5-7500 7th Gen Processor (3.40 GHz Turbo 3.80 GHz) - Used",
+    "slug": "intel-core-i5-7500-7th-gen-processor-used",
+    "product_code": "USED-CPU-I5-7TH",
+    "sku": "USD-CPU-I5-7TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1151, delivering reliable 4 Cores / 4 Threads computing performance at clock speeds up to 3.40 GHz (Turbo 3.80 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1151 compatibility with 4 Cores / 4 Threads.\n- Base/Turbo clock frequency of 3.40 GHz (Turbo 3.80 GHz).\n- 6MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 630 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i5-7500 7th Gen Processor (3.40 GHz Turbo 3.80 GHz)",
+      "Socket Type": "LGA 1151",
+      "Cores / Threads": "4 Cores / 4 Threads",
+      "Clock Speed": "3.40 GHz (Turbo 3.80 GHz)",
+      "Cache Memory": "6MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "65W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1151",
+        "Core Count": "4 Cores",
+        "Thread Count": "4 Threads",
+        "Integrated Graphics": "Intel HD Graphics 630"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I5 7TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5-8400 8th Gen Processor (2.80 GHz Turbo 4.00 GHz) - Used",
+    "slug": "intel-core-i5-8400-8th-gen-processor-used",
+    "product_code": "USED-CPU-I5-8TH",
+    "sku": "USD-CPU-I5-8TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 16400.0,
+    "sale_price": 16400.0,
+    "cost_price": 13940.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1151 v2, delivering reliable 6 Cores / 6 Threads computing performance at clock speeds up to 2.80 GHz (Turbo 4.00 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1151 v2 compatibility with 6 Cores / 6 Threads.\n- Base/Turbo clock frequency of 2.80 GHz (Turbo 4.00 GHz).\n- 9MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel UHD Graphics 630 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i5-8400 8th Gen Processor (2.80 GHz Turbo 4.00 GHz)",
+      "Socket Type": "LGA 1151 v2",
+      "Cores / Threads": "6 Cores / 6 Threads",
+      "Clock Speed": "2.80 GHz (Turbo 4.00 GHz)",
+      "Cache Memory": "9MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "65W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1151 v2",
+        "Core Count": "6 Cores",
+        "Thread Count": "6 Threads",
+        "Integrated Graphics": "Intel UHD Graphics 630"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I5 8TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i5-10400 10th Gen Processor (2.90 GHz Turbo 4.30 GHz) - Used",
+    "slug": "intel-core-i5-10400-10th-gen-processor-used",
+    "product_code": "USED-CPU-I5-10TH",
+    "sku": "USD-CPU-I5-10TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1200, delivering reliable 6 Cores / 12 Threads computing performance at clock speeds up to 2.90 GHz (Turbo 4.30 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1200 compatibility with 6 Cores / 12 Threads.\n- Base/Turbo clock frequency of 2.90 GHz (Turbo 4.30 GHz).\n- 12MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel UHD Graphics 630 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i5-10400 10th Gen Processor (2.90 GHz Turbo 4.30 GHz)",
+      "Socket Type": "LGA 1200",
+      "Cores / Threads": "6 Cores / 12 Threads",
+      "Clock Speed": "2.90 GHz (Turbo 4.30 GHz)",
+      "Cache Memory": "12MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "65W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1200",
+        "Core Count": "6 Cores",
+        "Thread Count": "12 Threads",
+        "Integrated Graphics": "Intel UHD Graphics 630"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I5 10TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i7-4770 4th Gen Processor (3.40 GHz Turbo 3.90 GHz) - Used",
+    "slug": "intel-core-i7-4770-4th-gen-processor-used",
+    "product_code": "USED-CPU-I7-4TH",
+    "sku": "USD-CPU-I7-4TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1150, delivering reliable 4 Cores / 8 Threads computing performance at clock speeds up to 3.40 GHz (Turbo 3.90 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1150 compatibility with 4 Cores / 8 Threads.\n- Base/Turbo clock frequency of 3.40 GHz (Turbo 3.90 GHz).\n- 8MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 4600 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i7-4770 4th Gen Processor (3.40 GHz Turbo 3.90 GHz)",
+      "Socket Type": "LGA 1150",
+      "Cores / Threads": "4 Cores / 8 Threads",
+      "Clock Speed": "3.40 GHz (Turbo 3.90 GHz)",
+      "Cache Memory": "8MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "84W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1150",
+        "Core Count": "4 Cores",
+        "Thread Count": "8 Threads",
+        "Integrated Graphics": "Intel HD Graphics 4600"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I7 4TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel Core i7-6700 6th Gen Processor (3.40 GHz Turbo 4.00 GHz) - Used",
+    "slug": "intel-core-i7-6700-6th-gen-processor-used",
+    "product_code": "USED-CPU-I7-6TH",
+    "sku": "USD-CPU-I7-6TH",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processors",
+    "brand_slug": "intel",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Genuine Intel desktop processor built on socket LGA 1151, delivering reliable 4 Cores / 8 Threads computing performance at clock speeds up to 3.40 GHz (Turbo 4.00 GHz). Thoroughly stress-tested and thermal benchmarked with 1 Month warranty.\n\nKey Features:\n\n- Socket LGA 1151 compatibility with 4 Cores / 8 Threads.\n- Base/Turbo clock frequency of 3.40 GHz (Turbo 4.00 GHz).\n- 8MB Intel Smart Cache for rapid instruction retrieval.\n- Integrated Intel HD Graphics 530 for display output without dedicated GPU.\n- Clean pins and tested under thermal benchmarks with 1 Month warranty.",
+    "main_specifications": {
+      "Processor Model": "Intel Core i7-6700 6th Gen Processor (3.40 GHz Turbo 4.00 GHz)",
+      "Socket Type": "LGA 1151",
+      "Cores / Threads": "4 Cores / 8 Threads",
+      "Clock Speed": "3.40 GHz (Turbo 4.00 GHz)",
+      "Cache Memory": "8MB Intel Smart Cache"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Bench Tested",
+        "Processor Series": "Intel Core Series",
+        "Thermal Design Power (TDP)": "65W",
+        "Manufacturing Lithography": "Intel FinFET Process"
+      },
+      "Technical Performance": {
+        "Socket": "LGA 1151",
+        "Core Count": "4 Cores",
+        "Thread Count": "8 Threads",
+        "Integrated Graphics": "Intel HD Graphics 530"
+      },
+      "Compatibility & Standards": {
+        "Memory Support": "DDR3 / DDR4 (Motherboard Dependent)",
+        "PCI Express Revision": "PCIe 3.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "PROCESSOR/I7 6TH GEN",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "Intel G31 LGA775 DDR2 Micro-ATX Motherboard - Used",
+    "slug": "intel-g31-lga775-ddr2-motherboard-used",
+    "product_code": "USED-MB-G31",
+    "sku": "USD-MB-G31",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified desktop motherboard based on Intel G31 chipset with LGA 775 CPU socket. Built with durable solid capacitors, 2x DDR2 DIMM, and full support for PCIe x16, SATA 3Gb/s, USB 2.0.\n\nKey Features:\n\n- Socket LGA 775 supporting compatible Intel processors.\n- Intel G31 high-stability chipset.\n- 2x DDR2 DIMM with Dual Channel DDR2.\n- High-speed PCIe x16, SATA 3Gb/s, USB 2.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 775",
+      "Chipset": "Intel G31",
+      "RAM Support": "2x DDR2 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 775",
+        "Chipset": "Intel G31",
+        "Memory Architecture": "Dual Channel DDR2",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/G31 DDR2",
+    "images": [
+      "Manufacturer-G31-Motherboard-Supports-Office-Desktop-DDR2-3-Mainboard-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel G41 LGA775 DDR3 Micro-ATX Motherboard - Used",
+    "slug": "intel-g41-lga775-ddr3-motherboard-used",
+    "product_code": "USED-MB-G41",
+    "sku": "USD-MB-G41",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified desktop motherboard based on Intel G41 chipset with LGA 775 CPU socket. Built with durable solid capacitors, 2x DDR3 DIMM, and full support for PCIe x16, SATA 3Gb/s, USB 2.0.\n\nKey Features:\n\n- Socket LGA 775 supporting compatible Intel processors.\n- Intel G41 high-stability chipset.\n- 2x DDR3 DIMM with Dual Channel DDR3.\n- High-speed PCIe x16, SATA 3Gb/s, USB 2.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 775",
+      "Chipset": "Intel G41",
+      "RAM Support": "2x DDR3 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 775",
+        "Chipset": "Intel G41",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/G41 DDR3",
+    "images": [
+      "RECONDITION-G41-DDR3-MOTHER-BOARD-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel H55 LGA1156 DDR3 Micro-ATX Motherboard - Used",
+    "slug": "intel-h55-lga1156-ddr3-motherboard-used",
+    "product_code": "USED-MB-H55",
+    "sku": "USD-MB-H55",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified desktop motherboard based on Intel H55 Express chipset with LGA 1156 CPU socket. Built with durable solid capacitors, 2x DDR3 DIMM, and full support for PCIe 2.0 x16, HDMI, VGA, SATA 3Gb/s.\n\nKey Features:\n\n- Socket LGA 1156 supporting compatible Intel processors.\n- Intel H55 Express high-stability chipset.\n- 2x DDR3 DIMM with Dual Channel DDR3.\n- High-speed PCIe 2.0 x16, HDMI, VGA, SATA 3Gb/s.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1156",
+      "Chipset": "Intel H55 Express",
+      "RAM Support": "2x DDR3 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1156",
+        "Chipset": "Intel H55 Express",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H55",
+    "images": [
+      "93fc1cb48c0fa144521ccf6c05c767f7.jpg_720x720q80-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel H61 LGA1155 2nd Gen DDR3 Motherboard - Used",
+    "slug": "intel-h61-lga1155-2nd-gen-ddr3-motherboard-used",
+    "product_code": "USED-MB-H61-2ND",
+    "sku": "USD-MB-H61-2ND",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 3400.0,
+    "sale_price": 3300.0,
+    "cost_price": 2805.0,
+    "description": "Tested and certified desktop motherboard based on Intel H61 Express chipset with LGA 1155 CPU socket. Built with durable solid capacitors, 2x DDR3 DIMM, and full support for PCIe 3.0/2.0 x16, VGA, USB 2.0.\n\nKey Features:\n\n- Socket LGA 1155 supporting compatible Intel processors.\n- Intel H61 Express high-stability chipset.\n- 2x DDR3 DIMM with Dual Channel DDR3.\n- High-speed PCIe 3.0/2.0 x16, VGA, USB 2.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1155",
+      "Chipset": "Intel H61 Express",
+      "RAM Support": "2x DDR3 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1155",
+        "Chipset": "Intel H61 Express",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H61 2ND",
+    "images": [
+      "EXX-IMG-665190-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel H61 LGA1155 2nd/3rd Gen DDR3 Motherboard - Used",
+    "slug": "intel-h61-lga1155-3rd-gen-ddr3-motherboard-used",
+    "product_code": "USED-MB-H61-3RD",
+    "sku": "USD-MB-H61-3RD",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified desktop motherboard based on Intel H61 Express chipset with LGA 1155 CPU socket. Built with durable solid capacitors, 2x DDR3 DIMM, and full support for PCIe 3.0 x16, HDMI/VGA, USB 2.0.\n\nKey Features:\n\n- Socket LGA 1155 supporting compatible Intel processors.\n- Intel H61 Express high-stability chipset.\n- 2x DDR3 DIMM with Dual Channel DDR3.\n- High-speed PCIe 3.0 x16, HDMI/VGA, USB 2.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1155",
+      "Chipset": "Intel H61 Express",
+      "RAM Support": "2x DDR3 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1155",
+        "Chipset": "Intel H61 Express",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H61 3RD",
+    "images": [
+      "3e6316f259bae33e224b95397d4b0a51.jpg_720x720q80-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel H75 / B75 LGA1155 2-RAM Slot DDR3 Motherboard - Used",
+    "slug": "intel-h75-b75-lga1155-2-ram-ddr3-motherboard-used",
+    "product_code": "USED-MB-H75-R2",
+    "sku": "USD-MB-H75-R2",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 4100.0,
+    "sale_price": 3900.0,
+    "cost_price": 3315.0,
+    "description": "Tested and certified desktop motherboard based on Intel B75 / H75 chipset with LGA 1155 CPU socket. Built with durable solid capacitors, 2x DDR3 DIMM, and full support for PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n\nKey Features:\n\n- Socket LGA 1155 supporting compatible Intel processors.\n- Intel B75 / H75 high-stability chipset.\n- 2x DDR3 DIMM with Dual Channel DDR3.\n- High-speed PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1155",
+      "Chipset": "Intel B75 / H75",
+      "RAM Support": "2x DDR3 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1155",
+        "Chipset": "Intel B75 / H75",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H 75 Ram 2",
+    "images": [
+      "fc8aabc1f32957c98c7292662cb0f3b5.jpg_720x720q80-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel H75 / B75 LGA1155 4-RAM Slot DDR3 Motherboard - Used",
+    "slug": "intel-h75-b75-lga1155-4-ram-ddr3-motherboard-used",
+    "product_code": "USED-MB-H75-R4",
+    "sku": "USD-MB-H75-R4",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 5600.0,
+    "sale_price": 5400.0,
+    "cost_price": 4590.0,
+    "description": "Tested and certified desktop motherboard based on Intel B75 / H75 chipset with LGA 1155 CPU socket. Built with durable solid capacitors, 4x DDR3 DIMM (Up to 32GB), and full support for PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n\nKey Features:\n\n- Socket LGA 1155 supporting compatible Intel processors.\n- Intel B75 / H75 high-stability chipset.\n- 4x DDR3 DIMM (Up to 32GB) with Dual Channel DDR3.\n- High-speed PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1155",
+      "Chipset": "Intel B75 / H75",
+      "RAM Support": "4x DDR3 DIMM (Up to 32GB)",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1155",
+        "Chipset": "Intel B75 / H75",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H 75 Ram 4",
+    "images": [
+      "71NM5AzSW-L-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel H81 LGA1150 4th Gen DDR3 Motherboard - Used",
+    "slug": "intel-h81-lga1150-4th-gen-ddr3-motherboard-used",
+    "product_code": "USED-MB-H81",
+    "sku": "USD-MB-H81",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 4500.0,
+    "sale_price": 4300.0,
+    "cost_price": 3655.0,
+    "description": "Tested and certified desktop motherboard based on Intel H81 Express chipset with LGA 1150 CPU socket. Built with durable solid capacitors, 2x DDR3 DIMM, and full support for PCIe 2.0 x16, SATA 6Gb/s, USB 3.0.\n\nKey Features:\n\n- Socket LGA 1150 supporting compatible Intel processors.\n- Intel H81 Express high-stability chipset.\n- 2x DDR3 DIMM with Dual Channel DDR3.\n- High-speed PCIe 2.0 x16, SATA 6Gb/s, USB 3.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1150",
+      "Chipset": "Intel H81 Express",
+      "RAM Support": "2x DDR3 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1150",
+        "Chipset": "Intel H81 Express",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H81",
+    "images": [
+      "15773-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel B85 LGA1150 2-RAM Slot DDR3 Motherboard - Used",
+    "slug": "intel-b85-lga1150-2-ram-ddr3-motherboard-used",
+    "product_code": "USED-MB-B85-R2",
+    "sku": "USD-MB-B85-R2",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 5000.0,
+    "sale_price": 4800.0,
+    "cost_price": 4080.0,
+    "description": "Tested and certified desktop motherboard based on Intel B85 Express chipset with LGA 1150 CPU socket. Built with durable solid capacitors, 2x DDR3 DIMM, and full support for PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n\nKey Features:\n\n- Socket LGA 1150 supporting compatible Intel processors.\n- Intel B85 Express high-stability chipset.\n- 2x DDR3 DIMM with Dual Channel DDR3.\n- High-speed PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1150",
+      "Chipset": "Intel B85 Express",
+      "RAM Support": "2x DDR3 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1150",
+        "Chipset": "Intel B85 Express",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/B 85 ram 2",
+    "images": [
+      "b85.png"
+    ]
+  },
+  {
+    "name": "Intel B85 LGA1150 4-RAM Slot DDR3 Motherboard - Used",
+    "slug": "intel-b85-lga1150-4-ram-ddr3-motherboard-used",
+    "product_code": "USED-MB-B85-R4",
+    "sku": "USD-MB-B85-R4",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 5650.0,
+    "sale_price": 5500.0,
+    "cost_price": 4675.0,
+    "description": "Tested and certified desktop motherboard based on Intel B85 Express chipset with LGA 1150 CPU socket. Built with durable solid capacitors, 4x DDR3 DIMM (Up to 32GB), and full support for PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n\nKey Features:\n\n- Socket LGA 1150 supporting compatible Intel processors.\n- Intel B85 Express high-stability chipset.\n- 4x DDR3 DIMM (Up to 32GB) with Dual Channel DDR3.\n- High-speed PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1150",
+      "Chipset": "Intel B85 Express",
+      "RAM Support": "4x DDR3 DIMM (Up to 32GB)",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1150",
+        "Chipset": "Intel B85 Express",
+        "Memory Architecture": "Dual Channel DDR3",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/B 85 Ram 4",
+    "images": [
+      "Asus-b85-min.png"
+    ]
+  },
+  {
+    "name": "Intel H110 LGA1151 6th/7th Gen DDR4 Motherboard - Used",
+    "slug": "intel-h110-lga1151-6th-7th-gen-ddr4-motherboard-used",
+    "product_code": "USED-MB-H110",
+    "sku": "USD-MB-H110",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 6600.0,
+    "sale_price": 6400.0,
+    "cost_price": 5440.0,
+    "description": "Tested and certified desktop motherboard based on Intel H110 Express chipset with LGA 1151 CPU socket. Built with durable solid capacitors, 2x DDR4 DIMM, and full support for PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n\nKey Features:\n\n- Socket LGA 1151 supporting compatible Intel processors.\n- Intel H110 Express high-stability chipset.\n- 2x DDR4 DIMM with Dual Channel DDR4.\n- High-speed PCIe 3.0 x16, SATA 6Gb/s, USB 3.0.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1151",
+      "Chipset": "Intel H110 Express",
+      "RAM Support": "2x DDR4 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1151",
+        "Chipset": "Intel H110 Express",
+        "Memory Architecture": "Dual Channel DDR4",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H110",
+    "images": [
+      "H110M4-C43_LGA_1151_Intel_Motherboard_2-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel B150 LGA1151 4-RAM Slot DDR4 Motherboard - Used",
+    "slug": "intel-b150-lga1151-4-ram-ddr4-motherboard-used",
+    "product_code": "USED-MB-B150-R4",
+    "sku": "USD-MB-B150-R4",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 10900.0,
+    "sale_price": 10700.0,
+    "cost_price": 9095.0,
+    "description": "Tested and certified desktop motherboard based on Intel B150 Express chipset with LGA 1151 CPU socket. Built with durable solid capacitors, 4x DDR4 DIMM (Up to 64GB), and full support for PCIe 3.0 x16, M.2 Slot, SATA 6Gb/s.\n\nKey Features:\n\n- Socket LGA 1151 supporting compatible Intel processors.\n- Intel B150 Express high-stability chipset.\n- 4x DDR4 DIMM (Up to 64GB) with Dual Channel DDR4.\n- High-speed PCIe 3.0 x16, M.2 Slot, SATA 6Gb/s.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1151",
+      "Chipset": "Intel B150 Express",
+      "RAM Support": "4x DDR4 DIMM (Up to 64GB)",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1151",
+        "Chipset": "Intel B150 Express",
+        "Memory Architecture": "Dual Channel DDR4",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/B150-  4 RAM SLOT",
+    "images": [
+      "B150M-A-M.2-3-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel B250 LGA1151 4-RAM Slot DDR4 Motherboard - Used",
+    "slug": "intel-b250-lga1151-4-ram-ddr4-motherboard-used",
+    "product_code": "USED-MB-B250-R4",
+    "sku": "USD-MB-B250-R4",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 12000.0,
+    "sale_price": 11800.0,
+    "cost_price": 10030.0,
+    "description": "Tested and certified desktop motherboard based on Intel B250 Express chipset with LGA 1151 CPU socket. Built with durable solid capacitors, 4x DDR4 DIMM (Up to 64GB), and full support for PCIe 3.0 x16, Ultra M.2, USB 3.1.\n\nKey Features:\n\n- Socket LGA 1151 supporting compatible Intel processors.\n- Intel B250 Express high-stability chipset.\n- 4x DDR4 DIMM (Up to 64GB) with Dual Channel DDR4.\n- High-speed PCIe 3.0 x16, Ultra M.2, USB 3.1.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1151",
+      "Chipset": "Intel B250 Express",
+      "RAM Support": "4x DDR4 DIMM (Up to 64GB)",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1151",
+        "Chipset": "Intel B250 Express",
+        "Memory Architecture": "Dual Channel DDR4",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/B250- 4 RAM SLOT",
+    "images": [
+      "b250-4.png"
+    ]
+  },
+  {
+    "name": "Intel H310 LGA1151 8th/9th Gen DDR4 Motherboard - Used",
+    "slug": "intel-h310-lga1151-8th-9th-gen-ddr4-motherboard-used",
+    "product_code": "USED-MB-H310",
+    "sku": "USD-MB-H310",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 11700.0,
+    "sale_price": 11500.0,
+    "cost_price": 9775.0,
+    "description": "Tested and certified desktop motherboard based on Intel H310 Express chipset with LGA 1151 v2 CPU socket. Built with durable solid capacitors, 2x DDR4 DIMM, and full support for PCIe 3.0 x16, USB 3.1 Gen 1, SATA 6Gb/s.\n\nKey Features:\n\n- Socket LGA 1151 v2 supporting compatible Intel processors.\n- Intel H310 Express high-stability chipset.\n- 2x DDR4 DIMM with Dual Channel DDR4.\n- High-speed PCIe 3.0 x16, USB 3.1 Gen 1, SATA 6Gb/s.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1151 v2",
+      "Chipset": "Intel H310 Express",
+      "RAM Support": "2x DDR4 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1151 v2",
+        "Chipset": "Intel H310 Express",
+        "Memory Architecture": "Dual Channel DDR4",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H310",
+    "images": [
+      "H310H5-M7_LGA_1151_Intel_Motherboard_1-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel H410 LGA1200 10th Gen DDR4 Motherboard - Used",
+    "slug": "intel-h410-lga1200-10th-gen-ddr4-motherboard-used",
+    "product_code": "USED-MB-H410",
+    "sku": "USD-MB-H410",
+    "category_slug": "pc-components",
+    "subcategory_slug": "motherboards",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified desktop motherboard based on Intel H410 Express chipset with LGA 1200 CPU socket. Built with durable solid capacitors, 2x DDR4 DIMM, and full support for PCIe 3.0 x16, M.2 NVMe, USB 3.2 Gen 1.\n\nKey Features:\n\n- Socket LGA 1200 supporting compatible Intel processors.\n- Intel H410 Express high-stability chipset.\n- 2x DDR4 DIMM with Dual Channel DDR4.\n- High-speed PCIe 3.0 x16, M.2 NVMe, USB 3.2 Gen 1.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Form Factor": "Micro-ATX",
+      "Socket Type": "LGA 1200",
+      "Chipset": "Intel H410 Express",
+      "RAM Support": "2x DDR4 DIMM",
+      "Expansion Slots": "PCI Express x16"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Tested",
+        "Form Factor": "Micro-ATX / ATX",
+        "Power Connector": "24-Pin ATX + 4-Pin / 8-Pin 12V",
+        "Capacitor Type": "Solid Capacitors"
+      },
+      "Technical Performance": {
+        "CPU Socket": "LGA 1200",
+        "Chipset": "Intel H410 Express",
+        "Memory Architecture": "Dual Channel DDR4",
+        "SATA Connectors": "SATA 3Gb/s / 6Gb/s Ports"
+      },
+      "Compatibility & Standards": {
+        "Back Panel Ports": "VGA/HDMI/DVI, USB, LAN RJ-45, 3-in-1 Audio",
+        "PCIe Lane Support": "PCIe 3.0 / PCIe 2.0",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "MOTHERBOARD/H410",
+    "images": [
+      "NR-2026-08-06T132725.708-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GT 650 1GB Graphics Card - Used",
+    "slug": "nvidia-geforce-gt-650-1gb-graphics-card-used",
+    "product_code": "USED-GPU-GT650-1G",
+    "sku": "USD-GPU-GT650-1G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 1GB GDDR5 / DDR3 on a 128-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 1GB GDDR5 / DDR3 high-speed memory for crisp textures.\n- 384 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including HDMI / DVI / VGA.\n- 64W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GT 650 1GB Graphics Card",
+      "Video Memory (VRAM)": "1GB GDDR5 / DDR3",
+      "Memory Bus": "128-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "HDMI / DVI / VGA"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "64W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "384 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "128-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "HDMI / DVI / VGA",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GT-650 1GB",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GTX 650 1GB GDDR5 Graphics Card - Used",
+    "slug": "nvidia-geforce-gtx-650-1gb-gddr5-graphics-card-used",
+    "product_code": "USED-GPU-GTX650-1G",
+    "sku": "USD-GPU-GTX650-1G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 1GB GDDR5 on a 128-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 1GB GDDR5 high-speed memory for crisp textures.\n- 384 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including Mini-HDMI / Dual DVI / VGA.\n- 64W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GTX 650 1GB GDDR5 Graphics Card",
+      "Video Memory (VRAM)": "1GB GDDR5",
+      "Memory Bus": "128-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "Mini-HDMI / Dual DVI / VGA"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "64W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "384 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "128-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "Mini-HDMI / Dual DVI / VGA",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GTX 650 1GB",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GTX 750 1GB GDDR5 Graphics Card - Used",
+    "slug": "nvidia-geforce-gtx-750-1gb-gddr5-graphics-card-used",
+    "product_code": "USED-GPU-GTX750-1G",
+    "sku": "USD-GPU-GTX750-1G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 1GB GDDR5 on a 128-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 1GB GDDR5 high-speed memory for crisp textures.\n- 512 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including HDMI / DVI / VGA.\n- 55W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GTX 750 1GB GDDR5 Graphics Card",
+      "Video Memory (VRAM)": "1GB GDDR5",
+      "Memory Bus": "128-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "HDMI / DVI / VGA"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "55W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "512 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "128-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "HDMI / DVI / VGA",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GTX 750 1GB",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GTX 660 2GB GDDR5 Graphics Card - Used",
+    "slug": "nvidia-geforce-gtx-660-2gb-gddr5-graphics-card-used",
+    "product_code": "USED-GPU-GTX660-2G",
+    "sku": "USD-GPU-GTX660-2G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 2GB GDDR5 on a 192-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 2GB GDDR5 high-speed memory for crisp textures.\n- 960 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including DisplayPort / HDMI / Dual DVI.\n- 140W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GTX 660 2GB GDDR5 Graphics Card",
+      "Video Memory (VRAM)": "2GB GDDR5",
+      "Memory Bus": "192-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "DisplayPort / HDMI / Dual DVI"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "140W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "960 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "192-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "DisplayPort / HDMI / Dual DVI",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GTX 660 2GB",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GTX 750 2GB GDDR5 Graphics Card - Used",
+    "slug": "nvidia-geforce-gtx-750-2gb-gddr5-graphics-card-used",
+    "product_code": "USED-GPU-GTX750-2G",
+    "sku": "USD-GPU-GTX750-2G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 2GB GDDR5 on a 128-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 2GB GDDR5 high-speed memory for crisp textures.\n- 512 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including HDMI / DVI / VGA.\n- 55W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GTX 750 2GB GDDR5 Graphics Card",
+      "Video Memory (VRAM)": "2GB GDDR5",
+      "Memory Bus": "128-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "HDMI / DVI / VGA"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "55W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "512 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "128-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "HDMI / DVI / VGA",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GTX 750 2GB",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GTX 760 2GB GDDR5 Graphics Card - Used",
+    "slug": "nvidia-geforce-gtx-760-2gb-gddr5-graphics-card-used",
+    "product_code": "USED-GPU-GTX760-2G",
+    "sku": "USD-GPU-GTX760-2G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 2GB GDDR5 on a 256-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 2GB GDDR5 high-speed memory for crisp textures.\n- 1152 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including DisplayPort / HDMI / Dual DVI.\n- 170W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GTX 760 2GB GDDR5 Graphics Card",
+      "Video Memory (VRAM)": "2GB GDDR5",
+      "Memory Bus": "256-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "DisplayPort / HDMI / Dual DVI"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "170W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "1152 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "256-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "DisplayPort / HDMI / Dual DVI",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GTX 760 2GB",
+    "images": [
+      "GTX 760-1.png",
+      "GTX 760-2.png",
+      "GTX 760-3.png",
+      "GTX 760-4.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GTX 960 2GB GDDR5 Graphics Card - Used",
+    "slug": "nvidia-geforce-gtx-960-2gb-gddr5-graphics-card-used",
+    "product_code": "USED-GPU-GTX960-2G",
+    "sku": "USD-GPU-GTX960-2G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 2GB GDDR5 on a 128-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 2GB GDDR5 high-speed memory for crisp textures.\n- 1024 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including 3x DisplayPort / HDMI 2.0 / DVI.\n- 120W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GTX 960 2GB GDDR5 Graphics Card",
+      "Video Memory (VRAM)": "2GB GDDR5",
+      "Memory Bus": "128-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "3x DisplayPort / HDMI 2.0 / DVI"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "120W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "1024 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "128-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "3x DisplayPort / HDMI 2.0 / DVI",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GTX 960 2GB",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GTX 970 4GB GDDR5 Graphics Card - Used",
+    "slug": "nvidia-geforce-gtx-970-4gb-gddr5-graphics-card-used",
+    "product_code": "USED-GPU-GTX970-4G",
+    "sku": "USD-GPU-GTX970-4G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 4GB GDDR5 on a 256-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 4GB GDDR5 high-speed memory for crisp textures.\n- 1664 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including 3x DisplayPort / HDMI 2.0 / Dual DVI.\n- 145W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GTX 970 4GB GDDR5 Graphics Card",
+      "Video Memory (VRAM)": "4GB GDDR5",
+      "Memory Bus": "256-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "3x DisplayPort / HDMI 2.0 / Dual DVI"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "145W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "1664 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "256-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "3x DisplayPort / HDMI 2.0 / Dual DVI",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GTX 970 4GB",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "NVIDIA GeForce GTX 1060 6GB GDDR5 Graphics Card - Used",
+    "slug": "nvidia-geforce-gtx-1060-6gb-gddr5-graphics-card-used",
+    "product_code": "USED-GPU-GTX1060-6G",
+    "sku": "USD-GPU-GTX1060-6G",
+    "category_slug": "pc-components",
+    "subcategory_slug": "graphic-cards",
+    "brand_slug": "nvidia",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Reliable NVIDIA GeForce graphics card with 6GB GDDR5 on a 192-bit memory interface. Benchmark-tested under FurMark for optimal thermals, fan stability, and zero artifacting. Great for budget 1080p gaming, Photoshop, video editing, and multi-display setups.\n\nKey Features:\n\n- 6GB GDDR5 high-speed memory for crisp textures.\n- 1280 CUDA Cores with NVIDIA CUDA and DirectX support.\n- Versatile outputs including 3x DisplayPort 1.4 / HDMI 2.0b / DVI-D.\n- 120W power envelope with efficient active cooling.\n- 1 Month complete testing and warranty coverage.",
+    "main_specifications": {
+      "GPU Engine": "NVIDIA GeForce GTX 1060 6GB GDDR5 Graphics Card",
+      "Video Memory (VRAM)": "6GB GDDR5",
+      "Memory Bus": "192-bit",
+      "Interface": "PCIe 3.0 x16",
+      "Display Outputs": "3x DisplayPort 1.4 / HDMI 2.0b / DVI-D"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / FurMark Tested",
+        "Cooling System": "Active Fan Heatsink Cooler",
+        "DirectX Support": "DirectX 11 / 12 Support",
+        "TDP / Power Consumption": "120W"
+      },
+      "Technical Performance": {
+        "CUDA Cores": "1280 CUDA Cores",
+        "Memory Type": "GDDR5",
+        "Bus Width": "192-bit",
+        "Max Digital Resolution": "4096 x 2160 (4K Support)"
+      },
+      "Compatibility & Standards": {
+        "Bus Interface": "PCIe 3.0 x16",
+        "Video Connectors": "3x DisplayPort 1.4 / HDMI 2.0b / DVI-D",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "Graphic Card/GTX 1060 6GB",
+    "images": [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png"
+    ]
+  },
+  {
+    "name": "120GB 2.5\" SATA III Internal Solid State Drive - Used",
+    "slug": "120gb-sata-ssd-used",
+    "product_code": "USED-SSD-120GB",
+    "sku": "USD-SSD-120GB",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ssd",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 5100.0,
+    "sale_price": 4950.0,
+    "cost_price": 4207.5,
+    "description": "High-speed 2.5-inch SATA III 6Gb/s internal SSD delivering instantaneous OS boot times and fast file access. Fully health-tested with CrystalDiskInfo (100% / Good health, 0 bad sectors) and backed by 1 Month warranty.\n\nKey Features:\n\n- 120GB solid-state storage capacity with zero moving parts.\n- Fast sequential read speeds Up to 520 MB/s and write speeds Up to 450 MB/s.\n- Standard 2.5\" 7mm form factor compatible with laptops and desktops.\n- Low power consumption and silent operation.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Capacity": "120GB",
+      "Interface": "SATA III 6Gb/s (SATA 3.0)",
+      "Form Factor": "2.5\" (7mm Ultra Slim)",
+      "Read Speed": "Up to 520 MB/s",
+      "Write Speed": "Up to 450 MB/s"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / 100% Health Certified",
+        "Form Factor": "2.5-inch 7mm",
+        "NAND Flash Type": "Generic / OEM",
+        "MTBF": "1.5 Million Hours"
+      },
+      "Technical Performance": {
+        "Max Sequential Read": "Up to 520 MB/s",
+        "Max Sequential Write": "Up to 450 MB/s",
+        "Interface Rate": "6.0 Gb/s (SATA III)",
+        "TRIM Support": "Yes"
+      },
+      "Compatibility & Standards": {
+        "Device Compatibility": "Desktop PCs, Laptops, All-in-One PCs",
+        "S.M.A.R.T Support": "Yes",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "HDD SSD/120GB SATA SSD",
+    "images": [
+      "S85544b8f2ae24c0f9f36d38aa08dab67i.jpg_720x720q80-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "120GB Branded 2.5\" SATA III Solid State Drive - Used",
+    "slug": "120gb-branded-sata-ssd-used",
+    "product_code": "USED-SSD-120GB-BRANDED",
+    "sku": "USD-SSD-120GB-BRANDED",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ssd",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "High-speed 2.5-inch SATA III 6Gb/s internal SSD delivering instantaneous OS boot times and fast file access. Fully health-tested with CrystalDiskInfo (100% / Good health, 0 bad sectors) and backed by 1 Month warranty.\n\nKey Features:\n\n- 120GB solid-state storage capacity with zero moving parts.\n- Fast sequential read speeds Up to 530 MB/s and write speeds Up to 460 MB/s.\n- Standard 2.5\" 7mm form factor compatible with laptops and desktops.\n- Low power consumption and silent operation.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Capacity": "120GB",
+      "Interface": "SATA III 6Gb/s (SATA 3.0)",
+      "Form Factor": "2.5\" (7mm Ultra Slim)",
+      "Read Speed": "Up to 530 MB/s",
+      "Write Speed": "Up to 460 MB/s"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / 100% Health Certified",
+        "Form Factor": "2.5-inch 7mm",
+        "NAND Flash Type": "Branded OEM",
+        "MTBF": "1.5 Million Hours"
+      },
+      "Technical Performance": {
+        "Max Sequential Read": "Up to 530 MB/s",
+        "Max Sequential Write": "Up to 460 MB/s",
+        "Interface Rate": "6.0 Gb/s (SATA III)",
+        "TRIM Support": "Yes"
+      },
+      "Compatibility & Standards": {
+        "Device Compatibility": "Desktop PCs, Laptops, All-in-One PCs",
+        "S.M.A.R.T Support": "Yes",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "HDD SSD/120GB SATA SSD -USED Branded",
+    "images": [
+      "S3.png"
+    ]
+  },
+  {
+    "name": "Samsung 120GB 2.5\" SATA III Solid State Drive - Used",
+    "slug": "samsung-120gb-sata-ssd-used",
+    "product_code": "USED-SSD-120GB-SAMSUNG",
+    "sku": "USD-SSD-120GB-SAMSUNG",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ssd",
+    "brand_slug": "samsung",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "High-speed 2.5-inch SATA III 6Gb/s internal SSD delivering instantaneous OS boot times and fast file access. Fully health-tested with CrystalDiskInfo (100% / Good health, 0 bad sectors) and backed by 1 Month warranty.\n\nKey Features:\n\n- 120GB solid-state storage capacity with zero moving parts.\n- Fast sequential read speeds Up to 540 MB/s and write speeds Up to 520 MB/s.\n- Standard 2.5\" 7mm form factor compatible with laptops and desktops.\n- Low power consumption and silent operation.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Capacity": "120GB",
+      "Interface": "SATA III 6Gb/s (SATA 3.0)",
+      "Form Factor": "2.5\" (7mm Ultra Slim)",
+      "Read Speed": "Up to 540 MB/s",
+      "Write Speed": "Up to 520 MB/s"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / 100% Health Certified",
+        "Form Factor": "2.5-inch 7mm",
+        "NAND Flash Type": "Samsung V-NAND",
+        "MTBF": "1.5 Million Hours"
+      },
+      "Technical Performance": {
+        "Max Sequential Read": "Up to 540 MB/s",
+        "Max Sequential Write": "Up to 520 MB/s",
+        "Interface Rate": "6.0 Gb/s (SATA III)",
+        "TRIM Support": "Yes"
+      },
+      "Compatibility & Standards": {
+        "Device Compatibility": "Desktop PCs, Laptops, All-in-One PCs",
+        "S.M.A.R.T Support": "Yes",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "HDD SSD/120GB SATA SSD -USED Samsung",
+    "images": [
+      "MZ-650120-lg.png"
+    ]
+  },
+  {
+    "name": "WD 500GB 3.5\" SATA Desktop Internal Hard Drive - Used",
+    "slug": "wd-500gb-35-sata-desktop-hard-drive-used",
+    "product_code": "USED-HDD-500GB-WD",
+    "sku": "USD-HDD-500GB-WD",
+    "category_slug": "pc-components",
+    "subcategory_slug": "hard-disk",
+    "brand_slug": "wd",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 3400.0,
+    "sale_price": 3200.0,
+    "cost_price": 2720.0,
+    "description": "Tested and certified mechanical hard disk drive with 500GB capacity and 7200 RPM rotational speed. Checked via diagnostic software for 100% health, 0 bad sectors, and stable data read/write performance. Backed by 1 Month warranty.\n\nKey Features:\n\n- High capacity 500GB storage for OS, games, CCTV footage, and media backups.\n- 7200 RPM spindle speed for stable data throughput.\n- Standard 3.5\" Desktop form factor with SATA 6Gb/s / 3Gb/s connectivity.\n- 100% Health verified with 0 reallocated sectors.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Storage Capacity": "500GB",
+      "Form Factor": "3.5\" Desktop",
+      "Rotational Speed": "7200 RPM",
+      "Interface": "SATA 6Gb/s / 3Gb/s",
+      "Buffer / Cache": "16MB / 32MB / 64MB"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / 100% Health Verified",
+        "Form Factor": "3.5\" Desktop",
+        "Sector Format": "512e / 4Kn Advanced Format",
+        "Interface": "SATA 6Gb/s / 3Gb/s"
+      },
+      "Technical Performance": {
+        "Rotational Speed": "7200 RPM",
+        "Transfer Rate": "Up to 150 MB/s",
+        "Latency": "4.2ms Typical",
+        "Power Management": "Low Power Idle"
+      },
+      "Compatibility & Standards": {
+        "Mounting": "Standard Drive Cage",
+        "Operating Temperature": "0°C to 60°C",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "HDD SSD/500GB SATA HDD -USED (WD or SEAGATE)",
+    "images": [
+      "S03155de688c74d36a0ac0f5f2739f4e7W-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "WD 1TB 3.5\" SATA Desktop Internal Hard Drive - Used",
+    "slug": "wd-1tb-35-sata-desktop-hard-drive-used",
+    "product_code": "USED-HDD-1TB-WD",
+    "sku": "USD-HDD-1TB-WD",
+    "category_slug": "pc-components",
+    "subcategory_slug": "hard-disk",
+    "brand_slug": "wd",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified mechanical hard disk drive with 1TB (1000GB) capacity and 7200 RPM rotational speed. Checked via diagnostic software for 100% health, 0 bad sectors, and stable data read/write performance. Backed by 1 Month warranty.\n\nKey Features:\n\n- High capacity 1TB (1000GB) storage for OS, games, CCTV footage, and media backups.\n- 7200 RPM spindle speed for stable data throughput.\n- Standard 3.5\" Desktop form factor with SATA 6Gb/s connectivity.\n- 100% Health verified with 0 reallocated sectors.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Storage Capacity": "1TB (1000GB)",
+      "Form Factor": "3.5\" Desktop",
+      "Rotational Speed": "7200 RPM",
+      "Interface": "SATA 6Gb/s",
+      "Buffer / Cache": "16MB / 32MB / 64MB"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / 100% Health Verified",
+        "Form Factor": "3.5\" Desktop",
+        "Sector Format": "512e / 4Kn Advanced Format",
+        "Interface": "SATA 6Gb/s"
+      },
+      "Technical Performance": {
+        "Rotational Speed": "7200 RPM",
+        "Transfer Rate": "Up to 150 MB/s",
+        "Latency": "4.2ms Typical",
+        "Power Management": "Low Power Idle"
+      },
+      "Compatibility & Standards": {
+        "Mounting": "Standard Drive Cage",
+        "Operating Temperature": "0°C to 60°C",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "HDD SSD/1TB SATA HDD -USED (WD or SEAGATE)",
+    "images": [
+      "1tb-wd-seagate-hard-disk-500x500-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "1TB 3.5\" SATA Desktop Internal Hard Drive - Used",
+    "slug": "1tb-35-sata-desktop-hard-drive-used",
+    "product_code": "USED-HDD-1TB-OTHERS",
+    "sku": "USD-HDD-1TB-OTHERS",
+    "category_slug": "pc-components",
+    "subcategory_slug": "hard-disk",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified mechanical hard disk drive with 1TB (1000GB) capacity and 7200 RPM rotational speed. Checked via diagnostic software for 100% health, 0 bad sectors, and stable data read/write performance. Backed by 1 Month warranty.\n\nKey Features:\n\n- High capacity 1TB (1000GB) storage for OS, games, CCTV footage, and media backups.\n- 7200 RPM spindle speed for stable data throughput.\n- Standard 3.5\" Desktop form factor with SATA 6Gb/s connectivity.\n- 100% Health verified with 0 reallocated sectors.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Storage Capacity": "1TB (1000GB)",
+      "Form Factor": "3.5\" Desktop",
+      "Rotational Speed": "7200 RPM",
+      "Interface": "SATA 6Gb/s",
+      "Buffer / Cache": "16MB / 32MB / 64MB"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / 100% Health Verified",
+        "Form Factor": "3.5\" Desktop",
+        "Sector Format": "512e / 4Kn Advanced Format",
+        "Interface": "SATA 6Gb/s"
+      },
+      "Technical Performance": {
+        "Rotational Speed": "7200 RPM",
+        "Transfer Rate": "Up to 150 MB/s",
+        "Latency": "4.2ms Typical",
+        "Power Management": "Low Power Idle"
+      },
+      "Compatibility & Standards": {
+        "Mounting": "Standard Drive Cage",
+        "Operating Temperature": "0°C to 60°C",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "HDD SSD/1TB SATA HDD -USED (Others)",
+    "images": [
+      "seagate-1tb-baracuda-3.5-hdd-sata.png"
+    ]
+  },
+  {
+    "name": "500GB 2.5\" SATA Laptop Internal Hard Drive - Used",
+    "slug": "500gb-25-sata-laptop-hard-drive-used",
+    "product_code": "USED-HDD-500GB-LAP",
+    "sku": "USD-HDD-500GB-LAP",
+    "category_slug": "pc-components",
+    "subcategory_slug": "hard-disk",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified mechanical hard disk drive with 500GB capacity and 5400 RPM rotational speed. Checked via diagnostic software for 100% health, 0 bad sectors, and stable data read/write performance. Backed by 1 Month warranty.\n\nKey Features:\n\n- High capacity 500GB storage for OS, games, CCTV footage, and media backups.\n- 5400 RPM spindle speed for stable data throughput.\n- Standard 2.5\" Laptop Slim form factor with SATA 3Gb/s / 6Gb/s connectivity.\n- 100% Health verified with 0 reallocated sectors.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Storage Capacity": "500GB",
+      "Form Factor": "2.5\" Laptop Slim",
+      "Rotational Speed": "5400 RPM",
+      "Interface": "SATA 3Gb/s / 6Gb/s",
+      "Buffer / Cache": "16MB / 32MB / 64MB"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / 100% Health Verified",
+        "Form Factor": "2.5\" Laptop Slim",
+        "Sector Format": "512e / 4Kn Advanced Format",
+        "Interface": "SATA 3Gb/s / 6Gb/s"
+      },
+      "Technical Performance": {
+        "Rotational Speed": "5400 RPM",
+        "Transfer Rate": "Up to 150 MB/s",
+        "Latency": "4.2ms Typical",
+        "Power Management": "Low Power Idle"
+      },
+      "Compatibility & Standards": {
+        "Mounting": "Standard Drive Cage",
+        "Operating Temperature": "0°C to 60°C",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "HDD SSD/500GB LAPTOP HDD -USED",
+    "images": [
+      "123116d4aad87a35e1fc9a865e8f50fa-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "1TB 2.5\" SATA Laptop Internal Hard Drive - Used",
+    "slug": "1tb-25-sata-laptop-hard-drive-used",
+    "product_code": "USED-HDD-1TB-LAP",
+    "sku": "USD-HDD-1TB-LAP",
+    "category_slug": "pc-components",
+    "subcategory_slug": "hard-disk",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 1,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Tested and certified mechanical hard disk drive with 1TB (1000GB) capacity and 5400 RPM rotational speed. Checked via diagnostic software for 100% health, 0 bad sectors, and stable data read/write performance. Backed by 1 Month warranty.\n\nKey Features:\n\n- High capacity 1TB (1000GB) storage for OS, games, CCTV footage, and media backups.\n- 5400 RPM spindle speed for stable data throughput.\n- Standard 2.5\" Laptop Slim form factor with SATA 6Gb/s connectivity.\n- 100% Health verified with 0 reallocated sectors.\n- 1 Month complete hardware warranty.",
+    "main_specifications": {
+      "Storage Capacity": "1TB (1000GB)",
+      "Form Factor": "2.5\" Laptop Slim",
+      "Rotational Speed": "5400 RPM",
+      "Interface": "SATA 6Gb/s",
+      "Buffer / Cache": "16MB / 32MB / 64MB"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / 100% Health Verified",
+        "Form Factor": "2.5\" Laptop Slim",
+        "Sector Format": "512e / 4Kn Advanced Format",
+        "Interface": "SATA 6Gb/s"
+      },
+      "Technical Performance": {
+        "Rotational Speed": "5400 RPM",
+        "Transfer Rate": "Up to 150 MB/s",
+        "Latency": "4.2ms Typical",
+        "Power Management": "Low Power Idle"
+      },
+      "Compatibility & Standards": {
+        "Mounting": "Standard Drive Cage",
+        "Operating Temperature": "0°C to 60°C",
+        "Warranty Period": "1 Month (30 Days)"
+      }
+    },
+    "image_folder_rel": "HDD SSD/1TB LAPTOP HDD -USED",
+    "images": [
+      "714dpv63GOL._AC_SL3840_.png"
+    ]
+  },
+  {
+    "name": "2GB DDR2 800MHz Desktop RAM (DIMM) - Used",
+    "slug": "2gb-ddr2-800mhz-desktop-ram-used",
+    "product_code": "USED-RAM-DDR2-2GB",
+    "sku": "USD-RAM-DDR2-2GB",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Original system memory module featuring 2GB capacity at 800 MHz (PC2-6400). MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 2GB memory size with 800 MHz (PC2-6400) data rate.\n- Form factor: Desktop DIMM (240-Pin).\n- Energy-efficient operating voltage of 1.8V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "2GB",
+      "Memory Type": "DDR2",
+      "Module Type": "Desktop DIMM (240-Pin)",
+      "Frequency Speed": "800 MHz (PC2-6400)",
+      "Voltage": "1.8V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Desktop DIMM (240-Pin)",
+        "Memory Architecture": "DDR2",
+        "Operating Voltage": "1.8V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "800 MHz (PC2-6400)",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR2 2GB",
+    "images": [
+      "2GB-D2-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "2GB DDR3 1333MHz Desktop RAM (DIMM) - Used",
+    "slug": "2gb-ddr3-1333mhz-desktop-ram-used",
+    "product_code": "USED-RAM-DDR3-2GB",
+    "sku": "USD-RAM-DDR3-2GB",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 1300.0,
+    "sale_price": 1200.0,
+    "cost_price": 1020.0,
+    "description": "Original system memory module featuring 2GB capacity at 1333 MHz (PC3-10600). MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 2GB memory size with 1333 MHz (PC3-10600) data rate.\n- Form factor: Desktop DIMM (240-Pin).\n- Energy-efficient operating voltage of 1.5V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "2GB",
+      "Memory Type": "DDR3",
+      "Module Type": "Desktop DIMM (240-Pin)",
+      "Frequency Speed": "1333 MHz (PC3-10600)",
+      "Voltage": "1.5V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Desktop DIMM (240-Pin)",
+        "Memory Architecture": "DDR3",
+        "Operating Voltage": "1.5V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "1333 MHz (PC3-10600)",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR3 2GB",
+    "images": [
+      "S307019681e6b4c9fa012508ad03025cdW-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "4GB DDR3 1600MHz Desktop RAM (DIMM) - Used",
+    "slug": "4gb-ddr3-1600mhz-desktop-ram-used",
+    "product_code": "USED-RAM-DDR3-4GB",
+    "sku": "USD-RAM-DDR3-4GB",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Original system memory module featuring 4GB capacity at 1600 MHz (PC3-12800). MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 4GB memory size with 1600 MHz (PC3-12800) data rate.\n- Form factor: Desktop DIMM (240-Pin).\n- Energy-efficient operating voltage of 1.5V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "4GB",
+      "Memory Type": "DDR3",
+      "Module Type": "Desktop DIMM (240-Pin)",
+      "Frequency Speed": "1600 MHz (PC3-12800)",
+      "Voltage": "1.5V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Desktop DIMM (240-Pin)",
+        "Memory Architecture": "DDR3",
+        "Operating Voltage": "1.5V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "1600 MHz (PC3-12800)",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR3 4GB",
+    "images": [
+      "3c7684a0827fbe82d07b2288b8ab3878-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "8GB DDR3 1600MHz Desktop RAM (DIMM) - Used",
+    "slug": "8gb-ddr3-1600mhz-desktop-ram-used",
+    "product_code": "USED-RAM-DDR3-8GB",
+    "sku": "USD-RAM-DDR3-8GB",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 4400.0,
+    "sale_price": 4200.0,
+    "cost_price": 3570.0,
+    "description": "Original system memory module featuring 8GB capacity at 1600 MHz (PC3-12800). MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 8GB memory size with 1600 MHz (PC3-12800) data rate.\n- Form factor: Desktop DIMM (240-Pin).\n- Energy-efficient operating voltage of 1.5V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "8GB",
+      "Memory Type": "DDR3",
+      "Module Type": "Desktop DIMM (240-Pin)",
+      "Frequency Speed": "1600 MHz (PC3-12800)",
+      "Voltage": "1.5V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Desktop DIMM (240-Pin)",
+        "Memory Architecture": "DDR3",
+        "Operating Voltage": "1.5V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "1600 MHz (PC3-12800)",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR3 8GB",
+    "images": [
+      "Sbc0fae9765ad44ac9d16c0deb59b1e78z.jpg_720x720q80-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "4GB DDR4 2400MHz / 2666MHz Desktop RAM (DIMM) - Used",
+    "slug": "4gb-ddr4-2400mhz-2666mhz-desktop-ram-used",
+    "product_code": "USED-RAM-DDR4-4GB",
+    "sku": "USD-RAM-DDR4-4GB",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 6750.0,
+    "sale_price": 6600.0,
+    "cost_price": 5610.0,
+    "description": "Original system memory module featuring 4GB capacity at 2400MHz / 2666MHz. MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 4GB memory size with 2400MHz / 2666MHz data rate.\n- Form factor: Desktop DIMM (288-Pin).\n- Energy-efficient operating voltage of 1.2V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "4GB",
+      "Memory Type": "DDR4",
+      "Module Type": "Desktop DIMM (288-Pin)",
+      "Frequency Speed": "2400MHz / 2666MHz",
+      "Voltage": "1.2V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Desktop DIMM (288-Pin)",
+        "Memory Architecture": "DDR4",
+        "Operating Voltage": "1.2V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "2400MHz / 2666MHz",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR4 4GB",
+    "images": [
+      "image-removebg-preview-95.png"
+    ]
+  },
+  {
+    "name": "8GB DDR4 2666MHz / 3200MHz Desktop RAM (DIMM) - Used",
+    "slug": "8gb-ddr4-2666mhz-3200mhz-desktop-ram-used",
+    "product_code": "USED-RAM-DDR4-8GB",
+    "sku": "USD-RAM-DDR4-8GB",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 13500.0,
+    "sale_price": 13400.0,
+    "cost_price": 11390.0,
+    "description": "Original system memory module featuring 8GB capacity at 2666MHz / 3200MHz. MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 8GB memory size with 2666MHz / 3200MHz data rate.\n- Form factor: Desktop DIMM (288-Pin).\n- Energy-efficient operating voltage of 1.2V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "8GB",
+      "Memory Type": "DDR4",
+      "Module Type": "Desktop DIMM (288-Pin)",
+      "Frequency Speed": "2666MHz / 3200MHz",
+      "Voltage": "1.2V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Desktop DIMM (288-Pin)",
+        "Memory Architecture": "DDR4",
+        "Operating Voltage": "1.2V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "2666MHz / 3200MHz",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR4 8GB",
+    "images": [
+      "desk-ddr4-8gb-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "4GB DDR3L 1600MHz Laptop SO-DIMM RAM - Used",
+    "slug": "4gb-ddr3l-1600mhz-laptop-sodimm-ram-used",
+    "product_code": "USED-RAM-DDR3-4GB-LAP",
+    "sku": "USD-RAM-DDR3-4GB-LAP",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 1900.0,
+    "sale_price": 1800.0,
+    "cost_price": 1530.0,
+    "description": "Original system memory module featuring 4GB capacity at 1600 MHz (PC3L-12800S). MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 4GB memory size with 1600 MHz (PC3L-12800S) data rate.\n- Form factor: Laptop SO-DIMM (204-Pin).\n- Energy-efficient operating voltage of 1.35V / 1.5V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "4GB",
+      "Memory Type": "DDR3L",
+      "Module Type": "Laptop SO-DIMM (204-Pin)",
+      "Frequency Speed": "1600 MHz (PC3L-12800S)",
+      "Voltage": "1.35V / 1.5V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Laptop SO-DIMM (204-Pin)",
+        "Memory Architecture": "DDR3L",
+        "Operating Voltage": "1.35V / 1.5V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "1600 MHz (PC3L-12800S)",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR3 4GB LAP",
+    "images": [
+      "b8d35edbdf9efda870994dbedca1a6fc-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "8GB DDR3L 1600MHz Laptop SO-DIMM RAM - Used",
+    "slug": "8gb-ddr3l-1600mhz-laptop-sodimm-ram-used",
+    "product_code": "USED-RAM-DDR3-8GB-LAP",
+    "sku": "USD-RAM-DDR3-8GB-LAP",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 4500.0,
+    "sale_price": 4400.0,
+    "cost_price": 3740.0,
+    "description": "Original system memory module featuring 8GB capacity at 1600 MHz (PC3L-12800S). MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 8GB memory size with 1600 MHz (PC3L-12800S) data rate.\n- Form factor: Laptop SO-DIMM (204-Pin).\n- Energy-efficient operating voltage of 1.35V / 1.5V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "8GB",
+      "Memory Type": "DDR3L",
+      "Module Type": "Laptop SO-DIMM (204-Pin)",
+      "Frequency Speed": "1600 MHz (PC3L-12800S)",
+      "Voltage": "1.35V / 1.5V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Laptop SO-DIMM (204-Pin)",
+        "Memory Architecture": "DDR3L",
+        "Operating Voltage": "1.35V / 1.5V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "1600 MHz (PC3L-12800S)",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR3 8GB LAP",
+    "images": [
+      "8fab0db6119f6e436c34dba11d6a0003-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "4GB DDR4 2400MHz / 2666MHz Laptop SO-DIMM RAM - Used",
+    "slug": "4gb-ddr4-2400mhz-2666mhz-laptop-sodimm-ram-used",
+    "product_code": "USED-RAM-DDR4-4GB-LAP",
+    "sku": "USD-RAM-DDR4-4GB-LAP",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 5950.0,
+    "sale_price": 5750.0,
+    "cost_price": 4887.5,
+    "description": "Original system memory module featuring 4GB capacity at 2400MHz / 2666MHz. MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 4GB memory size with 2400MHz / 2666MHz data rate.\n- Form factor: Laptop SO-DIMM (260-Pin).\n- Energy-efficient operating voltage of 1.2V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "4GB",
+      "Memory Type": "DDR4",
+      "Module Type": "Laptop SO-DIMM (260-Pin)",
+      "Frequency Speed": "2400MHz / 2666MHz",
+      "Voltage": "1.2V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Laptop SO-DIMM (260-Pin)",
+        "Memory Architecture": "DDR4",
+        "Operating Voltage": "1.2V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "2400MHz / 2666MHz",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR4 4GB LAP",
+    "images": [
+      "DDR4.png"
+    ]
+  },
+  {
+    "name": "8GB DDR4 2666MHz / 3200MHz Laptop SO-DIMM RAM - Used",
+    "slug": "8gb-ddr4-2666mhz-3200mhz-laptop-sodimm-ram-used",
+    "product_code": "USED-RAM-DDR4-8GB-LAP",
+    "sku": "USD-RAM-DDR4-8GB-LAP",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 11250.0,
+    "sale_price": 11000.0,
+    "cost_price": 9350.0,
+    "description": "Original system memory module featuring 8GB capacity at 2666MHz / 3200MHz. MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 8GB memory size with 2666MHz / 3200MHz data rate.\n- Form factor: Laptop SO-DIMM (260-Pin).\n- Energy-efficient operating voltage of 1.2V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "8GB",
+      "Memory Type": "DDR4",
+      "Module Type": "Laptop SO-DIMM (260-Pin)",
+      "Frequency Speed": "2666MHz / 3200MHz",
+      "Voltage": "1.2V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Laptop SO-DIMM (260-Pin)",
+        "Memory Architecture": "DDR4",
+        "Operating Voltage": "1.2V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "2666MHz / 3200MHz",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR4 8GB LAP",
+    "images": [
+      "a51e214c412bc08f07cc9c32a1116d3e860792c9-500x500.png"
+    ]
+  },
+  {
+    "name": "16GB DDR4 2666MHz / 3200MHz Laptop SO-DIMM RAM - Used",
+    "slug": "16gb-ddr4-2666mhz-3200mhz-laptop-sodimm-ram-used",
+    "product_code": "USED-RAM-DDR4-16GB-LAP",
+    "sku": "USD-RAM-DDR4-16GB-LAP",
+    "category_slug": "pc-components",
+    "subcategory_slug": "ram",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 0.0,
+    "sale_price": 0.0,
+    "cost_price": 0.0,
+    "description": "Original system memory module featuring 16GB capacity at 2666MHz / 3200MHz. MemTest86 verified for 100% error-free operation, offering great responsiveness and multitasking power. Backed by 3 Months warranty.\n\nKey Features:\n\n- 16GB memory size with 2666MHz / 3200MHz data rate.\n- Form factor: Laptop SO-DIMM (260-Pin).\n- Energy-efficient operating voltage of 1.2V.\n- Plug-and-play installation with zero configuration.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Memory Capacity": "16GB",
+      "Memory Type": "DDR4",
+      "Module Type": "Laptop SO-DIMM (260-Pin)",
+      "Frequency Speed": "2666MHz / 3200MHz",
+      "Voltage": "1.2V"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / MemTest86 Passed",
+        "Form Factor": "Laptop SO-DIMM (260-Pin)",
+        "Memory Architecture": "DDR4",
+        "Operating Voltage": "1.2V"
+      },
+      "Technical Performance": {
+        "Bus Frequency": "2666MHz / 3200MHz",
+        "Error Checking": "Non-ECC Unbuffered",
+        "CAS Latency": "Standard JEDEC Timing",
+        "Operating Temperature": "0°C to 85°C"
+      },
+      "Compatibility & Standards": {
+        "Platform": "Desktop or Laptop (Form Dependent)",
+        "JEDEC Compliance": "Yes",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "RAM/DDR4 16GB LAP",
+    "images": [
+      "product-jpeg-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Socket LGA 1155 / 1150 / 1151 CPU Cooler Fan - Used",
+    "slug": "intel-socket-lga-1155-1150-1151-cpu-cooler-fan-used",
+    "product_code": "USED-FAN-1155",
+    "sku": "USD-FAN-1155",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processor-fans",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 650.0,
+    "sale_price": 600.0,
+    "cost_price": 510.0,
+    "description": "High-efficiency CPU heatsink and cooling fan designed for Intel LGA 1155 / 1150 / 1151 / 1200 desktop processors. Pre-tested for quiet bearings, strong airflow, and effective thermal regulation. Backed by 3 Months warranty.\n\nKey Features:\n\n- Socket LGA 1155 / 1150 / 1151 / 1200 compatibility with tool-free push-pin mount.\n- Solid Aluminum Heatsink + 80mm Fan for fast heat dissipation.\n- 4-Pin PWM connector with automatic motherboard speed control.\n- Smooth bearing rotation up to Up to 2500 RPM.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Compatible Sockets": "LGA 1155 / 1150 / 1151 / 1200",
+      "Cooler Type": "Air Cooler (Heatsink & Fan)",
+      "Connector Type": "4-Pin PWM",
+      "Max Fan Speed": "Up to 2500 RPM",
+      "Heatsink Material": "Aluminum"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Cleaned & Tested",
+        "Cooling Method": "Air Cooling",
+        "Mounting Type": "Intel Push-Pin Mechanism",
+        "Bearing Type": "Hydraulic / Rifle Bearing"
+      },
+      "Technical Performance": {
+        "Fan Speed": "Up to 2500 RPM",
+        "Power Connector": "4-Pin PWM",
+        "Rated Voltage": "12V DC",
+        "Noise Level": "Low Acoustic Profile"
+      },
+      "Compatibility & Standards": {
+        "Socket Support": "LGA 1155 / 1150 / 1151 / 1200",
+        "TDP Support": "Up to 95W CPUs",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "PROCESSOR FAN/1155 PROCESSOR FAN",
+    "images": [
+      "OEM-1155-1u-CPU-Cooler-with-8015-PWM-Fan-for-Intel-Mini-Itx-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "Intel Socket LGA 775 Push-Pin CPU Cooler Fan - Used",
+    "slug": "intel-socket-lga-775-push-pin-cpu-cooler-fan-used",
+    "product_code": "USED-FAN-775",
+    "sku": "USD-FAN-775",
+    "category_slug": "pc-components",
+    "subcategory_slug": "processor-fans",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 650.0,
+    "sale_price": 600.0,
+    "cost_price": 510.0,
+    "description": "High-efficiency CPU heatsink and cooling fan designed for Intel LGA 775 desktop processors. Pre-tested for quiet bearings, strong airflow, and effective thermal regulation. Backed by 3 Months warranty.\n\nKey Features:\n\n- Socket LGA 775 compatibility with tool-free push-pin mount.\n- Solid Radial Aluminum Heatsink + Fan for fast heat dissipation.\n- 4-Pin PWM connector with automatic motherboard speed control.\n- Smooth bearing rotation up to Up to 2800 RPM.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Compatible Sockets": "LGA 775",
+      "Cooler Type": "Air Cooler (Heatsink & Fan)",
+      "Connector Type": "4-Pin PWM",
+      "Max Fan Speed": "Up to 2800 RPM",
+      "Heatsink Material": "Aluminum"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Fully Cleaned & Tested",
+        "Cooling Method": "Air Cooling",
+        "Mounting Type": "Intel Push-Pin Mechanism",
+        "Bearing Type": "Hydraulic / Rifle Bearing"
+      },
+      "Technical Performance": {
+        "Fan Speed": "Up to 2800 RPM",
+        "Power Connector": "4-Pin PWM",
+        "Rated Voltage": "12V DC",
+        "Noise Level": "Low Acoustic Profile"
+      },
+      "Compatibility & Standards": {
+        "Socket Support": "LGA 775",
+        "TDP Support": "Up to 95W CPUs",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "PROCESSOR FAN/775 PROCESSOR FAN",
+    "images": [
+      "Original-Intel-LGA-775-CPU-Fans-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "24-Pin Standard Desktop ATX Power Supply Unit (PSU) - Used",
+    "slug": "24-pin-standard-desktop-atx-power-supply-unit-used",
+    "product_code": "USED-PSU-NORMAL",
+    "sku": "USD-PSU-NORMAL",
+    "category_slug": "pc-components",
+    "subcategory_slug": "power-supply",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 1700.0,
+    "sale_price": 1700.0,
+    "cost_price": 1445.0,
+    "description": "Standard ATX desktop power supply unit rated for 250W - 350W continuous output. Tested under digital load testers for strict voltage regulation (+12V, +5V, +3.3V) and ripple suppression. Featuring None (Standard Office/Home) for versatile hardware support. Backed by 3 Months warranty.\n\nKey Features:\n\n- Stable 250W - 350W power delivery for office and gaming PCs.\n- Connectors: 24-Pin ATX, 4-Pin CPU, SATA x2, Molex x2.\n- Dedicated None (Standard Office/Home).\n- Quiet cooling provided by 120mm / 80mm Silent Fan.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Rated Wattage": "250W - 350W",
+      "Form Factor": "Standard ATX",
+      "PCIe Connector": "None (Standard Office/Home)",
+      "Cooling Fan": "120mm / 80mm Silent Fan",
+      "Main Connector": "24-Pin (20+4 Pin) ATX"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Load Tested",
+        "Form Factor": "ATX 12V",
+        "Input Voltage": "AC 200-240V / 115-230V Switchable",
+        "Cooling Fan Size": "120mm / 80mm Silent Fan"
+      },
+      "Technical Performance": {
+        "Total Output": "250W - 350W",
+        "+12V Rail Output": "Single/Dual High-Amp +12V Rail",
+        "Efficiency": "Standard / 80 Plus Compatible",
+        "Protections": "OVP, OPP, SCP, OCP"
+      },
+      "Compatibility & Standards": {
+        "Connectors": "24-Pin ATX, 4-Pin CPU, SATA x2, Molex x2",
+        "Chassis Standard": "Standard ATX Desktop Cases",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "POWER UNIT/24 PIN PSU- NORMAL",
+    "images": [
+      "FSP350-60EPN80-lg__34378-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "24-Pin 400W/500W ATX Power Supply Unit with 6-Pin PCIe - Used",
+    "slug": "24-pin-400w-500w-atx-power-supply-unit-6pin-used",
+    "product_code": "USED-PSU-6PIN",
+    "sku": "USD-PSU-6PIN",
+    "category_slug": "pc-components",
+    "subcategory_slug": "power-supply",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 2400.0,
+    "sale_price": 2200.0,
+    "cost_price": 1870.0,
+    "description": "Standard ATX desktop power supply unit rated for 400W - 500W continuous output. Tested under digital load testers for strict voltage regulation (+12V, +5V, +3.3V) and ripple suppression. Featuring 1x 6-Pin PCIe GPU Power for versatile hardware support. Backed by 3 Months warranty.\n\nKey Features:\n\n- Stable 400W - 500W power delivery for office and gaming PCs.\n- Connectors: 24-Pin ATX, 4+4 Pin CPU, 1x 6-Pin PCIe, SATA x4, Molex x2.\n- Dedicated 1x 6-Pin PCIe GPU Power.\n- Quiet cooling provided by 120mm Thermal Controlled Fan.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Rated Wattage": "400W - 500W",
+      "Form Factor": "Standard ATX",
+      "PCIe Connector": "1x 6-Pin PCIe GPU Power",
+      "Cooling Fan": "120mm Thermal Controlled Fan",
+      "Main Connector": "24-Pin (20+4 Pin) ATX"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Load Tested",
+        "Form Factor": "ATX 12V",
+        "Input Voltage": "AC 200-240V / 115-230V Switchable",
+        "Cooling Fan Size": "120mm Thermal Controlled Fan"
+      },
+      "Technical Performance": {
+        "Total Output": "400W - 500W",
+        "+12V Rail Output": "Single/Dual High-Amp +12V Rail",
+        "Efficiency": "Standard / 80 Plus Compatible",
+        "Protections": "OVP, OPP, SCP, OCP"
+      },
+      "Compatibility & Standards": {
+        "Connectors": "24-Pin ATX, 4+4 Pin CPU, 1x 6-Pin PCIe, SATA x4, Molex x2",
+        "Chassis Standard": "Standard ATX Desktop Cases",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "POWER UNIT/24 PIN PSU- 400W or 500W 6PIN",
+    "images": [
+      "8eeefa4de23079e4317ca592e9cea445.jpg_960x960q80.jpg_-removebg-preview.png"
+    ]
+  },
+  {
+    "name": "24-Pin 500W/600W ATX Power Supply Unit with 8-Pin PCIe - Used",
+    "slug": "24-pin-500w-600w-atx-power-supply-unit-8pin-used",
+    "product_code": "USED-PSU-8PIN",
+    "sku": "USD-PSU-8PIN",
+    "category_slug": "pc-components",
+    "subcategory_slug": "power-supply",
+    "brand_slug": "others",
+    "condition": "Used",
+    "warranty_duration": 3,
+    "warranty_unit": "Months",
+    "price": 2700.0,
+    "sale_price": 2500.0,
+    "cost_price": 2125.0,
+    "description": "Standard ATX desktop power supply unit rated for 500W - 600W continuous output. Tested under digital load testers for strict voltage regulation (+12V, +5V, +3.3V) and ripple suppression. Featuring 1x 8-Pin (6+2) PCIe GPU Power for versatile hardware support. Backed by 3 Months warranty.\n\nKey Features:\n\n- Stable 500W - 600W power delivery for office and gaming PCs.\n- Connectors: 24-Pin ATX, 4+4 Pin CPU, 1x 8-Pin (6+2) PCIe, SATA x4, Molex x2.\n- Dedicated 1x 8-Pin (6+2) PCIe GPU Power.\n- Quiet cooling provided by 120mm High Airflow Fan.\n- 3 Months warranty coverage.",
+    "main_specifications": {
+      "Rated Wattage": "500W - 600W",
+      "Form Factor": "Standard ATX",
+      "PCIe Connector": "1x 8-Pin (6+2) PCIe GPU Power",
+      "Cooling Fan": "120mm High Airflow Fan",
+      "Main Connector": "24-Pin (20+4 Pin) ATX"
+    },
+    "technical_specifications": {
+      "General Specifications": {
+        "Item Condition": "Used / Diagnostic Load Tested",
+        "Form Factor": "ATX 12V",
+        "Input Voltage": "AC 200-240V / 115-230V Switchable",
+        "Cooling Fan Size": "120mm High Airflow Fan"
+      },
+      "Technical Performance": {
+        "Total Output": "500W - 600W",
+        "+12V Rail Output": "Single/Dual High-Amp +12V Rail",
+        "Efficiency": "Standard / 80 Plus Compatible",
+        "Protections": "OVP, OPP, SCP, OCP"
+      },
+      "Compatibility & Standards": {
+        "Connectors": "24-Pin ATX, 4+4 Pin CPU, 1x 8-Pin (6+2) PCIe, SATA x4, Molex x2",
+        "Chassis Standard": "Standard ATX Desktop Cases",
+        "Warranty Period": "3 Months"
+      }
+    },
+    "image_folder_rel": "POWER UNIT/24 PIN PSU- 500W or 600W 8PIN",
+    "images": [
+      "e9a26682-b703-48a3-bae1-a49ada90d08f-removebg-preview.png"
+    ]
+  }
+]

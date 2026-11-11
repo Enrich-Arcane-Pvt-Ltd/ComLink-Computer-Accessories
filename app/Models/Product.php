@@ -91,10 +91,18 @@ class Product extends Model
             }
 
             if (is_array($product->technical_specifications)) {
-                $product->technical_specifications = array_filter(
-                    $product->technical_specifications,
-                    fn ($val) => ! is_null($val) && trim((string) $val) !== ''
-                );
+                $cleanTech = function ($arr) use (&$cleanTech) {
+                    $cleaned = [];
+                    foreach ($arr as $k => $v) {
+                        if (is_array($v)) {
+                            $cleaned[$k] = $cleanTech($v);
+                        } elseif (! is_null($v) && trim((string) $v) !== '') {
+                            $cleaned[$k] = trim((string) $v);
+                        }
+                    }
+                    return $cleaned;
+                };
+                $product->technical_specifications = $cleanTech($product->technical_specifications);
             }
         });
     }

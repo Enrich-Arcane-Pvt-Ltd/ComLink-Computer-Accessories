@@ -1,0 +1,554 @@
+[
+  {
+    "brand": "EP-INK",
+    "brand_slug": "ep-ink",
+    "product_code": "EP-664-REF-INK",
+    "name": "EP 664 Refill Ink Bottle (70ml)",
+    "slug": "ep-664-refill-ink-bottle-70ml",
+    "folder": "EP 664 Refill Ink",
+    "price": 425.0,
+    "sale_price": 385.0,
+    "cost_price": 327.25,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "EP 664 high-quality refill ink bottle is engineered specifically for Epson EcoTank L-series printers (L100, L110, L120, L200, L210, L220, L300, L310, L350, L355, L360, L365, L380, L382, L385, L405, L455, L485, L550, L555, L565, L605, L655, L1300, L1455). Utilizing microscopic dye formulation, it produces razor-sharp document text and radiant photo reproduction without nozzle clogging. Each 70ml bottle is factory hermetically sealed to preserve fresh ink viscosity and extend printhead longevity.",
+    "has_variants": true,
+    "variants": [
+      {
+        "color_name": "Black",
+        "variant_name": "EP 664 Refill Ink - Black (70ml)",
+        "image_file": "Gemini_Generated_Image_z3ts69z3ts69z3ts-removebg-preview.png",
+        "sku": "EP-664-BK-70",
+        "stock": 20
+      },
+      {
+        "color_name": "Cyan",
+        "variant_name": "EP 664 Refill Ink - Cyan (70ml)",
+        "image_file": "Gemini_Generated_Image_5b0bz35b0bz35b0b-removebg-preview.png",
+        "sku": "EP-664-CY-70",
+        "stock": 15
+      },
+      {
+        "color_name": "Magenta",
+        "variant_name": "EP 664 Refill Ink - Magenta (70ml)",
+        "image_file": "Gemini_Generated_Image_wtimv3wtimv3wtim-removebg-preview.png",
+        "sku": "EP-664-MG-70",
+        "stock": 15
+      },
+      {
+        "color_name": "Yellow",
+        "variant_name": "EP 664 Refill Ink - Yellow (70ml)",
+        "image_file": "Gemini_Generated_Image_bw3rz4bw3rz4bw3r-removebg-preview.png",
+        "sku": "EP-664-YL-70",
+        "stock": 15
+      }
+    ],
+    "main_specs": {
+      "consumable_type": "Dye-Based Continuous Refill Ink Bottle",
+      "ink_volume": "70 ml per bottle",
+      "page_yield": "Up to 4,500 Pages (Black) / 7,500 Pages (Composite Color) at 5% Coverage",
+      "compatible_models": "Epson EcoTank L120, L220, L310, L360, L380, L382, L405, L565, L1300",
+      "shelf_life": "24 Months Unopened Factory Sealed",
+      "nozzle_design": "Precision Drip-Free Pouring Spout"
+    },
+    "tech_specs": {
+      "model_series": "EP 664 EcoTank Refill Series",
+      "category_segment": "Printer Consumables & Refill Inks",
+      "condition": "Brand New (Hermetically Sealed)",
+      "interface_connection": "EcoTank Built-in Continuous Reservoir Tank Injection",
+      "architecture": "Ultra-Filtered Water-Based Dye Formulation (Sub-Micron Particles)",
+      "thermal_efficiency": "Storage: 10°C to 35°C; Operating: 15°C to 32°C (Relative Humidity 20% - 80%)",
+      "power_consumption": "Non-Powered Passive Consumable Fluid",
+      "operating_systems": "Universal OS Agnostic (Windows 11/10/8, macOS, Linux, ChromeOS via Host Printer)",
+      "certification": "ISO 9001, ISO 14001, RoHS, REACH, MSDS Certified",
+      "dimensions_weight": "145 x 42 x 42 mm; 115g Gross Weight",
+      "included_in_box": "1x EP 664 70ml Refill Ink Bottle (Vacuum Foil Sealed with Leak-Proof Cap)"
+    }
+  },
+  {
+    "brand": "Refill-Ink",
+    "brand_slug": "refill-ink",
+    "product_code": "CAN-790-890-BK-135",
+    "name": "CAN 790 / 890 Refill Ink Black (135ml)",
+    "slug": "can-790-890-refill-ink-black-135ml",
+    "folder": "CAN 790 890 Refill Ink Black 135ml",
+    "price": 490.0,
+    "sale_price": 440.0,
+    "cost_price": 374.0,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "High-volume 135ml black refill ink bottle tailored for Canon PIXMA MegaTank G-series continuous ink printers (G1000, G1010, G2000, G2010, G3000, G3010, G4000, G4010, G1020, G2020, G3020, G3060, GM2070, GM4070). Formulated with high-density pigment/dye balance to deliver deep laser-like black text on plain copy paper and smear-resistant highlights. Equipped with an ergonomic squeeze nozzle for clean, mess-free replenishment.",
+    "has_variants": false,
+    "main_specs": {
+      "consumable_type": "High-Density Black Refill Ink Bottle",
+      "ink_volume": "135 ml",
+      "page_yield": "Up to 6,000 - 7,500 Pages (Economy Mode) at 5% Coverage",
+      "compatible_models": "Canon PIXMA G1000, G1010, G2000, G2010, G3000, G3010, G4000, G4010 Series",
+      "shelf_life": "24 Months Unopened Factory Sealed",
+      "nozzle_design": "Anti-Spill Valve Nozzle Cap"
+    },
+    "tech_specs": {
+      "model_series": "CAN 790 / 890 MegaTank Series",
+      "category_segment": "Printer Consumables & Refill Inks",
+      "condition": "Brand New (Factory Sealed)",
+      "interface_connection": "Canon Integrated MegaTank Reservoir Injection Port",
+      "architecture": "High Optical Density Smudge-Resistant Black Ink Compound",
+      "thermal_efficiency": "Storage: 5°C to 35°C; Operating: 15°C to 30°C",
+      "power_consumption": "Non-Powered Passive Consumable Fluid",
+      "operating_systems": "Universal OS Compatible via Host Printer Drivers",
+      "certification": "ISO 9001, ISO 14001, RoHS, CE, MSDS Certified",
+      "dimensions_weight": "165 x 52 x 52 mm; 185g Gross Weight",
+      "included_in_box": "1x CAN 790/890 135ml Black Refill Ink Bottle (Vacuum Sealed)"
+    }
+  },
+  {
+    "brand": "Refill-Ink",
+    "brand_slug": "refill-ink",
+    "product_code": "CAN-790-COLOR-70",
+    "name": "CAN 790 Refill Ink Bottle (70ml)",
+    "slug": "can-790-refill-ink-bottle-70ml",
+    "folder": "CAN 790 Refill Ink 70 ml",
+    "price": 425.0,
+    "sale_price": 385.0,
+    "cost_price": 327.25,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "CAN 790 70ml refill ink bottle delivers exceptional color accuracy and wide color gamut for Canon PIXMA MegaTank G-Series printers (G1000, G1010, G2000, G2010, G3000, G3010, G4000, G4010). Specially purified dye ink prevents printhead oxidation and buildup while providing glossy photographic prints, vibrant flyers, and crisp office charts.",
+    "has_variants": true,
+    "variants": [
+      {
+        "color_name": "Black",
+        "variant_name": "CAN 790 Refill Ink - Black (70ml)",
+        "image_file": "Gemini_Generated_Image_ikjxp5ikjxp5ikjx__3_-removebg-preview.png",
+        "sku": "CAN-790-BK-70",
+        "stock": 15
+      },
+      {
+        "color_name": "Cyan",
+        "variant_name": "CAN 790 Refill Ink - Cyan (70ml)",
+        "image_file": "Gemini_Generated_Image_ikjxp5ikjxp5ikjx__2_-removebg-preview.png",
+        "sku": "CAN-790-CY-70",
+        "stock": 15
+      },
+      {
+        "color_name": "Magenta",
+        "variant_name": "CAN 790 Refill Ink - Magenta (70ml)",
+        "image_file": "Gemini_Generated_Image_ikjxp5ikjxp5ikjx__1_-removebg-preview.png",
+        "sku": "CAN-790-MG-70",
+        "stock": 15
+      },
+      {
+        "color_name": "Yellow",
+        "variant_name": "CAN 790 Refill Ink - Yellow (70ml)",
+        "image_file": "Gemini_Generated_Image_ikjxp5ikjxp5ikjx-removebg-preview.png",
+        "sku": "CAN-790-YL-70",
+        "stock": 15
+      }
+    ],
+    "main_specs": {
+      "consumable_type": "Dye-Based MegaTank Color Refill Ink",
+      "ink_volume": "70 ml per bottle",
+      "page_yield": "Up to 7,000 Color Pages (Composite C/M/Y) at 5% Coverage",
+      "compatible_models": "Canon PIXMA G1000, G1010, G2000, G2010, G3000, G3010, G4000, G4010",
+      "shelf_life": "24 Months Unopened Factory Sealed",
+      "nozzle_design": "Spill-Resistant Direct Injection Tip"
+    },
+    "tech_specs": {
+      "model_series": "CAN 790 MegaTank Series",
+      "category_segment": "Printer Consumables & Refill Inks",
+      "condition": "Brand New (Factory Sealed)",
+      "interface_connection": "Canon PIXMA Integrated Reservoir Ink Ports",
+      "architecture": "Purified High-Chroma Water Soluble Dye Formula",
+      "thermal_efficiency": "Storage: 10°C to 35°C; Operating: 15°C to 30°C",
+      "power_consumption": "Non-Powered Passive Consumable Fluid",
+      "operating_systems": "Universal OS Compatible via Host Canon Printer",
+      "certification": "ISO 9001, ISO 14001, RoHS Compliant, MSDS Certified",
+      "dimensions_weight": "145 x 42 x 42 mm; 110g Gross Weight",
+      "included_in_box": "1x CAN 790 70ml Refill Ink Bottle (Sealed with Leak-Proof Cap)"
+    }
+  },
+  {
+    "brand": "EP-INK",
+    "brand_slug": "ep-ink",
+    "product_code": "EP-003-SM-REF-INK",
+    "name": "EP 003 Refill Ink Small (65ml)",
+    "slug": "ep-003-refill-ink-small-65ml",
+    "folder": "EP 003 Refill Ink Small",
+    "price": 410.0,
+    "sale_price": 365.0,
+    "cost_price": 310.25,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "EP 003 65ml refill ink bottle features specialized auto-stop key-lock nozzles custom-keyed to fit only the corresponding color tank on modern Epson EcoTank printers (L1110, L3100, L3101, L3110, L3150, L3210, L3250, L3252, L3256, L5190, L5290). Engineered with ultra-fine dye particles to provide fade-resistant color graphics and crisp smudge-proof text documents with zero spill hazard.",
+    "has_variants": true,
+    "variants": [
+      {
+        "color_name": "Black",
+        "variant_name": "EP 003 Refill Ink Small - Black (65ml)",
+        "image_file": "Gemini_Generated_Image_dahoxvdahoxvdaho-removebg-preview.png",
+        "sku": "EP-003S-BK-65",
+        "stock": 20
+      },
+      {
+        "color_name": "Cyan",
+        "variant_name": "EP 003 Refill Ink Small - Cyan (65ml)",
+        "image_file": "Gemini_Generated_Image_27pf2x27pf2x27pf.png",
+        "sku": "EP-003S-CY-65",
+        "stock": 15
+      },
+      {
+        "color_name": "Magenta",
+        "variant_name": "EP 003 Refill Ink Small - Magenta (65ml)",
+        "image_file": "Gemini_Generated_Image_hzhcflhzhcflhzhc-removebg-preview.png",
+        "sku": "EP-003S-MG-65",
+        "stock": 15
+      },
+      {
+        "color_name": "Yellow",
+        "variant_name": "EP 003 Refill Ink Small - Yellow (65ml)",
+        "image_file": "Gemini_Generated_Image_73aapx73aapx73aa.png",
+        "sku": "EP-003S-YL-65",
+        "stock": 15
+      }
+    ],
+    "main_specs": {
+      "consumable_type": "Key-Lock Auto-Stop Refill Ink Bottle",
+      "ink_volume": "65 ml per bottle",
+      "page_yield": "Up to 4,500 Pages (Black) / 7,500 Pages (Color) at 5% Coverage",
+      "compatible_models": "Epson EcoTank L1110, L3110, L3150, L3210, L3250, L3256, L5190, L5290",
+      "shelf_life": "24 Months Unopened Factory Sealed",
+      "nozzle_design": "Color-Keyed Auto-Stop Anti-Spill Nozzle"
+    },
+    "tech_specs": {
+      "model_series": "EP 003 EcoTank Smart Refill Series",
+      "category_segment": "Printer Consumables & Refill Inks",
+      "condition": "Brand New (Factory Sealed)",
+      "interface_connection": "Keyed EcoTank Auto-Fill Reservoir Valve",
+      "architecture": "High-Purity Fade-Resistant Dye Liquid Formulation",
+      "thermal_efficiency": "Storage: 10°C to 35°C; Operating: 15°C to 32°C",
+      "power_consumption": "Non-Powered Passive Consumable Fluid",
+      "operating_systems": "Universal OS Compatible via Host Epson Printer Drivers",
+      "certification": "ISO 9001, ISO 14001, RoHS, REACH, MSDS Certified",
+      "dimensions_weight": "140 x 40 x 40 mm; 105g Gross Weight",
+      "included_in_box": "1x EP 003 65ml Refill Ink Bottle (Vacuum Foil Sealed with Keyed Cap)"
+    }
+  },
+  {
+    "brand": "Kiyo",
+    "brand_slug": "kiyo",
+    "product_code": "EP-103-003-LG-INK",
+    "name": "EP 103 / 003 Refill Ink Large",
+    "slug": "ep-103-003-refill-ink-large",
+    "folder": "EP 003 Refill Ink Large",
+    "price": 1960.0,
+    "sale_price": 1770.0,
+    "cost_price": 1504.5,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "Kiyo high-yield commercial grade EP 103 / 003 large refill ink bottles are manufactured for demanding high-volume commercial printing hubs and institutions using Epson EcoTank systems (L1110, L3110, L3150, L3210, L3250, L5190, L5290, and European EP 103 series). Formulated with premium Japanese micro-pigments and UV stabilizers to resist outdoor fading, moisture bleeding, and paper curl while maintaining low cost per page.",
+    "has_variants": true,
+    "variants": [
+      {
+        "color_name": "Black",
+        "variant_name": "EP 103 / 003 Refill Ink Large - Black",
+        "image_file": "Gemini_Generated_Image_uii2sjuii2sjuii2.png",
+        "sku": "KIYO-103-BK-LG",
+        "stock": 10
+      },
+      {
+        "color_name": "Cyan",
+        "variant_name": "EP 103 / 003 Refill Ink Large - Cyan",
+        "image_file": "Gemini_Generated_Image_uii2sjuii2sjuii2 (1).png",
+        "sku": "KIYO-103-CY-LG",
+        "stock": 10
+      },
+      {
+        "color_name": "Magenta",
+        "variant_name": "EP 103 / 003 Refill Ink Large - Magenta",
+        "image_file": "Gemini_Generated_Image_uii2sjuii2sjuii2__2_-removebg-preview.png",
+        "sku": "KIYO-103-MG-LG",
+        "stock": 10
+      },
+      {
+        "color_name": "Yellow",
+        "variant_name": "EP 103 / 003 Refill Ink Large - Yellow",
+        "image_file": "Gemini_Generated_Image_uii2sjuii2sjuii2__3_-removebg-preview.png",
+        "sku": "KIYO-103-YL-LG",
+        "stock": 10
+      }
+    ],
+    "main_specs": {
+      "consumable_type": "Commercial Large-Capacity Refill Ink Bottle",
+      "ink_volume": "High-Yield Commercial Refill Bottle",
+      "page_yield": "Up to 8,500+ Pages (Black) / 12,000+ Pages (Color) at 5% Coverage",
+      "compatible_models": "Epson EcoTank L-Series L1110, L3110, L3150, L3210, L3250, L5190, L5290, EP-103",
+      "shelf_life": "36 Months Unopened Long-Life Formulation",
+      "nozzle_design": "Spill-Proof Pressure Valve Precision Cap"
+    },
+    "tech_specs": {
+      "model_series": "Kiyo EP 103/003 Pro Commercial Series",
+      "category_segment": "Commercial Printer Consumables",
+      "condition": "Brand New (Factory Sealed Boxed)",
+      "interface_connection": "EcoTank Reservoir Inverted Filling Nozzle",
+      "architecture": "UV-Stabilized High-Density Micro-Pigment / Purified Dye Matrix",
+      "thermal_efficiency": "Storage: 0°C to 40°C; Operating: 10°C to 35°C",
+      "power_consumption": "Non-Powered Passive Consumable Fluid",
+      "operating_systems": "Universal OS Compatible via Host Printer",
+      "certification": "ISO 9001, ISO 14001, CE, MSDS Certified",
+      "dimensions_weight": "190 x 60 x 60 mm; 350g Gross Weight",
+      "included_in_box": "1x Kiyo EP 103/003 Large Refill Ink Bottle (Hermetically Sealed in Retail Box)"
+    }
+  },
+  {
+    "brand": "Others",
+    "brand_slug": "others",
+    "product_code": "EPS-LQ310-RIB-CAS",
+    "name": "LQ310 Dot Matrix Printer Ribbon Cartridge",
+    "slug": "lq310-dot-matrix-printer-ribbon-cartridge",
+    "folder": "LQ310 Ribbon",
+    "price": 410.0,
+    "sale_price": 370.0,
+    "cost_price": 314.5,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "Premium dot matrix ribbon cartridge tailored specifically for Epson LQ-310 24-pin high-speed impact printers. Constructed with high-density seamless woven nylon fabric and specialized lubricating ink to minimize printhead needle wear and prevent jamming. Provides exceptionally crisp character rendering across multi-part continuous forms, commercial receipts, and invoices.",
+    "has_variants": false,
+    "main_specs": {
+      "consumable_type": "Impact Dot Matrix Fabric Ribbon Cartridge",
+      "ribbon_color": "High-Density Black",
+      "character_yield": "Up to 2.5 Million Characters (Draft 10 cpi)",
+      "compatible_models": "Epson LQ-310 24-Pin Dot Matrix Impact Printer",
+      "fabric_material": "High-Density Seamless Woven Nylon 66",
+      "ribbon_length": "10.0 Meters Continuous Loop"
+    },
+    "tech_specs": {
+      "model_series": "LQ-310 Impact Ribbon Series",
+      "category_segment": "Dot Matrix & Impact Printer Consumables",
+      "condition": "Brand New (Factory Sealed Cartridge)",
+      "interface_connection": "Snap-in Printhead Carriage Mechanism",
+      "architecture": "Continuous Fabric Loop with Self-Re-inking Reservoir Wheel",
+      "thermal_efficiency": "Storage: -10°C to 40°C; Operating: 5°C to 35°C",
+      "power_consumption": "Mechanical Drive via Printer Carriage Motor",
+      "operating_systems": "Hardware Level Consumable (Windows, DOS, Linux, UNIX POS)",
+      "certification": "ISO 9001, ISO 14001, RoHS Compliant",
+      "dimensions_weight": "295 x 75 x 30 mm; 130g",
+      "included_in_box": "1x LQ310 Black Dot Matrix Ribbon Cartridge (Sealed in Moisture-Proof Foil)"
+    }
+  },
+  {
+    "brand": "Others",
+    "brand_slug": "others",
+    "product_code": "EPS-LQ300-RIB-CAS",
+    "name": "LQ300 Dot Matrix Printer Ribbon Cartridge",
+    "slug": "lq300-dot-matrix-printer-ribbon-cartridge",
+    "folder": "LQ300 Ribbon",
+    "price": 410.0,
+    "sale_price": 375.0,
+    "cost_price": 318.75,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "Durable continuous fabric ribbon cassette built for Epson LQ-300, LQ-300+, LQ-300+II, and compatible 24-pin dot matrix printers. Impregnated with ultra-fine particle carbon ink that delivers clean, sharp alphanumeric impression without blurring or bleeding on 4-ply and 5-ply carbonless business forms.",
+    "has_variants": false,
+    "main_specs": {
+      "consumable_type": "24-Pin Dot Matrix Fabric Ribbon Cassette",
+      "ribbon_color": "Monochrome Black",
+      "character_yield": "Up to 2.0 Million Characters (Draft 10 cpi)",
+      "compatible_models": "Epson LQ-300, LQ-300+, LQ-300+II, LQ-200, LQ-500, LQ-570",
+      "fabric_material": "High-Grade Anti-Fray Nylon Ribbon",
+      "ribbon_length": "9.5 Meters Continuous Loop"
+    },
+    "tech_specs": {
+      "model_series": "LQ-300 Impact Cassette Series",
+      "category_segment": "Dot Matrix & Impact Printer Consumables",
+      "condition": "Brand New (Sealed Retail Box)",
+      "interface_connection": "Direct Snap-Fit Printer Carriage Track",
+      "architecture": "Precision Gear-Driven Re-inking Mechanism",
+      "thermal_efficiency": "Storage: -10°C to 40°C; Operating: 5°C to 35°C",
+      "power_consumption": "Mechanical Drive via Printer Carriage",
+      "operating_systems": "Universal Hardware Consumable (DOS, Windows, Linux, POS Terminals)",
+      "certification": "ISO 9001, RoHS Compliant",
+      "dimensions_weight": "280 x 70 x 28 mm; 125g",
+      "included_in_box": "1x LQ300 Dot Matrix Ribbon Cartridge (Foil Wrapped)"
+    }
+  },
+  {
+    "brand": "Others",
+    "brand_slug": "others",
+    "product_code": "EPS-ERC38-RIB-CAS",
+    "name": "ERC38 POS Receipt Printer Ribbon Cartridge",
+    "slug": "erc38-pos-receipt-printer-ribbon-cartridge",
+    "folder": "ERC38 Ribbon",
+    "price": 410.0,
+    "sale_price": 375.0,
+    "cost_price": 318.75,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "Heavy-duty impact ribbon cassette designed for EPSON TM-U220, TM-U200, TM-U230, TM-U300, TM-U375, and compatible POS cashier and kitchen receipt printers. Built to endure demanding restaurant and supermarket cashier environments with heat-resistant ink that resists grease, steam, and fading on single and 2-ply receipt paper rolls.",
+    "has_variants": false,
+    "main_specs": {
+      "consumable_type": "POS Impact Receipt Printer Ribbon Cartridge",
+      "ribbon_color": "High-Contrast Black",
+      "character_yield": "Up to 3.0 Million Characters (Continuous Roll Tickets)",
+      "compatible_models": "Epson TM-U220A, TM-U220B, TM-U220D, TM-U200, TM-U230, TM-U375 POS Printers",
+      "fabric_material": "Heavy-Duty High-Density Woven Ribbon",
+      "ribbon_length": "5.5 Meters Endless Loop"
+    },
+    "tech_specs": {
+      "model_series": "ERC-38 POS Terminal Series",
+      "category_segment": "Point of Sale (POS) Consumables",
+      "condition": "Brand New (Individually Boxed)",
+      "interface_connection": "Top-Loading Snap Lock POS Mechanism",
+      "architecture": "High-Tension Bi-Directional Ribbon Feed System",
+      "thermal_efficiency": "Storage: -15°C to 45°C; Operating: 0°C to 40°C (Kitchen Heat Tolerant)",
+      "power_consumption": "Mechanical Drive via POS Feed Motor",
+      "operating_systems": "Universal POS Hardware Compatible (OPOS, JavaPOS, ESC/POS)",
+      "certification": "ISO 9001, RoHS, CE Compliant",
+      "dimensions_weight": "135 x 85 x 22 mm; 65g",
+      "included_in_box": "1x ERC-38 Black POS Ribbon Cartridge (Sealed in Protective Bag)"
+    }
+  },
+  {
+    "brand": "Others",
+    "brand_slug": "others",
+    "product_code": "EPS-PLQ20-RIB-CAS",
+    "name": "PLQ20 Passbook Printer Ribbon Cartridge",
+    "slug": "plq20-passbook-printer-ribbon-cartridge",
+    "folder": "PLQ20 Ribbon",
+    "price": 916.0,
+    "sale_price": 830.0,
+    "cost_price": 705.5,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "High-yield specialized dot matrix ribbon cartridge engineered for Epson PLQ-20, PLQ-20M, PLQ-20D, PLQ-20DM banking passbook and financial transaction printers. Formulated with ultra-dense magnetic-compatible black ink that delivers impeccable character clarity on thick banking passbooks, savings slips, certificates, and government visa stickers.",
+    "has_variants": false,
+    "main_specs": {
+      "consumable_type": "Financial Passbook Dot Matrix Ribbon Cartridge",
+      "ribbon_color": "Dense Monochrome Black",
+      "character_yield": "Up to 5.0 Million Characters (Draft 10 cpi)",
+      "compatible_models": "Epson PLQ-20, PLQ-20M, PLQ-20D, PLQ-20DM Passbook Printers",
+      "fabric_material": "Heavy-Duty Industrial Grade Woven Nylon",
+      "ribbon_length": "36.0 Meters High-Capacity Spool"
+    },
+    "tech_specs": {
+      "model_series": "PLQ-20 Financial Passbook Series",
+      "category_segment": "Banking & Financial Impact Consumables",
+      "condition": "Brand New (Factory Boxed)",
+      "interface_connection": "Heavy-Duty Banking Carriage Snap Guide",
+      "architecture": "Continuous Lubricated Re-inking Core with Internal Tension Spring",
+      "thermal_efficiency": "Storage: -10°C to 40°C; Operating: 5°C to 38°C",
+      "power_consumption": "Driven by Heavy-Duty Teller Printer Carriage",
+      "operating_systems": "Universal Banking Systems (IBM, Wincor, Olivetti, ESC/P Emulations)",
+      "certification": "ISO 9001, ISO 14001, RoHS Compliant",
+      "dimensions_weight": "320 x 85 x 35 mm; 210g",
+      "included_in_box": "1x PLQ20 Passbook Ribbon Cartridge (Sealed Foil Pack in Retail Box)"
+    }
+  },
+  {
+    "brand": "Others",
+    "brand_slug": "others",
+    "product_code": "EPS-PLQ50-RIB-CAS",
+    "name": "PLQ50 Passbook Printer Ribbon Cartridge",
+    "slug": "plq50-passbook-printer-ribbon-cartridge",
+    "folder": "PLQ50 Ribbon",
+    "price": 916.0,
+    "sale_price": 830.0,
+    "cost_price": 705.5,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "Next-generation high-speed passbook ribbon cartridge engineered for Epson PLQ-30, PLQ-35, and PLQ-50 teller printers. Manufactured with reinforced micro-weave synthetic fabric to withstand high-velocity bidirectional printhead impacts while delivering flawless, indelible print darkness on bank account booklets and multi-copy vouchers.",
+    "has_variants": false,
+    "main_specs": {
+      "consumable_type": "High-Speed Passbook Dot Matrix Ribbon Cartridge",
+      "ribbon_color": "Indelible Banking Black",
+      "character_yield": "Up to 5.0 Million Characters (Ultra High Speed Draft)",
+      "compatible_models": "Epson PLQ-30, PLQ-30M, PLQ-35, PLQ-50, PLQ-50M Passbook Printers",
+      "fabric_material": "Reinforced Micro-Weave High-Tensile Nylon",
+      "ribbon_length": "36.0 Meters Continuous Loop"
+    },
+    "tech_specs": {
+      "model_series": "PLQ-50 High-Speed Teller Series",
+      "category_segment": "Banking & Financial Impact Consumables",
+      "condition": "Brand New (Sealed Retail Box)",
+      "interface_connection": "Precision Passbook Guide Carriage Assembly",
+      "architecture": "Anti-Friction Internal Drive Roller with Micro-Porous Re-inking Core",
+      "thermal_efficiency": "Storage: -10°C to 40°C; Operating: 5°C to 38°C",
+      "power_consumption": "Mechanical Drive via Financial Printer Motor",
+      "operating_systems": "Universal Financial Terminal Systems (Windows, UNIX, Linux, Mainframe)",
+      "certification": "ISO 9001, ISO 14001, RoHS, CE Compliant",
+      "dimensions_weight": "325 x 90 x 35 mm; 215g",
+      "included_in_box": "1x PLQ50 Passbook Ribbon Cartridge (Hermetically Sealed)"
+    }
+  },
+  {
+    "brand": "Others",
+    "brand_slug": "others",
+    "product_code": "EPS-LQ2090-RIB-CAS",
+    "name": "LQ2090 Wide Carriage Dot Matrix Printer Ribbon",
+    "slug": "lq2090-wide-carriage-dot-matrix-printer-ribbon",
+    "folder": "LQ2090 Ribbon",
+    "price": 1025.0,
+    "sale_price": 925.0,
+    "cost_price": 786.25,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "Heavy-duty wide-carriage 24-pin printer ribbon cartridge engineered for Epson LQ-2090 and LQ-2090II impact printers. Designed for heavy daily throughput in warehousing, logistics, and corporate billing, yielding up to 8 million characters with uniform darkness from the first column to the 136th column.",
+    "has_variants": false,
+    "main_specs": {
+      "consumable_type": "Wide-Carriage 24-Pin Dot Matrix Ribbon",
+      "ribbon_color": "Heavy-Duty Black",
+      "character_yield": "Up to 8.0 Million Characters (Draft 10 cpi)",
+      "compatible_models": "Epson LQ-2090, LQ-2090II, LQ-2090IIN Wide-Carriage Dot Matrix Printers",
+      "fabric_material": "High-Density Industrial Nylon 66",
+      "ribbon_length": "16.0 Meters Continuous Loop"
+    },
+    "tech_specs": {
+      "model_series": "LQ-2090 Enterprise Impact Series",
+      "category_segment": "Wide-Carriage Enterprise Consumables",
+      "condition": "Brand New (Factory Sealed Box)",
+      "interface_connection": "136-Column Wide-Carriage Snap-Fit Guide",
+      "architecture": "High-Torque Internal Gear Drive with Continuous Re-inking Tank",
+      "thermal_efficiency": "Storage: -10°C to 45°C; Operating: 5°C to 38°C",
+      "power_consumption": "Mechanical Drive via Enterprise Printer Carriage",
+      "operating_systems": "Universal OS Agnostic (Windows, IBM AS/400, SAP ERP, Linux)",
+      "certification": "ISO 9001, ISO 14001, RoHS Compliant",
+      "dimensions_weight": "380 x 85 x 30 mm; 240g",
+      "included_in_box": "1x LQ2090 Dot Matrix Ribbon Cartridge (Foil Wrapped in Retail Box)"
+    }
+  },
+  {
+    "brand": "Others",
+    "brand_slug": "others",
+    "product_code": "EPS-LQ2190-RIB-CAS",
+    "name": "LQ2190 Wide Carriage Dot Matrix Printer Ribbon",
+    "slug": "lq2190-wide-carriage-dot-matrix-printer-ribbon",
+    "folder": "LQ2190 Ribbon",
+    "price": 1025.0,
+    "sale_price": 925.0,
+    "cost_price": 786.25,
+    "warranty_duration": 6,
+    "warranty_unit": "Months",
+    "description": "Ultra-long-life industrial ribbon cartridge manufactured for Epson LQ-2190 and LQ-2190II 24-pin 136-column impact dot matrix printers. Provides a massive 15 million character printing capacity, making it the industry standard for continuous multi-part invoice printing, shipping bills, payroll processing, and batch statement generation.",
+    "has_variants": false,
+    "main_specs": {
+      "consumable_type": "Ultra-High Yield Wide-Carriage Dot Matrix Ribbon",
+      "ribbon_color": "Ultra-Dense Industrial Black",
+      "character_yield": "Up to 15.0 Million Characters (Draft 10 cpi)",
+      "compatible_models": "Epson LQ-2190, LQ-2190II, LQ-2190N Wide-Carriage Dot Matrix Printers",
+      "fabric_material": "Extra-Long High-Tensile Woven Fabric",
+      "ribbon_length": "59.0 Meters Extended Loop"
+    },
+    "tech_specs": {
+      "model_series": "LQ-2190 Industrial Impact Series",
+      "category_segment": "Wide-Carriage Enterprise Consumables",
+      "condition": "Brand New (Factory Sealed Box)",
+      "interface_connection": "136-Column Wide-Carriage Snap-Fit Guide",
+      "architecture": "Extended-Cycle Dual Gear Tensioner with Heavy Re-inking Reservoir",
+      "thermal_efficiency": "Storage: -10°C to 45°C; Operating: 5°C to 38°C",
+      "power_consumption": "Mechanical Drive via Enterprise Printer Carriage",
+      "operating_systems": "Universal Hardware Consumable (Windows, ERP, UNIX, Linux, DOS)",
+      "certification": "ISO 9001, ISO 14001, RoHS Compliant",
+      "dimensions_weight": "385 x 90 x 32 mm; 260g",
+      "included_in_box": "1x LQ2190 Dot Matrix Ribbon Cartridge (Foil Wrapped in Retail Box)"
+    }
+  }
+]

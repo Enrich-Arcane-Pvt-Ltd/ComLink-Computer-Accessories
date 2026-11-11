@@ -772,9 +772,16 @@ function ProductViewContent({
                                 <h3 className="text-xs font-bold uppercase tracking-wider text-muted mb-2">
                                     Overview
                                 </h3>
-                                <p className="text-sm leading-relaxed text-muted dark:text-slate-300 break-words [overflow-wrap:anywhere] whitespace-pre-line">
-                                    {product.description}
-                                </p>
+                                {/<[a-z][\s\S]*>/i.test(product.description || "") ? (
+                                    <div
+                                        className="text-sm leading-relaxed text-muted dark:text-slate-300 break-words [overflow-wrap:anywhere] space-y-2 [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-fg [&_h4]:text-xs [&_h4]:font-bold [&_h4]:uppercase [&_h4]:tracking-wider [&_h4]:text-fg [&_h4]:mt-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_strong]:font-semibold [&_strong]:text-fg"
+                                        dangerouslySetInnerHTML={{ __html: product.description || "" }}
+                                    />
+                                ) : (
+                                    <p className="text-sm leading-relaxed text-muted dark:text-slate-300 break-words [overflow-wrap:anywhere] whitespace-pre-line">
+                                        {product.description}
+                                    </p>
+                                )}
                             </div>
 
                             {/* 6.5. Color Options Selection for multi-color products */}

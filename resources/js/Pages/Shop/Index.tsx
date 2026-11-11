@@ -59,11 +59,30 @@ export interface BrandItem {
     slug: string;
 }
 
+export interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+export interface PaginationData {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    from: number | null;
+    to: number | null;
+    prev_page_url: string | null;
+    next_page_url: string | null;
+    links: PaginationLink[];
+}
+
 interface ShopProps {
     categories: CategoryData[];
     activeCategory?: CategoryData | null;
     activeSubCategory?: SubCategoryData | null;
     products: ProductCardData[];
+    pagination?: PaginationData | null;
     dynamicFacets?: FilterFacet[];
     brands?: BrandItem[];
     pageMaxPrice?: number;
@@ -263,6 +282,7 @@ export default function ShopIndex({
     activeCategory = null,
     activeSubCategory = null,
     products = [],
+    pagination = null,
     dynamicFacets = [],
     brands = [],
     pageMaxPrice = 0,
@@ -377,6 +397,11 @@ export default function ShopIndex({
             ...newParams,
         };
 
+        // Reset page on filter changes unless explicitly targeting a specific page
+        if (!("page" in newParams)) {
+            delete query.page;
+        }
+
         // Clean empty values
         Object.keys(query).forEach((key) => {
             if (query[key] === undefined || query[key] === "" || query[key] === null) {
@@ -384,7 +409,12 @@ export default function ShopIndex({
             }
         });
 
-        router.get("/shop", query, {
+        const targetPath =
+            typeof window !== "undefined" && window.location.pathname
+                ? window.location.pathname
+                : "/shop";
+
+        router.get(targetPath, query, {
             preserveState: true,
             preserveScroll: true,
         });
@@ -455,8 +485,12 @@ export default function ShopIndex({
         setMaxPrice("");
         setInStockOnly(false);
         setOutOfStockOnly(false);
+        const targetPath =
+            typeof window !== "undefined" && window.location.pathname
+                ? window.location.pathname
+                : "/shop";
         router.get(
-            "/shop",
+            targetPath,
             {
                 category: activeCategory?.slug || undefined,
                 subcategory: activeSubCategory?.slug || undefined,
@@ -744,7 +778,7 @@ export default function ShopIndex({
                                     </div>
                                 )}
 
-                                <div className="max-h-48 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin">
+                                <div className="space-y-1.5">
                                     {filteredBrands.length > 0 ? (
                                         filteredBrands.map((b) => {
                                             const checked = isBrandSelected(b.name, b.slug);
@@ -843,7 +877,7 @@ export default function ShopIndex({
                                     </div>
                                 )}
 
-                                <div className="max-h-48 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin">
+                                <div className="space-y-1.5">
                                     {filteredOptions.length > 0 ? (
                                         filteredOptions.map((opt) => {
                                             const checked = isOptionSelected(facet.id, opt);
@@ -970,7 +1004,7 @@ export default function ShopIndex({
                         {/* Horizontal Subcategory Bar (if category has subcategories) */}
                         {currentSubcategories.length > 0 && (
                             <div className="mt-6 pt-5 border-t border-border/60">
-                                <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
+                                <div className="flex flex-wrap items-center gap-2 py-1">
                                     <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mr-2 shrink-0">
                                         Subcategories:
                                     </span>
@@ -1025,7 +1059,7 @@ export default function ShopIndex({
                         {/* -------------------------------------------------------------- */}
                         {/*  Desktop Filter Sidebar                                        */}
                         {/* -------------------------------------------------------------- */}
-                        <aside className="hidden lg:block w-72 shrink-0 sticky top-24 space-y-6">
+                        <aside className="hidden lg:block w-72 shrink-0 space-y-6">
                             {/* Categories Tree Navigation */}
                             <div className="bg-card rounded-2xl border border-border/80 p-5 shadow-sm">
                                 <div className="flex items-center justify-between pb-3 mb-4 border-b border-border/80">
@@ -1265,7 +1299,16 @@ export default function ShopIndex({
                             {/* Results Count */}
                             <div className="flex items-center justify-between text-xs text-muted px-1">
                                 <span>
-                                    Showing <strong className="text-fg">{products.length}</strong> {products.length === 1 ? "product" : "products"}
+                                    {pagination && pagination.total > 0 ? (
+                                        <>
+                                            Showing <strong className="text-fg">{pagination.from ?? 1}–{pagination.to ?? products.length}</strong> of{" "}
+                                            <strong className="text-fg">{pagination.total}</strong> {pagination.total === 1 ? "product" : "products"}
+                                        </>
+                                    ) : (
+                                        <>
+                                            Showing <strong className="text-fg">{products.length}</strong> {products.length === 1 ? "product" : "products"}
+                                        </>
+                                    )}
                                     {activeCategory && ` in ${activeCategory.name}`}
                                     {activeSubCategory && ` > ${activeSubCategory.name}`}
                                 </span>
@@ -1273,15 +1316,63 @@ export default function ShopIndex({
 
                             {/* Product Cards Grid */}
                             {products.length > 0 ? (
-                                <div
-                                    className={`grid grid-cols-1 sm:grid-cols-2 ${
-                                        columns === 4 ? "xl:grid-cols-4" : "xl:grid-cols-3"
-                                    } gap-5`}
-                                >
-                                    {products.map((product) => (
-                                        <ProductCard key={product.id} product={product} />
-                                    ))}
-                                </div>
+                                <>
+                                    <div
+                                        className={`grid grid-cols-1 sm:grid-cols-2 ${
+                                            columns === 4 ? "xl:grid-cols-4" : "xl:grid-cols-3"
+                                        } gap-5`}
+                                    >
+                                        {products.map((product) => (
+                                            <ProductCard key={product.id} product={product} />
+                                        ))}
+                                    </div>
+
+                                    {/* Pagination Controls */}
+                                    {pagination && pagination.last_page > 1 && (
+                                        <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+                                            <div className="text-xs text-muted">
+                                                Showing <strong className="text-fg">{pagination.from}</strong> to{" "}
+                                                <strong className="text-fg">{pagination.to}</strong> of{" "}
+                                                <strong className="text-fg">{pagination.total}</strong> products
+                                                {" "}(Page {pagination.current_page} of {pagination.last_page})
+                                            </div>
+
+                                            <nav className="flex items-center gap-1.5 flex-wrap justify-center">
+                                                {pagination.links.map((link, idx) => {
+                                                    const cleanLabel = link.label
+                                                        .replace("&laquo; Previous", "Previous")
+                                                        .replace("Next &raquo;", "Next");
+
+                                                    if (!link.url) {
+                                                        return (
+                                                            <span
+                                                                key={idx}
+                                                                aria-disabled="true"
+                                                                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-muted/40 bg-card/40 border border-border/40 cursor-not-allowed select-none"
+                                                                dangerouslySetInnerHTML={{ __html: cleanLabel }}
+                                                            />
+                                                        );
+                                                    }
+
+                                                    return (
+                                                        <Link
+                                                            key={idx}
+                                                            href={link.url}
+                                                            preserveScroll
+                                                            preserveState
+                                                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                                                                link.active
+                                                                    ? "bg-accent text-white dark:text-slate-950 border-accent shadow-md shadow-accent/20"
+                                                                    : "bg-card text-muted hover:text-fg hover:border-accent/60 hover:bg-card/80 border-border"
+                                                            }`}
+                                                            dangerouslySetInnerHTML={{ __html: cleanLabel }}
+                                                        />
+                                                    );
+                                                })}
+                                            </nav>
+                                        </div>
+                                    )}
+                                </>
                             ) : (
                                 /* Empty State */
                                 <div className="text-center py-20 px-4 rounded-3xl bg-card border border-border my-8">
@@ -1358,7 +1449,7 @@ export default function ShopIndex({
                                             View All
                                         </Link>
                                     </div>
-                                    <div className="space-y-1 max-h-64 overflow-y-auto pr-1 scrollbar-thin">
+                                    <div className="space-y-1">
                                         {categories.map((cat) => {
                                             const isCatActive = activeCategory?.slug === cat.slug;
                                             const hasSubs = cat.subcategories && cat.subcategories.length > 0;

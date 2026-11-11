@@ -107,6 +107,12 @@ Route::prefix('admin/stock-analyzer')->name('admin.stock-analyzer.')->group(func
     Route::get('/report/print', [\App\Http\Controllers\Admin\StockAnalyzerReportController::class, 'printView'])->name('print');
 });
 
+// Admin Profit & Loss Analysis Report Routes
+Route::prefix('admin/profit-loss-report')->name('admin.profit-loss.')->group(function () {
+    Route::get('/pdf', [\App\Http\Controllers\Admin\ProfitLossReportController::class, 'downloadPdf'])->name('pdf');
+    Route::get('/print', [\App\Http\Controllers\Admin\ProfitLossReportController::class, 'printView'])->name('print');
+});
+
 // Fallback Route (placed after all routes)
 Route::fallback(function () {
     return Inertia::render('Error/Index', [

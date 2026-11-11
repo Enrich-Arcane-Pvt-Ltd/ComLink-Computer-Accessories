@@ -2,8 +2,12 @@
 
 namespace App\Filament\Resources\InventoryProductResource\Tables;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\InventoryProduct;
+use Filament\Forms;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 
 class InventoryProductTable
@@ -81,6 +85,80 @@ class InventoryProductTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at', 'desc')
+            ->filters([
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label('Category')
+                    ->placeholder('All Categories')
+                    ->options(fn () => Category::whereNull('parent_id')->orderBy('sort_order')->pluck('name', 'id'))
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
+                    ->query(function ($query, array $data) {
+                        if (! empty($data['value'])) {
+                            $catId = $data['value'];
+                            $query->whereHas('storefrontProduct.categories', function ($sq) use ($catId) {
+                                $sq->where('categories.id', $catId)
+                                    ->orWhere('categories.parent_id', $catId);
+                            });
+                        }
+                    }),
+
+                Tables\Filters\SelectFilter::make('sub_category_id')
+                    ->label('Sub Category')
+                    ->placeholder('All Sub Categories')
+                    ->options(function () {
+                        return Category::whereNotNull('parent_id')
+                            ->with('parent')
+                            ->get()
+                            ->mapWithKeys(function ($sub) {
+                                $prefix = $sub->parent ? "{$sub->parent->name} › " : '';
+
+                                return [$sub->id => "{$prefix}{$sub->name}"];
+                            })
+                            ->sort()
+                            ->all();
+                    })
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
+                    ->query(function ($query, array $data) {
+                        if (! empty($data['value'])) {
+                            $query->whereHas('storefrontProduct.categories', fn ($sq) => $sq->where('categories.id', $data['value']));
+                        }
+                    }),
+
+                Tables\Filters\SelectFilter::make('brand_id')
+                    ->label('Brand')
+                    ->placeholder('All Brands')
+                    ->options(fn () => Brand::orderBy('name')->pluck('name', 'id'))
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
+                    ->query(function ($query, array $data) {
+                        if (! empty($data['value'])) {
+                            $query->whereHas('storefrontProduct', fn ($sq) => $sq->where('brand_id', $data['value']));
+                        }
+                    }),
+
+                Tables\Filters\SelectFilter::make('condition')
+                    ->label('Condition')
+                    ->placeholder('All Conditions')
+                    ->options([
+                        'Brand New' => 'Brand New',
+                        'Used' => 'Used',
+                    ])
+                    ->native(false)
+                    ->query(function ($query, array $data) {
+                        if (! empty($data['value'])) {
+                            $query->whereHas('storefrontProduct', fn ($sq) => $sq->where('condition', $data['value']));
+                        }
+                    }),
+            ], layout: FiltersLayout::AboveContent)
+            ->filtersFormColumns([
+                'default' => 1,
+                'sm' => 2,
+                'lg' => 4,
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()

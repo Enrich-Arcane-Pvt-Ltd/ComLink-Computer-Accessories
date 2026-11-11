@@ -1,0 +1,2736 @@
+[
+    {
+        "num": 1,
+        "name": "Kingston DataTraveler Exodia 128GB USB 3.2 Gen 1 Flash Drive",
+        "product_code": "KIN-DT-128G-USB",
+        "slug": "kingston-datatraveler-exodia-128gb-usb-flash-drive",
+        "brand_slug": "kingston",
+        "category_slug": "products",
+        "sub_category_slug": "flash-drives",
+        "sub_category_name": "Flash Drives",
+        "image_file": "Data_Traveler_128GB_USB_Flash_Drive-removebg-preview.png",
+        "sale_price": 4500,
+        "price": 4950,
+        "cost_price": 3690,
+        "stock": 50,
+        "condition": "Brand New",
+        "warranty_duration": 5,
+        "warranty_unit": "Years",
+        "description": "The Kingston DataTraveler Exodia delivers USB 3.2 Gen 1 performance for quick and convenient file transfers of music, video, documents, and multimedia presentations.\n\nKey Highlights:\n- USB 3.2 Gen 1 High Speed Data Transfer\n- 128GB High Capacity Storage for everyday digital files\n- Practical protective cap with large colored loop easily attaches to key rings\n- Backward compatible with existing USB 2.0 ports and multi-platform OS support",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Interface": "USB 3.2 Gen 1 (Type-A)",
+            "Form Factor": "Cap-Protected Flash Drive with Keyring Loop",
+            "Data Transfer Rate": "Up to 5 Gbps Bus Speed",
+            "Compatibility": "Windows 11/10, macOS, Linux, Chrome OS",
+            "Color": "Black with White Ring Accents"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Kingston DataTraveler Exodia (DTX/128GB)",
+                "Category Segment": "Flash Drives",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 3.2 Gen 1 Type-A (Backwards compatible with USB 2.0)",
+                "Architecture": "High-Reliability 3D NAND Flash Memory",
+                "Thermal Efficiency": "Operating Temperature: 0\u00b0C to 60\u00b0C",
+                "Power Consumption": "Low-power USB bus powered (5V standard)"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11, Windows 10, macOS (v. 10.15.x +), Linux (v. 4.4.x +), Chrome OS",
+                "Certification": "CE, FCC, RoHS, UKCA",
+                "Dimensions & Weight": "67.3mm x 21.04mm x 10.14mm (Weight: ~11g)",
+                "Included in Box": "1x Kingston DataTraveler Exodia 128GB USB Flash Drive"
+            }
+        }
+    },
+    {
+        "num": 2,
+        "name": "KSTAR M700 / M700U 650VA Line Interactive Desktop UPS",
+        "product_code": "KST-M700-650VA-UPS",
+        "slug": "kstar-m700-650va-line-interactive-ups",
+        "brand_slug": "kstar",
+        "category_slug": "products",
+        "sub_category_slug": "ups",
+        "sub_category_name": "UPS",
+        "image_file": "M700 M700U 650VA Line Interactive UPS.png",
+        "sale_price": 0,
+        "price": 0,
+        "cost_price": 0,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The KSTAR M700 / M700U 650VA Line Interactive UPS provides comprehensive power protection and battery backup for home computers, office workstations, Wi-Fi routers, and POS systems against blackouts, brownouts, and power surges.\n\nKey Highlights:\n- 650VA / 360W Surge & Battery Backup Capacity\n- Built-in Boost & Buck AVR (Automatic Voltage Regulation) stabilizes fluctuating mains voltage\n- Auto-restart function while AC recovery is restoring\n- Cold start function allows powering on devices without AC utility power\n- Fast intelligent battery charging with overcharge protection",
+        "main_specs": {
+            "Power Capacity": "650 VA / 360 W",
+            "Nominal Input Voltage": "220 / 230 / 240 VAC (140 - 290 VAC Range)",
+            "Output Voltage": "230 VAC \u00b1 10% (Simulated Sine Wave)",
+            "Battery Specification": "12V 7.0Ah / 7.2Ah Sealed Lead-Acid (SLA)",
+            "Typical Backup Time": "10 - 20 Minutes (Standard PC Load)",
+            "Output Sockets": "Universal Output Sockets with Surge Protection"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "KSTAR MicroPower M700 / M700U 650VA",
+                "Category Segment": "Uninterruptible Power Supply (UPS)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard IEC / Universal Output Sockets + USB Monitoring Port (M700U)",
+                "Architecture": "Line Interactive with Microprocessor Control and Fast AVR Transfer",
+                "Thermal Efficiency": "Silent fanless natural convection cooling, operating temp 0-40\u00b0C",
+                "Power Consumption": "Over 95% efficiency in normal line mode"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Desktop PCs, CCTV DVR/NVR, Monitors, and Wi-Fi Routers",
+                "Certification": "CE, IEC/EN 62040-1, RoHS Compliant",
+                "Dimensions & Weight": "279mm x 101mm x 142mm (Weight: ~4.2 kg)",
+                "Included in Box": "1x KSTAR 650VA Line Interactive UPS, 1x Power Cord, User Manual"
+            }
+        }
+    },
+    {
+        "num": 3,
+        "name": "Hiksemi Prime 128GB High Speed USB 3.0 Flash Drive",
+        "product_code": "HIK-PRIME-128G-USB",
+        "slug": "hiksemi-prime-128gb-usb-30-flash-drive",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "flash-drives",
+        "sub_category_name": "Flash Drives",
+        "image_file": "Prime_128GB_USB_Flash_Drive-removebg-preview.png",
+        "sale_price": 3950,
+        "price": 4345,
+        "cost_price": 3239,
+        "stock": 35,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi Prime 128GB USB 3.0 Flash Drive offers sleek, durable metal casing paired with high-speed USB 3.0 transmission rates for quick and secure file backups.\n\nKey Highlights:\n- High-Speed USB 3.0 Read Speeds up to 130 MB/s\n- Ultra-compact, shock-resistant and heat-dissipating metallic alloy body\n- 128GB storage for 4K videos, heavy graphic projects, and software backups\n- Plug-and-play simplicity across Windows, Mac, smart TVs, and car multimedia systems",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Interface": "USB 3.0 Type-A (Compatible with USB 2.0)",
+            "Max Read Speed": "Up to 130 MB/s",
+            "Casing Material": "Zinc Alloy Metallic Finish",
+            "Form Factor": "Capless Compact Unibody with Lanyard Hole",
+            "Compatibility": "Windows, macOS, Linux, Android TV, In-Car Audio"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Prime Series USB 3.0 (HS-USB-M200P)",
+                "Category Segment": "Flash Drives",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 3.0 SuperSpeed 5Gbps interface",
+                "Architecture": "High-Density 3D TLC Flash NAND Controller",
+                "Thermal Efficiency": "Metal unibody dissipates heat rapidly during heavy file transfers",
+                "Power Consumption": "Bus powered low power consumption (<1.5W)"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, macOS 10.x+, Linux Kernel 2.6+, ChromeOS",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "38mm x 12mm x 4.5mm (Weight: ~9g)",
+                "Included in Box": "1x Hiksemi Prime 128GB USB 3.0 Flash Drive"
+            }
+        }
+    },
+    {
+        "num": 4,
+        "name": "Hiksemi Prime 64GB High Speed USB 3.0 Flash Drive",
+        "product_code": "HIK-PRIME-64G-USB",
+        "slug": "hiksemi-prime-64gb-usb-30-flash-drive",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "flash-drives",
+        "sub_category_name": "Flash Drives",
+        "image_file": "Prime_64GB_USB_Flash_Drive-removebg-preview.png",
+        "sale_price": 2900,
+        "price": 3190,
+        "cost_price": 2378,
+        "stock": 40,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi Prime 64GB USB 3.0 Flash Drive provides dependable, lightning-fast file storage in a sleek metallic alloy unibody design built for everyday pocket mobility.\n\nKey Highlights:\n- 64GB storage capacity for office docs, photos, and HD multimedia\n- USB 3.0 high-speed data transfer speeds up to 100 MB/s\n- Durable shockproof and dustproof metal unibody\n- Compact capless design with integrated keyring loop",
+        "main_specs": {
+            "Storage Capacity": "64 GB",
+            "Interface": "USB 3.0 Type-A",
+            "Max Read Speed": "Up to 100 MB/s",
+            "Casing Material": "Zinc Alloy Metallic Finish",
+            "Form Factor": "Capless Unibody",
+            "Compatibility": "Universal PC, Mac, Laptop, and TV Support"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Prime Series USB 3.0 (HS-USB-M200P-64G)",
+                "Category Segment": "Flash Drives",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 3.0 Type-A Connector",
+                "Architecture": "3D TLC NAND Flash Memory",
+                "Thermal Efficiency": "Operating Temperature: 0\u00b0C to 60\u00b0C",
+                "Power Consumption": "Eco-efficient USB bus powered"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, macOS, Linux, Chrome OS",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "38mm x 12mm x 4.5mm (Weight: ~9g)",
+                "Included in Box": "1x Hiksemi Prime 64GB USB 3.0 Flash Drive"
+            }
+        }
+    },
+    {
+        "num": 5,
+        "name": "Hiksemi Neo Lite 64GB Micro SDXC Memory Card (V30 / 4K UHD)",
+        "product_code": "HIK-NEOLITE-64G-V30",
+        "slug": "hiksemi-neo-lite-64gb-micro-sd-card-v30",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "memory-cards",
+        "sub_category_name": "Memory Cards",
+        "image_file": "Neo_Lite_64GB_Micro_SD_Card__V30_-removebg-preview.png",
+        "sale_price": 3850,
+        "price": 4235,
+        "cost_price": 3157,
+        "stock": 50,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi Neo Lite 64GB V30 Micro SD Card is engineered for high-performance 4K Ultra HD video recording, drones, action cameras, gaming consoles, and smart surveillance cameras.\n\nKey Highlights:\n- Video Speed Class V30 & UHS Speed Class 3 (U3) for smooth 4K UHD recording\n- Read speeds up to 95 MB/s and write speeds up to 45 MB/s\n- Class 10 & A1 Application Performance rated for faster smartphone app execution\n- Waterproof, shockproof, X-ray proof, and temperature-resistant durability",
+        "main_specs": {
+            "Storage Capacity": "64 GB",
+            "Speed Class": "Class 10, UHS-I U3, V30, A1",
+            "Max Read Speed": "Up to 95 MB/s",
+            "Max Write Speed": "Up to 45 MB/s",
+            "Video Recording Support": "Full HD & 4K UHD Continuous Recording",
+            "Durability": "Waterproof, Magnet-proof, Temperature-proof, X-Ray Proof"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Neo Lite V30 Series (HS-TF-L2-64G)",
+                "Category Segment": "Memory Cards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "UHS-I Interface (MicroSDXC)",
+                "Architecture": "High-Endurance 3D NAND Flash Memory",
+                "Thermal Efficiency": "Operational range: 0\u00b0C to 70\u00b0C; Storage range: -25\u00b0C to 85\u00b0C",
+                "Power Consumption": "Ultra-low power drain for extended camera and mobile battery life"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with Android Smartphones, CCTV IP Cameras, Dashcams, Nintendo Switch",
+                "Certification": "CE, FCC, RoHS, UHS-I Standard",
+                "Dimensions & Weight": "15mm x 11mm x 1mm (Weight: ~0.5g)",
+                "Included in Box": "1x Hiksemi Neo Lite 64GB V30 Micro SDXC Card"
+            }
+        }
+    },
+    {
+        "num": 6,
+        "name": "Hiksemi Neo Lite 128GB Micro SDXC Memory Card (V30 / 4K UHD)",
+        "product_code": "HIK-NEOLITE-128G-V30",
+        "slug": "hiksemi-neo-lite-128gb-micro-sd-card-v30",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "memory-cards",
+        "sub_category_name": "Memory Cards",
+        "image_file": "Neo_Lite_128GB_Micro_SD_Card__V30_-removebg-preview.png",
+        "sale_price": 6250,
+        "price": 6875,
+        "cost_price": 5125,
+        "stock": 50,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi Neo Lite 128GB V30 Micro SDXC Memory Card is engineered for continuous 24/7 CCTV surveillance recording, 4K action cameras, drones, and heavy smartphone multimedia storage.\n\nKey Highlights:\n- 128GB Massive Capacity for hours of 4K video and thousands of high-res photos\n- Video Speed Class V30, U3, and Class 10 certified\n- High read speed up to 95 MB/s and write speed up to 55 MB/s\n- Application Performance Class A1 for ultra-responsive mobile gaming and app usage",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Speed Class": "Class 10, UHS-I U3, V30, A1",
+            "Max Read Speed": "Up to 95 MB/s",
+            "Max Write Speed": "Up to 55 MB/s",
+            "Video Recording Support": "4K Ultra HD & 1080P Continuous Surveillance",
+            "Durability": "Shockproof, Waterproof, Extreme Temperature Resistance"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Neo Lite V30 Series (HS-TF-L2-128G)",
+                "Category Segment": "Memory Cards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "UHS-I Ultra High Speed MicroSDXC",
+                "Architecture": "Optimized 3D TLC Endurance Flash NAND",
+                "Thermal Efficiency": "Designed for heavy continuous surveillance writing up to 70\u00b0C",
+                "Power Consumption": "Ultra-low power sleep and write modes"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with CCTV IP Cameras, Ezviz/Hikvision Wireless Cams, Mobile Phones, Tablets",
+                "Certification": "CE, FCC, RoHS, SD Association Compliant",
+                "Dimensions & Weight": "15mm x 11mm x 1mm (Weight: ~0.5g)",
+                "Included in Box": "1x Hiksemi Neo Lite 128GB V30 Micro SDXC Memory Card"
+            }
+        }
+    },
+    {
+        "num": 7,
+        "name": "Hiksemi Neo Lite 64GB Micro SDXC Class 10 Memory Card",
+        "product_code": "HIK-NEOLITE-64G-SD",
+        "slug": "hiksemi-neo-lite-64gb-micro-sd-card",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "memory-cards",
+        "sub_category_name": "Memory Cards",
+        "image_file": "Neo_Lite_64GB_Micro_SD_Card-removebg-preview.png",
+        "sale_price": 3850,
+        "price": 4235,
+        "cost_price": 3157,
+        "stock": 40,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi Neo Lite 64GB Class 10 Micro SDXC Card provides reliable storage expansion for CCTV home security cameras, Android smartphones, dash cams, and MP3 audio players.\n\nKey Highlights:\n- 64GB Reliable Flash Storage\n- Class 10 & UHS-I U1 standard ensures steady Full HD 1080p recording\n- Read speeds up to 92 MB/s for fast file viewing and transfers\n- Built-in wear leveling algorithm ensures long service life",
+        "main_specs": {
+            "Storage Capacity": "64 GB",
+            "Speed Class": "Class 10, UHS-I U1",
+            "Max Read Speed": "Up to 92 MB/s",
+            "Recording Quality": "Full HD 1080p Video Recording",
+            "Form Factor": "MicroSDXC",
+            "Compatibility": "Smartphones, Surveillance Cams, Tablets, Dashcams"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Neo Lite Standard Series (HS-TF-C1-64G)",
+                "Category Segment": "Memory Cards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "MicroSDXC UHS-I standard pinout",
+                "Architecture": "3D NAND Flash Memory",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "Low power consumption"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal Android, Windows, Mac, Linux compatibility",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "15mm x 11mm x 1mm (Weight: ~0.5g)",
+                "Included in Box": "1x Hiksemi Neo Lite 64GB Class 10 Micro SDXC Card"
+            }
+        }
+    },
+    {
+        "num": 8,
+        "name": "Blackbox BB-24751 24\" Full HD 75Hz Office Desktop Monitor",
+        "product_code": "BBX-24751-24-MON",
+        "slug": "blackbox-bb-24751-24-tn-office-monitor",
+        "brand_slug": "blackbox",
+        "category_slug": "products",
+        "sub_category_slug": "monitors-products",
+        "sub_category_name": "Monitors",
+        "image_file": "BB-24751_24_TN_Office_Monitor-removebg-preview.png",
+        "sale_price": 27500,
+        "price": 28300,
+        "cost_price": 22550,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Blackbox BB-24751 is a crisp 24-inch Full HD desktop monitor designed for daily office productivity, educational tasks, CCTV surveillance monitoring, and multimedia entertainment.\n\nKey Highlights:\n- 24-Inch Full HD (1920 x 1080) Widescreen Display\n- Smooth 75Hz Refresh Rate reduces screen flicker and eye strain\n- Ultra-slim bezel design creates modern multi-monitor desk setups\n- Dual Input: HDMI and VGA ports for wide PC and CCTV DVR compatibility\n- Low Blue Light and Anti-Glare technology protects your vision during long work hours",
+        "main_specs": {
+            "Screen Size": "24 Inch Diagonal",
+            "Resolution": "1920 x 1080 (Full HD 1080p)",
+            "Refresh Rate": "75 Hz",
+            "Response Time": "5 ms (GtG)",
+            "Video Inputs": "1x HDMI, 1x VGA",
+            "Mounting Support": "VESA 75 x 75 mm Mount Compatible"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Blackbox BB-24751",
+                "Category Segment": "Desktop Monitors",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1x HDMI 1.4, 1x VGA (D-Sub), 1x DC Power In",
+                "Architecture": "Fast Response TN / LED Backlit Panel",
+                "Thermal Efficiency": "Low-heat passive ventilation enclosure",
+                "Power Consumption": "<24W Typical, <0.5W Standby Mode"
+            },
+            "compatibility": {
+                "Operating Systems": "Plug and play with Windows 11/10/8, macOS, CCTV DVR / NVR Systems",
+                "Certification": "CE, FCC, RoHS, Energy Star",
+                "Dimensions & Weight": "540mm x 410mm x 180mm with stand (Weight: ~3.2 kg)",
+                "Included in Box": "1x Blackbox BB-24751 24\" Monitor, 1x Power Adapter, 1x HDMI Cable, Desk Stand Base"
+            }
+        }
+    },
+    {
+        "num": 9,
+        "name": "Hiksemi Neo Lite 128GB Micro SDXC Class 10 Memory Card",
+        "product_code": "HIK-NEOLITE-128G-SD",
+        "slug": "hiksemi-neo-lite-128gb-micro-sd-card",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "memory-cards",
+        "sub_category_name": "Memory Cards",
+        "image_file": "Neo_Lite_128GB_Micro_SD_Card-removebg-preview.png",
+        "sale_price": 6250,
+        "price": 6875,
+        "cost_price": 5125,
+        "stock": 40,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi Neo Lite 128GB Class 10 Micro SDXC Memory Card provides high-capacity, dependable storage expansion for CCTV surveillance cameras, mobile devices, tablets, and media players.\n\nKey Highlights:\n- 128GB High Capacity storage holds over 10 days of continuous security footage\n- Class 10 & UHS-I high-speed standard\n- Up to 92 MB/s read transfer speed\n- Rigorously tested for water, heat, magnetic, and X-ray resistance",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Speed Class": "Class 10, UHS-I U1",
+            "Max Read Speed": "Up to 92 MB/s",
+            "Video Compatibility": "Full HD 1080p Continuous Recording",
+            "Form Factor": "MicroSDXC",
+            "Durability": "Waterproof, Shockproof, Temperature-resistant"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Neo Lite Standard (HS-TF-C1-128G)",
+                "Category Segment": "Memory Cards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "MicroSDXC UHS-I Bus Interface",
+                "Architecture": "Long-life 3D NAND Flash memory cells",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "Ultra-low power draw"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all MicroSDXC host devices",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "15mm x 11mm x 1mm (Weight: ~0.5g)",
+                "Included in Box": "1x Hiksemi Neo Lite 128GB Class 10 Micro SDXC Card"
+            }
+        }
+    },
+    {
+        "num": 10,
+        "name": "Hikvision WRE12C AC1200 Dual Band Wi-Fi Range Extender",
+        "product_code": "HIK-WRE12C-EXT",
+        "slug": "hikvision-wre12c-ac1200-dual-band-wifi-extender",
+        "brand_slug": "hikvision",
+        "category_slug": "products",
+        "sub_category_slug": "range-extenders",
+        "sub_category_name": "Range Extenders",
+        "image_file": "WRE12C_AC1200_Dual_Band_Wi-Fi_Extender-removebg-preview.png",
+        "sale_price": 8400,
+        "price": 9240,
+        "cost_price": 6888,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "The Hikvision WRE12C AC1200 Dual Band Wi-Fi Range Extender eliminates dead zones and boosts wireless signal coverage throughout your home, office, or retail space.\n\nKey Highlights:\n- Dual-Band AC1200 Speed: 867 Mbps on 5GHz + 300 Mbps on 2.4GHz\n- Dual External High-Gain Antennas ensure stable wall-penetrating signals\n- Smart Signal Indicator Light helps find the perfect location for optimal coverage\n- Quick One-Touch WPS Setup for instant connection to any existing Wi-Fi router\n- Fast Ethernet Port to connect wired smart TVs, desktop PCs, or game consoles",
+        "main_specs": {
+            "Wireless Speed": "AC1200 (867 Mbps on 5 GHz + 300 Mbps on 2.4 GHz)",
+            "Frequency Bands": "Dual Band (2.4 GHz & 5 GHz Concurrent)",
+            "Antenna Type": "2x External Omnidirectional High-Gain Antennas",
+            "Ethernet Ports": "1x 10/100 Mbps RJ45 LAN Port",
+            "Wireless Standards": "IEEE 802.11ac/n/a 5GHz, IEEE 802.11b/g/n 2.4GHz",
+            "Security": "WPA-PSK / WPA2-PSK Wireless Encryption"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision WRE12C (DS-3WRE12C)",
+                "Category Segment": "Wi-Fi Range Extenders",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Direct Wall Plug (UK 3-Pin / Standard) + 1x 10/100M RJ45 Port",
+                "Architecture": "High-Efficiency Dual-Core Wi-Fi Signal Repeater Chipset",
+                "Thermal Efficiency": "Ventilated wall-mount chassis with rapid heat dissipation",
+                "Power Consumption": "<6.5W Max Operating Power"
+            },
+            "compatibility": {
+                "Operating Systems": "Works with any standard 802.11a/b/g/n/ac Wi-Fi router or access point",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "112mm x 75mm x 66mm (Weight: ~150g)",
+                "Included in Box": "1x Hikvision WRE12C AC1200 Wi-Fi Range Extender, Quick Setup Guide"
+            }
+        }
+    },
+    {
+        "num": 11,
+        "name": "ViewTech 450W Desktop ATX Power Supply Unit",
+        "product_code": "VWT-450W-PSU",
+        "slug": "viewtech-450w-atx-power-supply",
+        "brand_slug": "viewtech",
+        "category_slug": "products",
+        "sub_category_slug": "power-supplies",
+        "sub_category_name": "Power Supplies",
+        "image_file": "450W Power Supply.png",
+        "sale_price": 3600,
+        "price": 3960,
+        "cost_price": 2952,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The ViewTech 450W Desktop ATX Power Supply delivers steady, energy-efficient power for standard home and office desktop systems, integrated PCs, and surveillance NVR workstations.\n\nKey Highlights:\n- 450W Continuous Rated Power Output\n- Low-noise 120mm intelligent temperature-controlled cooling fan\n- Multi-Protection Safeguards: OVP (Over Voltage), UVP, OCP, and SCP (Short Circuit Protection)\n- Flexible standard cabling supports SATA drives, 24-pin ATX, and 4/8-pin CPU power",
+        "main_specs": {
+            "Wattage": "450 Watts",
+            "Form Factor": "Standard ATX",
+            "Cooling Fan": "120 mm Silent Hydraulic Bearing Fan",
+            "Input Voltage": "200 - 240 VAC 50Hz",
+            "Connectors": "1x 24-Pin ATX, 1x 4+4 Pin CPU, 3x SATA, 2x Molex",
+            "Protection": "OVP, OPP, SCP, UVP Built-in"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "ViewTech VT-450W",
+                "Category Segment": "Power Supplies",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard ATX 12V 2.31 Cabling",
+                "Architecture": "Single +12V Rail Design with High Current Output",
+                "Thermal Efficiency": "Smart thermal fan controller balances whisper-quiet operation and cooling",
+                "Power Consumption": "High energy conversion efficiency >75%"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal PC Component (Compatible with Intel and AMD desktop systems)",
+                "Certification": "CE, RoHS, CCC",
+                "Dimensions & Weight": "150mm x 140mm x 86mm (Weight: ~1.2 kg)",
+                "Included in Box": "1x ViewTech 450W ATX Power Supply, 1x AC Power Cable, Mounting Screws"
+            }
+        }
+    },
+    {
+        "num": 12,
+        "name": "Canon imageCLASS LBP6030 Compact Monochrome Laser Printer",
+        "product_code": "CAN-LBP6030-PRN",
+        "slug": "canon-imageclass-lbp6030-laser-printer",
+        "brand_slug": "canon",
+        "category_slug": "products",
+        "sub_category_slug": "printers",
+        "sub_category_name": "Printers",
+        "image_file": "imageCLASS_LBP6030_Laser_Printer-removebg-preview.png",
+        "sale_price": 0,
+        "price": 0,
+        "cost_price": 0,
+        "stock": 15,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The Canon imageCLASS LBP6030 is a space-saving, highly efficient monochrome desktop laser printer designed for personal home offices and small business commercial use.\n\nKey Highlights:\n- Fast Print Speed: Up to 18 ppm (pages per minute) on A4 paper\n- First Print Out Time in just 7.8 seconds with Quick First-Print technology\n- High Resolution: Up to 2400 x 600 dpi equivalent with Canon Automatic Image Refinement\n- Compact Footprint: Fits neatly on any desk or tight counter\n- Low Energy Consumption: Energy Star certified with On-Demand Fixing technology",
+        "main_specs": {
+            "Print Technology": "Monochrome Laser Beam Printing",
+            "Print Speed": "Up to 18 ppm (A4)",
+            "Print Resolution": "600 x 600 dpi (Up to 2400 x 600 dpi equivalent)",
+            "Paper Input Capacity": "150-Sheet Multi-Purpose Tray",
+            "Connectivity": "USB 2.0 High-Speed",
+            "Monthly Duty Cycle": "Up to 5,000 Pages"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Canon imageCLASS LBP6030",
+                "Category Segment": "Laser Printers",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 2.0 High Speed Interface",
+                "Architecture": "Canon On-Demand Fixing Laser Print Engine",
+                "Thermal Efficiency": "Instant warm-up with zero recovery time from standby mode",
+                "Power Consumption": "Max 840W; Standby approx. 1.8W; Sleep approx. 0.8W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11 / 10 / 8.1 / 7, macOS X 10.7+, Linux (CUPS driver)",
+                "Certification": "Energy Star, CE, RoHS Compliant",
+                "Dimensions & Weight": "364mm x 249mm x 199mm (Weight: ~5.0 kg)",
+                "Included in Box": "1x Canon LBP6030 Printer, 1x Starter Toner Cartridge 325, 1x USB Cable, 1x Power Cord, Setup CD"
+            }
+        }
+    },
+    {
+        "num": 13,
+        "name": "BT163 USB Wireless Bluetooth Audio Music Receiver",
+        "product_code": "OTH-BT163-RCV",
+        "slug": "bt163-usb-wireless-bluetooth-audio-receiver",
+        "brand_slug": "others",
+        "category_slug": "products",
+        "sub_category_slug": "routers-adapters",
+        "sub_category_name": "Routers & Adapters",
+        "image_file": "BT163 Wireless Music Receiver (Bluetooth).png",
+        "sale_price": 250,
+        "price": 275,
+        "cost_price": 205,
+        "stock": 100,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The BT163 USB Wireless Bluetooth Music Receiver transforms standard wired home speakers, desktop audio systems, and car stereos into wireless Bluetooth-enabled sound stations.\n\nKey Highlights:\n- Wireless Bluetooth Audio Streaming up to 10 meters\n- Universal 3.5mm Aux Audio Output + USB 5V power port\n- Instant Plug & Play: No driver installation required\n- Crystal-clear stereo sound transmission for calls, music, and GPS navigation",
+        "main_specs": {
+            "Bluetooth Version": "Bluetooth v2.1 + EDR (Supports A2DP Stereo)",
+            "Transmission Range": "Up to 10 Meters (Open Air)",
+            "Power Supply": "USB 5V Standard Bus Powered",
+            "Audio Output": "3.5 mm Aux Stereo Female Jack",
+            "Housing": "Compact White ABS Plastic Unibody",
+            "Compatibility": "Car Stereos, Desktop Speakers, Home Theaters, Smartphones"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "BT163 Wireless USB Music Receiver",
+                "Category Segment": "Audio Adapters & Receivers",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 2.0 Port (Power Only) + 3.5mm Stereo Aux Line Out",
+                "Architecture": "A2DP v1.2 / AVRCP / AVDTP Audio Decoding Chip",
+                "Thermal Efficiency": "Low power consumption without heat buildup",
+                "Power Consumption": "<0.5W operating power"
+            },
+            "compatibility": {
+                "Operating Systems": "Pairs with any Bluetooth-enabled iPhone, Android, Tablet, or PC",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "55mm x 20mm x 10mm (Weight: ~15g)",
+                "Included in Box": "1x BT163 Bluetooth USB Receiver, 1x 3.5mm Male-to-Male Audio Cable"
+            }
+        }
+    },
+    {
+        "num": 14,
+        "name": "Hiksemi 128GB SATA III 2.5\" Internal SSD (Silk Series)",
+        "product_code": "HIK-SILK-S-128G-SATA",
+        "slug": "hiksemi-128gb-sata-ssd-silk-s",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "128GB_SATA_SSD_Silk__S_-removebg-preview.png",
+        "sale_price": 7690,
+        "price": 8459,
+        "cost_price": 6305.8,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi 128GB Silk (S) Series 2.5\" SATA III SSD offers an instant speed boost to older laptops and desktop PCs, delivering fast boot times and snappy application loading.\n\nKey Highlights:\n- SATA III 6 Gb/s Interface for universal desktop and laptop compatibility\n- Sequential Read Speeds up to 530 MB/s and Write Speeds up to 400 MB/s\n- 3D TLC NAND Flash ensures high endurance and data retention\n- Shockproof and vibration-resistant with no moving mechanical parts",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Interface": "SATA III 6Gb/s (Backwards compatible with SATA II)",
+            "Form Factor": "2.5 Inch (7mm Ultra-Slim)",
+            "Max Read Speed": "Up to 530 MB/s",
+            "Max Write Speed": "Up to 400 MB/s",
+            "NAND Flash Type": "3D TLC NAND"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Silk (S) Series (HS-SSD-WAVE(S)/128G)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard SATA 7+15 Pin Data and Power Connector",
+                "Architecture": "Advanced Multi-Channel NAND Controller with TRIM & S.M.A.R.T support",
+                "Thermal Efficiency": "Operating Temperature: 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "Active Read/Write: <1.8W, Idle: <0.3W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11 / 10 / 8 / 7, Linux, macOS (via external enclosure)",
+                "Certification": "CE, FCC, RoHS, REACH",
+                "Dimensions & Weight": "100mm x 69.9mm x 7.0mm (Weight: ~45g)",
+                "Included in Box": "1x Hiksemi 128GB 2.5\" SATA III SSD"
+            }
+        }
+    },
+    {
+        "num": 15,
+        "name": "Oscoo 256GB 2.5\" SATA III SSD (Gold Series OS003)",
+        "product_code": "OSC-GOLD-256G-SATA",
+        "slug": "oscoo-256gb-gold-series-sata-ssd",
+        "brand_slug": "oscoo",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "2.5_SSD_Gold_Series_256GB__OS003_-removebg-preview.png",
+        "sale_price": 10950,
+        "price": 12045,
+        "cost_price": 8979,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Oscoo Gold Series 256GB 2.5\" SATA III SSD delivers high-performance storage acceleration with premium golden metallic casing and rapid read/write speeds.\n\nKey Highlights:\n- 256GB High-Speed Solid State Drive\n- Up to 550 MB/s Read and 500 MB/s Write speeds\n- Premium Gold Edition Aluminum Casing provides superior passive cooling\n- Supports NCQ, TRIM, S.M.A.R.T, and DevSleep low-power states",
+        "main_specs": {
+            "Storage Capacity": "256 GB",
+            "Interface": "SATA III 6Gb/s",
+            "Form Factor": "2.5 Inch (7mm Slim Profile)",
+            "Max Read Speed": "Up to 550 MB/s",
+            "Max Write Speed": "Up to 500 MB/s",
+            "Casing Material": "Golden Brushed Aluminum Alloy"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Oscoo Gold Series OS003 256GB",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard 2.5\" SATA III 7+15 Pin Connector",
+                "Architecture": "High-Tier 3D TLC Flash with LDPC Error Correction",
+                "Thermal Efficiency": "All-metal golden enclosure acts as a continuous heatsink",
+                "Power Consumption": "Max 2.0W, Deep Sleep <0.1W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8, macOS, Linux, CCTV NVRs",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "100mm x 69.85mm x 7.0mm (Weight: ~55g)",
+                "Included in Box": "1x Oscoo Gold Series 256GB SATA SSD"
+            }
+        }
+    },
+    {
+        "num": 16,
+        "name": "Hiksemi 256GB SATA III 2.5\" Internal SSD (Silk Series)",
+        "product_code": "HIK-SILK-S-256G-SATA",
+        "slug": "hiksemi-256gb-sata-ssd-silk-s",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "256GB_SATA_SSD_Silk__S_-removebg-preview.png",
+        "sale_price": 10750,
+        "price": 11825,
+        "cost_price": 8815,
+        "stock": 35,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi 256GB Silk (S) Series 2.5\" SATA III SSD provides generous storage capacity and exceptional system responsiveness for everyday computing, office multi-tasking, and fast gaming loads.\n\nKey Highlights:\n- 256GB High Speed Solid State Storage\n- Sequential Read Speeds up to 550 MB/s and Write Speeds up to 480 MB/s\n- 7mm ultra-thin form factor easily fits into laptops, ultrabooks, and desktop drive bays\n- Built-in ECC (Error Correcting Code) and Wear Leveling for maximum data integrity",
+        "main_specs": {
+            "Storage Capacity": "256 GB",
+            "Interface": "SATA III 6Gb/s",
+            "Form Factor": "2.5 Inch 7mm Slim",
+            "Max Read Speed": "Up to 550 MB/s",
+            "Max Write Speed": "Up to 480 MB/s",
+            "MTBF": "1,500,000 Hours"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Silk (S) Series (HS-SSD-WAVE(S)/256G)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "SATA 6Gb/s Standard Interface",
+                "Architecture": "3D TLC NAND Flash Memory Architecture",
+                "Thermal Efficiency": "Efficient thermal dissipation without noise",
+                "Power Consumption": "Operating: 1.5W, Idle: 0.3W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, Linux Kernel 2.6+, macOS",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "100mm x 69.9mm x 7.0mm (Weight: ~45g)",
+                "Included in Box": "1x Hiksemi 256GB 2.5\" SATA SSD"
+            }
+        }
+    },
+    {
+        "num": 17,
+        "name": "Hiksemi 256GB M.2 2280 NVMe PCIe SSD (Silk Series)",
+        "product_code": "HIK-SILK-P-256G-NVME",
+        "slug": "hiksemi-256gb-nvme-ssd-silk-p",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "256GB_NVMe_SSD_Silk__P_-removebg-preview.png",
+        "sale_price": 16500,
+        "price": 18150,
+        "cost_price": 13530,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi 256GB Silk (P) M.2 NVMe PCIe SSD unleashes high-speed PCIe Gen 3x4 performance, delivering rapid boot times and instantaneous game level loading.\n\nKey Highlights:\n- Ultra-Fast PCIe Gen 3.0 x4 Interface with NVMe 1.3 compliance\n- Blazing Speeds: Up to 2400 MB/s Read and 1800 MB/s Write\n- M.2 2280 compact form factor fits desktop motherboards and modern laptops\n- Advanced thermal throttling and dynamic SLC caching support",
+        "main_specs": {
+            "Storage Capacity": "256 GB",
+            "Interface": "PCIe Gen 3.0 x4, NVMe 1.3",
+            "Form Factor": "M.2 2280 (Single-Sided)",
+            "Max Read Speed": "Up to 2400 MB/s",
+            "Max Write Speed": "Up to 1800 MB/s",
+            "NAND Flash Type": "High-Grade 3D NAND"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Silk (P) Series (HS-SSD-FUTURE-LITE/256G)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "M.2 M-Key PCIe 3.0 x4",
+                "Architecture": "High-Performance NVMe Flash Controller with HMB (Host Memory Buffer)",
+                "Thermal Efficiency": "Engineered with graphene copper foil label for superior thermal transfer",
+                "Power Consumption": "Ultra-low power L1.2 sub-state <5mW"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11, Windows 10, Linux Kernel 4.15+",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "80mm x 22mm x 2.2mm (Weight: ~6g)",
+                "Included in Box": "1x Hiksemi 256GB M.2 NVMe SSD"
+            }
+        }
+    },
+    {
+        "num": 18,
+        "name": "Verbatim Vi3000 512GB M.2 2280 PCIe NVMe SSD",
+        "product_code": "VER-VI3000-512G-NVME",
+        "slug": "verbatim-vi3000-512gb-nvme-ssd",
+        "brand_slug": "verbatim",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "M.2_2280_Vi3000_512GB_NVMe_SSD-removebg-preview.png",
+        "sale_price": 24750,
+        "price": 27225,
+        "cost_price": 20295,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Verbatim Vi3000 512GB M.2 PCIe NVMe SSD offers relentless speed, massive storage, and uncompromising reliability for demanding creative workflows, video editing, and pro gaming.\n\nKey Highlights:\n- PCIe Generation 3.0 x4 with NVMe 1.3 architecture\n- Extreme Read Speeds up to 3100 MB/s and Write Speeds up to 2200 MB/s\n- 512GB High Capacity accommodates large game libraries and operating systems\n- 6x faster performance compared to standard SATA SSDs",
+        "main_specs": {
+            "Storage Capacity": "512 GB",
+            "Interface": "PCIe Gen 3.0 x4, NVMe 1.3",
+            "Form Factor": "M.2 2280",
+            "Max Read Speed": "Up to 3100 MB/s",
+            "Max Write Speed": "Up to 2200 MB/s",
+            "Endurance": "TBW: 240 TBW"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Verbatim Vi3000 Internal NVMe PCIe SSD (49364)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "PCI Express 3.0 x4 M.2 2280 M-Key",
+                "Architecture": "3D TLC NAND with Smart SLC Caching",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "Active read: 3.7W, Active write: 3.2W, Idle: 0.03W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11 / 10 / 8, Linux, macOS (compatible motherboards)",
+                "Certification": "CE, FCC, RoHS, WEEE",
+                "Dimensions & Weight": "80mm x 22mm x 2.3mm (Weight: ~7g)",
+                "Included in Box": "1x Verbatim Vi3000 512GB M.2 NVMe SSD, Quick Installation Guide"
+            }
+        }
+    },
+    {
+        "num": 19,
+        "name": "Canon PIXMA G2010 All-in-One Ink Tank Color Printer",
+        "product_code": "CAN-G2010-PRN",
+        "slug": "canon-pixma-g2010-ink-tank-printer",
+        "brand_slug": "canon",
+        "category_slug": "products",
+        "sub_category_slug": "printers",
+        "sub_category_name": "Printers",
+        "image_file": "PIXMA_G2010_Printer-removebg-preview.png",
+        "sale_price": 0,
+        "price": 0,
+        "cost_price": 0,
+        "stock": 15,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The Canon PIXMA G2010 is an ultra-low-cost, high-yield All-in-One refillable ink tank printer designed for high-volume color printing, copying, and high-resolution flatbed scanning.\n\nKey Highlights:\n- 3-in-1 Multifunction: Print, Scan, Copy\n- Integrated Refillable Ink Tanks: Delivers up to 7,000 color pages and 6,000 black pages\n- Print Speed: 8.8 ipm (black) / 5.0 ipm (color)\n- Borderless Photo Printing up to A4 size with vivid dye-based color inks\n- 1.2-inch Segment LCD Screen for intuitive standalone copy configuration",
+        "main_specs": {
+            "Functions": "Print, Scan, Copy",
+            "Print Speed": "8.8 ipm (Black) / 5.0 ipm (Color)",
+            "Print Resolution": "Up to 4800 x 1200 dpi",
+            "Scanner Type": "Flatbed CIS Scanner (600 x 1200 dpi)",
+            "Ink System": "4-Color Built-in Refillable Ink Tank (GI-790)",
+            "Paper Handling": "100-Sheet Rear Paper Feeder"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Canon PIXMA G2010",
+                "Category Segment": "All-in-One Ink Tank Printers",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 2.0 High-Speed",
+                "Architecture": "Canon FINE Inkjet Cartridge & Ink Tank Fluid Architecture",
+                "Thermal Efficiency": "Cool operation with minimal power draw",
+                "Power Consumption": "Operating: Approx. 9W, Standby: Approx. 0.6W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11, Windows 10, Windows 8.1, Windows 7 SP1",
+                "Certification": "Energy Star, CE, RoHS",
+                "Dimensions & Weight": "445mm x 330mm x 163mm (Weight: ~6.3 kg)",
+                "Included in Box": "1x Canon PIXMA G2010 Printer, 1x Set of GI-790 Ink Bottles, 1x Power Cord, 1x USB Cable, Setup Guide"
+            }
+        }
+    },
+    {
+        "num": 20,
+        "name": "Hiksemi 128GB M.2 2280 NVMe PCIe SSD (Silk Series)",
+        "product_code": "HIK-SILK-P-128G-NVME",
+        "slug": "hiksemi-128gb-nvme-ssd-silk-p",
+        "brand_slug": "hiksemi",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "128GB_NVMe_SSD_Silk__P_-removebg-preview.png",
+        "sale_price": 9500,
+        "price": 10450,
+        "cost_price": 7790,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Hiksemi 128GB Silk (P) M.2 NVMe PCIe SSD is the perfect high-speed boot drive upgrade, boosting system startup speeds and app performance to next-gen levels.\n\nKey Highlights:\n- PCIe Gen 3.0 x4 Interface with NVMe 1.3 protocol\n- Sequential Read Speeds up to 2000 MB/s and Write Speeds up to 1200 MB/s\n- Ultra-compact M.2 2280 form factor\n- Advanced wear leveling and LDPC error correction algorithms",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Interface": "PCIe Gen 3.0 x4 NVMe 1.3",
+            "Form Factor": "M.2 2280",
+            "Max Read Speed": "Up to 2000 MB/s",
+            "Max Write Speed": "Up to 1200 MB/s",
+            "NAND Flash": "3D TLC NAND"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hiksemi Silk (P) Series (HS-SSD-FUTURE-LITE/128G)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "M.2 PCIe Gen3 x4",
+                "Architecture": "Multi-Channel Flash Controller with Host Memory Buffer",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "Low power consumption <2W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11 / 10, Linux",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "80mm x 22mm x 2.2mm (Weight: ~6g)",
+                "Included in Box": "1x Hiksemi 128GB M.2 NVMe SSD"
+            }
+        }
+    },
+    {
+        "num": 21,
+        "name": "MemoryGhost R16 8GB Metal USB 2.0 Flash Drive",
+        "product_code": "MMG-R16-8GB-USB",
+        "slug": "memoryghost-r16-8gb-usb-flash-drive",
+        "brand_slug": "memoryghost",
+        "category_slug": "products",
+        "sub_category_slug": "flash-drives",
+        "sub_category_name": "Flash Drives",
+        "image_file": "R16_8GB_USB_Flash_Drive-removebg-preview.png",
+        "sale_price": 1300,
+        "price": 1430,
+        "cost_price": 1066,
+        "stock": 50,
+        "condition": "Brand New",
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "The MemoryGhost R16 8GB USB 2.0 Flash Drive features an all-metal zinc alloy body designed for durable, portable storage of school files, office documents, and music tracks.\n\nKey Highlights:\n- 8GB Compact Flash Storage\n- Robust metallic alloy waterproof and shockproof construction\n- Built-in key ring loop for everyday carry\n- Universal plug-and-play across PCs, sound systems, and laptops",
+        "main_specs": {
+            "Storage Capacity": "8 GB",
+            "Interface": "USB 2.0 High Speed",
+            "Casing Material": "Matte Silver Zinc Alloy",
+            "Form Factor": "Ultra-Slim Capless",
+            "Compatibility": "Windows, Mac, Linux, Car Audio"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "MemoryGhost R16 Series (8GB)",
+                "Category Segment": "Flash Drives",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 2.0 Type-A",
+                "Architecture": "UDP Integrated Waterproof Flash Chip",
+                "Thermal Efficiency": "Metal body conducts heat efficiently",
+                "Power Consumption": "<0.8W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, macOS, Linux, Chrome OS",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "39mm x 12mm x 4.5mm (Weight: ~8g)",
+                "Included in Box": "1x MemoryGhost R16 8GB Metal USB Flash Drive"
+            }
+        }
+    },
+    {
+        "num": 22,
+        "name": "MemoryGhost 64GB High Speed Micro SDXC Memory Card",
+        "product_code": "MMG-64GB-SD",
+        "slug": "memoryghost-64gb-microsd-card",
+        "brand_slug": "memoryghost",
+        "category_slug": "products",
+        "sub_category_slug": "memory-cards",
+        "sub_category_name": "Memory Cards",
+        "image_file": "64GB_Micro_SD_Card-removebg-preview.png",
+        "sale_price": 4200,
+        "price": 4620,
+        "cost_price": 3444,
+        "stock": 40,
+        "condition": "Brand New",
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "The MemoryGhost 64GB Micro SDXC Memory Card offers reliable high-speed data recording and rapid app performance for Android smartphones, dash cams, and home security cameras.\n\nKey Highlights:\n- 64GB High-Endurance Storage\n- Class 10 & UHS-I high-speed transfer speeds up to 90 MB/s\n- Supports Full HD 1080p continuous video recording\n- Protected against water, shock, extreme temperature, and X-rays",
+        "main_specs": {
+            "Storage Capacity": "64 GB",
+            "Speed Class": "Class 10, UHS-I U1",
+            "Max Read Speed": "Up to 90 MB/s",
+            "Form Factor": "MicroSDXC",
+            "Compatibility": "Smartphones, Tablets, CCTV Cameras, Dashcams"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "MemoryGhost High Speed MicroSDXC 64GB",
+                "Category Segment": "Memory Cards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "MicroSDXC UHS-I Interface",
+                "Architecture": "Multi-Level Cell 3D NAND",
+                "Thermal Efficiency": "Operational temp: -25\u00b0C to 85\u00b0C",
+                "Power Consumption": "Low power consumption"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal Android, Windows, Mac compatibility",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "15mm x 11mm x 1mm (Weight: ~0.5g)",
+                "Included in Box": "1x MemoryGhost 64GB Micro SDXC Card"
+            }
+        }
+    },
+    {
+        "num": 23,
+        "name": "Samsung 27\" LED Full HD TV Monitor (HDMI / AV / USB)",
+        "product_code": "SAM-27-TV-MON",
+        "slug": "samsung-27-tv-monitor",
+        "brand_slug": "samsung",
+        "category_slug": "products",
+        "sub_category_slug": "monitors-products",
+        "sub_category_name": "Monitors",
+        "image_file": "Samsung_27_TV_Monitor-removebg-preview.png",
+        "sale_price": 18500,
+        "price": 20350,
+        "cost_price": 15170,
+        "stock": 15,
+        "condition": "Brand New",
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "The Samsung 27\" LED Full HD TV Monitor combines vibrant desktop monitor clarity with built-in TV receiver and multimedia capabilities, perfect for compact bedrooms, dorms, and retail display.\n\nKey Highlights:\n- 27-Inch Full HD (1920 x 1080) LED Backlit Display\n- Multi-Input Flexibility: HDMI, AV Video, USB Media Playback, and RF Antenna Tuner\n- Built-in High-Fidelity Stereo Speakers\n- Wide 178\u00b0 viewing angles with Samsung Wide Color Enhancer technology\n- Full Function Remote Control included",
+        "main_specs": {
+            "Screen Size": "27 Inch Diagonal",
+            "Resolution": "1920 x 1080 Full HD",
+            "Panel Type": "VA / LED Backlit",
+            "Audio Output": "Integrated 2x 5W Stereo Speakers",
+            "Video Connectivity": "1x HDMI, 1x AV Composite, 1x USB 2.0, 1x RF Tuner In",
+            "Mounting Support": "VESA 100 x 100 mm Wall Mountable"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Samsung 27\" Multimedia TV Monitor Series",
+                "Category Segment": "TV Monitors & Displays",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "HDMI, AV RCA In, USB Multimedia Port, 3.5mm Headphone Jack",
+                "Architecture": "Samsung High-Definition Image Processing Engine",
+                "Thermal Efficiency": "Cool operating LED panel with smart eco sensor",
+                "Power Consumption": "<35W Max, Standby <0.3W"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with all Desktop PCs, Laptops, TV Cable Decoders, CCTV DVRs, and Consoles",
+                "Certification": "CE, EnergyStar, RoHS",
+                "Dimensions & Weight": "620mm x 440mm x 170mm with stand (Weight: ~4.5 kg)",
+                "Included in Box": "1x Samsung 27\" TV Monitor, 1x Infrared Remote Control, 1x Power Adapter & Cable, Desk Stand"
+            }
+        }
+    },
+    {
+        "num": 24,
+        "name": "MemoryGhost K009 64GB Swivel Metal Pen Drive",
+        "product_code": "MMG-K009-64GB-USB",
+        "slug": "memoryghost-k009-64gb-swivel-pen-drive",
+        "brand_slug": "memoryghost",
+        "category_slug": "products",
+        "sub_category_slug": "flash-drives",
+        "sub_category_name": "Flash Drives",
+        "image_file": "K009_64GB_Pen_Drive-removebg-preview.png",
+        "sale_price": 1575,
+        "price": 1732.5,
+        "cost_price": 1291.5,
+        "stock": 45,
+        "condition": "Brand New",
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "The MemoryGhost K009 64GB Swivel Pen Drive features an innovative 360-degree rotating metal shield that protects the USB connector without the hassle of a lost cap.\n\nKey Highlights:\n- 64GB High Capacity Flash Storage\n- 360-degree durable metallic swivel protection design\n- Integrated keychain loop for portable on-the-go convenience\n- Reliable USB 2.0 high-speed file transfer and universal plug & play",
+        "main_specs": {
+            "Storage Capacity": "64 GB",
+            "Interface": "USB 2.0 High Speed",
+            "Mechanism": "360\u00b0 Rotating Swivel Metal Clip",
+            "Body Material": "Brushed Steel & Durable Composite",
+            "Compatibility": "PCs, Laptops, Mac, Smart TVs, Audio Systems"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "MemoryGhost K009 Swivel Series (64GB)",
+                "Category Segment": "Flash Drives",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard USB Type-A",
+                "Architecture": "Reliable 3D NAND Flash Memory",
+                "Thermal Efficiency": "Metal clip assists in heat dissipation",
+                "Power Consumption": "Standard USB bus powered (<1W)"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, macOS, Linux, Chrome OS",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "56mm x 18mm x 10mm (Weight: ~12g)",
+                "Included in Box": "1x MemoryGhost K009 64GB Swivel USB Flash Drive"
+            }
+        }
+    },
+    {
+        "num": 25,
+        "name": "UltraHero CR2032 3V Lithium Coin Cell Batteries (5-Pack)",
+        "product_code": "UTH-CR2032-5PK",
+        "slug": "ultrahero-cr2032-lithium-batteries-5pk",
+        "brand_slug": "ultrahero",
+        "category_slug": "products",
+        "sub_category_slug": "batteries",
+        "sub_category_name": "Batteries",
+        "image_file": "CR2032_Lithium_Battery__5_pcs_-removebg-preview.png",
+        "sale_price": 25,
+        "price": 27.5,
+        "cost_price": 20.5,
+        "stock": 200,
+        "condition": "Brand New",
+        "warranty_duration": 6,
+        "warranty_unit": "Months",
+        "description": "UltraHero CR2032 3V Lithium Coin Batteries provide dependable, long-lasting power for computer motherboards (BIOS/CMOS backup), car remote keys, digital scales, and watches.\n\nKey Highlights:\n- 5-Pack Value Blister Strip of 3V Lithium Coin Cells\n- High energy density with steady voltage discharge curve\n- Leak-resistant design with up to 5 years shelf storage life\n- Zero mercury added for eco-friendly safety",
+        "main_specs": {
+            "Battery Type": "CR2032 Lithium Coin / Button Cell",
+            "Nominal Voltage": "3.0 Volts",
+            "Package Quantity": "5 Batteries per Blister Card",
+            "Typical Capacity": "225 mAh",
+            "Chemical System": "Lithium Manganese Dioxide (Li/MnO2)",
+            "Applications": "Motherboard BIOS, Car Key Fobs, Watches, Calculators"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "UltraHero CR2032-5PK",
+                "Category Segment": "Lithium Coin Batteries",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard Button Cell Terminal (Positive Top / Negative Bottom)",
+                "Architecture": "Sealed Anti-Leak Casing Technology",
+                "Thermal Efficiency": "Wide Operating Temperature: -20\u00b0C to 60\u00b0C",
+                "Power Consumption": "Ultra-low self-discharge (<1% per year at 20\u00b0C)"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal Hardware Component (DL2032, ECR2032, BR2032, KCR2032 equivalent)",
+                "Certification": "CE, RoHS, UN38.3 Compliant",
+                "Dimensions & Weight": "Diameter: 20.0mm, Height: 3.2mm (Weight: ~3.1g per cell)",
+                "Included in Box": "1x Blister Strip Containing 5x UltraHero CR2032 3V Lithium Batteries"
+            }
+        }
+    },
+    {
+        "num": 26,
+        "name": "UltraHero CR1220 3V Lithium Coin Cell Batteries (5-Pack)",
+        "product_code": "UTH-CR1220-5PK",
+        "slug": "ultrahero-cr1220-lithium-batteries-5pk",
+        "brand_slug": "ultrahero",
+        "category_slug": "products",
+        "sub_category_slug": "batteries",
+        "sub_category_name": "Batteries",
+        "image_file": "CR2032_Lithium_Battery__5_pcs_-removebg-preview.png",
+        "sale_price": 85,
+        "price": 93.5,
+        "cost_price": 69.7,
+        "stock": 150,
+        "condition": "Brand New",
+        "warranty_duration": 6,
+        "warranty_unit": "Months",
+        "description": "UltraHero CR1220 3V Micro Lithium Coin Batteries are precision-engineered for compact electronic devices including motherboard CMOS chips, digital thermometers, and keyless remotes.\n\nKey Highlights:\n- 5-Pack Blister Card of High Quality 3V Lithium Micro Cells\n- Consistent 3.0V output ensures accurate timekeeping and sensor readings\n- Anti-leakage seal structure protects delicate miniature electronics\n- Long shelf life with low internal self-discharge",
+        "main_specs": {
+            "Battery Type": "CR1220 Lithium Micro Coin Cell",
+            "Nominal Voltage": "3.0 Volts",
+            "Package Quantity": "5 Batteries per Pack",
+            "Typical Capacity": "40 mAh",
+            "Chemical System": "Lithium Manganese Dioxide",
+            "Applications": "Watches, Motherboard CMOS, Medical Thermometers, Keyless Remotes"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "UltraHero CR1220-5PK",
+                "Category Segment": "Lithium Coin Batteries",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Precision 12mm Button Contacts",
+                "Architecture": "Corrosion-resistant stainless steel shell",
+                "Thermal Efficiency": "Operating Range: -20\u00b0C to 60\u00b0C",
+                "Power Consumption": "Long duration micro-amp discharge profile"
+            },
+            "compatibility": {
+                "Operating Systems": "Direct replacement for DL1220, BR1220, ECR1220, 5012LC",
+                "Certification": "CE, RoHS, UN38.3",
+                "Dimensions & Weight": "Diameter: 12.5mm, Height: 2.0mm (Weight: ~0.8g per cell)",
+                "Included in Box": "1x Blister Strip Containing 5x UltraHero CR1220 3V Lithium Batteries"
+            }
+        }
+    },
+    {
+        "num": 27,
+        "name": "Pantum P2500W Monochrome Laser Printer (Wi-Fi)",
+        "product_code": "PAN-P2500W-PRN",
+        "slug": "pantum-p2500w-monochrome-laser-printer",
+        "brand_slug": "pantum",
+        "category_slug": "products",
+        "sub_category_slug": "printers",
+        "sub_category_name": "Printers",
+        "image_file": "P2500W_Monochrome_Laser_Printer-removebg-preview.png",
+        "sale_price": 34860,
+        "price": 38346,
+        "cost_price": 28585.2,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The Pantum P2500W is a sleek, ultra-compact single-function monochrome laser printer featuring built-in Wi-Fi and mobile printing designed for modern home and small office setups.\n\nKey Highlights:\n- Fast Printing: Up to 22 ppm (A4) / 23 ppm (Letter)\n- Wireless Connectivity: Print effortlessly from smartphones, tablets, and laptops via Wi-Fi & Wi-Fi Direct\n- Compact Footprint: One of the smallest laser printers on the market, fits easily on tight desks\n- Robust Metal Frame: Durable internal steel construction ensures long-term operational stability\n- Pantum Mobile App: One-step installation and instant document printing",
+        "main_specs": {
+            "Print Technology": "Electrophotographic Monochrome Laser",
+            "Print Speed": "Up to 22 ppm (A4)",
+            "Resolution": "Up to 1200 x 1200 dpi",
+            "Connectivity": "High-Speed USB 2.0 + Wi-Fi 802.11b/g/n",
+            "Monthly Duty Cycle": "Up to 15,000 Pages",
+            "Paper Tray Capacity": "150 Sheets Input"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Pantum P2500W Series",
+                "Category Segment": "Wireless Laser Printers",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 2.0 + 2.4GHz Wi-Fi (Wi-Fi Direct Supported)",
+                "Architecture": "600MHz Processor with 128MB High-Speed Memory",
+                "Thermal Efficiency": "Fast First Page Out in less than 7.8 seconds",
+                "Power Consumption": "Printing: 370W, Ready: 38W, Sleep Mode: <2W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8.1/7, macOS 10.7+, Linux (Ubuntu, Debian, Fedora), Android, iOS",
+                "Certification": "Energy Star, CE, FCC, RoHS",
+                "Dimensions & Weight": "337mm x 220mm x 178mm (Weight: ~4.75 kg)",
+                "Included in Box": "1x Pantum P2500W Printer, 1x Starter Toner Cartridge (PC-211EV), 1x USB Cable, 1x Power Cord"
+            }
+        }
+    },
+    {
+        "num": 28,
+        "name": "OKOP KP-560 Disco Series Wireless RGB Soundbar",
+        "product_code": "OKOP-KP-560-SND",
+        "slug": "okop-kp-560-disco-series-wireless-soundbar",
+        "brand_slug": "okop",
+        "category_slug": "products",
+        "sub_category_slug": "bluetooth-speakers",
+        "sub_category_name": "Bluetooth Speakers",
+        "image_file": "KP-560_Disco_Series_Wireless_Soundbar-removebg-preview.png",
+        "sale_price": 1565,
+        "price": 1710,
+        "cost_price": 1283.3,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The OKOP KP-560 Disco Series Wireless Soundbar delivers rich stereo sound with deep bass and vibrant dynamic RGB party light effects, perfect for PC gaming and home entertainment.\n\nKey Highlights:\n- Powerful Dual Stereo Speakers with passive bass radiator\n- Dynamic RGB Disco Light Effects sync with music beats\n- Wireless Bluetooth 5.0 + USB Flash Drive + Micro SD Card + Aux Input\n- Built-in Rechargeable Lithium Battery for portable outdoor and indoor use\n- Sleek horizontal soundbar form factor fits neatly under monitors and TVs",
+        "main_specs": {
+            "Output Power": "10 Watts (Dual 5W Drivers + Bass Diaphragm)",
+            "Bluetooth Version": "Bluetooth v5.0 (Up to 10m Range)",
+            "Battery Capacity": "1200 mAh Rechargeable Lithium-Ion",
+            "Playtime": "3 - 6 Hours Continuous Playback",
+            "Lighting": "Multi-Color Dynamic RGB Disco Light Modes",
+            "Input Modes": "Bluetooth, USB Flash, TF Card, 3.5mm Aux Line-In"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "OKOP KP-560 Disco Series",
+                "Category Segment": "Bluetooth Soundbars",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Bluetooth 5.0, USB-A Port, TF Card Slot, 3.5mm Aux In, Micro USB Charging",
+                "Architecture": "Dual 52mm High-Magnetic Drivers with Dual Bass Reflex Radiators",
+                "Thermal Efficiency": "Low-heat efficient Class-D Digital Audio Amplifier",
+                "Power Consumption": "5V DC 1A USB Charging"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal Bluetooth & Aux compatibility (Smartphones, PCs, Laptops, Smart TVs)",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "380mm x 65mm x 65mm (Weight: ~650g)",
+                "Included in Box": "1x OKOP KP-560 Soundbar, 1x USB Charging Cable, 1x 3.5mm Aux Audio Cable"
+            }
+        }
+    },
+    {
+        "num": 29,
+        "name": "Blackbox BB24120HD 24\" IPS 120Hz Ultra-Fast Gaming Monitor",
+        "product_code": "BBX-24120HD-24-MON",
+        "slug": "blackbox-bb24120hd-24-ips-gaming-monitor",
+        "brand_slug": "blackbox",
+        "category_slug": "products",
+        "sub_category_slug": "monitors-products",
+        "sub_category_name": "Monitors",
+        "image_file": "BB24120HD_24_IPS_Gaming_Monitor-removebg-preview.png",
+        "sale_price": 35500,
+        "price": 39050,
+        "cost_price": 29110,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Blackbox BB24120HD is a high-performance 24-inch IPS gaming monitor featuring a blistering 120Hz refresh rate and 1ms response time for competitive esports gaming and buttery-smooth graphics.\n\nKey Highlights:\n- 24-Inch Full HD (1920 x 1080) Vibrant IPS Panel\n- High 120Hz Refresh Rate delivers fluid frame rates with zero motion blur\n- 1ms Rapid Response Time for instant esports competitive reaction\n- AMD FreeSync / G-Sync Compatible technology eliminates screen tearing\n- 3-Sided Frameless Bezel with HDMI and DisplayPort inputs",
+        "main_specs": {
+            "Screen Size": "24 Inch Diagonal",
+            "Panel Type": "Super IPS (In-Plane Switching)",
+            "Resolution": "1920 x 1080 (Full HD)",
+            "Refresh Rate": "120 Hz",
+            "Response Time": "1 ms MPRT",
+            "Inputs": "1x DisplayPort, 1x HDMI 2.0, 1x Audio Out"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Blackbox BB24120HD Esports Gaming Series",
+                "Category Segment": "Gaming Monitors",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "DisplayPort 1.2, HDMI 2.0, 3.5mm Audio Out, DC Power Jack",
+                "Architecture": "High Color Gamut 99% sRGB Fast IPS Liquid Crystal Panel",
+                "Thermal Efficiency": "Rear aerodynamic passive heat dissipation vents",
+                "Power Consumption": "<28W Active Gaming, <0.5W Standby"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10, PlayStation 5, Xbox Series X/S, Nintendo Switch",
+                "Certification": "CE, FCC, RoHS, FreeSync Certified",
+                "Dimensions & Weight": "541mm x 415mm x 175mm with stand (Weight: ~3.5 kg)",
+                "Included in Box": "1x Blackbox BB24120HD Gaming Monitor, 1x HDMI Cable, 1x Power Adapter, Ergonomic Tilt Stand"
+            }
+        }
+    },
+    {
+        "num": 30,
+        "name": "Blackbox BB22751 22\" Full HD 75Hz Frameless Monitor",
+        "product_code": "BBX-22751-22-MON",
+        "slug": "blackbox-bb22751-22-office-monitor",
+        "brand_slug": "blackbox",
+        "category_slug": "products",
+        "sub_category_slug": "monitors-products",
+        "sub_category_name": "Monitors",
+        "image_file": "BB22751_22_Office_Monitor-removebg-preview.png",
+        "sale_price": 22900,
+        "price": 25190,
+        "cost_price": 18778,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Blackbox BB22751 is a compact, elegant 22-inch Full HD frameless desktop monitor designed for space-conscious offices, accounting desks, and home workstations.\n\nKey Highlights:\n- 22-Inch Full HD (1920 x 1080) Widescreen Display\n- 75Hz Refresh Rate with Low Blue Light and Flicker-Free technology\n- Minimalist 3-sided frameless design maximizes screen estate\n- HDMI and VGA inputs provide universal PC and CCTV DVR compatibility\n- Tilt-adjustable sturdy metal-accented stand",
+        "main_specs": {
+            "Screen Size": "21.5 / 22 Inch Diagonal",
+            "Resolution": "1920 x 1080 Full HD",
+            "Refresh Rate": "75 Hz",
+            "Response Time": "5 ms",
+            "Video Connectivity": "1x HDMI, 1x VGA",
+            "Aspect Ratio": "16:9 Widescreen"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Blackbox BB22751",
+                "Category Segment": "Desktop Monitors",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "HDMI 1.4, VGA (D-Sub), 12V DC Input",
+                "Architecture": "LED Backlit Widescreen Liquid Crystal Panel",
+                "Thermal Efficiency": "Low energy thermal profile",
+                "Power Consumption": "<20W Typical Power Usage"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8, macOS, Linux, CCTV NVR/DVR",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "495mm x 380mm x 165mm (Weight: ~2.8 kg)",
+                "Included in Box": "1x Blackbox BB22751 22\" Monitor, 1x Power Adapter, 1x HDMI Cable, Desk Stand"
+            }
+        }
+    },
+    {
+        "num": 31,
+        "name": "Monova M2710 27\" Full HD 100Hz Frameless Desktop Monitor",
+        "product_code": "MNV-M2710-27-MON",
+        "slug": "monova-m2710-27-100hz-monitor",
+        "brand_slug": "monova",
+        "category_slug": "products",
+        "sub_category_slug": "monitors-products",
+        "sub_category_name": "Monitors",
+        "image_file": "M2710_27_100Hz_Monitor-removebg-preview.png",
+        "sale_price": 36000,
+        "price": 39600,
+        "cost_price": 29520,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Monova M2710 delivers an expansive 27-inch Full HD display with an ultra-smooth 100Hz refresh rate, combining vivid colors, wide viewing angles, and ultra-slim modern bezels.\n\nKey Highlights:\n- 27-Inch Full HD (1920 x 1080) Immersive Widescreen\n- High 100Hz Refresh Rate delivers significantly smoother scrolling and fluid gaming motion than standard 60Hz panels\n- Ultra-Slim 3-Sided Borderless Profile for multi-screen panoramas\n- HDMI and VGA inputs with integrated Audio Out jack\n- Eye-Care Technology: Flicker-Free and Low Blue Light filter",
+        "main_specs": {
+            "Screen Size": "27 Inch Diagonal",
+            "Resolution": "1920 x 1080 (Full HD)",
+            "Refresh Rate": "100 Hz",
+            "Panel Type": "IPS Grade Widescreen",
+            "Viewing Angles": "178\u00b0 Horizontal / 178\u00b0 Vertical",
+            "Connectivity": "1x HDMI, 1x VGA, 1x Audio Out"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Monova M2710 Series",
+                "Category Segment": "Desktop Monitors",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "HDMI 1.4, VGA, 3.5mm Headphone Jack, 12V DC Port",
+                "Architecture": "Advanced 8-Bit Wide-Color LCD Panel with Fast Response Circuitry",
+                "Thermal Efficiency": "Low heat emission with passive ventilation slots",
+                "Power Consumption": "<30W Max Operation, <0.5W Standby"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8, macOS, Linux, Game Consoles",
+                "Certification": "CE, FCC, RoHS, Energy Star",
+                "Dimensions & Weight": "615mm x 450mm x 185mm with stand (Weight: ~4.2 kg)",
+                "Included in Box": "1x Monova M2710 27\" Monitor, 1x HDMI Cable, 1x Power Adapter, Stand Base & Neck"
+            }
+        }
+    },
+    {
+        "num": 32,
+        "name": "Blackbox BB19750 19\" HD+ 75Hz Compact Office Monitor",
+        "product_code": "BBX-19750-19-MON",
+        "slug": "blackbox-bb19750-19-office-monitor",
+        "brand_slug": "blackbox",
+        "category_slug": "products",
+        "sub_category_slug": "monitors-products",
+        "sub_category_name": "Monitors",
+        "image_file": "BB19750_19_Office_Monitor-removebg-preview.png",
+        "sale_price": 19500,
+        "price": 21450,
+        "cost_price": 15990,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Blackbox BB19750 is a compact 19-inch desktop monitor specifically designed for space-constrained POS checkout counters, CCTV surveillance stations, and reception workstations.\n\nKey Highlights:\n- 19-Inch HD+ (1440 x 900) Widescreen Display\n- 75Hz Refresh Rate delivers clear, tear-free motion\n- Ultra-compact footprint fits tight reception counters and retail cash registers\n- Dual Input: HDMI and VGA ports for modern and legacy PC systems\n- VESA 75x75mm wall-mount compatible for security rack or arm mounting",
+        "main_specs": {
+            "Screen Size": "19 Inch Diagonal (18.5\" Viewable)",
+            "Resolution": "1440 x 900 (HD+ 16:10)",
+            "Refresh Rate": "75 Hz",
+            "Response Time": "5 ms",
+            "Video Inputs": "1x HDMI, 1x VGA",
+            "Mounting": "VESA 75 x 75 mm Mountable"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Blackbox BB19750",
+                "Category Segment": "Compact Monitors",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "HDMI, VGA (D-Sub 15-pin), DC 12V In",
+                "Architecture": "Reliable LED Backlit TN Panel",
+                "Thermal Efficiency": "Eco-efficient low-power heat profile",
+                "Power Consumption": "<18W Typical Operating Power"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, POS Systems, CCTV DVR / NVR",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "440mm x 340mm x 150mm with stand (Weight: ~2.3 kg)",
+                "Included in Box": "1x Blackbox BB19750 19\" Monitor, 1x Power Adapter, 1x HDMI Cable, Stand"
+            }
+        }
+    },
+    {
+        "num": 33,
+        "name": "HDMI 60M Single Cat5e/6 Cable Extender with IR Support",
+        "product_code": "OTH-HDMI-EXT-60M",
+        "slug": "hdmi-60m-single-cable-extender",
+        "brand_slug": "others",
+        "category_slug": "products",
+        "sub_category_slug": "range-extenders",
+        "sub_category_name": "Range Extenders",
+        "image_file": "HDMI_60M_Extender-removebg-preview.png",
+        "sale_price": 5795,
+        "price": 6374.5,
+        "cost_price": 4751.9,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The HDMI 60M Single Cat5e/6 Cable Extender transmits Full HD 1080p audio and video signals up to 60 meters (196 feet) over a single cost-effective Cat5e/Cat6 network patch cable.\n\nKey Highlights:\n- Transmits uncompressed 1080p @ 60Hz HDMI video signals up to 60 meters\n- Single Cat5e/Cat6 cable eliminates bulky, expensive long-distance HDMI cables\n- Infrared (IR) Pass-Through allows controlling the HDMI source device remotely from the TV screen\n- Auto-adjustment feedback for signal equalization and pixel clarity\n- Sturdy aluminum alloy metal enclosure protects against interference and dissipates heat",
+        "main_specs": {
+            "Transmission Distance": "Up to 60 Meters (over Cat6/Cat5e)",
+            "Video Resolution": "1080p @ 60Hz / 1080i / 720p Full HD",
+            "Signal Transmission": "Single Cat5e / Cat6 Network Cable",
+            "Audio Support": "DTS-HD, Dolby-TrueHD, LPCM 7.1",
+            "Remote Control": "Bidirectional IR Extension Included",
+            "Housing": "Industrial Black Metal Alloy"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "HDMI 60M Cat5e/6 Extender Pair (TX + RX)",
+                "Category Segment": "Audio & Video Extenders",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "TX: HDMI In, RJ45 Out, IR Out, 5V DC; RX: RJ45 In, HDMI Out, IR In, 5V DC",
+                "Architecture": "Zero-Latency Signal Conversion and Equalization Processor",
+                "Thermal Efficiency": "Industrial metal casing designed for 24/7 continuous operation",
+                "Power Consumption": "<2W per unit (5V 1A Power Adapters Included)"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with CCTV NVR/DVR, PS5, PCs, Projectors, and HDTVs",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "82mm x 45mm x 22mm each unit (Weight: ~180g pair)",
+                "Included in Box": "1x HDMI Transmitter (TX), 1x HDMI Receiver (RX), 2x 5V DC Power Adapters, 1x IR Cable Pair"
+            }
+        }
+    },
+    {
+        "num": 34,
+        "name": "High Speed 4-Port USB 2.0 Desktop Hub",
+        "product_code": "OTH-USB2-HUB-4P",
+        "slug": "4-port-usb-20-desktop-hub",
+        "brand_slug": "others",
+        "category_slug": "products",
+        "sub_category_slug": "routers-adapters",
+        "sub_category_name": "Routers & Adapters",
+        "image_file": "4_Port_USB_2.0_Hub-removebg-preview.png",
+        "sale_price": 400,
+        "price": 440,
+        "cost_price": 328,
+        "stock": 50,
+        "condition": "Brand New",
+        "warranty_duration": 6,
+        "warranty_unit": "Months",
+        "description": "The 4-Port USB 2.0 Desktop Hub instantly expands a single computer USB port into four fully functional USB connections for mice, keyboards, flash drives, and printers.\n\nKey Highlights:\n- 4 High-Speed USB 2.0 Output Ports\n- 480 Mbps fast data transfer bandwidth\n- Compact lightweight circular design with integrated 50cm cable\n- Built-in over-current and surge protection protects connected USB peripherals\n- Driver-free instant plug and play across all major operating systems",
+        "main_specs": {
+            "USB Ports": "4x USB 2.0 Type-A Female Ports",
+            "Data Transfer Rate": "Up to 480 Mbps",
+            "Cable Length": "Approx. 45 - 50 cm Integrated Cable",
+            "Protection": "Individual Port Over-Current Protection",
+            "Power Supply": "USB Bus Powered",
+            "Compatibility": "Flash Drives, Keyboards, Mice, Card Readers, Printers"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "High Speed 4-Port USB Hub Series",
+                "Category Segment": "USB Hubs & Adapters",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "USB 2.0 Type-A Male Host to 4x USB 2.0 Type-A Female",
+                "Architecture": "High-Efficiency USB 2.0 Hub Controller IC",
+                "Thermal Efficiency": "Cool operation with minimal power draw",
+                "Power Consumption": "Bus powered <500mA total"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, macOS, Linux, Android TV Box",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "70mm x 35mm x 18mm (Weight: ~45g)",
+                "Included in Box": "1x 4-Port USB 2.0 Desktop Hub with Attached Cable"
+            }
+        }
+    },
+    {
+        "num": 35,
+        "name": "Hikvision 4G N300 Wi-Fi LTE Router (DS-3WR4G3N)",
+        "product_code": "HIK-DS3WR4G3N-RTR",
+        "slug": "hikvision-4g-n300-wifi-lte-router-ds-3wr4g3n",
+        "brand_slug": "hikvision",
+        "category_slug": "products",
+        "sub_category_slug": "routers-adapters",
+        "sub_category_name": "Routers & Adapters",
+        "image_file": "4G_N300_Wi-Fi_LTE_Router__DS-3WR4G3N_-removebg-preview.png",
+        "sale_price": 14795,
+        "price": 16274.5,
+        "cost_price": 12131.9,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "The Hikvision DS-3WR4G3N is a versatile 4G LTE N300 wireless router designed to provide high-speed internet access via micro SIM card or standard broadband WAN cable connection.\n\nKey Highlights:\n- 4G LTE Cat4 Mobile Broadband: Download speeds up to 150 Mbps and upload up to 50 Mbps\n- N300 Wireless Wi-Fi: 300 Mbps Wi-Fi speed connects up to 32 wireless devices simultaneously\n- 4 External High-Gain Antennas: 2 dedicated LTE antennas + 2 dedicated 2.4GHz Wi-Fi antennas\n- Dual WAN Failover: Automatically switches between wired broadband and 4G LTE mobile network\n- Ideal for remote surveillance sites, villas, smart farms, construction sites, and backup office internet",
+        "main_specs": {
+            "Mobile Network Support": "4G LTE (FDD/TDD) / 3G WCDMA",
+            "LTE Speeds": "Up to 150 Mbps Download / 50 Mbps Upload",
+            "Wi-Fi Speed": "300 Mbps (2.4 GHz 802.11b/g/n)",
+            "Antennas": "4x External Omnidirectional High-Gain Antennas",
+            "Network Ports": "3x 10/100 Mbps LAN Ports, 1x 10/100 Mbps WAN Port",
+            "SIM Slot": "Standard Micro SIM Card Slot"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Hikvision DS-3WR4G3N 4G LTE Router",
+                "Category Segment": "4G LTE Wireless Routers",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1x WAN/LAN + 2x LAN RJ45, 1x SIM Card Slot, 1x Power Port, Reset/WPS Button",
+                "Architecture": "High-Performance LTE Modem Engine with Multi-Band Carrier Support",
+                "Thermal Efficiency": "Perforated ventilation base maintains cool operation in warm tropical climates",
+                "Power Consumption": "12V DC 1A (<9W)"
+            },
+            "compatibility": {
+                "Operating Systems": "Works with Dialog, Mobitel, Airtel, Hutch 4G SIM Cards & Fixed Line Broadband",
+                "Certification": "CE, FCC, RoHS, Telecommunications Standard",
+                "Dimensions & Weight": "200mm x 127mm x 33.6mm (Weight: ~310g)",
+                "Included in Box": "1x Hikvision DS-3WR4G3N 4G Router, 1x Power Adapter, 1x RJ45 Ethernet Cable, Quick Guide"
+            }
+        }
+    },
+    {
+        "num": 36,
+        "name": "Htech Power SA22 12V 2A Outdoor Rainproof Power Adapter",
+        "product_code": "HTP-SA22-12V-PSU",
+        "slug": "htech-power-sa22-outdoor-rainproof-power-adapter",
+        "brand_slug": "htech-power",
+        "category_slug": "products",
+        "sub_category_slug": "power-supplies",
+        "sub_category_name": "Power Supplies",
+        "image_file": "SA22_Outdoor_Rainproof_Power_Adapter-removebg-preview.png",
+        "sale_price": 0,
+        "price": 0,
+        "cost_price": 0,
+        "stock": 50,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The Htech Power SA22 is an IP66 outdoor weatherproof rainproof 12V 2A switching power adapter designed to safely power outdoor CCTV security cameras and wireless access points.\n\nKey Highlights:\n- 12V DC 2.0A Regulated Stable Power Output\n- IP66 Outdoor Waterproof & Rainproof Casing with drip-loop cable entries\n- Integrated Wall-Mounting Bracket for tidy pole or exterior wall installation\n- Comprehensive Circuit Protection: Built-in surge protection, overload, and short-circuit safeguards",
+        "main_specs": {
+            "Input Voltage": "100 - 240 VAC 50/60 Hz",
+            "Output Voltage": "12.0 VDC Regulated",
+            "Output Current": "2.0 Amperes (24 Watts Max)",
+            "Ingress Protection": "IP66 Weatherproof / Rainproof",
+            "DC Connector": "Standard 5.5mm x 2.1mm DC Plug",
+            "Applications": "Outdoor Bullet Cameras, PTZ Cameras, Wireless APs"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Htech Power SA22 Series",
+                "Category Segment": "Outdoor Camera Power Supplies",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "AC 2-Pin Input Lead + 12V DC Male Barrel Output Cable",
+                "Architecture": "High-Efficiency Low-Ripple PWM Switching Power Circuit",
+                "Thermal Efficiency": "Convection cooled within flame-retardant weather-sealed plastic enclosure",
+                "Power Consumption": "Over 85% energy efficiency"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal 12V DC CCTV Cameras (Hikvision, Dahua, Ezviz, Uniview, CP Plus)",
+                "Certification": "CE, RoHS, IP66 Certified",
+                "Dimensions & Weight": "130mm x 85mm x 45mm (Weight: ~220g)",
+                "Included in Box": "1x Htech Power SA22 12V 2A Rainproof Power Adapter"
+            }
+        }
+    },
+    {
+        "num": 37,
+        "name": "Kingston Canvas Select Plus 128GB Micro SD Card with Adapter (UHS-I V30 A1)",
+        "product_code": "KIN-CANVAS-128G-SD",
+        "slug": "kingston-canvas-select-plus-128gb-microsd",
+        "brand_slug": "kingston",
+        "category_slug": "products",
+        "sub_category_slug": "memory-cards",
+        "sub_category_name": "Memory Cards",
+        "image_file": "128GB_Micro_SD_Card__Canvas_Select_Plus__kINGSTON-removebg-preview.png",
+        "sale_price": 6200,
+        "price": 6820,
+        "cost_price": 5084,
+        "stock": 50,
+        "condition": "Brand New",
+        "warranty_duration": 5,
+        "warranty_unit": "Years",
+        "description": "Kingston Canvas Select Plus 128GB Micro SD Card is engineered for Android smartphones, tablets, handheld game consoles, and cameras, delivering Class 10 UHS-I speeds up to 100 MB/s.\n\nKey Highlights:\n- 128GB Massive Capacity\n- Fast Class 10 UHS-I Speeds up to 100 MB/s Read\n- A1 Application Performance Class ensures faster app launch and smoother smartphone multitasking\n- Full HD and 4K video recording capability\n- Full-size SD adapter included for wide laptop and camera compatibility",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Speed Class": "Class 10, UHS-I, U1/U3, V30, A1",
+            "Max Read Speed": "Up to 100 MB/s",
+            "Included Accessories": "Full-Size SD Adapter Included",
+            "Form Factor": "MicroSDXC",
+            "Durability": "Waterproof, Temperature-proof, Shock-proof, X-Ray proof"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Kingston Canvas Select Plus (SDCS2/128GB)",
+                "Category Segment": "Memory Cards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "UHS-I MicroSDXC Pinout",
+                "Architecture": "High-Endurance 3D NAND Flash Memory",
+                "Thermal Efficiency": "Operating: -25\u00b0C to 85\u00b0C; Storage: -40\u00b0C to 85\u00b0C",
+                "Power Consumption": "Low battery drain for mobile devices"
+            },
+            "compatibility": {
+                "Operating Systems": "Compatible with Android, Nintendo Switch, GoPro, Dashcams, CCTV IP Cams",
+                "Certification": "CE, FCC, RoHS, VCI",
+                "Dimensions & Weight": "11mm x 15mm x 1mm (Weight: ~0.5g)",
+                "Included in Box": "1x Kingston Canvas Select Plus 128GB Micro SD Card, 1x Full-Size SD Adapter"
+            }
+        }
+    },
+    {
+        "num": 38,
+        "name": "HP 15.6\" Classic Durable Laptop Backpack (Water-Resistant)",
+        "product_code": "HP-BACKPACK-156",
+        "slug": "hp-156-classic-laptop-backpack",
+        "brand_slug": "hp",
+        "category_slug": "products",
+        "sub_category_slug": "laptop-bags-backpacks",
+        "sub_category_name": "Laptop Bags & Backpacks",
+        "image_file": "Laptop_Backpack_15.6-removebg-preview.png",
+        "sale_price": 1780,
+        "price": 1958,
+        "cost_price": 1459.6,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 6,
+        "warranty_unit": "Months",
+        "description": "The HP 15.6\" Classic Laptop Backpack offers streamlined style, heavy-duty padded protection, and organized compartments designed for daily work commutes, college students, and travelers.\n\nKey Highlights:\n- Dedicated Padded Sleeve fits laptops up to 15.6-inch diagonal\n- Water-resistant durable woven fabric protects electronics against sudden rain showers\n- Breathable ergonomic air-mesh padded shoulder straps and back panel for all-day comfort\n- Spacious main compartment with organizer pockets for chargers, mouse, pens, and notebook\n- Quick-access exterior zipper pocket and dual stretch side water bottle holders",
+        "main_specs": {
+            "Laptop Compatibility": "Fits up to 15.6-inch Laptops & Ultrabooks",
+            "Material": "Heavy-Duty Water-Resistant Polyester Fabric",
+            "Compartments": "1x Padded Laptop Compartment, 1x Spacious Main Section, 1x Front Pocket, 2x Side Mesh",
+            "Straps": "Padded Breathable Adjustable Shoulder Straps",
+            "Color": "Classic Matte Black",
+            "Weight": "Approx. 450 g"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "HP 15.6 Classic Backpack Series (1B3M1AA)",
+                "Category Segment": "Laptop Backpacks",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Heavy-Duty Smooth Metal Zipper Pulls with Reinforced Seams",
+                "Architecture": "Multi-Layer Shock-Absorbing High-Density Foam Padding",
+                "Thermal Efficiency": "Breathable mesh back airflow ventilation channel",
+                "Power Consumption": "Not Applicable"
+            },
+            "compatibility": {
+                "Operating Systems": "Fits HP, Dell, Lenovo, Asus, Acer, and Apple MacBook Laptops up to 15.6\"",
+                "Certification": "RoHS, REACH Material Certified",
+                "Dimensions & Weight": "450mm x 310mm x 120mm (Weight: ~450g)",
+                "Included in Box": "1x HP 15.6\" Classic Laptop Backpack"
+            }
+        }
+    },
+    {
+        "num": 39,
+        "name": "Dell Essential Backpack 15 (ES1520P) Water-Resistant",
+        "product_code": "DEL-BACKPACK-15",
+        "slug": "dell-essential-backpack-15",
+        "brand_slug": "dell",
+        "category_slug": "products",
+        "sub_category_slug": "laptop-bags-backpacks",
+        "sub_category_name": "Laptop Bags & Backpacks",
+        "image_file": "Essential_Backpack_15-removebg-preview.png",
+        "sale_price": 1790,
+        "price": 1969,
+        "cost_price": 1467.8,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 6,
+        "warranty_unit": "Months",
+        "description": "The Dell Essential Backpack 15 (ES1520P) is engineered with reflective prints for nighttime visibility, dedicated padded laptop sleeve, and water-resistant materials built for reliable everyday protection.\n\nKey Highlights:\n- Fits most laptops with screen sizes up to 15.6 inches\n- High-visibility reflective prints on front panels enhance safety in low-light commutes\n- Water-resistant outer material keeps laptop and documents dry during bad weather\n- Lightweight, ergonomic design with padded back panel and contoured shoulder straps\n- Dual exterior side stretch mesh pockets for umbrellas and beverage bottles",
+        "main_specs": {
+            "Laptop Compatibility": "Fits laptops up to 15.6-inch screen size",
+            "Material": "Water-Resistant Outer Shell with Protective Foam Padding",
+            "Safety Feature": "Reflective Accents on Front Panel for Night Commuting",
+            "Compartments": "Dedicated Laptop Section, Large Main Compartment, Quick-Access Front Pocket",
+            "Color": "Black with Subtle Dell Logo Print",
+            "Weight": "Approx. 450 g"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Dell Essential Backpack 15 (ES1520P)",
+                "Category Segment": "Laptop Backpacks",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Smooth-gliding dual zippers with durable pull tabs",
+                "Architecture": "Shock-dampening padded bottom and rear laptop barrier",
+                "Thermal Efficiency": "Airflow padded rear panel prevents sweat buildup",
+                "Power Consumption": "Not Applicable"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal fit for Dell Inspiron, Latitude, XPS, and other 15.6\" laptops",
+                "Certification": "Dell EcoLoop Quality Standard",
+                "Dimensions & Weight": "430mm x 310mm x 140mm (Weight: ~450g)",
+                "Included in Box": "1x Dell Essential Backpack 15 (ES1520P)"
+            }
+        }
+    },
+    {
+        "num": 40,
+        "name": "Lenovo ThinkBook 15.6\" Premium Laptop Backpack",
+        "product_code": "LEN-THINKBOOK-BP",
+        "slug": "lenovo-thinkbook-laptop-backpack",
+        "brand_slug": "lenovo",
+        "category_slug": "products",
+        "sub_category_slug": "laptop-bags-backpacks",
+        "sub_category_name": "Laptop Bags & Backpacks",
+        "image_file": "ThinkBook Laptop Backpack.png",
+        "sale_price": 2675,
+        "price": 2942.5,
+        "cost_price": 2193.5,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 6,
+        "warranty_unit": "Months",
+        "description": "The Lenovo ThinkBook 15.6\" Laptop Backpack delivers executive elegance, weather-resistant fabric, and ergonomic carrying comfort tailored for mobile business professionals and students.\n\nKey Highlights:\n- Tailored for modern laptops up to 15.6 inches with thick plush protective lining\n- Modern minimalist two-tone slate grey design matching ThinkBook styling\n- Water-repellent treated fabric with sealed weather-proof front pocket zipper\n- Luggage trolley strap on rear for effortless stacking on rolling airport suitcases\n- Ergonomic S-shaped padded shoulder straps for reduced neck and back pressure",
+        "main_specs": {
+            "Laptop Compatibility": "Fits up to 15.6\" Laptops & Tablets",
+            "Material": "Water-Repellent Polyurethane & High-Density Polyester",
+            "Travel Features": "Luggage Trolley Pass-Through Strap Included",
+            "Compartments": "Cushioned Laptop Sleeve, Tablet Pocket, Stationery Organizer, Bottle Pocket",
+            "Color": "Modern Two-Tone Slate Grey / Charcoal",
+            "Weight": "Approx. 580 g"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Lenovo ThinkBook 15.6\" Urban Backpack",
+                "Category Segment": "Executive Laptop Backpacks",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Heavy-Duty Reversed Water-Resistant Zippers",
+                "Architecture": "Reinforced Base Panel with Multi-Layer Impact Foam",
+                "Thermal Efficiency": "Breathable 3D honeycomb back padding for cool comfort",
+                "Power Consumption": "Not Applicable"
+            },
+            "compatibility": {
+                "Operating Systems": "Fits Lenovo ThinkPad, ThinkBook, IdeaPad, Legion, and all 15.6\" notebooks",
+                "Certification": "RoHS, REACH Compliant",
+                "Dimensions & Weight": "450mm x 305mm x 155mm (Weight: ~580g)",
+                "Included in Box": "1x Lenovo ThinkBook 15.6\" Premium Laptop Backpack"
+            }
+        }
+    },
+    {
+        "num": 41,
+        "name": "Gigabyte H610M S2 DDR4 Motherboard (LGA1700 / Intel 12th, 13th, 14th Gen)",
+        "product_code": "GIG-H610M-S2-DDR4",
+        "slug": "gigabyte-h610m-s2-ddr4-motherboard",
+        "brand_slug": "gigabyte",
+        "category_slug": "products",
+        "sub_category_slug": "motherboards-products",
+        "sub_category_name": "Motherboards",
+        "image_file": "H610M S2 DDR4 Motherboard.png",
+        "sale_price": 28500,
+        "price": 31350,
+        "cost_price": 23370,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Gigabyte H610M S2 DDR4 motherboard delivers rock-solid performance with 6+1+1 Hybrid Digital VRM, Gen3 x4 M.2 slot, GbE Gaming LAN, and Smart Fan 6 for Intel 12th, 13th, and 14th Gen Core processors.\n\nKey Highlights:\n- Supports Intel Core 14th, 13th, and 12th Gen Processors (LGA1700 socket)\n- Dual Channel Non-ECC Unbuffered DDR4, 2 DIMMs (Up to 64GB 3200MHz)\n- 6+1+1 Phases Hybrid Digital VRM Design for stable CPU power delivery\n- Ultra-Fast M.2 with PCIe NVMe 3.0 x4 & SATA mode support\n- GbE LAN with Bandwidth Management & Anti-Sulfur Resistor Design",
+        "main_specs": {
+            "CPU Socket": "LGA1700 (Intel 12th/13th/14th Gen Core)",
+            "Chipset": "Intel H610 Express Chipset",
+            "Memory Support": "2x DDR4 DIMM Slots (Up to 64GB 3200/3000/2666 MHz)",
+            "Storage Interface": "1x M.2 (PCIe 3.0 x4) + 4x SATA 6Gb/s Ports",
+            "Expansion Slots": "1x PCIe 4.0 x16 Slot, 1x PCIe 3.0 x1 Slot",
+            "Video Outputs": "1x D-Sub (VGA) Port",
+            "Form Factor": "Micro ATX (23.0cm x 21.5cm)"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Gigabyte H610M S2 DDR4 (rev. 1.0/1.2)",
+                "Category Segment": "Motherboards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "PCIe 4.0 x16, NVMe M.2 2280, 4x SATA III, USB 3.2 Gen 1",
+                "Architecture": "Intel H610 Chipset Architecture with Smart Fan 6 cooling control",
+                "Thermal Efficiency": "Low RDS(on) MOSFETs and solid capacitor power delivery",
+                "Power Consumption": "Supports Intel C-State low-power idle states"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11 (64-bit), Windows 10 (64-bit)",
+                "Certification": "CE, FCC, BSMI, RoHS Compliant",
+                "Dimensions & Weight": "230mm x 215mm Micro-ATX (Weight: ~750g)",
+                "Included in Box": "1x Gigabyte H610M S2 Motherboard, 2x SATA Cables, I/O Shield, Driver CD, Manual"
+            }
+        }
+    },
+    {
+        "num": 42,
+        "name": "Gigabyte H310M S2 2.0 Motherboard (LGA1151 / Intel 8th & 9th Gen)",
+        "product_code": "GIG-H310M-S2-20",
+        "slug": "gigabyte-h310m-s2-20-motherboard",
+        "brand_slug": "gigabyte",
+        "category_slug": "products",
+        "sub_category_slug": "motherboards-products",
+        "sub_category_name": "Motherboards",
+        "image_file": "H310M_S2_2.0_Motherboard-removebg-preview.png",
+        "sale_price": 24900,
+        "price": 27390,
+        "cost_price": 20418,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Gigabyte H310M S2 2.0 motherboard features Ultra Durable design, Realtek 8118 Gaming LAN, Smart Fan 5, and Anti-Sulfur Resistors built for Intel 8th and 9th Generation Core processors.\n\nKey Highlights:\n- Supports 9th and 8th Gen Intel Core Processors (Socket LGA1151)\n- Dual Channel Non-ECC Unbuffered DDR4 (2 DIMMs up to 32GB 2666MHz)\n- 8-Channel HD Audio with High Quality Audio Capacitors and Audio Noise Guard\n- Realtek 8118 Exclusive Gaming LAN with automatic bandwidth allocation\n- CEC 2019 Ready: Save power with a simple one-click BIOS setting",
+        "main_specs": {
+            "CPU Socket": "LGA1151 (Intel 8th & 9th Gen Core/Pentium/Celeron)",
+            "Chipset": "Intel H310 Express Chipset",
+            "Memory Support": "2x DDR4 DIMMs (Up to 32GB 2666/2400/2133 MHz)",
+            "Storage Interface": "4x SATA 6Gb/s Connectors",
+            "Expansion Slots": "1x PCIe 3.0 x16 Slot, 2x PCIe 2.0 x1 Slots",
+            "Video Outputs": "1x D-Sub (VGA) Port",
+            "Form Factor": "Micro ATX (22.6cm x 17.4cm)"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Gigabyte H310M S2 2.0 (rev. 1.0)",
+                "Category Segment": "Motherboards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "PCIe 3.0 x16, 4x SATA 6Gb/s, 4x USB 3.1 Gen 1, Realtek GbE LAN",
+                "Architecture": "Ultra Durable Glass Fabric PCB with Hybrid Fan Headers",
+                "Thermal Efficiency": "Smart Fan 5 with Multiple Temperature Sensors",
+                "Power Consumption": "CEC 2019 ultra-low power consumption standards"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 10 64-bit",
+                "Certification": "CE, FCC, RoHS, ErP/EuP 2013",
+                "Dimensions & Weight": "226mm x 174mm Micro-ATX (Weight: ~650g)",
+                "Included in Box": "1x Gigabyte H310M S2 2.0 Motherboard, 2x SATA Cables, I/O Shield, User Manual"
+            }
+        }
+    },
+    {
+        "num": 43,
+        "name": "Gigabyte GA-H110M-DS2V Gold Edition Motherboard (LGA1151 / Intel 6th & 7th Gen)",
+        "product_code": "GIG-H110M-DS2V-GLD",
+        "slug": "gigabyte-ga-h110m-ds2v-gold-motherboard",
+        "brand_slug": "gigabyte",
+        "category_slug": "products",
+        "sub_category_slug": "motherboards-products",
+        "sub_category_name": "Motherboards",
+        "image_file": "H110M-DS2V_Gold_Motherboard-removebg-preview.png",
+        "sale_price": 23850,
+        "price": 26235,
+        "cost_price": 19557,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Gigabyte GA-H110M-DS2V Gold Edition motherboard offers exceptional durability with High Quality Audio Capacitors, Audio Noise Guard, DVI-D & VGA outputs for Intel 6th and 7th Gen processors.\n\nKey Highlights:\n- Supports 7th / 6th Generation Intel Core Processors (LGA1151)\n- Dual Channel DDR4, 2 DIMMs (Up to 32GB 2400/2133 MHz)\n- Dual Display Outputs: DVI-D and D-Sub (VGA) ports\n- Realtek GbE LAN with cFosSpeed Internet Accelerator Software\n- GIGABYTE UEFI DualBIOS technology protects against firmware failure",
+        "main_specs": {
+            "CPU Socket": "LGA1151 (Intel 6th / 7th Gen Core)",
+            "Chipset": "Intel H110 Express Chipset",
+            "Memory Support": "2x DDR4 DIMMs (Up to 32GB 2400/2133 MHz)",
+            "Storage Interface": "4x SATA 6Gb/s Ports",
+            "Expansion Slots": "1x PCIe 3.0 x16 Slot, 1x PCIe 2.0 x1 Slot",
+            "Video Outputs": "1x DVI-D, 1x D-Sub (VGA)",
+            "Form Factor": "Micro ATX (19.0cm x 17.4cm)"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Gigabyte GA-H110M-DS2V Gold Edition",
+                "Category Segment": "Motherboards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "PCIe 3.0 x16, DVI-D, VGA, 4x SATA III, USB 3.0 Ports",
+                "Architecture": "Ultra Durable All Solid Capacitors & Glass Fabric PCB",
+                "Thermal Efficiency": "Dedicated system fan pin headers with thermal monitoring",
+                "Power Consumption": "Energy-efficient standby and idle profiles"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 10 / 8.1 / 7 (32-bit & 64-bit)",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "190mm x 174mm Ultra-Compact Micro ATX (Weight: ~580g)",
+                "Included in Box": "1x GA-H110M-DS2V Motherboard, 2x SATA Cables, I/O Shield, User Manual"
+            }
+        }
+    },
+    {
+        "num": 44,
+        "name": "Classic 15.6\" Laptop Shoulder Bag (Padded / Black)",
+        "product_code": "OTH-LAPTOP-BAG-BLK",
+        "slug": "classic-156-laptop-shoulder-bag-black",
+        "brand_slug": "others",
+        "category_slug": "products",
+        "sub_category_slug": "laptop-bags-backpacks",
+        "sub_category_name": "Laptop Bags & Backpacks",
+        "image_file": "Laptop_Bag__Black_-removebg-preview.png",
+        "sale_price": 1275,
+        "price": 1402.5,
+        "cost_price": 1045.5,
+        "stock": 40,
+        "condition": "Brand New",
+        "warranty_duration": 6,
+        "warranty_unit": "Months",
+        "description": "The Classic 15.6\" Laptop Shoulder Bag is a sleek, professional briefcase-style laptop bag featuring thick protective foam padding, durable nylon fabric, and an adjustable shoulder strap.\n\nKey Highlights:\n- Universal Compatibility: Accommodates all laptops and ultrabooks up to 15.6 inches\n- High-Density Shock-Absorbing Foam Padding cushions against accidental drops and bumps\n- Dedicated Front Accessory Pocket holds mouse, charger, pens, and smartphone\n- Dual Carrying Options: Reinforced top grab handles + detachable padded shoulder strap\n- Professional all-black aesthetic suitable for office meetings and college lectures",
+        "main_specs": {
+            "Laptop Compatibility": "Fits up to 15.6\" Laptops & MacBooks",
+            "Material": "Durable Water-Repellent Oxford Nylon",
+            "Carrying Style": "Top Grab Handles + Detachable Shoulder Strap",
+            "Compartments": "1x Main Padded Laptop Compartment, 1x Front Zipper Pocket",
+            "Color": "Matte Black",
+            "Weight": "Approx. 380 g"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Classic 15.6\" Laptop Briefcase Series",
+                "Category Segment": "Laptop Shoulder Bags",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Heavy-duty dual metal zippers with reinforced stitching",
+                "Architecture": "360-degree all-around protective foam lining",
+                "Thermal Efficiency": "Not Applicable",
+                "Power Consumption": "Not Applicable"
+            },
+            "compatibility": {
+                "Operating Systems": "Fits HP, Dell, Lenovo, Asus, Acer, Apple, MSI Laptops up to 15.6\"",
+                "Certification": "RoHS Compliant Fabric",
+                "Dimensions & Weight": "410mm x 300mm x 60mm (Weight: ~380g)",
+                "Included in Box": "1x Classic 15.6\" Laptop Bag, 1x Detachable Padded Shoulder Strap"
+            }
+        }
+    },
+    {
+        "num": 45,
+        "name": "Gigabyte GA-H81M-DS2 Ultra Durable Motherboard (LGA1150 / Intel 4th Gen)",
+        "product_code": "GIG-H81M-DS2",
+        "slug": "gigabyte-ga-h81m-ds2-motherboard",
+        "brand_slug": "gigabyte",
+        "category_slug": "products",
+        "sub_category_slug": "motherboards-products",
+        "sub_category_name": "Motherboards",
+        "image_file": "H81M_DS2_Motherboard-removebg-preview.png",
+        "sale_price": 12950,
+        "price": 14245,
+        "cost_price": 10619,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Gigabyte GA-H81M-DS2 is a classic Ultra Durable motherboard designed for 4th Generation Intel Core processors, offering rock-solid stability for budget workstation builds and CCTV monitoring PCs.\n\nKey Highlights:\n- Supports 4th Generation Intel Core / Pentium / Celeron Processors (Socket LGA1150)\n- Dual Channel DDR3 / DDR3L, 2 DIMMs (Up to 16GB 1600/1333 MHz)\n- GIGABYTE Ultra Durable 4 Plus Technology with Anti-Surge IC and Solid Capacitors\n- Realtek GbE LAN with High ESD Protection for network ports\n- GIGABYTE UEFI DualBIOS provides hardware protection against BIOS corruption",
+        "main_specs": {
+            "CPU Socket": "LGA1150 (Intel 4th Gen Haswell / Haswell Refresh)",
+            "Chipset": "Intel H81 Express Chipset",
+            "Memory Support": "2x DDR3 DIMMs (Up to 16GB 1600/1333 MHz)",
+            "Storage Interface": "2x SATA 6Gb/s (SATA3) + 2x SATA 3Gb/s Ports",
+            "Expansion Slots": "1x PCIe 2.0 x16 Slot, 2x PCIe 2.0 x1 Slots",
+            "Video Outputs": "1x D-Sub (VGA) Port",
+            "Form Factor": "Micro ATX (22.6cm x 17.0cm)"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Gigabyte GA-H81M-DS2 (rev. 3.0/4.0)",
+                "Category Segment": "Motherboards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "PCIe x16, VGA D-Sub, 2x SATA 6Gb/s, 2x USB 3.0, Realtek Gigabit LAN",
+                "Architecture": "Ultra Durable 4 Plus Glass Fabric PCB",
+                "Thermal Efficiency": "Solid capacitor design ensures 50,000-hour operational lifespan",
+                "Power Consumption": "ErP/EuP Ready for green computing"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 10 / 8.1 / 8 / 7 / XP (32-bit & 64-bit)",
+                "Certification": "CE, FCC, RoHS, ErP Compliant",
+                "Dimensions & Weight": "226mm x 170mm Micro-ATX (Weight: ~580g)",
+                "Included in Box": "1x Gigabyte GA-H81M-DS2 Motherboard, 2x SATA Cables, I/O Shield, User Manual"
+            }
+        }
+    },
+    {
+        "num": 46,
+        "name": "Gigabyte H410M S2 V3 Motherboard (LGA1200 / Intel 10th Gen)",
+        "product_code": "GIG-H410M-S2-V3",
+        "slug": "gigabyte-h410m-s2-v3-motherboard",
+        "brand_slug": "gigabyte",
+        "category_slug": "products",
+        "sub_category_slug": "motherboards-products",
+        "sub_category_name": "Motherboards",
+        "image_file": "H410M_S2_V3_Motherboard-removebg-preview.png",
+        "sale_price": 25450,
+        "price": 27995,
+        "cost_price": 20869,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Gigabyte H410M S2 V3 delivers high reliability and thermal efficiency with 4+1 Phases Hybrid Digital VRM, GbE Gaming LAN, and Anti-Sulfur Resistors for 10th Gen Intel Core processors.\n\nKey Highlights:\n- Supports 10th Gen Intel Core Processors (Socket LGA1200)\n- Dual Channel Non-ECC Unbuffered DDR4 (2 DIMMs up to 64GB 2933MHz)\n- 8-Channel HD Audio with High Quality Audio Capacitors and Audio Noise Guard\n- GIGABYTE Exclusive 8118 Gaming LAN with Bandwidth Management\n- Smart Fan 5 features multiple temperature sensors and hybrid fan headers",
+        "main_specs": {
+            "CPU Socket": "LGA1200 (Intel 10th Gen Core / Pentium / Celeron)",
+            "Chipset": "Intel H410 / H470 Express Chipset",
+            "Memory Support": "2x DDR4 DIMMs (Up to 64GB 2933/2666/2400/2133 MHz)",
+            "Storage Interface": "4x SATA 6Gb/s Ports",
+            "Expansion Slots": "1x PCIe 3.0 x16 Slot, 1x PCIe 3.0 x1 Slot",
+            "Video Outputs": "1x D-Sub (VGA) Port",
+            "Form Factor": "Micro ATX (22.6cm x 18.5cm)"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Gigabyte H410M S2 V3 (rev. 1.0)",
+                "Category Segment": "Motherboards",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "PCIe 3.0 x16, 4x SATA III, USB 3.2 Gen 1, GbE LAN Port",
+                "Architecture": "4+1 Phases Hybrid Digital PWM with Low RDS(on) MOSFETs",
+                "Thermal Efficiency": "Smart Fan 5 with Fan Stop and thermal sensor monitoring",
+                "Power Consumption": "CEC 2019 power regulation compliant"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11 (64-bit), Windows 10 (64-bit)",
+                "Certification": "CE, FCC, RoHS, Energy Star",
+                "Dimensions & Weight": "226mm x 185mm Micro-ATX (Weight: ~650g)",
+                "Included in Box": "1x Gigabyte H410M S2 V3 Motherboard, 2x SATA Cables, I/O Shield, User Manual"
+            }
+        }
+    },
+    {
+        "num": 47,
+        "name": "Smart View 19\" LED Desktop Monitor (HDMI / VGA)",
+        "product_code": "SMV-19-LED-MON",
+        "slug": "smart-view-19-led-monitor",
+        "brand_slug": "smart-view",
+        "category_slug": "products",
+        "sub_category_slug": "monitors-products",
+        "sub_category_name": "Monitors",
+        "image_file": "19_LED_Monitor-removebg-preview.png",
+        "sale_price": 12950,
+        "price": 14245,
+        "cost_price": 10619,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Smart View 19\" LED Desktop Monitor provides crisp visual clarity and dependable everyday performance at an economical price point, perfect for retail POS, school computer labs, and office workstations.\n\nKey Highlights:\n- 19-Inch Widescreen LED Backlit Display\n- High Resolution: 1440 x 900 / 1366 x 768 crisp visuals\n- Dual Input: HDMI and VGA ports connect easily to PCs, laptops, and CCTV DVRs\n- Energy-efficient LED backlighting reduces electricity costs\n- Built-in VESA wall mounting support",
+        "main_specs": {
+            "Screen Size": "19 Inch Diagonal",
+            "Resolution": "1440 x 900 / 1366 x 768 HD Widescreen",
+            "Refresh Rate": "60 Hz - 75 Hz",
+            "Response Time": "5 ms",
+            "Inputs": "1x HDMI, 1x VGA (D-Sub)",
+            "Aspect Ratio": "16:9 / 16:10 Widescreen"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Smart View 19\" Series",
+                "Category Segment": "Desktop Monitors",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "HDMI, VGA, DC 12V In",
+                "Architecture": "Eco-friendly Energy Saving LED Panel",
+                "Thermal Efficiency": "Low heat emission passively cooled housing",
+                "Power Consumption": "<18W Typical Operating Power"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal Windows, Mac, Linux, CCTV DVR/NVR compatibility",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "440mm x 340mm x 150mm (Weight: ~2.2 kg)",
+                "Included in Box": "1x Smart View 19\" Monitor, 1x Power Adapter, 1x HDMI Cable, Base Stand"
+            }
+        }
+    },
+    {
+        "num": 48,
+        "name": "Smart View 22\" LED Desktop Monitor (HDMI / VGA)",
+        "product_code": "SMV-22-LED-MON",
+        "slug": "smart-view-22-led-monitor",
+        "brand_slug": "smart-view",
+        "category_slug": "products",
+        "sub_category_slug": "monitors-products",
+        "sub_category_name": "Monitors",
+        "image_file": "22_LED_Monitor-removebg-preview.png",
+        "sale_price": 16500,
+        "price": 18150,
+        "cost_price": 13530,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Smart View 22\" LED Desktop Monitor delivers expansive Full HD 1080p widescreen viewing with vibrant color reproduction for everyday document editing, browsing, and CCTV security monitoring.\n\nKey Highlights:\n- 22-Inch Full HD (1920 x 1080) Widescreen LED Display\n- 75Hz Refresh Rate ensures smooth video playback and comfortable scrolling\n- HDMI and VGA inputs provide plug-and-play setup with all modern computers\n- Slim bezel styling with sturdy tilt-adjustable desk stand\n- Eye-saver low flicker screen technology",
+        "main_specs": {
+            "Screen Size": "21.5 / 22 Inch Diagonal",
+            "Resolution": "1920 x 1080 (Full HD)",
+            "Refresh Rate": "75 Hz",
+            "Response Time": "5 ms",
+            "Video Inputs": "1x HDMI, 1x VGA",
+            "Aspect Ratio": "16:9 Widescreen"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Smart View 22\" Series",
+                "Category Segment": "Desktop Monitors",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "HDMI 1.4, VGA, 12V DC Port",
+                "Architecture": "Full HD LED Backlit Liquid Crystal Panel",
+                "Thermal Efficiency": "Low operating temperature with rear ventilation",
+                "Power Consumption": "<22W Typical Power Usage"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8, macOS, Linux, CCTV Security Systems",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "500mm x 380mm x 165mm (Weight: ~2.8 kg)",
+                "Included in Box": "1x Smart View 22\" Monitor, 1x Power Adapter, 1x HDMI Cable, Desk Stand"
+            }
+        }
+    },
+    {
+        "num": 49,
+        "name": "HP 15-FD0689TU Core i5 13th Gen 15.6\" FHD Laptop (8GB / 512GB NVMe / Windows 11)",
+        "product_code": "HP-15-FD0689TU-LAP",
+        "slug": "hp-15-fd0689tu-laptop-i5-1334u-8gb-512gb",
+        "brand_slug": "hp",
+        "category_slug": "products",
+        "sub_category_slug": "laptops-notebooks",
+        "sub_category_name": "Laptops & Notebooks",
+        "image_file": "15-FD0689TU_Laptop__i5_1334U__8GB__512GB_NVMe_-removebg-preview.png",
+        "sale_price": 215000,
+        "price": 236500,
+        "cost_price": 176300,
+        "stock": 10,
+        "condition": "Brand New",
+        "warranty_duration": 2,
+        "warranty_unit": "Years",
+        "description": "The HP 15-FD0689TU is a sleek, modern 15.6-inch laptop powered by a 13th Gen Intel Core i5 processor, 8GB high-speed memory, and a blazing 512GB NVMe SSD, built for exceptional productivity.\n\nKey Highlights:\n- 13th Generation Intel Core i5-1334U Processor (10 Cores, up to 4.60 GHz with Intel Turbo Boost)\n- 15.6\" Full HD (1920 x 1080) Anti-Glare Micro-Edge Display\n- 8GB DDR4 3200MHz RAM + 512GB PCIe NVMe M.2 High-Speed SSD\n- Intel Iris Xe Graphics delivers crisp photo editing and HD streaming\n- HP True Vision 720p HD Camera with temporal noise reduction and integrated dual-array digital mics\n- Full-size keyboard with numeric keypad and precision multi-touch touchpad\n- Genuine Windows 11 Home pre-installed with long-lasting battery life",
+        "main_specs": {
+            "Processor": "Intel Core i5-1334U (10 Cores: 2 Performance + 8 Efficient, up to 4.6 GHz)",
+            "Memory (RAM)": "8 GB DDR4-3200 MHz RAM",
+            "Internal Storage": "512 GB PCIe NVMe M.2 SSD",
+            "Display": "15.6\" diagonal, FHD (1920 x 1080), micro-edge, anti-glare, 250 nits",
+            "Graphics": "Intel Iris Xe Graphics",
+            "Operating System": "Windows 11 Home 64-bit Genuine",
+            "Connectivity": "Wi-Fi 6 (2x2) and Bluetooth 5.3",
+            "Battery": "3-cell, 41 Wh Li-ion with HP Fast Charge"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "HP Laptop 15-fd0689TU (Natural Silver)",
+                "Category Segment": "Laptops & Notebooks",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "1x USB Type-C 5Gbps, 2x USB Type-A 5Gbps, 1x HDMI 1.4b, 1x Headphone/Mic Combo, 1x AC Smart Pin",
+                "Architecture": "Intel Raptor Lake 13th Gen Intel 7 Process Architecture",
+                "Thermal Efficiency": "Quiet dual-pipe cooling fan with dynamic thermal profile",
+                "Power Consumption": "45W Smart AC Power Adapter, Fast Charging: 50% in 45 minutes"
+            },
+            "compatibility": {
+                "Operating Systems": "Genuine Windows 11 Home (Factory Pre-Installed)",
+                "Certification": "EPEAT Gold Registered, Energy Star Certified",
+                "Dimensions & Weight": "359.8mm x 236mm x 18.6mm (Weight: ~1.59 kg)",
+                "Included in Box": "1x HP 15-FD0689TU Laptop, 1x 45W Smart AC Power Adapter, Power Cable, User Guides"
+            }
+        },
+        "image_folder": "HP 15 - FD0689TU",
+        "image_files": [
+            "HP-I5-13U-8-512-SlIM-BLU-01-removebg-preview.png",
+            "new-011-32-removebg-preview.png",
+            "new-03-32-removebg-preview.png",
+            "new-04-31-removebg-preview.png"
+        ]
+    },
+    {
+        "num": 50,
+        "name": "V-TEK 12V 7.5Ah Sealed Lead Acid UPS Replacement Battery",
+        "product_code": "VTK-12V-75AH-BAT",
+        "slug": "v-tek-12v-75ah-ups-battery",
+        "brand_slug": "v-tek",
+        "category_slug": "products",
+        "sub_category_slug": "batteries",
+        "sub_category_name": "Batteries",
+        "image_file": "12V_7.5Ah_UPS_Battery-removebg-preview.png",
+        "sale_price": 3250,
+        "price": 3575,
+        "cost_price": 2665,
+        "stock": 50,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The V-TEK 12V 7.5Ah Sealed Lead-Acid (SLA) AGM Rechargeable Battery is the industry standard replacement battery for computer UPS units, security alarm systems, emergency lighting, and electric gates.\n\nKey Highlights:\n- 12 Volt 7.5 Ampere-Hour (Ah) High Discharge Capacity\n- AGM (Absorbent Glass Mat) technology ensures superior performance and maintenance-free valve regulation\n- Spill-proof and leak-proof construction allows mounting in any orientation\n- Heavy-duty lead-calcium alloy grids ensure extended service life and low self-discharge\n- Direct drop-in replacement for standard 12V 7Ah and 12V 7.2Ah UPS batteries",
+        "main_specs": {
+            "Nominal Voltage": "12.0 Volts",
+            "Rated Capacity": "7.5 Ah (20-Hour Rate)",
+            "Battery Type": "Rechargeable Valve Regulated Sealed Lead Acid (VRLA / AGM)",
+            "Terminal Type": "Faston Tab F1 / F2 (T2 Standard)",
+            "Cycle Use Voltage": "14.4 - 15.0 V",
+            "Standby Use Voltage": "13.5 - 13.8 V",
+            "Applications": "Computer UPS (KSTAR, Prolink, APC), CCTV Backups, Alarms"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "V-TEK VT12-7.5 (12V 7.5Ah/20HR)",
+                "Category Segment": "UPS & Inverter Batteries",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard T2 Faston 6.35mm Male Terminal Lug",
+                "Architecture": "Oxygen Recombination AGM Valve-Regulated Sealed Lead Battery",
+                "Thermal Efficiency": "Operating Temp: Discharge -15\u00b0C to 50\u00b0C, Charge 0\u00b0C to 40\u00b0C",
+                "Power Consumption": "Internal Resistance: Approx. 22 m\u03a9"
+            },
+            "compatibility": {
+                "Operating Systems": "Universal compatibility with 650VA, 850VA, 1000VA, 1200VA UPS systems",
+                "Certification": "ISO9001, CE, UL Recognized Component",
+                "Dimensions & Weight": "151mm x 65mm x 94mm, Total Height: 100mm (Weight: ~2.1 kg)",
+                "Included in Box": "1x V-TEK 12V 7.5Ah SLA Rechargeable UPS Battery"
+            }
+        }
+    },
+    {
+        "num": 51,
+        "name": "Warner 128GB M.2 NVMe PCIe Solid State Drive",
+        "product_code": "WRN-SSD-128G-NVME",
+        "slug": "warner-128gb-m2-nvme-ssd",
+        "brand_slug": "warner",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "SSD 128GB NVMe.png",
+        "sale_price": 8650,
+        "price": 9515,
+        "cost_price": 7093,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Warner 128GB M.2 NVMe PCIe SSD delivers blistering PCIe Gen 3x4 speed at an affordable price, accelerating system boots, application launches, and responsiveness.\n\nKey Highlights:\n- PCIe Gen 3.0 x4 Interface with NVMe protocol\n- High Speeds: Up to 1800 MB/s Read and 1000 MB/s Write\n- M.2 2280 Form Factor fits desktop PCs and modern laptops\n- Advanced thermal throttling and low power sleep modes",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Interface": "PCIe Gen 3.0 x4 NVMe",
+            "Form Factor": "M.2 2280",
+            "Max Read Speed": "Up to 1800 MB/s",
+            "Max Write Speed": "Up to 1000 MB/s",
+            "NAND Flash": "3D TLC NAND"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Warner M.2 NVMe Series (128GB)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "M.2 M-Key PCIe 3.0 x4",
+                "Architecture": "High-Efficiency NVMe Multi-Channel Controller",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "<2.2W Active, <0.2W Idle"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8, Linux Kernel 4.x+",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "80mm x 22mm x 2.2mm (Weight: ~6g)",
+                "Included in Box": "1x Warner 128GB M.2 NVMe SSD"
+            }
+        }
+    },
+    {
+        "num": 52,
+        "name": "Warner 256GB M.2 NVMe PCIe Solid State Drive",
+        "product_code": "WRN-SSD-256G-NVME",
+        "slug": "warner-256gb-m2-nvme-ssd",
+        "brand_slug": "warner",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "SSD_256GB_NVMe-removebg-preview.png",
+        "sale_price": 14750,
+        "price": 16225,
+        "cost_price": 12095,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Warner 256GB M.2 NVMe PCIe SSD provides substantial storage capacity combined with high-speed PCIe Gen 3x4 throughput for fast multitasking, gaming, and creative editing.\n\nKey Highlights:\n- Ultra-Fast PCIe Gen 3.0 x4 NVMe Interface\n- Speeds up to 2200 MB/s Read and 1400 MB/s Write\n- 256GB Capacity holds OS and multiple large applications\n- TRIM, S.M.A.R.T, and LDPC error correction for extended lifespan",
+        "main_specs": {
+            "Storage Capacity": "256 GB",
+            "Interface": "PCIe Gen 3.0 x4 NVMe",
+            "Form Factor": "M.2 2280",
+            "Max Read Speed": "Up to 2200 MB/s",
+            "Max Write Speed": "Up to 1400 MB/s",
+            "NAND Flash": "3D TLC NAND"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Warner M.2 NVMe Series (256GB)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "M.2 2280 PCIe NVMe M-Key",
+                "Architecture": "High-Grade 3D NAND with Dynamic SLC Caching",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "<2.5W Active, <0.3W Idle"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11, Windows 10, Linux",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "80mm x 22mm x 2.2mm (Weight: ~6g)",
+                "Included in Box": "1x Warner 256GB M.2 NVMe SSD"
+            }
+        }
+    },
+    {
+        "num": 53,
+        "name": "Warner 512GB M.2 NVMe PCIe Solid State Drive",
+        "product_code": "WRN-SSD-512G-NVME",
+        "slug": "warner-512gb-m2-nvme-ssd",
+        "brand_slug": "warner",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "SSD_512GB_NVMe-removebg-preview.png",
+        "sale_price": 22950,
+        "price": 25245,
+        "cost_price": 18819,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Warner 512GB M.2 NVMe PCIe SSD is built for heavy power users and gamers who demand large storage space and lightning fast PCIe data speeds.\n\nKey Highlights:\n- Extreme PCIe Gen 3.0 x4 Performance with NVMe support\n- Blistering Speeds: Up to 2600 MB/s Read and 1800 MB/s Write\n- 512GB High Capacity for AAA game libraries, video projects, and heavy software\n- Shock-resistant solid state reliability with zero noise",
+        "main_specs": {
+            "Storage Capacity": "512 GB",
+            "Interface": "PCIe Gen 3.0 x4 NVMe",
+            "Form Factor": "M.2 2280",
+            "Max Read Speed": "Up to 2600 MB/s",
+            "Max Write Speed": "Up to 1800 MB/s",
+            "Endurance": "TBW: 280 TBW"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Warner M.2 NVMe Series (512GB)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "PCI Express 3.0 x4 M.2 2280",
+                "Architecture": "3D TLC Flash NAND with Host Memory Buffer Support",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "Active read/write <3.2W, Idle <0.3W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8, Linux, compatible motherboards & laptops",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "80mm x 22mm x 2.2mm (Weight: ~7g)",
+                "Included in Box": "1x Warner 512GB M.2 NVMe SSD"
+            }
+        }
+    },
+    {
+        "num": 54,
+        "name": "Warner 1TB M.2 NVMe PCIe Solid State Drive",
+        "product_code": "WRN-SSD-1TB-NVME",
+        "slug": "warner-1tb-m2-nvme-ssd",
+        "brand_slug": "warner",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "SSD_1TB_NVMe-removebg-preview.png",
+        "sale_price": 36690,
+        "price": 40359,
+        "cost_price": 30085.8,
+        "stock": 20,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Warner 1TB M.2 NVMe PCIe SSD offers massive, high-speed storage capacity for professional workstations, intensive video rendering, and top-tier gaming rigs.\n\nKey Highlights:\n- Massive 1TB (1000GB) Storage Capacity\n- High Speeds up to 2800 MB/s Read and 2100 MB/s Write\n- PCIe Gen 3.0 x4 NVMe architecture\n- Superior thermal management and high write endurance up to 500 TBW",
+        "main_specs": {
+            "Storage Capacity": "1 TB (1000 GB)",
+            "Interface": "PCIe Gen 3.0 x4 NVMe",
+            "Form Factor": "M.2 2280",
+            "Max Read Speed": "Up to 2800 MB/s",
+            "Max Write Speed": "Up to 2100 MB/s",
+            "Endurance": "TBW: 500 TBW"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Warner M.2 NVMe Series (1TB)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "M.2 PCIe 3.0 x4 NVMe",
+                "Architecture": "Multi-Channel High Endurance 3D TLC Flash Controller",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "Peak <3.8W, Sleep <0.1W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11, Windows 10, Linux",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "80mm x 22mm x 2.3mm (Weight: ~7g)",
+                "Included in Box": "1x Warner 1TB M.2 NVMe SSD"
+            }
+        }
+    },
+    {
+        "num": 55,
+        "name": "Warner 128GB 2.5\" SATA III Solid State Drive",
+        "product_code": "WRN-SSD-128G-SATA",
+        "slug": "warner-128gb-sata-ssd",
+        "brand_slug": "warner",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "SSD_128GB_SATA-removebg-preview.png",
+        "sale_price": 7350,
+        "price": 8085,
+        "cost_price": 6027,
+        "stock": 35,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Warner 128GB 2.5\" SATA III SSD is a budget-friendly, high-efficiency boot drive that revitalizes slow laptops and desktops with 5x the speed of standard mechanical hard drives.\n\nKey Highlights:\n- SATA III 6Gb/s Interface (Backwards compatible with SATA II)\n- Up to 520 MB/s Read and 400 MB/s Write speeds\n- 7mm slim form factor fits all laptops and desktop drive caddies\n- Silent operation, shockproof design, and low power consumption",
+        "main_specs": {
+            "Storage Capacity": "128 GB",
+            "Interface": "SATA III 6Gb/s",
+            "Form Factor": "2.5 Inch (7mm Slim)",
+            "Max Read Speed": "Up to 520 MB/s",
+            "Max Write Speed": "Up to 400 MB/s",
+            "NAND Flash": "3D TLC NAND"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Warner 2.5\" SATA Series (128GB)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard SATA 7+15 Pin Connector",
+                "Architecture": "High-Efficiency 3D NAND Controller with TRIM Support",
+                "Thermal Efficiency": "Cool and silent operation",
+                "Power Consumption": "<1.5W Active, <0.2W Idle"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, Linux, macOS (external)",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "100mm x 69.85mm x 7.0mm (Weight: ~45g)",
+                "Included in Box": "1x Warner 128GB 2.5\" SATA SSD"
+            }
+        }
+    },
+    {
+        "num": 56,
+        "name": "Warner 256GB 2.5\" SATA III Solid State Drive",
+        "product_code": "WRN-SSD-256G-SATA",
+        "slug": "warner-256gb-sata-ssd",
+        "brand_slug": "warner",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "SSD_256GB_SATA-removebg-preview .png",
+        "sale_price": 10890,
+        "price": 11979,
+        "cost_price": 8929.8,
+        "stock": 35,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Warner 256GB 2.5\" SATA III SSD delivers fast responsiveness and ample space for operating systems, office applications, and multimedia files.\n\nKey Highlights:\n- 256GB High Speed Solid State Storage\n- Sequential Read Speeds up to 540 MB/s and Write Speeds up to 480 MB/s\n- Universal 2.5\" 7mm design for laptops and desktop PC cases\n- Highly reliable with advanced wear leveling and ECC error correction",
+        "main_specs": {
+            "Storage Capacity": "256 GB",
+            "Interface": "SATA III 6Gb/s",
+            "Form Factor": "2.5 Inch 7mm Slim",
+            "Max Read Speed": "Up to 540 MB/s",
+            "Max Write Speed": "Up to 480 MB/s",
+            "MTBF": "1,500,000 Hours"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Warner 2.5\" SATA Series (256GB)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "SATA 6Gb/s Standard Interface",
+                "Architecture": "3D TLC NAND Flash Memory Architecture",
+                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Power Consumption": "Operating: 1.8W, Idle: 0.3W"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, Linux, macOS",
+                "Certification": "CE, FCC, RoHS Compliant",
+                "Dimensions & Weight": "100mm x 69.85mm x 7.0mm (Weight: ~45g)",
+                "Included in Box": "1x Warner 256GB 2.5\" SATA SSD"
+            }
+        }
+    },
+    {
+        "num": 57,
+        "name": "Warner 512GB 2.5\" SATA III Solid State Drive",
+        "product_code": "WRN-SSD-512G-SATA",
+        "slug": "warner-512gb-sata-ssd",
+        "brand_slug": "warner",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "SSD_512GB_SATA-removebg-preview.png",
+        "sale_price": 21950,
+        "price": 24145,
+        "cost_price": 17999,
+        "stock": 30,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Warner 512GB 2.5\" SATA III SSD offers large capacity and rapid data access for gaming installations, video editing scratch disks, and high-performance business workstations.\n\nKey Highlights:\n- 512GB Generous Storage Capacity\n- High Speeds up to 550 MB/s Read and 500 MB/s Write\n- SATA III 6Gb/s interface maxing out standard SATA bandwidth\n- Low latency and rapid game loading times compared to mechanical HDDs",
+        "main_specs": {
+            "Storage Capacity": "512 GB",
+            "Interface": "SATA III 6Gb/s",
+            "Form Factor": "2.5 Inch 7mm Profile",
+            "Max Read Speed": "Up to 550 MB/s",
+            "Max Write Speed": "Up to 500 MB/s",
+            "Endurance": "TBW: 240 TBW"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Warner 2.5\" SATA Series (512GB)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "Standard 2.5\" SATA III 7+15 Pin Connector",
+                "Architecture": "High-Endurance 3D NAND with SLC Acceleration",
+                "Thermal Efficiency": "Durable aluminum/composite chassis with efficient heat dissipation",
+                "Power Consumption": "<2.2W Active, <0.3W Idle"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, Linux, macOS, CCTV NVRs",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "100mm x 69.85mm x 7.0mm (Weight: ~48g)",
+                "Included in Box": "1x Warner 512GB 2.5\" SATA SSD"
+            }
+        }
+    },
+    {
+        "num": 58,
+        "name": "Warner 1TB 2.5\" SATA III Solid State Drive",
+        "product_code": "WRN-SSD-1TB-SATA",
+        "slug": "warner-1tb-sata-ssd",
+        "brand_slug": "warner",
+        "category_slug": "products",
+        "sub_category_slug": "ssd-storage",
+        "sub_category_name": "Solid State Drives (SSD)",
+        "image_file": "SSD_1TB_SATA-removebg-preview.png",
+        "sale_price": 34950,
+        "price": 38445,
+        "cost_price": 28659,
+        "stock": 25,
+        "condition": "Brand New",
+        "warranty_duration": 3,
+        "warranty_unit": "Years",
+        "description": "The Warner 1TB 2.5\" SATA III SSD delivers massive solid-state storage capacity, perfect for full primary storage replacement in desktop PCs and laptops, storing huge libraries with instant access.\n\nKey Highlights:\n- Massive 1TB (1000GB) Storage Space\n- Speeds up to 550 MB/s Read and 510 MB/s Write\n- SATA III 6Gb/s protocol with NCQ and TRIM support\n- Long endurance and rock-solid data protection with high TBW rating",
+        "main_specs": {
+            "Storage Capacity": "1 TB (1000 GB)",
+            "Interface": "SATA III 6Gb/s",
+            "Form Factor": "2.5 Inch 7mm Profile",
+            "Max Read Speed": "Up to 550 MB/s",
+            "Max Write Speed": "Up to 510 MB/s",
+            "Endurance": "TBW: 480 TBW"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "Warner 2.5\" SATA Series (1TB)",
+                "Category Segment": "Solid State Drives (SSD)",
+                "Condition": "Brand New"
+            },
+            "performance": {
+                "Interface / Connection": "SATA 6Gb/s 7+15 Pin Connector",
+                "Architecture": "Multi-Channel High-Density 3D TLC Flash Controller",
+                "Thermal Efficiency": "Low heat emission, vibration-proof construction",
+                "Power Consumption": "<2.8W Peak, <0.3W Sleep"
+            },
+            "compatibility": {
+                "Operating Systems": "Windows 11/10/8/7, macOS, Linux, Network Attached Storage (NAS)",
+                "Certification": "CE, FCC, RoHS",
+                "Dimensions & Weight": "100mm x 69.85mm x 7.0mm (Weight: ~50g)",
+                "Included in Box": "1x Warner 1TB 2.5\" SATA SSD"
+            }
+        }
+    },
+    {
+        "num": 59,
+        "name": "HP 15-FD0105TU Core i5 13th Gen 15.6\" FHD Laptop (8GB / 512GB NVMe / Windows 11)",
+        "product_code": "HP-15-FD0105TU-LAP",
+        "slug": "hp-15-fd0105tu-laptop-i5-1335u-8gb-512gb",
+        "brand_slug": "hp",
+        "category_slug": "products",
+        "sub_category_slug": "laptops-notebooks",
+        "sub_category_name": "Laptops & Notebooks",
+        "image_folder": "HP 15 - FD0689TU",
+        "image_files": [
+            "HP-I5-13U-8-512-SlIM-BLU-01-removebg-preview.png",
+            "new-011-32-removebg-preview.png",
+            "new-03-32-removebg-preview.png",
+            "new-04-31-removebg-preview.png"
+        ],
+        "sale_price": 215000,
+        "price": 235000,
+        "cost_price": 175000,
+        "stock": 10,
+        "condition": "Brand New",
+        "warranty_duration": 1,
+        "warranty_unit": "Years",
+        "description": "The HP 15-FD0105TU is a powerful, modern 15.6-inch laptop engineered for hybrid professionals, university students, and demanding daily multitasking. Powered by the 13th Gen Intel Core i5-1335U 10-core processor, it delivers fast responsiveness, seamless multitasking, and enhanced battery longevity.\n\nKey Highlights:\n- 13th Generation Intel Core i5-1335U Processor (10 Cores: 2 Performance + 8 Efficient, 12 Threads, up to 4.60 GHz with Intel Turbo Boost)\n- 15.6\" Full HD (1920 x 1080) Micro-Edge IPS Anti-Glare Display (250 nits brightness, 45% NTSC)\n- 8GB DDR4-3200 MHz RAM (dual-channel upgradable) + 512GB PCIe NVMe M.2 High-Speed SSD\n- Intel Iris Xe Graphics for ultra-smooth multimedia streaming, photo editing, and casual gaming\n- HP True Vision 1080p Full HD Camera with temporal noise reduction and integrated dual-array digital microphones\n- Dual stereo speakers tuned for crisp voice clarity and entertainment\n- Full-size soft grey keyboard with numeric keypad and precision multi-touch navigation touchpad\n- MediaTek Wi-Fi 6E MT7902 (1x1) and Bluetooth 5.3 ultra-fast wireless card\n- Comprehensive ports: 1x USB Type-C 5Gbps, 2x USB Type-A 5Gbps, 1x HDMI 1.4b, and 3.5mm combo audio jack\n- Long-lasting 3-cell 41 Wh Li-ion polymer battery with HP Fast Charge (~50% charge in 45 minutes)\n- Pre-loaded with Genuine Microsoft Windows 11 Home 64-bit\n- Elegant Diamond White finish with Natural Silver base, weighing just 1.59 kg",
+        "main_specs": {
+            "Processor": "Intel Core i5-1335U (10 Cores: 2 Performance + 8 Efficient, 12 Threads, up to 4.60 GHz, 12MB Cache)",
+            "Memory (RAM)": "8 GB DDR4-3200 MHz RAM (Upgradable)",
+            "Internal Storage": "512 GB PCIe NVMe M.2 High-Speed SSD",
+            "Display": "15.6\" diagonal, FHD (1920 x 1080), IPS, micro-edge, anti-glare, 250 nits, 45% NTSC",
+            "Graphics": "Intel Iris Xe Graphics",
+            "Operating System": "Windows 11 Home 64-bit Genuine Pre-installed",
+            "Connectivity": "MediaTek Wi-Fi 6E MT7902 (1x1) and Bluetooth 5.3",
+            "Battery": "3-cell, 41 Wh Li-ion polymer with HP Fast Charge (50% in 45 min)"
+        },
+        "tech_specs": {
+            "general": {
+                "Model / Series": "HP Laptop 15-fd0105TU (Diamond White / Natural Silver)",
+                "Category Segment": "Laptops & Notebooks",
+                "Condition": "Brand New (Original Factory Sealed)"
+            },
+            "performance": {
+                "Interface / Connection": "1x USB Type-C 5Gbps, 2x USB Type-A 5Gbps, 1x HDMI 1.4b, 1x Headphone/Mic Combo, 1x AC Smart Pin",
+                "Architecture": "Intel Raptor Lake 13th Gen Intel 7 Process Architecture (10 Cores / 12 Threads)",
+                "Thermal Efficiency": "Quiet dual-pipe cooling exhaust with dynamic thermal control",
+                "Power Consumption": "45W Smart AC Power Adapter, Fast Charging: ~50% in 45 minutes"
+            },
+            "compatibility": {
+                "Operating Systems": "Genuine Windows 11 Home 64-bit (Factory Pre-Installed)",
+                "Certification": "EPEAT Gold Registered, Energy Star Certified, RoHS Compliant",
+                "Dimensions & Weight": "359.8mm x 236mm x 18.6mm (Lightweight: ~1.59 kg)",
+                "Included in Box": "1x HP 15-FD0105TU Laptop, 1x 45W Smart AC Power Adapter, Power Cable, Setup and Warranty Guides"
+            }
+        }
+    }
+]

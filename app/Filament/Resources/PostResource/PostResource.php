@@ -18,6 +18,7 @@ class PostResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationGroup = 'Content Management';
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $pluralLabel = 'Blogs';
 

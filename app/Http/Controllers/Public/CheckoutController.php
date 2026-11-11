@@ -188,8 +188,19 @@ class CheckoutController extends Controller
             foreach ($validated['items'] as $item) {
                 $qty = (int) $item['quantity'];
                 $price = (float) $item['price'];
-                $prodId = is_numeric($item['productId'] ?? null) ? (int) $item['productId'] : null;
-                $variantId = is_numeric($item['variantId'] ?? null) ? (int) $item['variantId'] : null;
+                $prodId = is_numeric($item['productId'] ?? null)
+                    ? (int) $item['productId']
+                    : (is_numeric($item['product_id'] ?? null)
+                        ? (int) $item['product_id']
+                        : (is_numeric($item['id'] ?? null) ? (int) $item['id'] : null));
+
+                if (! $prodId && ! empty($item['name'])) {
+                    $prodId = Product::where('name', $item['name'])->value('id');
+                }
+
+                $variantId = is_numeric($item['variantId'] ?? null)
+                    ? (int) $item['variantId']
+                    : (is_numeric($item['variant_id'] ?? null) ? (int) $item['variant_id'] : null);
                 $color = $item['color'] ?? null;
 
                 // 1. Decrement specific color variant stock if applicable

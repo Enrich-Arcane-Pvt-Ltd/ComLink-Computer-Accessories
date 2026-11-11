@@ -70,12 +70,12 @@ class HomeController extends Controller
         if ($heroSlides->isEmpty()) {
             $heroSlides = collect([[
                 'id' => 1,
-                'image' => 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=2000',
-                'title' => 'MAKING A STATEMENT THROUGH FASHION',
-                'subtitle' => 'New Collection',
-                'description' => 'Elevate your everyday style with our premium collection of streetwear and essentials.',
-                'cta' => 'Shop Collection',
-                'link' => '/',
+                'image' => '/images/login-bg.png',
+                'title' => 'EMPOWER YOUR DIGITAL WORKSPACE',
+                'subtitle' => 'Genuine Hardware & Accessories',
+                'description' => 'Discover cutting-edge computer components, high-speed storage, and gaming accessories with official warranty.',
+                'cta' => 'Explore Products',
+                'link' => '/shop',
             ]]);
         }
 
@@ -139,17 +139,6 @@ class HomeController extends Controller
                 return $item->image_url;
             })
             ->toArray();
-
-        if (empty($instagramImages)) {
-            $instagramImages = [
-                'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=400',
-                'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=400',
-                'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&q=80&w=400',
-                'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=80&w=400',
-                'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=400',
-                'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&q=80&w=400',
-            ];
-        }
 
         return Inertia::render('Home/Index', [
             'title' => 'Home - ComLink Computer Accessories',
