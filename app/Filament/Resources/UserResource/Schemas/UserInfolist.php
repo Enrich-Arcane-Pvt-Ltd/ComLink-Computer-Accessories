@@ -55,7 +55,12 @@ class UserInfolist
 
                                     Infolists\Components\TextEntry::make('role')
                                         ->badge()
-                                        ->color(fn (string $state): string => $state === 'admin' ? 'danger' : 'info')
+                                        ->color(fn (string $state): string => match ($state) {
+                                            'super-admin' => 'primary',
+                                            'admin' => 'danger',
+                                            'user' => 'info',
+                                            default => 'gray',
+                                        })
                                         ->alignCenter(),
 
                                     Infolists\Components\TextEntry::make('status')
