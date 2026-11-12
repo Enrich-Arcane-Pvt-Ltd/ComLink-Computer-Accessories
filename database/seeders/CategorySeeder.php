@@ -31,7 +31,7 @@ class CategorySeeder extends Seeder
                     ['name' => 'Processors', 'slug' => 'processors', 'image' => 'images/categories/processors.webp'],
                     ['name' => 'Motherboards', 'slug' => 'motherboards', 'image' => 'images/categories/motherboards.webp'],
                     ['name' => 'Coolers', 'slug' => 'coolers', 'image' => 'images/categories/coolers.webp'],
-                    ['name' => 'Memory Cards', 'slug' => 'memory', 'image' => 'images/categories/memory.webp'],
+                    ['name' => 'Memory Cards', 'slug' => 'memory-cards', 'image' => 'images/categories/memory.webp'],
                     ['name' => 'SSD', 'slug' => 'ssd', 'image' => 'images/categories/ssd.webp'],
                     ['name' => 'Hard Disk', 'slug' => 'hard-disk', 'image' => 'images/categories/hard-disk.webp'],
                     ['name' => 'Graphic Cards', 'slug' => 'graphic-cards', 'image' => 'images/categories/graphic-cards.webp'],

@@ -118,12 +118,6 @@ class PostProductsSeeder extends Seeder
                 'image' => 'images/categories/default.webp',
                 'sort_order' => 2,
             ],
-            'memory-cards' => [
-                'name' => 'Memory Cards',
-                'description' => 'High speed Micro SDXC memory cards for phones, surveillance, and cameras.',
-                'image' => 'images/categories/default.webp',
-                'sort_order' => 3,
-            ],
             'monitors-products' => [
                 'name' => 'Monitors',
                 'description' => 'Full HD, gaming, frameless, and office desktop LED display monitors.',
@@ -178,12 +172,6 @@ class PostProductsSeeder extends Seeder
                 'image' => 'images/categories/default.webp',
                 'sort_order' => 12,
             ],
-            'motherboards-products' => [
-                'name' => 'Motherboards',
-                'description' => 'Intel LGA1700, LGA1200, LGA1151, and LGA1150 Ultra Durable desktop motherboards.',
-                'image' => 'images/categories/default.webp',
-                'sort_order' => 13,
-            ],
             'laptops-notebooks' => [
                 'name' => 'Laptops & Notebooks',
                 'description' => 'Brand new Intel Core i5 laptops, portable notebooks, and ultrabooks.',
@@ -223,82 +211,8 @@ class PostProductsSeeder extends Seeder
             $subCategoryModels[$subSlug] = $subCat;
         }
 
-        // 5. Ensure Specification Definitions for each Sub Category
-        $mainSpecTitles = [
-            'Storage Capacity',
-            'Interface',
-            'Screen Size',
-            'Resolution',
-            'Refresh Rate',
-            'CPU Socket',
-            'Chipset',
-            'Memory Support',
-            'Print Technology',
-            'Wireless Speed',
-            'Power Capacity',
-            'Nominal Voltage',
-            'Output Power',
-            'Laptop Compatibility',
-            'Material',
-            'Connectivity',
-            'Compatibility',
-        ];
-
-        $techSpecsDef = [
-            'general' => [
-                'Model / Series',
-                'Category Segment',
-                'Condition',
-            ],
-            'performance' => [
-                'Interface / Connection',
-                'Architecture',
-                'Thermal Efficiency',
-                'Power Consumption',
-            ],
-            'compatibility' => [
-                'Operating Systems',
-                'Certification',
-                'Dimensions & Weight',
-                'Included in Box',
-            ],
-        ];
-
-        foreach ($subCategoryModels as $subCat) {
-            foreach ($mainSpecTitles as $t) {
-                ProductSpecification::updateOrInsert(
-                    [
-                        'category_id' => $subCat->parent_id,
-                        'sub_category_id' => $subCat->id,
-                        'specification_type' => 'main',
-                        'title' => $t,
-                    ],
-                    [
-                        'sub_section' => null,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]
-                );
-            }
-
-            foreach ($techSpecsDef as $subSec => $titles) {
-                foreach ($titles as $st) {
-                    ProductSpecification::updateOrInsert(
-                        [
-                            'category_id' => $subCat->parent_id,
-                            'sub_category_id' => $subCat->id,
-                            'specification_type' => 'technical',
-                            'title' => $st,
-                        ],
-                        [
-                            'sub_section' => $subSec,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ]
-                    );
-                }
-            }
-        }
+        // 5. Ensure Tailored Specification Definitions for each Category & Sub Category
+        (new ProductSpecificationSeeder())->run();
 
         // 6. Direct GRN for Inventory (Only in local environment or if SEED_MOCK_GRNS is enabled)
         $seedGrns = env('SEED_MOCK_GRNS', app()->environment('local'));
@@ -337,6 +251,16 @@ class PostProductsSeeder extends Seeder
         foreach ($productsData as $data) {
             $subCatSlug = $data['sub_category_slug'];
             $subCatObj = $subCategoryModels[$subCatSlug] ?? null;
+            if (!$subCatObj) {
+                $targetCatSlug = $data['category_slug'] ?? 'products';
+                $targetParent = Category::where('slug', $targetCatSlug)->first() ?? $parentCat;
+                $subCatObj = Category::where('parent_id', $targetParent->id)
+                    ->where(function ($q) use ($subCatSlug, $data) {
+                        $q->where('slug', $subCatSlug)
+                            ->orWhere('name', $data['sub_category_name'] ?? '');
+                    })
+                    ->first();
+            }
             $brandObj = $brandModels[$data['brand_slug']] ?? $brandModels['others'];
 
             if (!$subCatObj) {
@@ -432,8 +356,9 @@ class PostProductsSeeder extends Seeder
             ]);
             $product->save();
 
-            // Sync Categories: Parent (Products) and Subcategory
-            $product->categories()->sync([$parentCat->id, $subCatObj->id]);
+            // Sync Categories: Parent and Subcategory
+            $resolvedParentId = $subCatObj->parent_id ?? $parentCat->id;
+            $product->categories()->sync([$resolvedParentId, $subCatObj->id]);
 
             // Sync InventoryProduct
             $invProduct = InventoryProduct::where('product_code', $data['product_code'])
