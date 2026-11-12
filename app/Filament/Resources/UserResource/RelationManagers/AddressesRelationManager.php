@@ -88,13 +88,22 @@ class AddressesRelationManager extends RelationManager
                 Tables\Columns\IconColumn::make('is_default')
                     ->boolean()
                     ->label('Default')
-                    ->trueIcon('heroicon-s-star') // Default නම් Star එකක්
+                    ->trueIcon('heroicon-s-star')
                     ->falseIcon('heroicon-o-minus')
                     ->trueColor('warning'),
-                Tables\Columns\TextColumn::make('type')->badge()->color('warning'),
-                Tables\Columns\TextColumn::make('address_line_1'),
-                Tables\Columns\TextColumn::make('city'),
-                Tables\Columns\TextColumn::make('phone'),
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
+                    ->color('warning'),
+                Tables\Columns\TextColumn::make('full_address')
+                    ->label('Full Address')
+                    ->wrap()
+                    ->description(fn ($record): ?string => trim("{$record->first_name} {$record->last_name}") ? 'Recipient: ' . trim("{$record->first_name} {$record->last_name}") : null)
+                    ->searchable(['address_line_1', 'address_line_2', 'city', 'postal_code']),
+                Tables\Columns\TextColumn::make('city')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->searchable(),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
