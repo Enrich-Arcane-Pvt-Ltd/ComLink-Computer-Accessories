@@ -120,25 +120,20 @@ class InventoryForm
                 ])->columns(3),
 
             Forms\Components\Section::make('Inventory Product Information')
-                ->description('Product code, name, and warehouse catalog info.')
+                ->description('Master catalog information (Read-only. Managed under Inventory Products).')
                 ->schema([
                     Forms\Components\TextInput::make('product_code')
                         ->label('Product Code')
-                        ->required()
-                        ->disabled(fn (string $operation) => $operation === 'edit')
-                        ->dehydrated()
-                        ->unique(InventoryProduct::class, 'product_code', ignoreRecord: true),
+                        ->disabled(),
 
                     Forms\Components\TextInput::make('product_name')
                         ->label('Product Name')
-                        ->required()
-                        ->maxLength(255),
+                        ->disabled(),
 
                     Forms\Components\Select::make('supplier_id')
                         ->label('Supplier')
                         ->relationship('supplier', 'name')
-                        ->searchable()
-                        ->preload(),
+                        ->disabled(),
 
                     Forms\Components\FileUpload::make('product_image')
                         ->label('Product Image')
@@ -146,8 +141,11 @@ class InventoryForm
                         ->disk('public')
                         ->directory('inventory-products')
                         ->visibility('public')
-                        ->imageEditor(),
-                ])->columns(2),
+                        ->disabled()
+                        ->dehydrated(false),
+                ])
+                ->disabled()
+                ->columns(2),
         ];
     }
 }
