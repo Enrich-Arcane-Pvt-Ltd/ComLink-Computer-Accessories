@@ -277,7 +277,7 @@
         @if($report->notes)
         <tr>
             <td class="meta-label">Notes:</td>
-            <td class="meta-val" colspan="3">{{ $report->notes }}</td>
+            <td class="meta-val" colspan="3">{!! nl2br(e($report->notes)) !!}</td>
         </tr>
         @endif
     </table>
