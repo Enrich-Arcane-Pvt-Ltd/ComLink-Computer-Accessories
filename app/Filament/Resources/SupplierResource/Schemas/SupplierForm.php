@@ -36,7 +36,9 @@ class SupplierForm
                     Forms\Components\Textarea::make('address')
                         ->label('Address')
                         ->rows(3)
+                        ->maxLength(500)
                         ->placeholder('e.g. No. 45, Galle Road, Colombo 03, Sri Lanka')
+                        ->helperText('Maximum 500 characters. Enter the primary physical or mailing address.')
                         ->columnSpanFull(),
                 ])->columns(2),
         ];
