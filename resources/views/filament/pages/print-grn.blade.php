@@ -61,7 +61,7 @@
                     Goods Received Note (GRN)
                 </span>
                 <p class="text-lg font-mono font-bold text-gray-900 mt-3">{{ $grn->grn_number }}</p>
-                <p class="text-xs text-gray-500 mt-1">Date: {{ $grn->created_at->format('M d, Y h:i A') }}</p>
+                <p class="text-xs text-gray-500 mt-1">Date: {{ optional($grn->created_at)->timezone(config('app.timezone', 'Asia/Colombo'))?->format('M d, Y h:i A') ?? '—' }}</p>
                 @if($grn->purchaseOrder)
                     <p class="text-xs text-gray-600 mt-1">PO Ref: <span class="font-mono font-semibold">{{ $grn->purchaseOrder->po_number }}</span></p>
                 @elseif($grn->direct_po_number)

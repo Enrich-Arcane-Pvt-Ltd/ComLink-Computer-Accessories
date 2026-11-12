@@ -133,6 +133,7 @@ class GrnForm
                         ->native(false)
                         ->seconds(false)
                         ->dehydrated()
+                        ->timezone(config('app.timezone', 'Asia/Colombo'))
                         ->helperText('Local date and time when the goods are received.'),
                 ])->columns(2),
 

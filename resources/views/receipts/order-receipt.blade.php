@@ -233,7 +233,7 @@
                 <h1>Official Receipt</h1>
                 <div class="receipt-badge">Order #{{ $order->order_number }}</div>
                 <div class="order-meta-box">
-                    <strong>Date:</strong> {{ $order->created_at ? $order->created_at->format('M d, Y h:i A') : 'N/A' }}<br/>
+                    <strong>Date:</strong> {{ $order->created_at ? $order->created_at->timezone(config('app.timezone', 'Asia/Colombo'))->format('M d, Y h:i A') : 'N/A' }}<br/>
                     <strong>Order Status:</strong> {{ strtoupper($order->status ?? 'PROCESSING') }}<br/>
                     <strong>Payment Status:</strong> {{ strtoupper($order->payment_status ?? 'PAID') }}
                 </div>
