@@ -22,7 +22,7 @@ class TestimonialTable
                 ImageColumn::make('avatar')
                     ->label('Avatar')
                     ->circular()
-                    ->defaultImageUrl(url('https://ui-avatars.com/api/?background=random')),
+                    ->defaultImageUrl(fn ($record) => $record->avatar_url),
 
                 TextColumn::make('name')
                     ->searchable()
@@ -45,10 +45,10 @@ class TestimonialTable
                     ->sortable(),
 
                 TextColumn::make('created_at')
-                    ->label('Submitted At')
-                    ->dateTime()
+                    ->label('Submitted Date & Time')
+                    ->dateTime('M d, Y h:i A', timezone: config('app.timezone', 'Asia/Colombo'))
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([

@@ -18,7 +18,7 @@ class TestimonialInfolist
                     ->schema([
                         ImageEntry::make('avatar')
                             ->label('Customer Avatar')
-                            ->defaultImageUrl(url('https://ui-avatars.com/api/?background=random'))
+                            ->defaultImageUrl(fn ($record) => $record->avatar_url)
                             ->circular(),
 
                         TextEntry::make('name')
