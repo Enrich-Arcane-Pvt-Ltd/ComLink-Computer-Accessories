@@ -242,17 +242,24 @@ class GrnForm
                                 ->minValue(0)
                                 ->default(0.00)
                                 ->required()
-                                ->reactive()
+                                ->live(onBlur: true)
                                 ->afterStateUpdated(fn (Get $get, Set $set) => self::recalculateRowAndSubtotal($get, $set))
                                 ->columnSpan(['sm' => 1, 'md' => 2]),
 
                             Forms\Components\TextInput::make('product_quantity')
                                 ->label('Quantity')
-                                ->numeric()
-                                ->minValue(1)
+                                ->type('text')
+                                ->inputMode('numeric')
+                                ->rule('integer')
+                                ->rule('min:1')
+                                ->placeholder('1')
                                 ->default(1)
                                 ->required()
-                                ->reactive()
+                                ->live(onBlur: true)
+                                ->extraInputAttributes([
+                                    'pattern' => '[0-9]*',
+                                    'autocomplete' => 'off',
+                                ])
                                 ->afterStateUpdated(fn (Get $get, Set $set) => self::recalculateRowAndSubtotal($get, $set))
                                 ->columnSpan(['sm' => 1, 'md' => 1]),
 
@@ -299,7 +306,8 @@ class GrnForm
     public static function recalculateRowAndSubtotal(Get $get, Set $set): void
     {
         $price = (float) ($get('price_per_unit') ?: 0);
-        $qty = (int) ($get('product_quantity') ?: 1);
+        $rawQty = $get('product_quantity');
+        $qty = (is_numeric($rawQty) && (int) $rawQty > 0) ? (int) $rawQty : 1;
         $rowTotal = round($price * $qty, 2);
         $set('total', $rowTotal);
 
@@ -308,7 +316,8 @@ class GrnForm
         $subTotal = 0;
         foreach ($items as $item) {
             $p = (float) ($item['price_per_unit'] ?? 0);
-            $q = (int) ($item['product_quantity'] ?? 1);
+            $rawItemQty = $item['product_quantity'] ?? 1;
+            $q = (is_numeric($rawItemQty) && (int) $rawItemQty > 0) ? (int) $rawItemQty : 1;
             $subTotal += round($p * $q, 2);
         }
         $set('../../sub_total', round($subTotal, 2));

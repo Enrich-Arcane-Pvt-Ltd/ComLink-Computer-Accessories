@@ -151,10 +151,17 @@ class PurchaseOrderForm
 
                             Forms\Components\TextInput::make('product_quantity')
                                 ->label('Quantity')
-                                ->numeric()
-                                ->minValue(1)
+                                ->type('text')
+                                ->inputMode('numeric')
+                                ->rule('integer')
+                                ->rule('min:1')
+                                ->placeholder('1')
                                 ->default(1)
                                 ->required()
+                                ->extraInputAttributes([
+                                    'pattern' => '[0-9]*',
+                                    'autocomplete' => 'off',
+                                ])
                                 ->columnSpan(['sm' => 1, 'md' => 1]),
 
                             Forms\Components\Select::make('product_condition')
