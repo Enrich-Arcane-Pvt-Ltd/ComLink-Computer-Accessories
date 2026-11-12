@@ -87,7 +87,11 @@ class Grn extends Model
 
     public function recalculateSubTotal(): void
     {
-        $this->sub_total = $this->items()->sum('total');
+        $total = (float) $this->items()->sum('total');
+        if ($total <= 0) {
+            $total = (float) $this->items()->sum(\Illuminate\Support\Facades\DB::raw('COALESCE(price_per_unit, 0) * COALESCE(product_quantity, 1)'));
+        }
+        $this->sub_total = round($total, 2);
         $this->save();
     }
 

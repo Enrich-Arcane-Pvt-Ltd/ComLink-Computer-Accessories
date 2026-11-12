@@ -77,19 +77,23 @@ class CreateGrn extends CreateRecord
             $data['direct_po_number'] = null;
         }
 
-        // Calculate sub total from items if not already set
-        $subTotal = 0;
-        if (isset($data['items']) && is_array($data['items'])) {
+        if (isset($data['items']) && is_array($data['items']) && count($data['items']) > 0) {
+            $subTotal = 0;
             foreach ($data['items'] as &$item) {
                 $price = (float) ($item['price_per_unit'] ?? 0);
                 $qty = (int) ($item['product_quantity'] ?? 1);
                 $item['total'] = round($price * $qty, 2);
                 $subTotal += $item['total'];
             }
+            $data['sub_total'] = round($subTotal, 2);
         }
-        $data['sub_total'] = round($subTotal, 2);
 
         return $data;
+    }
+
+    protected function afterCreate(): void
+    {
+        $this->record->recalculateSubTotal();
     }
 
     protected function getRedirectUrl(): string
