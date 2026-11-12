@@ -259,13 +259,41 @@
 
     @if(!empty($isPrint))
     <div class="screen-actions">
-        <a href="javascript:history.back()" class="btn btn-secondary">
-            &larr; Back to Dashboard
-        </a>
+        <div style="display: flex; gap: 8px;">
+            <a href="{{ route('filament.admin.pages.stock-analyzer') }}" onclick="return handleBack(event);" class="btn btn-secondary">
+                &larr; Back to Stock Analyzer
+            </a>
+            <a href="{{ url('/admin') }}" class="btn btn-secondary">
+                Back to Dashboard
+            </a>
+        </div>
         <button onclick="window.print()" class="btn btn-primary">
             Print Report
         </button>
     </div>
+
+    <script>
+        function handleBack(event) {
+            try {
+                if (window.opener && !window.opener.closed) {
+                    window.close();
+                    return false;
+                }
+                window.close();
+            } catch (e) {}
+
+            if (window.history && window.history.length > 1) {
+                window.history.back();
+            }
+
+            setTimeout(function() {
+                window.location.href = "{{ route('filament.admin.pages.stock-analyzer') }}";
+            }, 100);
+
+            if (event) event.preventDefault();
+            return false;
+        }
+    </script>
     @endif
 
     <div class="page-container">
