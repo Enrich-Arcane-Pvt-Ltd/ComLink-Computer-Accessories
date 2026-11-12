@@ -5,11 +5,17 @@ namespace App\Filament\Resources\ContactInquiryResource\Pages;
 use App\Filament\Resources\ContactInquiryResource\ContactInquiryResource;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\MaxWidth;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListContactInquiries extends ListRecords
 {
     protected static string $resource = ContactInquiryResource::class;
+
+    public function getMaxContentWidth(): MaxWidth|string|null
+    {
+        return MaxWidth::Full;
+    }
 
     public function getTabs(): array
     {

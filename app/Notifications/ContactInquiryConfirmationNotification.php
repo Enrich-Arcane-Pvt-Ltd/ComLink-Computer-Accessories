@@ -28,6 +28,8 @@ class ContactInquiryConfirmationNotification extends Notification implements Sho
             ->line('Thank you for reaching out to us! We have successfully received your inquiry regarding "'.$this->inquiry->subject.'".')
             ->line('Our support team is currently reviewing your message and will get back to you as soon as possible (usually within 24 hours).')
             ->markdown('mail.inquiry-confirmation', [
+                'name' => $this->inquiry->name,
+                'inquiry' => $this->inquiry,
                 'originalMessage' => $this->inquiry->message,
             ]);
     }
