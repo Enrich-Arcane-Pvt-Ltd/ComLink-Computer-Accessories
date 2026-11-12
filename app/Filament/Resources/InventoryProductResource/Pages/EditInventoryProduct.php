@@ -47,6 +47,38 @@ class EditInventoryProduct extends EditRecord
             $data['main_specifications'] = $product->main_specifications ?? [];
             $data['technical_specifications'] = $product->technical_specifications ?? [];
 
+            // Normalize main_specifications so both slug keys and title keys exist in form data
+            if (! empty($product->main_specifications) && is_array($product->main_specifications)) {
+                $normalizedMain = $data['main_specifications'];
+                foreach ($product->main_specifications as $k => $v) {
+                    if ($v === null || trim((string) $v) === '') {
+                        continue;
+                    }
+                    $slug = \Illuminate\Support\Str::slug($k, '_');
+                    $normalizedMain[$slug] = $v;
+                    $normalizedMain[$k] = $v;
+                }
+                $data['main_specifications'] = $normalizedMain;
+            }
+
+            // Normalize technical_specifications so flat slug keys exist
+            if (! empty($product->technical_specifications) && is_array($product->technical_specifications)) {
+                $normalizedTech = $data['technical_specifications'];
+                $flattenTech = function ($arr) use (&$flattenTech, &$normalizedTech) {
+                    foreach ($arr as $k => $v) {
+                        if (is_array($v)) {
+                            $flattenTech($v);
+                        } elseif ($v !== null && trim((string) $v) !== '') {
+                            $slug = \Illuminate\Support\Str::slug($k, '_');
+                            $normalizedTech[$slug] = $v;
+                            $normalizedTech[$k] = $v;
+                        }
+                    }
+                };
+                $flattenTech($product->technical_specifications);
+                $data['technical_specifications'] = array_merge($data['technical_specifications'], $normalizedTech);
+            }
+
             if ($product->hasColorVariants()) {
                 $data['has_color_variants'] = true;
                 $data['color_variants'] = $product->variants->map(fn ($v) => [
@@ -141,8 +173,8 @@ class EditInventoryProduct extends EditRecord
                 'condition'                => $condition,
                 'warranty_duration'        => ! empty($raw['warranty_duration']) ? (int) $raw['warranty_duration'] : null,
                 'warranty_unit'            => $raw['warranty_unit'] ?? 'Years',
-                'main_specifications'      => $raw['main_specifications'] ?? [],
-                'technical_specifications' => $raw['technical_specifications'] ?? [],
+                'main_specifications'      => $this->mergeSpecs($existingProduct?->main_specifications, $raw['main_specifications'] ?? []),
+                'technical_specifications' => $this->mergeSpecs($existingProduct?->technical_specifications, $raw['technical_specifications'] ?? []),
                 'price'                    => $existingProduct ? $existingProduct->price : 0.00,
                 'is_visible'               => $existingProduct ? $existingProduct->is_visible : false,
             ]
@@ -205,6 +237,14 @@ class EditInventoryProduct extends EditRecord
         } else {
             $product->variants()->delete();
         }
+    }
+
+    protected function mergeSpecs(?array $existing, array $incoming): array
+    {
+        $existing = $existing ?? [];
+        $cleanedIncoming = array_filter($incoming, fn ($v) => ! is_null($v) && trim((string) (is_array($v) ? json_encode($v) : $v)) !== '');
+
+        return array_merge($existing, $cleanedIncoming);
     }
 
     protected function getRedirectUrl(): string
