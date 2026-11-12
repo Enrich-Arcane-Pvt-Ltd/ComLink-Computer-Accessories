@@ -532,21 +532,11 @@
         </div>
     </div>
 
-    <!-- 5. Download Action Bar -->
+    <!-- 5. Receipt Notice Bar -->
     <div class="crm-footer-bar">
         <p class="crm-receipt-notice">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             <span>Official computer-generated receipt for Order #{{ $record->order_number }}.</span>
         </p>
-
-        <a
-            href="{{ route('orders.receipt', ['order' => $record->id]) }}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="crm-download-btn"
-        >
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>Download PDF</span>
-        </a>
     </div>
 </div>
