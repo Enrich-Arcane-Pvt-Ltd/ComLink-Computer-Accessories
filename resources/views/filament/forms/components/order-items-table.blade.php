@@ -30,8 +30,13 @@
                                 />
                             @endif
                             <div class="min-w-0">
-                                <div class="font-semibold text-gray-100 text-xs sm:text-sm">
-                                    {{ $item->product_name }}
+                                <div class="font-semibold text-gray-100 text-xs sm:text-sm flex items-center gap-2">
+                                    <span>{{ $item->product_name }}</span>
+                                    @if(!empty($item->color))
+                                        <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-medium bg-cyan-950/80 text-cyan-300 border border-cyan-800/60">
+                                            {{ $item->color }}
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="text-[11px] text-cyan-400 font-medium mt-0.5">
                                     Rs. {{ number_format((float) $item->unit_price, 2) }} × {{ $item->quantity }} {{ $item->quantity === 1 ? 'unit' : 'units' }}
