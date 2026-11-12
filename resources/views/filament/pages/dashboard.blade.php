@@ -282,7 +282,7 @@
             }
             .cl-table--breakdown .cl-prod-name {
                 font-size: 12px;
-                max-width: 200px;
+                max-width: 340px;
                 line-height: 1.3;
             }
         </style>
@@ -301,10 +301,6 @@
                 <a href="{{ $createGrnUrl }}" class="cl-btn">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     Create GRN
-                </a>
-                <a href="{{ $createProductUrl }}" class="cl-btn cl-btn--primary">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                    Add product
                 </a>
             </div>
         </div>
@@ -470,7 +466,7 @@
                     </div>
 
                     {{-- Category Dropdown --}}
-                    <div style="min-width: 170px;">
+                    <div style="min-width: 150px;">
                         <select wire:model.live="profitLossCategory" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none;">
                             <option value="">All Categories (Default)</option>
                             @foreach($plCategories as $cat)
@@ -480,7 +476,7 @@
                     </div>
 
                     {{-- Subcategory Dropdown --}}
-                    <div style="min-width: 170px;">
+                    <div style="min-width: 150px;">
                         <select wire:model.live="profitLossSubCategory" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none;">
                             <option value="">All Subcategories</option>
                             @foreach($plSubCategories as $subCat)
@@ -490,7 +486,7 @@
                     </div>
 
                     {{-- Product Dropdown --}}
-                    <div style="min-width: 220px; max-width: 320px;">
+                    <div style="min-width: 180px; max-width: 260px;">
                         <select wire:model.live="profitLossProduct" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none;">
                             <option value="">All Products ({{ count($plProducts) }})</option>
                             @foreach($plProducts as $prodItem)
@@ -499,9 +495,30 @@
                         </select>
                     </div>
 
+                    {{-- Period Dropdown (Daily, Weekly, Monthly, Annually, Custom) --}}
+                    <div style="min-width: 150px;">
+                        <select wire:model.live="profitLossPeriod" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none; font-weight: 500;">
+                            <option value="all">All Time (Default)</option>
+                            <option value="daily">Daily (Today)</option>
+                            <option value="weekly">Weekly (Last 7 Days)</option>
+                            <option value="monthly">Monthly (This Month)</option>
+                            <option value="annually">Annually (This Year)</option>
+                            <option value="custom">Selected Custom Range</option>
+                        </select>
+                    </div>
+
+                    {{-- Custom Date Range Inputs --}}
+                    @if($profitLossPeriod === 'custom')
+                        <div style="display: flex; align-items: center; gap: 6px; background: var(--cl-card); border: 1px solid var(--cl-border); border-radius: 8px; padding: 3px 8px;">
+                            <input type="date" wire:model.live="profitLossStartDate" style="font-size: 12px; background: transparent; border: none; color: var(--cl-text); outline: none;" title="Start Date">
+                            <span style="font-size: 11px; color: var(--cl-muted);">to</span>
+                            <input type="date" wire:model.live="profitLossEndDate" style="font-size: 12px; background: transparent; border: none; color: var(--cl-text); outline: none;" title="End Date">
+                        </div>
+                    @endif
+
                     {{-- Reset Filter Button --}}
-                    @if($profitLossCategory || $profitLossSubCategory || $profitLossProduct)
-                        <button type="button" wire:click="resetProfitLossFilters" class="cl-btn" style="font-size: 11.5px; padding: 6px 10px; color: var(--cl-muted);" title="Reset back to all products">
+                    @if($profitLossCategory || $profitLossSubCategory || $profitLossProduct || $profitLossPeriod !== 'all')
+                        <button type="button" wire:click="resetProfitLossFilters" class="cl-btn" style="font-size: 11.5px; padding: 6px 10px; color: var(--cl-muted);" title="Reset back to all products and all time">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 13px; height: 13px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             Reset Filter
                         </button>
@@ -526,13 +543,19 @@
                         <span class="cl-kpi-label">Total GRN Value</span>
                     </div>
                     <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['total_grn_value'], 2) }}">
-                        <small>Rs.</small>{{ $compact($profitLossAnalysis['summary']['total_grn_value']) }}
+                        <small>Rs.</small>{{ number_format($profitLossAnalysis['summary']['display_grn_value'] ?? $profitLossAnalysis['summary']['total_grn_value'], 2) }}
                     </div>
-                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
                         <span class="cl-pill t-slate" style="font-size: 11px; padding: 2px 8px;">
                             <i></i><b>{{ number_format($profitLossAnalysis['summary']['products_count']) }}</b> Products Under Scope
                         </span>
-                        <span style="font-size: 11px; color: var(--cl-muted);">Procurement Cost</span>
+                        <span style="font-size: 11px; color: var(--cl-muted);">
+                            @if(!empty($profitLossAnalysis['summary']['is_period_filtered']))
+                                Period Procurement
+                            @else
+                                Procurement Cost
+                            @endif
+                        </span>
                     </div>
                 </div>
 
@@ -562,10 +585,10 @@
                         <span class="cl-kpi-label">Gained Income</span>
                     </div>
                     <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['gained_income'], 2) }}">
-                        <small>Rs.</small>{{ $compact($profitLossAnalysis['summary']['gained_income']) }}
+                        <small>Rs.</small>{{ number_format($profitLossAnalysis['summary']['gained_income'], 2) }}
                     </div>
                     <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
-                        <span>COGS: <b>Rs. {{ $compact($profitLossAnalysis['summary']['cogs']) }}</b></span>
+                        <span>COGS: <b>Rs. {{ number_format($profitLossAnalysis['summary']['cogs'], 2) }}</b></span>
                         <span class="t-cyan"><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> units sold</span>
                     </div>
                 </div>
@@ -577,7 +600,7 @@
                         <span class="cl-kpi-label">Net Profit / Loss</span>
                     </div>
                     <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['net_profit'], 2) }}">
-                        {{ $profitLossAnalysis['summary']['is_profitable'] ? '+' : '' }}<small style="color: inherit;">Rs.</small>{{ $compact($profitLossAnalysis['summary']['net_profit']) }}
+                        {{ $profitLossAnalysis['summary']['is_profitable'] ? '+' : '' }}<small style="color: inherit;">Rs.</small>{{ number_format($profitLossAnalysis['summary']['net_profit'], 2) }}
                     </div>
                     <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
                         <span class="cl-pill {{ $profitLossAnalysis['summary']['is_profitable'] ? 't-green' : 't-red' }}">
@@ -604,15 +627,15 @@
                     <table class="cl-table cl-table--breakdown">
                         <thead style="position: sticky; top: 0; z-index: 2; background: var(--cl-card);">
                             <tr>
-                                <th style="width: 34px; text-align: center; padding-left: 12px !important;">#</th>
-                                <th style="min-width: 170px;">Product Details</th>
-                                <th style="width: 110px;">Category</th>
-                                <th class="cl-c" style="width: 105px;">Stock Status</th>
-                                <th class="cl-r" style="width: 80px;">Unit Cost</th>
-                                <th class="cl-r" style="width: 80px;">Unit Price</th>
-                                <th class="cl-r" style="width: 95px;">Total GRN</th>
-                                <th class="cl-r" style="width: 95px;">Gained Income</th>
-                                <th class="cl-r" style="width: 110px; padding-right: 14px !important;">Net Profit / Loss</th>
+                                <th style="width: 38px; text-align: center; padding-left: 12px !important;">#</th>
+                                <th style="width: 25%; min-width: 200px;">Product Details</th>
+                                <th style="width: 15%; min-width: 130px;">Category</th>
+                                <th class="cl-c" style="width: 10%; min-width: 95px;">Stock Status</th>
+                                <th class="cl-r" style="width: 8%; min-width: 80px;">Unit Cost</th>
+                                <th class="cl-r" style="width: 8%; min-width: 80px;">Unit Price</th>
+                                <th class="cl-r" style="width: 10%; min-width: 95px;">Total GRN</th>
+                                <th class="cl-r" style="width: 11%; min-width: 100px;">Gained Income</th>
+                                <th class="cl-r" style="width: 13%; min-width: 110px; padding-right: 14px !important;">Net Profit / Loss</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -645,7 +668,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td style="font-size: 11.5px; color: var(--cl-muted); max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $item['categories'] }}">
+                                    <td style="font-size: 11.5px; color: var(--cl-muted); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $item['categories'] }}">
                                         {{ $item['categories'] }}
                                     </td>
                                     <td class="cl-c">
