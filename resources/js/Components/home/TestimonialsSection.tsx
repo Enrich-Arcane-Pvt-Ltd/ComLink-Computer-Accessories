@@ -1,108 +1,21 @@
 import { cn } from "@/utils/cn";
 import { Quote, Star } from "lucide-react";
 
-/* -------------------------------------------------------------------------- */
-/*  Hard-coded sample testimonials (replace with real reviews later)          */
-/* -------------------------------------------------------------------------- */
-
-interface Testimonial {
-    id: number;
-    description: string;
+export interface TestimonialItem {
+    id: string | number;
     name: string;
-    role: string;
+    location?: string;
+    role?: string;
+    avatar?: string | null;
+    avatar_url?: string | null;
     rating: number;
+    quote?: string;
+    description?: string;
 }
 
-const testimonials: Testimonial[] = [
-    {
-        id: 1,
-        description:
-            "Ordered a mechanical keyboard and a gaming mouse. Both arrived well packed and work perfectly. My desk setup finally feels complete.",
-        name: "Kasun Perera",
-        role: "PC Gamer",
-        rating: 5,
-    },
-    {
-        id: 2,
-        description:
-            "The Build My PC tool made choosing parts so easy. I got every component from one place with no compatibility worries.",
-        name: "Nethmi Silva",
-        role: "Video Editor",
-        rating: 5,
-    },
-    {
-        id: 3,
-        description:
-            "Genuine products at fair prices. The SSD I bought cut my project load times in half. Highly recommended.",
-        name: "Ravindu Fernando",
-        role: "Software Engineer",
-        rating: 5,
-    },
-    {
-        id: 4,
-        description:
-            "Fast delivery and great support. They helped me pick the right monitor for design work and it was exactly what I needed.",
-        name: "Ishara Jayasinghe",
-        role: "Graphic Designer",
-        rating: 4,
-    },
-    {
-        id: 5,
-        description:
-            "Bought a headset and a webcam for my streams. The quality is amazing for the price, and the warranty gave me peace of mind.",
-        name: "Dinesh Kumar",
-        role: "Streamer",
-        rating: 5,
-    },
-    {
-        id: 6,
-        description:
-            "As a student on a budget, I found a solid laptop and accessories bundle here. Honest advice from the team too.",
-        name: "Amaya Wickramasinghe",
-        role: "University Student",
-        rating: 5,
-    },
-    {
-        id: 7,
-        description:
-            "We equipped our whole office with UPS units, printers and chairs. Smooth ordering and everything arrived on time.",
-        name: "Sahan De Silva",
-        role: "Office Manager",
-        rating: 5,
-    },
-    {
-        id: 8,
-        description:
-            "Great range of gaming gear. The controller and RGB mouse pad I picked up are top quality. I'll be back for my next upgrade.",
-        name: "Tharushi Perera",
-        role: "Esports Player",
-        rating: 4,
-    },
-    {
-        id: 9,
-        description:
-            "Upgraded my graphics card and power supply here. Clear product details made the decision easy, and checkout was quick.",
-        name: "Malik Rajapaksa",
-        role: "Home PC Builder",
-        rating: 5,
-    },
-];
-
-/* Three columns, three testimonials each. Visibility per breakpoint. */
-const columns = [
-    {
-        items: testimonials.slice(0, 3),
-        className: "animate-testimonial-scroll-1",
-    },
-    {
-        items: testimonials.slice(3, 6),
-        className: "hidden md:block animate-testimonial-scroll-2",
-    },
-    {
-        items: testimonials.slice(6, 9),
-        className: "hidden lg:block animate-testimonial-scroll-3",
-    },
-];
+interface TestimonialsSectionProps {
+    testimonials?: TestimonialItem[];
+}
 
 const getInitials = (name: string) =>
     name
@@ -116,7 +29,11 @@ const getInitials = (name: string) =>
 /*  Card                                                                      */
 /* -------------------------------------------------------------------------- */
 
-function TestimonialCard({ item }: { item: Testimonial }) {
+function TestimonialCard({ item }: { item: TestimonialItem }) {
+    const text = item.quote || item.description || "";
+    const roleOrLocation = item.location || item.role || "Verified Customer";
+    const avatar = item.avatar || item.avatar_url;
+
     return (
         <div className="mb-4 rounded-xl border border-border bg-card p-6 transition-colors duration-300 hover:border-accent">
             <div className="mb-5 flex items-center justify-between">
@@ -140,16 +57,27 @@ function TestimonialCard({ item }: { item: Testimonial }) {
             </div>
 
             <p className="mb-5 text-sm leading-relaxed text-fg/80">
-                {item.description}
+                {text}
             </p>
 
             <div className="flex items-center gap-3">
-                <div className="flex size-9 flex-shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-fg">
-                    {getInitials(item.name)}
-                </div>
-                <div>
-                    <p className="text-sm font-medium text-fg">{item.name}</p>
-                    <p className="text-sm text-muted">{item.role}</p>
+                {avatar ? (
+                    <img
+                        src={avatar}
+                        alt={item.name}
+                        className="size-9 rounded-full object-cover border border-border"
+                        onError={(e) => {
+                            (e.target as HTMLElement).style.display = "none";
+                        }}
+                    />
+                ) : (
+                    <div className="flex size-9 flex-shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-fg">
+                        {getInitials(item.name)}
+                    </div>
+                )}
+                <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium text-fg">{item.name}</p>
+                    <p className="truncate text-sm text-muted">{roleOrLocation}</p>
                 </div>
             </div>
         </div>
@@ -160,7 +88,52 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 /*  Section                                                                   */
 /* -------------------------------------------------------------------------- */
 
-export default function TestimonialSection() {
+export default function TestimonialsSection({
+    testimonials = [],
+}: TestimonialsSectionProps) {
+    if (!testimonials || testimonials.length === 0) {
+        return null;
+    }
+
+    // Distribute testimonials across 3 columns
+    const col1: TestimonialItem[] = [];
+    const col2: TestimonialItem[] = [];
+    const col3: TestimonialItem[] = [];
+
+    testimonials.forEach((item, index) => {
+        if (index % 3 === 0) col1.push(item);
+        else if (index % 3 === 1) col2.push(item);
+        else col3.push(item);
+    });
+
+    if (col2.length === 0) col2.push(...col1);
+    if (col3.length === 0) col3.push(...col1);
+
+    // Ensure at least 3 items in each column so continuous scrolling is smooth
+    const padItems = (items: TestimonialItem[], min = 3): TestimonialItem[] => {
+        if (items.length === 0) return [];
+        let res = [...items];
+        while (res.length < min) {
+            res = [...res, ...items];
+        }
+        return res;
+    };
+
+    const columns = [
+        {
+            items: padItems(col1),
+            className: "animate-testimonial-scroll-1",
+        },
+        {
+            items: padItems(col2),
+            className: "hidden md:block animate-testimonial-scroll-2",
+        },
+        {
+            items: padItems(col3),
+            className: "hidden lg:block animate-testimonial-scroll-3",
+        },
+    ];
+
     return (
         <section className="bg-bg px-4 py-16">
             {/* Scoped keyframes + animation classes */}

@@ -331,9 +331,7 @@ export default function Home({
                 </section>
 
                 {/* Testimonials */}
-                {/* <TestimonialsSection testimonials={testimonials} /> */}
-
-                <TestimonialsSection />
+                <TestimonialsSection testimonials={testimonials} />
 
                 {/* Instagram Grid */}
                 {/* <InstagramGrid instagramImages={instagramImages} /> */}
