@@ -348,14 +348,28 @@ class BuildPcController extends Controller
         // Helper to find spec case-insensitively with loose key matching
         $getSpec = function (array $source, ...$keys) {
             foreach ($keys as $k) {
-                if (isset($source[$k]) && ! is_null($source[$k]) && trim((string) $source[$k]) !== '') {
-                    return trim((string) $source[$k]);
+                if (isset($source[$k]) && ! is_null($source[$k])) {
+                    if (is_array($source[$k])) {
+                        $joined = implode(', ', array_filter($source[$k], fn ($v) => is_scalar($v)));
+                        if ($joined !== '') {
+                            return $joined;
+                        }
+                    } elseif (is_scalar($source[$k]) && trim((string) $source[$k]) !== '') {
+                        return trim((string) $source[$k]);
+                    }
                 }
                 $cleanK = strtolower(str_replace([' ', '.', '-', '_'], '', $k));
                 foreach ($source as $sk => $sv) {
                     $cleanSK = strtolower(str_replace([' ', '.', '-', '_'], '', (string) $sk));
-                    if ($cleanSK === $cleanK && ! is_null($sv) && trim((string) $sv) !== '') {
-                        return trim((string) $sv);
+                    if ($cleanSK === $cleanK && ! is_null($sv)) {
+                        if (is_array($sv)) {
+                            $joined = implode(', ', array_filter($sv, fn ($v) => is_scalar($v)));
+                            if ($joined !== '') {
+                                return $joined;
+                            }
+                        } elseif (is_scalar($sv) && trim((string) $sv) !== '') {
+                            return trim((string) $sv);
+                        }
                     }
                 }
             }
@@ -476,22 +490,28 @@ class BuildPcController extends Controller
         $specs = [];
         if (! empty($tech)) {
             foreach ($tech as $key => $val) {
-                if (! is_null($val) && trim((string) $val) !== '' && ! in_array($key, ['category_segment', 'model_series'])) {
-                    $label = ucwords(str_replace('_', ' ', $key));
-                    $specs[$label] = (string) $val;
-                    if (count($specs) >= 4) {
-                        break;
+                if (! is_null($val) && ! in_array($key, ['category_segment', 'model_series'])) {
+                    $strVal = is_array($val) ? implode(', ', array_filter($val, fn ($v) => is_scalar($v))) : (string) $val;
+                    if (trim($strVal) !== '') {
+                        $label = ucwords(str_replace('_', ' ', $key));
+                        $specs[$label] = $strVal;
+                        if (count($specs) >= 4) {
+                            break;
+                        }
                     }
                 }
             }
         }
         if (empty($specs) && ! empty($main)) {
             foreach ($main as $key => $val) {
-                if (! is_null($val) && trim((string) $val) !== '') {
-                    $label = ucwords(str_replace('_', ' ', $key));
-                    $specs[$label] = (string) $val;
-                    if (count($specs) >= 4) {
-                        break;
+                if (! is_null($val)) {
+                    $strVal = is_array($val) ? implode(', ', array_filter($val, fn ($v) => is_scalar($v))) : (string) $val;
+                    if (trim($strVal) !== '') {
+                        $label = ucwords(str_replace('_', ' ', $key));
+                        $specs[$label] = $strVal;
+                        if (count($specs) >= 4) {
+                            break;
+                        }
                     }
                 }
             }
