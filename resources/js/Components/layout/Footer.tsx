@@ -295,10 +295,10 @@ export default function Footer() {
             </div>
 
             {/* Watermark + bottom bar */}
-            <div className="relative">
+            <div className="relative min-h-[110px] sm:min-h-[130px]">
                 <div
                     aria-hidden="true"
-                    className="pointer-events-none select-none text-center font-display font-extrabold leading-none tracking-tight text-white/[0.06] text-[22vw] lg:text-[17rem] -mb-[0.18em]"
+                    className="pointer-events-none select-none text-center font-display font-extrabold leading-none tracking-tight text-white/[0.06] text-[22vw] lg:text-[17rem] -mb-[0.08em]"
                     style={{
                         WebkitMaskImage:
                             "linear-gradient(to bottom, black 35%, transparent 95%)",
@@ -309,8 +309,8 @@ export default function Footer() {
                     ComLink
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 pb-6">
-                    <div className="container mx-auto px-4 md:px-6 flex flex-col items-center gap-2 text-center">
+                <div className="absolute inset-x-0 bottom-8 sm:bottom-10">
+                    <div className="container mx-auto px-4 md:px-6 flex flex-col items-center gap-1.5 text-center">
                         <p className="text-sm text-primary-fg/60">
                             Copyright &copy; {nowDate}
                             <span className="mx-3 sm:mx-4 text-primary-fg/40">|</span>
@@ -327,20 +327,6 @@ export default function Footer() {
                                 Enrich Arcane
                             </a>
                         </p>
-                        <div className="flex items-center gap-4 text-xs text-primary-fg/60">
-                            <Link
-                                href={route("privacy.show")}
-                                className="hover:text-accent transition-colors"
-                            >
-                                Privacy Policy
-                            </Link>
-                            <Link
-                                href={route("terms.show")}
-                                className="hover:text-accent transition-colors"
-                            >
-                                Terms of Use
-                            </Link>
-                        </div>
                     </div>
                 </div>
             </div>
