@@ -1,5 +1,6 @@
 import { cn } from "@/utils/cn";
-import { Link } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
+import { toast } from "sonner";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
     ArrowRight,
@@ -34,11 +35,16 @@ const GLOBAL_FRAME_CACHE = new Map<number, HTMLImageElement>();
 let globalActiveLoads = 0;
 const MAX_CONCURRENT_BG_LOADS = 2; // Keep low to avoid starving PHP/network
 
+const BUILD_PC_ROUTE = "/build-my-pc";
+
 export function HeroCarousel({
     slides = [],
     totalFrames = 192,
     framesFolder = "/images/hero-frames",
 }: HeroCarouselProps) {
+    const { auth } = usePage().props as any;
+    const user = auth?.user ?? null;
+
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -494,7 +500,14 @@ export function HeroCarousel({
                                 asChild
                             >
                                 <Link
-                                    href="/shop?category=pc-components"
+                                    href={BUILD_PC_ROUTE}
+                                    onClick={(e) => {
+                                        if (!user) {
+                                            e.preventDefault();
+                                            toast.info("Please login or register to use Build My PC.");
+                                            router.visit("/login");
+                                        }
+                                    }}
                                     className="inline-flex items-center gap-3"
                                 >
                                     <Cpu className="w-4 h-4 text-cyan-400 transition-transform duration-300 group-hover:rotate-45" />

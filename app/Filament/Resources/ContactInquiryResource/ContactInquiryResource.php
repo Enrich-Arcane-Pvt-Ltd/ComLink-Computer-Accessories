@@ -53,7 +53,8 @@ class ContactInquiryResource extends Resource
 
                 Tables\Columns\TextColumn::make('subject')
                     ->searchable()
-                    ->limit(40),
+                    ->limit(40)
+                    ->wrap(),
 
                 Tables\Columns\TextColumn::make('status')
                     ->badge()

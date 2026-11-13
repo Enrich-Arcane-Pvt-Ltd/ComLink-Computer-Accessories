@@ -2507,6 +2507,8 @@ class EzvizCameraProductsSeeder extends Seeder
                         'discount_percentage' => round((($price - $salePrice) / $price) * 100),
                     ]);
                 }
+
+                $product->syncWithFirstVariant();
             }
 
             // Sync InventoryProduct

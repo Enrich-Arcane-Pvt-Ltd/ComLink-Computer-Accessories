@@ -11,6 +11,25 @@
 
     $latestGrn = $record?->latest_grn_price;
     $margin = ($latestSelling > 0 && $latestGrn !== null) ? ($latestSelling - $latestGrn) : null;
+
+    if ($storeProduct && $storeProduct->hasColorVariants()) {
+        $firstVar = $storeProduct->variants()->orderBy('id')->first();
+        if ($firstVar) {
+            $vOrig = (float) ($firstVar->price ?? 0);
+            $vSale = ($firstVar->sale_price !== null && (float) $firstVar->sale_price > 0) ? (float) $firstVar->sale_price : $vOrig;
+            if ($vOrig > 0) {
+                $origPrice = $vOrig;
+                $salePrice = $vSale;
+                $latestSelling = $vSale;
+                $hasDiscount = $origPrice > 0 && $salePrice < $origPrice;
+                $discountPct = $hasDiscount ? (int) round((($origPrice - $salePrice) / $origPrice) * 100) : (int) ($firstVar->discount_percentage ?? 0);
+            }
+            if ((float) ($firstVar->grn_price ?? 0) > 0) {
+                $latestGrn = (float) $firstVar->grn_price;
+            }
+            $margin = ($latestSelling > 0 && $latestGrn !== null) ? ($latestSelling - $latestGrn) : null;
+        }
+    }
 @endphp
 
 <div style="display: flex; flex-direction: column; min-width: 0; padding: 2px 0; gap: 3px;">

@@ -213,6 +213,9 @@ class CheckoutController extends Controller
                         if (! $color) {
                             $color = $variant->color_name;
                         }
+                        if ($variant->effective_price > 0) {
+                            $price = (float) $variant->effective_price;
+                        }
                     }
                 } elseif ($prodId && $color) {
                     $variant = \App\Models\ProductVariant::where('product_id', $prodId)
@@ -227,6 +230,9 @@ class CheckoutController extends Controller
                         $variant->show_quantity = max(0, ((int) $variant->show_quantity) - $qty);
                         $variant->save();
                         $variantId = $variant->id;
+                        if ($variant->effective_price > 0) {
+                            $price = (float) $variant->effective_price;
+                        }
                     }
                 }
 

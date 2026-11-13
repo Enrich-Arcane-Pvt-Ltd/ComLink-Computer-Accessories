@@ -396,6 +396,12 @@ class PosAccessoriesProductsSeeder extends Seeder
                     $vStock = (int) ($vData['stock'] ?? 10);
                     $vSku = $vData['sku'] ?? ($product->sku . '-' . strtoupper(substr($vColor, 0, 3)));
 
+                    // Extract variant specific pricing & cost values if provided in JSON, falling back to parent
+                    $vOrigPrice = isset($vData['original_price']) ? (float) $vData['original_price'] : (isset($vData['price']) ? (float) $vData['price'] : $price);
+                    $vSalePrice = isset($vData['latest_selling_price']) ? (float) $vData['latest_selling_price'] : (isset($vData['selling_price']) ? (float) $vData['selling_price'] : (isset($vData['sale_price']) ? (float) $vData['sale_price'] : $salePrice));
+                    $vCostPrice = isset($vData['grn_unit_cost']) ? (float) $vData['grn_unit_cost'] : (isset($vData['cost_price']) ? (float) $vData['cost_price'] : (isset($vData['grn_price']) ? (float) $vData['grn_price'] : $costPrice));
+                    $vDiscount = isset($vData['discount_percentage']) ? (int) $vData['discount_percentage'] : (($vOrigPrice > 0 && $vSalePrice < $vOrigPrice) ? (int) round((($vOrigPrice - $vSalePrice) / $vOrigPrice) * 100) : 0);
+
                     $variant = ProductVariant::updateOrCreate(
                         [
                             'product_id' => $product->id,
@@ -404,10 +410,10 @@ class PosAccessoriesProductsSeeder extends Seeder
                         [
                             'variant_name' => $vData['variant_name'],
                             'condition' => 'Brand New',
-                            'price' => $price,
-                            'sale_price' => $salePrice,
-                            'grn_price' => $costPrice,
-                            'discount_percentage' => ($price > 0 && $salePrice < $price) ? (int) round((($price - $salePrice) / $price) * 100) : 0,
+                            'price' => $vOrigPrice,
+                            'sale_price' => $vSalePrice,
+                            'grn_price' => $vCostPrice,
+                            'discount_percentage' => $vDiscount,
                             'stock' => ($seedGrns ? $vStock : 0),
                             'inventory_stock' => ($seedGrns ? $vStock : 0),
                             'show_quantity' => ($seedGrns ? $vStock : 0),
@@ -429,13 +435,13 @@ class PosAccessoriesProductsSeeder extends Seeder
                             'product_variant_id' => $variant->id,
                             'product_name' => $vData['variant_name'],
                             'product_quantity' => $vStock,
-                            'price_per_unit' => $costPrice,
-                            'total' => $costPrice * $vStock,
+                            'price_per_unit' => $vCostPrice,
+                            'total' => $vCostPrice * $vStock,
                             'product_condition' => 'Brand New',
                         ]
                     );
 
-                    $totalGrnAmount += ($costPrice * $vStock);
+                    $totalGrnAmount += ($vCostPrice * $vStock);
                     }
                 }
 
@@ -445,6 +451,9 @@ class PosAccessoriesProductsSeeder extends Seeder
                     ->whereNull('product_variant_id')
                     ->whereNull('color_name')
                     ->delete(); }
+
+                // Sync parent Product and InventoryProduct with the 1st color variation details
+                $product->syncWithFirstVariant();
             } else {
                 // Remove any leftover variants if simple
                 ProductVariant::where('product_id', $product->id)->delete();

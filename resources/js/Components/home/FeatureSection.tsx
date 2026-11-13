@@ -4,7 +4,6 @@ import {
     ArrowRight,
     BadgeCheck,
     Headphones,
-    RotateCw,
     ShieldCheck,
     Truck,
 } from "lucide-react";
@@ -14,7 +13,8 @@ import { useEffect, useRef, useState } from "react";
 /*  Hard-coded content                                                        */
 /* -------------------------------------------------------------------------- */
 
-const LOGO_SRC = "/images/comlink-logo-3d.png"; // cropped, transparent PNG
+const IMG_1 = "/images/home-choose/img1.jfif";
+const IMG_2 = "/images/home-choose/img2.jfif";
 
 const features = [
     {
@@ -44,169 +44,251 @@ const features = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  3D logo (stacked layers = extrusion, auto-rotate + drag to rotate)        */
+/*  Vector background (pure SVG – crisp at any size, each element animates)   */
 /* -------------------------------------------------------------------------- */
 
-const DEPTH = 40; // px thickness of the extruded logo
-const MID_LAYERS = 14; // layers that form the "side walls"
-const AUTO_SPEED = 0.45; // degrees per frame (~60fps)
-const DEFAULT_TILT = 8; // resting X tilt in degrees
-const LOGO_ASPECT = "487 / 177";
+const topDots = Array.from({ length: 6 }, (_, i) => 338 + i * 19);
+const bottomDots = Array.from({ length: 6 }, (_, i) => 75 + i * 19);
+const hatchLines = Array.from({ length: 16 }, (_, i) => 200 + i * 11);
 
-const layerBase: React.CSSProperties = {
-    position: "absolute",
-    inset: 0,
-    width: "100%",
-    height: "100%",
-    pointerEvents: "none",
-    userSelect: "none",
+// every animated group scales/rotates around its own center
+const fillBox: React.CSSProperties = {
+    transformBox: "fill-box",
+    transformOrigin: "center",
 };
 
-function Logo3D() {
-    const objRef = useRef<HTMLDivElement>(null);
-    const state = useRef({
-        rotY: -25,
-        rotX: DEFAULT_TILT,
-        velY: AUTO_SPEED,
-        dragging: false,
-        lastX: 0,
-        lastY: 0,
-    });
-    const [grabbing, setGrabbing] = useState(false);
-
-    useEffect(() => {
-        const reduceMotion = window.matchMedia(
-            "(prefers-reduced-motion: reduce)",
-        ).matches;
-        const autoSpeed = reduceMotion ? 0 : AUTO_SPEED;
-
-        let frame = 0;
-        let last = performance.now();
-
-        const tick = (now: number) => {
-            const dt = Math.min((now - last) / 16.67, 3);
-            last = now;
-            const s = state.current;
-
-            if (!s.dragging) {
-                // ease velocity back to the auto-rotate speed (gives inertia)
-                s.velY += (autoSpeed - s.velY) * 0.04 * dt;
-                s.rotY += s.velY * dt;
-                // ease the tilt back to its resting angle
-                s.rotX += (DEFAULT_TILT - s.rotX) * 0.03 * dt;
-            }
-
-            if (objRef.current) {
-                objRef.current.style.transform = `rotateX(${s.rotX}deg) rotateY(${s.rotY}deg)`;
-            }
-            frame = requestAnimationFrame(tick);
-        };
-
-        frame = requestAnimationFrame(tick);
-        return () => cancelAnimationFrame(frame);
-    }, []);
-
-    const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-        const s = state.current;
-        s.dragging = true;
-        s.lastX = e.clientX;
-        s.lastY = e.clientY;
-        e.currentTarget.setPointerCapture(e.pointerId);
-        setGrabbing(true);
-    };
-
-    const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-        const s = state.current;
-        if (!s.dragging) return;
-        const dx = e.clientX - s.lastX;
-        const dy = e.clientY - s.lastY;
-        s.lastX = e.clientX;
-        s.lastY = e.clientY;
-        s.rotY += dx * 0.6;
-        s.velY = dx * 0.6; // remembered for inertia on release
-        s.rotX = Math.max(-35, Math.min(35, s.rotX - dy * 0.4));
-    };
-
-    const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
-        state.current.dragging = false;
-        setGrabbing(false);
-        if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-            e.currentTarget.releasePointerCapture(e.pointerId);
-        }
-    };
-
-    const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "ArrowLeft") state.current.velY = -6;
-        if (e.key === "ArrowRight") state.current.velY = 6;
-    };
-
-    const midLayers = Array.from({ length: MID_LAYERS }, (_, i) => {
-        const z = -DEPTH / 2 + (DEPTH * (i + 1)) / (MID_LAYERS + 1);
-        return z;
-    });
-
+function VectorBackground() {
     return (
-        <div
-            role="img"
-            tabIndex={0}
-            aria-label="Rotating 3D ComLink logo. Drag, or use the left and right arrow keys, to rotate."
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-            onKeyDown={onKeyDown}
-            className={cn(
-                "relative z-10 flex h-full w-full items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-accent",
-                grabbing ? "cursor-grabbing" : "cursor-grab",
-            )}
-            style={{ perspective: "1200px", touchAction: "pan-y" }}
+        <svg
+            aria-hidden="true"
+            viewBox="60 80 380 380"
+            className="h-full w-full overflow-visible"
         >
-            <div
-                ref={objRef}
-                className="relative w-[78%] max-w-[440px] will-change-transform"
+            <defs>
+                <linearGradient id="cl-purple" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#3a0a8a" />
+                    <stop offset="100%" stopColor="#5a00e6" />
+                </linearGradient>
+                <linearGradient id="cl-cyan" x1="0.2" y1="0" x2="0.8" y2="1">
+                    <stop offset="0%" stopColor="#00d8ff" />
+                    <stop offset="100%" stopColor="#1a4dff" />
+                </linearGradient>
+                <linearGradient id="cl-mid" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#1f6bff" />
+                    <stop offset="100%" stopColor="#5a1ee0" />
+                </linearGradient>
+                <clipPath id="cl-hatch-clip">
+                    <path d="M215 330 C260 360 330 330 372 322 C360 380 320 425 262 432 C235 410 215 370 215 330 Z" />
+                </clipPath>
+            </defs>
+
+            {/* Purple blob */}
+            <g
+                className="cl-anim"
                 style={{
-                    aspectRatio: LOGO_ASPECT,
-                    transformStyle: "preserve-3d",
+                    ...fillBox,
+                    animation: "cl-float-a 11s ease-in-out infinite",
                 }}
             >
-                {/* Back face (readable when the logo is rotated 180°) */}
-                <img
-                    src={LOGO_SRC}
-                    alt=""
-                    draggable={false}
-                    style={{
-                        ...layerBase,
-                        transform: `rotateY(180deg) translateZ(${DEPTH / 2}px)`,
-                        backfaceVisibility: "hidden",
-                    }}
+                <path
+                    fill="url(#cl-purple)"
+                    d="M130 135 C160 128 175 170 215 215 C260 265 360 305 358 345 C356 385 280 400 210 392 C120 385 78 320 82 240 C85 185 100 140 130 135 Z"
                 />
+            </g>
 
-                {/* Side walls: darkened layers between front and back */}
-                {midLayers.map((z) => (
-                    <img
-                        key={z}
-                        src={LOGO_SRC}
-                        alt=""
-                        draggable={false}
+            {/* Cyan blob */}
+            <g
+                className="cl-anim"
+                style={{
+                    ...fillBox,
+                    animation: "cl-float-b 13s ease-in-out infinite",
+                }}
+            >
+                <path
+                    fill="url(#cl-cyan)"
+                    d="M335 98 C385 100 415 160 412 230 C410 290 365 322 330 336 C290 350 205 330 162 278 C130 238 215 208 260 165 C290 132 305 98 335 98 Z"
+                />
+            </g>
+
+            {/* Overlap blob */}
+            <g
+                className="cl-anim"
+                style={{
+                    ...fillBox,
+                    animation: "cl-float-c 9s ease-in-out infinite",
+                }}
+            >
+                <path
+                    fill="url(#cl-mid)"
+                    opacity="0.78"
+                    d="M150 205 C200 195 262 250 340 290 C366 305 360 342 330 344 C260 352 160 332 135 282 C120 245 125 215 150 205 Z"
+                />
+            </g>
+
+            {/* Thin outline arcs */}
+            <g
+                className="cl-anim"
+                style={{
+                    ...fillBox,
+                    animation: "cl-drift 16s ease-in-out infinite",
+                }}
+                fill="none"
+                stroke="#1a2340"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+            >
+                <path d="M275 108 C300 62 395 62 420 150 C430 190 422 240 402 270" />
+                <path d="M160 255 C150 215 230 195 255 205" />
+                <path d="M168 282 C205 322 300 322 352 300" />
+            </g>
+
+            {/* Dotted rows */}
+            <g fill="#1a2340">
+                {topDots.map((x, i) => (
+                    <circle
+                        key={`t${x}`}
+                        className="cl-anim"
+                        cx={x}
+                        cy="150"
+                        r="2.4"
                         style={{
-                            ...layerBase,
-                            transform: `translateZ(${z}px)`,
-                            filter: "brightness(0.35) saturate(1.2)",
+                            ...fillBox,
+                            animation: `cl-dot 2.8s ease-in-out ${i * 0.18}s infinite`,
                         }}
                     />
                 ))}
+                {bottomDots.map((x, i) => (
+                    <circle
+                        key={`b${x}`}
+                        className="cl-anim"
+                        cx={x}
+                        cy="340"
+                        r="2.4"
+                        style={{
+                            ...fillBox,
+                            animation: `cl-dot 2.8s ease-in-out ${i * 0.18 + 0.9}s infinite`,
+                        }}
+                    />
+                ))}
+            </g>
 
-                {/* Front face */}
-                <img
-                    src={LOGO_SRC}
-                    alt=""
-                    draggable={false}
+            {/* Diagonal stripes */}
+            <g clipPath="url(#cl-hatch-clip)">
+                <g
+                    className="cl-anim"
+                    stroke="#1a2340"
+                    strokeWidth="1.3"
+                    style={{ animation: "cl-hatch 6s ease-in-out infinite" }}
+                >
+                    {hatchLines.map((x) => (
+                        <line
+                            key={x}
+                            x1={x}
+                            y1="440"
+                            x2={x + 110}
+                            y2="320"
+                        />
+                    ))}
+                </g>
+            </g>
+        </svg>
+    );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Image showcase (two equal cards + animated vector background)             */
+/* -------------------------------------------------------------------------- */
+
+function ImageShowcase() {
+    return (
+        <div className="relative mx-auto aspect-[5/4] w-full max-w-[620px]">
+            {/* Scoped keyframes */}
+            <style>{`
+                @keyframes cl-float-a {
+                    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+                    50%      { transform: translate(-10px, 12px) rotate(-4deg) scale(1.04); }
+                }
+                @keyframes cl-float-b {
+                    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+                    50%      { transform: translate(12px, -12px) rotate(4deg) scale(1.05); }
+                }
+                @keyframes cl-float-c {
+                    0%, 100% { transform: translate(0, 0) scale(1); }
+                    50%      { transform: translate(8px, 6px) scale(1.06); }
+                }
+                @keyframes cl-drift {
+                    0%, 100% { transform: rotate(0deg) translate(0, 0); }
+                    50%      { transform: rotate(3deg) translate(4px, -4px); }
+                }
+                @keyframes cl-dot {
+                    0%, 100% { transform: scale(1); opacity: .45; }
+                    50%      { transform: scale(1.9); opacity: 1; }
+                }
+                @keyframes cl-hatch {
+                    0%, 100% { transform: translate(0, 0); }
+                    50%      { transform: translate(7px, -7px); }
+                }
+                @keyframes cl-card-a {
+                    0%, 100% { transform: translateY(0) rotateY(-18deg) rotateX(3deg); }
+                    50%      { transform: translateY(-14px) rotateY(18deg) rotateX(-3deg); }
+                }
+                @keyframes cl-card-b {
+                    0%, 100% { transform: translateY(0) rotateY(18deg) rotateX(-3deg); }
+                    50%      { transform: translateY(14px) rotateY(-18deg) rotateX(3deg); }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    .cl-anim { animation: none !important; }
+                }
+            `}</style>
+
+            {/* Vector background – centered, covers the whole left side */}
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute left-1/2 top-1/2 aspect-square h-[150%] -translate-x-1/2 -translate-y-1/2 select-none"
+            >
+                <VectorBackground />
+            </div>
+
+            {/* Card 1 – higher, left */}
+            <div
+                className="absolute left-[4%] top-[3%] w-[46%]"
+                style={{ perspective: "1000px" }}
+            >
+                <div
+                    className="cl-anim aspect-[3/4] w-full overflow-hidden rounded-2xl border-4 border-white shadow-2xl will-change-transform"
                     style={{
-                        ...layerBase,
-                        transform: `translateZ(${DEPTH / 2}px)`,
-                        backfaceVisibility: "hidden",
+                        transformStyle: "preserve-3d",
+                        animation: "cl-card-a 9s ease-in-out infinite",
                     }}
-                />
+                >
+                    <img
+                        src={IMG_1}
+                        alt="Custom PC build"
+                        draggable={false}
+                        className="h-full w-full object-cover"
+                    />
+                </div>
+            </div>
+
+            {/* Card 2 – lower, right */}
+            <div
+                className="absolute bottom-[3%] right-[4%] w-[46%]"
+                style={{ perspective: "1000px" }}
+            >
+                <div
+                    className="cl-anim aspect-[3/4] w-full overflow-hidden rounded-2xl border-4 border-white shadow-2xl will-change-transform"
+                    style={{
+                        transformStyle: "preserve-3d",
+                        animation: "cl-card-b 9s ease-in-out infinite",
+                    }}
+                >
+                    <img
+                        src={IMG_2}
+                        alt="Gaming PC setup"
+                        draggable={false}
+                        className="h-full w-full object-cover"
+                    />
+                </div>
             </div>
         </div>
     );
@@ -238,74 +320,23 @@ export default function FeatureSection() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="bg-bg py-16 md:py-24">
+        <section
+            ref={sectionRef}
+            className="overflow-hidden bg-bg py-16 md:py-24"
+        >
             <div className="container mx-auto grid items-center gap-10 px-4 md:px-6 lg:grid-cols-2 lg:gap-16">
-                {/* ------------- LEFT: 3D logo stage ------------- */}
+                {/* ------------- LEFT: image showcase ------------- */}
                 <div
                     className={cn(
-                        "relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border bg-linear-to-br from-white via-accent-50 to-primary-100 shadow-lg transition-all duration-700 sm:aspect-[5/4]",
+                        "transition-all duration-700",
                         !inView && "motion-safe:translate-y-6 motion-safe:opacity-0",
                     )}
                 >
-                    {/* Glow */}
-                    <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-3xl"
-                        style={{
-                            background:
-                                "radial-gradient(circle, rgba(6,182,212,0.55) 0%, transparent 70%)",
-                        }}
-                    />
-
-                    {/* Orbit rings */}
-                    <svg
-                        aria-hidden="true"
-                        viewBox="0 0 100 100"
-                        className="pointer-events-none absolute left-1/2 top-1/2 h-[92%] -translate-x-1/2 -translate-y-1/2 motion-safe:animate-[spin_50s_linear_infinite]"
-                    >
-                        <circle
-                            cx="50"
-                            cy="50"
-                            r="48"
-                            fill="none"
-                            stroke="rgba(8,145,178,0.35)"
-                            strokeWidth="0.35"
-                            strokeDasharray="1.5 3"
-                        />
-                    </svg>
-                    <svg
-                        aria-hidden="true"
-                        viewBox="0 0 100 100"
-                        className="pointer-events-none absolute left-1/2 top-1/2 h-[74%] -translate-x-1/2 -translate-y-1/2 motion-safe:animate-[spin_35s_linear_infinite_reverse]"
-                    >
-                        <circle
-                            cx="50"
-                            cy="50"
-                            r="48"
-                            fill="none"
-                            stroke="rgba(25,35,65,0.22)"
-                            strokeWidth="0.35"
-                            strokeDasharray="6 4"
-                        />
-                    </svg>
-
-                    {/* Floor shadow */}
-                    <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute bottom-[14%] left-1/2 h-5 w-[55%] -translate-x-1/2 rounded-full bg-primary-950/25 blur-xl"
-                    />
-
-                    <Logo3D />
-
-                    {/* Hint */}
-                    <div className="pointer-events-none absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/85 px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm backdrop-blur">
-                        <RotateCw className="h-3.5 w-3.5" aria-hidden="true" />
-                        Drag to rotate
-                    </div>
+                    <ImageShowcase />
                 </div>
 
                 {/* ------------- RIGHT: trust features ------------- */}
-                <div>
+                <div className="relative z-10">
                     <span className="mb-3 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
                         <span className="h-px w-8 bg-accent" />
                         Why choose ComLink

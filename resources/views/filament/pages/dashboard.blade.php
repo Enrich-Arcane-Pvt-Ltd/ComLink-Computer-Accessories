@@ -627,9 +627,9 @@
                     <table class="cl-table cl-table--breakdown">
                         <thead style="position: sticky; top: 0; z-index: 2; background: var(--cl-card);">
                             <tr>
-                                <th style="width: 38px; text-align: center; padding-left: 12px !important;">#</th>
-                                <th style="width: 25%; min-width: 200px;">Product Details</th>
-                                <th style="width: 15%; min-width: 130px;">Category</th>
+                                <th style="width: 36px; text-align: center; padding-left: 10px !important;">#</th>
+                                <th style="width: 22%; min-width: 180px; padding-right: 6px !important;">Product Details</th>
+                                <th style="width: 14%; min-width: 110px; padding-left: 6px !important;">Category</th>
                                 <th class="cl-c" style="width: 10%; min-width: 95px;">Stock Status</th>
                                 <th class="cl-r" style="width: 8%; min-width: 80px;">Unit Cost</th>
                                 <th class="cl-r" style="width: 8%; min-width: 80px;">Unit Price</th>
@@ -647,8 +647,8 @@
                                     }
                                 @endphp
                                 <tr>
-                                    <td class="cl-c" style="color: var(--cl-faint); font-weight: 500; padding-left: 12px !important;">{{ $index + 1 }}</td>
-                                    <td>
+                                    <td class="cl-c" style="color: var(--cl-faint); font-weight: 500; padding-left: 10px !important;">{{ $index + 1 }}</td>
+                                    <td style="padding-right: 6px !important;">
                                         <div class="cl-prod">
                                             @if($imgUrl)
                                                 <img src="{{ $imgUrl }}" alt="{{ $item['name'] }}" class="cl-prod-img" onerror="this.style.display='none'">
@@ -668,7 +668,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td style="font-size: 11.5px; color: var(--cl-muted); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $item['categories'] }}">
+                                    <td style="padding-left: 6px !important; font-size: 11.5px; color: var(--cl-muted); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $item['categories'] }}">
                                         {{ $item['categories'] }}
                                     </td>
                                     <td class="cl-c">
