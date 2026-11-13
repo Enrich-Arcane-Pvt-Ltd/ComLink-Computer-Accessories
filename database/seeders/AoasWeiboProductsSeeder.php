@@ -438,6 +438,9 @@ class AoasWeiboProductsSeeder extends Seeder
                     ->whereNull('product_variant_id')
                     ->whereNull('color_name')
                     ->delete(); }
+
+                // Sync parent Product and InventoryProduct with the 1st color variation details
+                $product->syncWithFirstVariant();
             } else {
                 // Remove any leftover variants if not variable
                 ProductVariant::where('product_id', $product->id)->delete();

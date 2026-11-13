@@ -138,38 +138,16 @@ class ProfitLossAnalysisService
                 ->keyBy('product_code');
         }
 
-        // 5. Pre-aggregate Paid Order Items for the selected period
-        $soldItemsQuery = OrderItem::whereHas('order', function ($q) use ($startDateTime, $endDateTime) {
-            $q->where('payment_status', 'Paid');
-            if ($startDateTime && $endDateTime) {
-                $q->whereBetween('orders.created_at', [$startDateTime, $endDateTime]);
-            }
-        })
-            ->select(
-                'product_id',
-                'product_name',
-                DB::raw('SUM(quantity) as total_sold_qty'),
-                DB::raw('SUM(total_price) as total_revenue')
-            )
-            ->groupBy('product_id', 'product_name');
+        // 5. Query Paid Order Items for the selected period with variant relations
+        $paidOrderItemsQuery = OrderItem::with(['variant', 'product'])
+            ->whereHas('order', function ($q) use ($startDateTime, $endDateTime) {
+                $q->where('payment_status', 'Paid');
+                if ($startDateTime && $endDateTime) {
+                    $q->whereBetween('orders.created_at', [$startDateTime, $endDateTime]);
+                }
+            });
 
-        $soldItems = $soldItemsQuery->get();
-
-        $soldByProductId = [];
-        $soldByProductName = [];
-        $revenueByProductId = [];
-        $revenueByProductName = [];
-
-        foreach ($soldItems as $sold) {
-            if ($sold->product_id) {
-                $soldByProductId[$sold->product_id] = ($soldByProductId[$sold->product_id] ?? 0) + (int) $sold->total_sold_qty;
-                $revenueByProductId[$sold->product_id] = ($revenueByProductId[$sold->product_id] ?? 0.0) + (float) $sold->total_revenue;
-            }
-            if ($sold->product_name) {
-                $soldByProductName[$sold->product_name] = ($soldByProductName[$sold->product_name] ?? 0) + (int) $sold->total_sold_qty;
-                $revenueByProductName[$sold->product_name] = ($revenueByProductName[$sold->product_name] ?? 0.0) + (float) $sold->total_revenue;
-            }
-        }
+        $allPaidOrderItems = $paidOrderItemsQuery->get();
 
         // 6. Compute metrics per product and accumulate totals
         $productRows = [];
@@ -182,7 +160,7 @@ class ProfitLossAnalysisService
         $periodTotalGrn = 0.0;
 
         foreach ($products as $p) {
-            // Stock counts
+            // Stock counts & initial GRN valuation
             $fullCount = 0;
             $grnValue = 0.0;
 
@@ -196,36 +174,73 @@ class ProfitLossAnalysisService
                 $grnValue = round($fullCount * $unitCost, 2);
             }
 
+            // If product has color variations and parent stock/value wasn't set, aggregate from variants
+            if ($p->relationLoaded('variants') && $p->variants->isNotEmpty()) {
+                $variantStockSum = $p->variants->sum(fn ($v) => (int) ($v->inventory_stock ?? $v->stock ?? 0));
+                $variantGrnSum = $p->variants->sum(fn ($v) => ((int) ($v->inventory_stock ?? $v->stock ?? 0)) * (float) ($v->grn_price ?: 0));
+                if ($fullCount <= 0 && $variantStockSum > 0) {
+                    $fullCount = $variantStockSum;
+                }
+                if ($grnValue <= 0 && $variantGrnSum > 0) {
+                    $grnValue = round($variantGrnSum, 2);
+                }
+            }
+
             // Period GRN value if period filtered
             $itemPeriodGrn = 0.0;
             if ($periodGrnAggregates && $p->product_code && isset($periodGrnAggregates[$p->product_code])) {
                 $itemPeriodGrn = (float) $periodGrnAggregates[$p->product_code]->total_val;
             }
 
-            // Sold count & revenue in period
-            $soldQty = 0;
-            $income = 0.0;
+            // Filter sold order items specifically for this product
+            $productOrderItems = $allPaidOrderItems->filter(function ($item) use ($p) {
+                return ($item->product_id && $item->product_id == $p->id)
+                    || (!$item->product_id && $item->product_name && $item->product_name === $p->name);
+            });
 
-            if (isset($soldByProductId[$p->id])) {
-                $soldQty = (int) $soldByProductId[$p->id];
-                $income = (float) $revenueByProductId[$p->id];
-            } elseif ($p->name && isset($soldByProductName[$p->name])) {
-                $soldQty = (int) $soldByProductName[$p->name];
-                $income = (float) $revenueByProductName[$p->name];
-            }
+            $soldQty = (int) $productOrderItems->sum('quantity');
+            $income = (float) $productOrderItems->sum('total_price');
 
             $availableQty = max(0, $fullCount - $soldQty);
             $sellingPrice = (float) ($p->sale_price ?: $p->price ?: 0);
-            $unitCost = (float) ($p->grn_price ?: $p->cost_price ?: 0);
-            if ($unitCost <= 0 && $p->product_code) {
-                $unitCost = (float) (GrnItem::where('product_code', $p->product_code)->latest()->value('price_per_unit') ?? 0);
+            $defaultUnitCost = (float) ($p->grn_price ?: $p->cost_price ?: 0);
+            if ($defaultUnitCost <= 0 && $p->product_code) {
+                $defaultUnitCost = (float) (GrnItem::where('product_code', $p->product_code)->latest()->value('price_per_unit') ?? 0);
             }
-            if ($unitCost <= 0 && $sellingPrice > 0) {
-                $unitCost = round($sellingPrice * 0.75, 2);
+            if ($defaultUnitCost <= 0 && $sellingPrice > 0) {
+                $defaultUnitCost = round($sellingPrice * 0.75, 2);
             }
 
-            // COGS & Net Profit for this product
-            $productCogs = round($soldQty * $unitCost, 2);
+            // Calculate exact COGS item by item using variant GRN cost if present
+            $productCogs = 0.0;
+            foreach ($productOrderItems as $item) {
+                $itemQty = (int) $item->quantity;
+                $itemUnitCost = 0.0;
+
+                // 1. Check if order item has variant relation with grn_price
+                if ($item->variant_id && $item->variant && (float) $item->variant->grn_price > 0) {
+                    $itemUnitCost = (float) $item->variant->grn_price;
+                } elseif ($item->color && $p->relationLoaded('variants') && $p->variants->isNotEmpty()) {
+                    $matchedVar = $p->variants->firstWhere('color_name', $item->color);
+                    if ($matchedVar && (float) $matchedVar->grn_price > 0) {
+                        $itemUnitCost = (float) $matchedVar->grn_price;
+                    }
+                }
+
+                // 2. Fallback to default product cost
+                if ($itemUnitCost <= 0) {
+                    $itemUnitCost = $defaultUnitCost;
+                }
+
+                $productCogs += round($itemQty * $itemUnitCost, 2);
+            }
+
+            // If no items sold yet, fallback display unit cost
+            $displayUnitCost = $defaultUnitCost;
+            if ($displayUnitCost <= 0 && $p->relationLoaded('variants') && $p->variants->isNotEmpty()) {
+                $displayUnitCost = (float) ($p->variants->firstWhere('grn_price', '>', 0)?->grn_price ?? 0);
+            }
+
             $netProfit = round($income - $productCogs, 2);
             $margin = $income > 0 ? round(($netProfit / $income) * 100, 1) : 0.0;
 
@@ -247,7 +262,7 @@ class ProfitLossAnalysisService
                 'image' => $imageSrc,
                 'categories' => $categoryNames ?: 'Uncategorized',
                 'brand' => $p->brand?->name,
-                'unit_cost' => $unitCost,
+                'unit_cost' => $displayUnitCost ?: $defaultUnitCost,
                 'selling_price' => $sellingPrice,
                 'total_stock' => $fullCount,
                 'available_stock' => $availableQty,

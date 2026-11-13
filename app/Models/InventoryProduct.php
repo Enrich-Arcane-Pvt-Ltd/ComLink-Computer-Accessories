@@ -76,6 +76,14 @@ class InventoryProduct extends Model
 
     public function getLatestGrnPriceAttribute(): ?float
     {
+        $storeProduct = $this->storefrontProduct;
+        if ($storeProduct && $storeProduct->hasColorVariants()) {
+            $firstVar = $storeProduct->variants()->orderBy('id')->first();
+            if ($firstVar && (float) $firstVar->grn_price > 0) {
+                return (float) $firstVar->grn_price;
+            }
+        }
+
         $latestGrn = $this->grnItems()->latest('id')->first();
 
         return $latestGrn ? (float) $latestGrn->price_per_unit : null;

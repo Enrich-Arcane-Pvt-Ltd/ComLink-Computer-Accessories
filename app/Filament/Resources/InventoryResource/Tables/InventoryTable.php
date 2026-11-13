@@ -32,10 +32,19 @@ class InventoryTable
 
                 Tables\Columns\ImageColumn::make('product_image')
                     ->label('Image')
-                    ->getStateUsing(fn (InventoryProduct $record): ?string => $record->product_image
-                        ?? $record->storefrontProduct?->images[0]
-                        ?? null
-                    )
+                    ->getStateUsing(function (InventoryProduct $record): ?string {
+                        $storeProduct = $record->storefrontProduct;
+                        if ($storeProduct && ($storeProduct->hasColorVariants() || $storeProduct->variants()->exists())) {
+                            $firstVar = $storeProduct->variants()->orderBy('id')->first();
+                            if ($firstVar && $firstVar->image) {
+                                return $firstVar->image;
+                            }
+                        }
+
+                        return $record->product_image
+                            ?? $storeProduct?->images[0]
+                            ?? null;
+                    })
                     ->disk('public')
                     ->defaultImageUrl('/images/placeholder.png')
                     ->extraImgAttributes(['class' => 'rounded-lg object-cover ring-1 ring-slate-200 dark:ring-slate-700'])

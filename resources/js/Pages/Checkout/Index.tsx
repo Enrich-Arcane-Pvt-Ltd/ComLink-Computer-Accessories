@@ -245,6 +245,8 @@ function CheckoutContent({ prefill, stripeKey }: CheckoutProps) {
                 shipping_country: country.trim() || "Sri Lanka",
                 items: items.map((i) => ({
                     productId: i.productId,
+                    variantId: i.variantId,
+                    color: i.color,
                     name: i.name,
                     price: i.price,
                     quantity: i.quantity,

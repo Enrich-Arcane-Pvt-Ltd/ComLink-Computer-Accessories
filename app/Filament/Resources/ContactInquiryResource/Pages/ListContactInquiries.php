@@ -12,6 +12,11 @@ class ListContactInquiries extends ListRecords
 {
     protected static string $resource = ContactInquiryResource::class;
 
+    public function getMaxWidth(): MaxWidth|string|null
+    {
+        return MaxWidth::Full;
+    }
+
     public function getMaxContentWidth(): MaxWidth|string|null
     {
         return MaxWidth::Full;

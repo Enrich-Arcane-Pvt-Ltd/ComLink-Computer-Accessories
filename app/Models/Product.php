@@ -144,6 +144,72 @@ class Product extends Model
             : $this->variants()->exists();
     }
 
+    /**
+     * Synchronize parent product and its inventory record with the 1st color variant's details.
+     */
+    public function syncWithFirstVariant(): void
+    {
+        if (! $this->hasColorVariants()) {
+            return;
+        }
+
+        $firstVariant = $this->variants()->orderBy('id')->first();
+        if (! $firstVariant) {
+            return;
+        }
+
+        $updates = [];
+
+        // 1. Primary Image: Ensure 1st variant image is at index 0
+        if ($firstVariant->image) {
+            $existingImages = is_array($this->images) ? $this->images : [];
+            $filtered = array_values(array_filter($existingImages, fn ($img) => $img !== $firstVariant->image));
+            array_unshift($filtered, $firstVariant->image);
+            $updates['images'] = $filtered;
+        }
+
+        // 2. Pricing & Cost
+        $orig = (float) ($firstVariant->price ?? 0);
+        $sale = $firstVariant->sale_price !== null && (float) $firstVariant->sale_price > 0
+            ? (float) $firstVariant->sale_price
+            : $orig;
+        $grn = (float) ($firstVariant->grn_price ?? 0);
+        $disc = ($orig > 0 && $sale < $orig)
+            ? (int) round((($orig - $sale) / $orig) * 100)
+            : (int) ($firstVariant->discount_percentage ?? 0);
+
+        if ($orig > 0) {
+            $updates['price'] = $orig;
+        }
+        if ($sale > 0) {
+            $updates['sale_price'] = $sale;
+        }
+        if ($grn > 0) {
+            $updates['grn_price'] = $grn;
+            $updates['cost_price'] = $grn;
+        }
+        $updates['discount_percentage'] = $disc;
+
+        if (! empty($updates)) {
+            $this->updateQuietly($updates);
+        }
+
+        // 3. Corresponding InventoryProduct synchronization
+        $inv = InventoryProduct::where('product_code', $this->product_code)->first();
+        if ($inv) {
+            $invUpdates = [];
+            if ($firstVariant->image) {
+                $invUpdates['product_image'] = $firstVariant->image;
+            }
+            if ($grn > 0) {
+                $invUpdates['latest_grn_price'] = $grn;
+            }
+            if (! empty($invUpdates)) {
+                $inv->updateQuietly($invUpdates);
+            }
+        }
+    }
+
     public function inventoryProduct(): BelongsTo
     {
         return $this->belongsTo(InventoryProduct::class, 'product_code', 'product_code');
