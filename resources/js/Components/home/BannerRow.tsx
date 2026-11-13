@@ -1,5 +1,6 @@
-import { Link } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import { ArrowRight } from "lucide-react";
+import { toast } from "sonner";
 
 /* -------------------------------------------------------------------------- */
 /*  Hard-coded banners (replace with admin dashboard data later)              */
@@ -13,6 +14,7 @@ interface Banner {
     buttonText: string;
     href: string;
     image: string;
+    authRequiredMessage: string;
 }
 
 const banners: Banner[] = [
@@ -23,8 +25,9 @@ const banners: Banner[] = [
         description:
             "Pick your processor, graphics card, memory and more. Made for your performance.",
         buttonText: "Build My PC",
-        href: "/",
+        href: "/build-my-pc",
         image: "/images/banners/banner-build-pc.jpg",
+        authRequiredMessage: "Please login or register to use Build My PC.",
     },
     {
         id: 2,
@@ -33,8 +36,9 @@ const banners: Banner[] = [
         description:
             "Keyboards, mice, headsets and controllers built for speed and precision.",
         buttonText: "Shop Gaming",
-        href: "/",
+        href: "/shop?category=gaming",
         image: "/images/banners/banner-gaming.jpg",
+        authRequiredMessage: "Please login or register to shop Gaming.",
     },
 ];
 
@@ -43,6 +47,9 @@ const banners: Banner[] = [
 /* -------------------------------------------------------------------------- */
 
 export default function BannerRow() {
+    const { auth } = usePage().props as any;
+    const user = auth?.user ?? null;
+
     return (
         <section className="py-8 md:py-12">
             <div className="container mx-auto px-4 md:px-6">
@@ -51,6 +58,13 @@ export default function BannerRow() {
                         <Link
                             key={banner.id}
                             href={banner.href}
+                            onClick={(e) => {
+                                if (!user) {
+                                    e.preventDefault();
+                                    toast.info(banner.authRequiredMessage);
+                                    router.visit("/login");
+                                }
+                            }}
                             className="group relative block min-h-[220px] overflow-hidden rounded-lg bg-gradient-to-br from-primary-700 to-primary-950 md:min-h-[280px]"
                         >
                             {/* Background image (gradient above shows if the image is missing) */}
