@@ -6,7 +6,7 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 10mm 12mm 12mm 12mm;
+            margin: 8mm 10mm 10mm 10mm;
         }
         * {
             box-sizing: border-box;
@@ -16,73 +16,82 @@
             margin: 0;
             padding: 0;
             color: #1e293b;
-            background: #fff;
-            font-size: 11px;
-            line-height: 1.4;
+            background: #ffffff;
+            font-size: 10.5px;
+            line-height: 1.35;
+        }
+        .page-container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
         }
 
-        /* Screen Print Bar */
-        @media screen {
-            body {
-                background: #f1f5f9;
-                padding: 20px;
-            }
-            .page-container {
-                max-width: 1120px;
-                margin: 0 auto;
-                background: #fff;
-                padding: 28px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                border-radius: 8px;
-            }
-            .screen-actions {
-                max-width: 1120px;
-                margin: 0 auto 16px auto;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .btn {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                padding: 8px 16px;
-                border-radius: 6px;
-                font-weight: 600;
-                font-size: 12px;
-                text-decoration: none;
-                cursor: pointer;
-                border: 1px solid transparent;
-            }
-            .btn-primary {
-                background: #2563eb;
-                color: #fff;
-            }
-            .btn-secondary {
-                background: #fff;
-                color: #475569;
-                border-color: #cbd5e1;
-            }
+        @if(!empty($isPrint))
+        /* Screen Print View styling */
+        body {
+            background: #f1f5f9;
+            padding: 20px;
+        }
+        .page-container {
+            max-width: 1120px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-radius: 8px;
+        }
+        .screen-actions {
+            max-width: 1120px;
+            margin: 0 auto 16px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: #fff;
+        }
+        .btn-secondary {
+            background: #fff;
+            color: #475569;
+            border-color: #cbd5e1;
         }
         @media print {
             .screen-actions {
                 display: none !important;
             }
             body {
-                background: #fff;
-                padding: 0;
+                background: #ffffff !important;
+                padding: 0 !important;
             }
             .page-container {
-                padding: 0;
-                box-shadow: none;
+                padding: 0 !important;
+                box-shadow: none !important;
+                max-width: 100% !important;
+                margin: 0 !important;
             }
         }
+        @endif
 
         /* Header */
         .report-header {
             border-bottom: 2px solid #0f172a;
-            padding-bottom: 12px;
-            margin-bottom: 14px;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            width: 100%;
         }
         .header-top {
             display: table;
@@ -259,13 +268,41 @@
 
     @if(!empty($isPrint))
     <div class="screen-actions">
-        <a href="javascript:history.back()" class="btn btn-secondary">
-            &larr; Back to Dashboard
-        </a>
+        <div style="display: flex; gap: 8px;">
+            <a href="{{ route('filament.admin.pages.stock-analyzer') }}" onclick="return handleBack(event);" class="btn btn-secondary">
+                &larr; Back to Stock Analyzer
+            </a>
+            <a href="{{ url('/admin') }}" class="btn btn-secondary">
+                Back to Dashboard
+            </a>
+        </div>
         <button onclick="window.print()" class="btn btn-primary">
             Print Report
         </button>
     </div>
+
+    <script>
+        function handleBack(event) {
+            try {
+                if (window.opener && !window.opener.closed) {
+                    window.close();
+                    return false;
+                }
+                window.close();
+            } catch (e) {}
+
+            if (window.history && window.history.length > 1) {
+                window.history.back();
+            }
+
+            setTimeout(function() {
+                window.location.href = "{{ route('filament.admin.pages.stock-analyzer') }}";
+            }, 100);
+
+            if (event) event.preventDefault();
+            return false;
+        }
+    </script>
     @endif
 
     <div class="page-container">
@@ -320,19 +357,19 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 25px;" class="center">#</th>
-                    <th style="width: 200px;">Product Details</th>
-                    <th style="width: 60px;" class="center">Purchased</th>
-                    <th style="width: 85px;" class="right">Avg Cost</th>
-                    <th style="width: 95px;" class="right">Purchase Expense</th>
-                    <th style="width: 55px;" class="center">Sold</th>
-                    <th style="width: 85px;" class="right">Avg Price</th>
-                    <th style="width: 95px;" class="right">Sales Revenue</th>
-                    <th style="width: 85px;" class="right">COGS</th>
-                    <th style="width: 95px;" class="right">Gross Profit</th>
-                    <th style="width: 55px;" class="center">Margin %</th>
-                    <th style="width: 60px;" class="center">In Stock</th>
-                    <th style="width: 95px;" class="right">Stock Value</th>
+                    <th style="width: 3%;" class="center">#</th>
+                    <th style="width: 21%;">Product Details</th>
+                    <th style="width: 5%;" class="center">Purchased</th>
+                    <th style="width: 8%;" class="right">Avg Cost</th>
+                    <th style="width: 8%;" class="right">Purchase Expense</th>
+                    <th style="width: 5%;" class="center">Sold</th>
+                    <th style="width: 8%;" class="right">Avg Price</th>
+                    <th style="width: 8%;" class="right">Sales Revenue</th>
+                    <th style="width: 8%;" class="right">COGS</th>
+                    <th style="width: 8%;" class="right">Gross Profit</th>
+                    <th style="width: 5%;" class="center">Margin %</th>
+                    <th style="width: 5%;" class="center">In Stock</th>
+                    <th style="width: 8%;" class="right">Stock Value</th>
                 </tr>
             </thead>
             <tbody>

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\NavbarControllerResource\Tables;
 
 use App\Models\Category;
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -16,7 +17,7 @@ class NavbarControllerTable
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Icon/Image')
                     ->circular()
-                    ->defaultImageUrl(url('/images/placeholder.png')),
+                    ->defaultImageUrl(asset('images/default-category-image.png')),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Category in Navbar')
@@ -176,18 +177,39 @@ class NavbarControllerTable
                                 ]);
                             }
                         }
+
+                        Notification::make()
+                            ->title('Navbar Submenu Order Updated Successfully')
+                            ->success()
+                            ->send();
                     }),
 
                 Tables\Actions\EditAction::make()
                     ->slideOver()
+                    ->modalHeading('Edit Navbar Category')
                     ->form([
                         Forms\Components\TextInput::make('name')
                             ->label('Category Name')
-                            ->required(),
+                            ->required()
+                            ->minLength(2)
+                            ->maxLength(100)
+                            ->rules(['string', 'min:2', 'max:100'])
+                            ->validationMessages([
+                                'required' => 'The category name is required.',
+                                'min' => 'The category name must be at least 2 characters.',
+                                'max' => 'The category name cannot exceed 100 characters.',
+                            ])
+                            ->placeholder('e.g. PC Components, Laptops, Peripherals')
+                            ->helperText('Maximum 100 characters. Keep the name concise for optimal navbar layout.')
+                            ->columnSpanFull(),
+
                         Forms\Components\Toggle::make('is_visible')
                             ->label('Show in Navbar')
-                            ->default(true),
-                    ]),
+                            ->default(true)
+                            ->helperText('Control whether this category appears in the website header navigation.')
+                            ->columnSpanFull(),
+                    ])
+                    ->successNotificationTitle('Navbar Category Updated Successfully'),
             ])
             ->bulkActions([]);
     }

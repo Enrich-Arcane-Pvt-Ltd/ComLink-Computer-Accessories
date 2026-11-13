@@ -29,8 +29,11 @@ class ProfitLossReportController extends Controller
         $categoryId = $request->query('category_id') ? (int) $request->query('category_id') : null;
         $subCategoryId = $request->query('subcategory_id') ? (int) $request->query('subcategory_id') : null;
         $productId = $request->query('product_id') ? (int) $request->query('product_id') : null;
+        $period = (string) $request->query('period', 'all');
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
 
-        $reportData = $this->service->calculate($categoryId, $subCategoryId, $productId);
+        $reportData = $this->service->calculate($categoryId, $subCategoryId, $productId, $period, $startDate, $endDate);
 
         $pdf = Pdf::loadView('reports.profit-loss-pdf', [
             'data' => $reportData,
@@ -58,8 +61,11 @@ class ProfitLossReportController extends Controller
         $categoryId = $request->query('category_id') ? (int) $request->query('category_id') : null;
         $subCategoryId = $request->query('subcategory_id') ? (int) $request->query('subcategory_id') : null;
         $productId = $request->query('product_id') ? (int) $request->query('product_id') : null;
+        $period = (string) $request->query('period', 'all');
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
 
-        $reportData = $this->service->calculate($categoryId, $subCategoryId, $productId);
+        $reportData = $this->service->calculate($categoryId, $subCategoryId, $productId, $period, $startDate, $endDate);
 
         return view('reports.profit-loss-pdf', [
             'data' => $reportData,

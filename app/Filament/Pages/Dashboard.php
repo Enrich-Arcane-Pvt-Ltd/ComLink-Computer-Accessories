@@ -30,6 +30,12 @@ class Dashboard extends BaseDashboard
 
     public ?int $profitLossProduct = null;
 
+    public string $profitLossPeriod = 'all';
+
+    public ?string $profitLossStartDate = null;
+
+    public ?string $profitLossEndDate = null;
+
     /**
      * Livewire hooks when filters change
      */
@@ -44,11 +50,29 @@ class Dashboard extends BaseDashboard
         $this->profitLossProduct = null;
     }
 
+    public function updatedProfitLossPeriod(): void
+    {
+        if ($this->profitLossPeriod !== 'custom') {
+            $this->profitLossStartDate = null;
+            $this->profitLossEndDate = null;
+        } else {
+            if (! $this->profitLossStartDate) {
+                $this->profitLossStartDate = now()->subDays(30)->format('Y-m-d');
+            }
+            if (! $this->profitLossEndDate) {
+                $this->profitLossEndDate = now()->format('Y-m-d');
+            }
+        }
+    }
+
     public function resetProfitLossFilters(): void
     {
         $this->profitLossCategory = null;
         $this->profitLossSubCategory = null;
         $this->profitLossProduct = null;
+        $this->profitLossPeriod = 'all';
+        $this->profitLossStartDate = null;
+        $this->profitLossEndDate = null;
     }
 
     /**
@@ -69,50 +93,24 @@ class Dashboard extends BaseDashboard
         $subCategoriesCount = Category::whereNotNull('parent_id')->count();
         $productsCount = Product::count();
 
-        // 2. Metric Card 2: Total Sales (Paid Orders Total)
-        $totalSales = (float) Order::where('payment_status', 'Paid')->sum('total_amount');
+        // Financial Baseline: All-time Store-Wide Metrics from ProfitLossAnalysisService
+        $baselineProfitLoss = app(\App\Services\ProfitLossAnalysisService::class)->calculate();
+        $totalSales = (float) $baselineProfitLoss['summary']['gained_income'];
+        $totalRevenue = $totalSales;
+        $cogs = (float) $baselineProfitLoss['summary']['cogs'];
+        $netProfit = (float) $baselineProfitLoss['summary']['net_profit'];
+        $profitMargin = (float) $baselineProfitLoss['summary']['profit_margin'];
+        $isProfitable = (bool) $baselineProfitLoss['summary']['is_profitable'];
+        $totalExpenses = (float) $baselineProfitLoss['summary']['total_grn_value'];
 
         // 3. Metric Card 3: Orders Count
         $ordersCount = Order::count();
         $paidOrdersCount = Order::where('payment_status', 'Paid')->count();
         $pendingOrdersCount = Order::where('payment_status', '!=', 'Paid')->count();
 
-        // 4. Metric Card 4: Expenses (All GRN Stock Items Total Value)
-        $totalExpenses = (float) GrnItem::sum(DB::raw('product_quantity * price_per_unit'));
-
-        // 5. Metric Card 5: Revenue (All-Time Sales Income)
-        $totalRevenue = $totalSales;
-
-        // 6. Metric Card 6: Net Profit / Loss
-        // Calculate Cost of Goods Sold (COGS) for sold items
         $paidOrderItems = OrderItem::with(['product.categories.parent', 'order'])
             ->whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
             ->get();
-
-        $cogs = 0.0;
-        foreach ($paidOrderItems as $item) {
-            $unitCost = 0.0;
-            if ($item->product) {
-                $unitCost = (float) ($item->product->grn_price ?: $item->product->cost_price ?: 0);
-                if ($unitCost <= 0 && $item->product->product_code) {
-                    $unitCost = (float) (GrnItem::where('product_code', $item->product->product_code)->latest()->value('price_per_unit') ?? 0);
-                }
-            }
-            if ($unitCost <= 0 && $item->product_name) {
-                $matchedProduct = Product::where('name', $item->product_name)->first();
-                $unitCost = (float) ($matchedProduct?->grn_price ?: $matchedProduct?->cost_price ?: 0);
-                if ($unitCost <= 0) {
-                    $unitCost = (float) (GrnItem::where('product_name', $item->product_name)->latest()->value('price_per_unit') ?? 0);
-                }
-            }
-            if ($unitCost <= 0 && $item->unit_price > 0) {
-                $unitCost = round((float) $item->unit_price * 0.75, 2);
-            }
-            $cogs += round($item->quantity * $unitCost, 2);
-        }
-
-        $netProfit = round($totalRevenue - $cogs, 2);
-        $profitMargin = $totalRevenue > 0 ? round(($netProfit / $totalRevenue) * 100, 1) : 0.0;
 
         // 7. Monthly Data for Charts (Last 6 Months)
         $monthlyLabels = [];
@@ -368,11 +366,14 @@ class Dashboard extends BaseDashboard
             return $product->computed_current_stock;
         })->take(6)->values();
 
-        // Profit & Loss Analysis Section
+        // Profit & Loss Analysis Section (Interactive with Category, Subcategory, Product, and Time Period)
         $profitLossAnalysis = app(\App\Services\ProfitLossAnalysisService::class)->calculate(
             $this->profitLossCategory ? (int) $this->profitLossCategory : null,
             $this->profitLossSubCategory ? (int) $this->profitLossSubCategory : null,
-            $this->profitLossProduct ? (int) $this->profitLossProduct : null
+            $this->profitLossProduct ? (int) $this->profitLossProduct : null,
+            $this->profitLossPeriod ?? 'all',
+            $this->profitLossStartDate,
+            $this->profitLossEndDate
         );
 
         $plCategories = Category::whereNull('parent_id')->orderBy('name')->get(['id', 'name']);
@@ -397,6 +398,9 @@ class Dashboard extends BaseDashboard
             'category_id' => $this->profitLossCategory,
             'subcategory_id' => $this->profitLossSubCategory,
             'product_id' => $this->profitLossProduct,
+            'period' => $this->profitLossPeriod !== 'all' ? $this->profitLossPeriod : null,
+            'start_date' => $this->profitLossStartDate,
+            'end_date' => $this->profitLossEndDate,
         ]);
         $profitLossPdfUrl = route('admin.profit-loss.pdf', $reportQueryParams);
         $profitLossPrintUrl = route('admin.profit-loss.print', $reportQueryParams);
@@ -462,6 +466,9 @@ class Dashboard extends BaseDashboard
             'plCategories' => $plCategories,
             'plSubCategories' => $plSubCategories,
             'plProducts' => $plProducts,
+            'profitLossPeriod' => $this->profitLossPeriod,
+            'profitLossStartDate' => $this->profitLossStartDate,
+            'profitLossEndDate' => $this->profitLossEndDate,
             'profitLossPdfUrl' => $profitLossPdfUrl,
             'profitLossPrintUrl' => $profitLossPrintUrl,
         ];

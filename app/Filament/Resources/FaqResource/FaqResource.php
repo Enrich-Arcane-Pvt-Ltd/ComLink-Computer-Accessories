@@ -40,9 +40,15 @@ class FaqResource extends Resource
                             ->maxLength(65535)
                             ->columnSpanFull(),
 
-                        Forms\Components\RichEditor::make('answer')
+                        Forms\Components\Textarea::make('answer')
+                            ->label('Answer')
                             ->required()
+                            ->rows(5)
                             ->maxLength(65535)
+                            ->formatStateUsing(fn (?string $state): ?string => $state ? trim(html_entity_decode(strip_tags($state))) : null)
+                            ->dehydrateStateUsing(fn (?string $state): ?string => $state ? trim(html_entity_decode(strip_tags($state))) : null)
+                            ->placeholder('Enter the answer for this FAQ...')
+                            ->helperText('Provide a clear, plain text answer for this question.')
                             ->columnSpanFull(),
 
                         Forms\Components\Toggle::make('is_active')

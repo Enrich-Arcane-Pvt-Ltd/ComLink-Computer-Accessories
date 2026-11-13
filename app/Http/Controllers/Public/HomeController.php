@@ -38,7 +38,7 @@ class HomeController extends Controller
         // 2. Dynamic Testimonials Data Fetching
         $testimonials = Testimonial::where('is_active', true)
             ->latest()
-            ->limit(10)
+            ->limit(12)
             ->get()
             ->map(function ($item) {
                 return [
@@ -47,7 +47,7 @@ class HomeController extends Controller
                     'location' => $item->location ?? 'Verified Buyer',
                     'avatar' => $item->avatar_url,
                     'rating' => (int) ($item->rating ?? 5),
-                    'quote' => Str::limit($item->quote ?? '', 50, '...'),
+                    'quote' => $item->quote ?? '',
                 ];
             });
 

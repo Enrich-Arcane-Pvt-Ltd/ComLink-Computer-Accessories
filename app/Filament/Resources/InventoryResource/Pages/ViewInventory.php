@@ -26,4 +26,26 @@ class ViewInventory extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $product = $this->record->storefrontProduct;
+        $grnPrice = (float) ($this->record->latest_grn_price ?? $product?->grn_price ?? 0);
+        $origPrice = $product && (float) $product->price > 0 ? (float) $product->price : null;
+        $salePrice = $product && $product->sale_price !== null && (float) $product->sale_price > 0
+            ? (float) $product->sale_price
+            : $origPrice;
+        $discountPct = ($origPrice && $salePrice && $salePrice < $origPrice)
+            ? (int) round((($origPrice - $salePrice) / $origPrice) * 100)
+            : 0;
+
+        $data['grn_price'] = round($grnPrice, 2);
+        $data['price'] = $origPrice;
+        $data['discount_percentage'] = $discountPct;
+        $data['sale_price'] = $salePrice;
+        $data['is_visible'] = (bool) ($product?->is_visible ?? false);
+        $data['is_featured'] = (bool) ($product?->is_featured ?? false);
+
+        return $data;
+    }
 }

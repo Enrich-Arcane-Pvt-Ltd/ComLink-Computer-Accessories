@@ -18,7 +18,7 @@ class ViewSalesInfo extends ViewRecord
                 ->label('Download Receipt')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('info')
-                ->url(fn (Order $record): string => route('orders.receipt', ['order' => $record->id]))
+                ->url(fn (): string => route('orders.receipt', ['order' => $this->getRecord()->id]))
                 ->openUrlInNewTab(),
             Actions\EditAction::make(),
             Actions\DeleteAction::make(),

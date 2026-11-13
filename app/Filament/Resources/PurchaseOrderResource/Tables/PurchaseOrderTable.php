@@ -46,7 +46,7 @@ class PurchaseOrderTable
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Order Created Date')
-                    ->dateTime('M d, Y h:i A')
+                    ->dateTime('M d, Y h:i A', timezone: config('app.timezone', 'Asia/Colombo'))
                     ->sortable(),
             ])
             ->defaultSort('created_at', 'desc')

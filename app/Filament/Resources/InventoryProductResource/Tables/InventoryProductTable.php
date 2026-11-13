@@ -80,7 +80,7 @@ class InventoryProductTable
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Added Date')
-                    ->dateTime('M d, Y h:i A')
+                    ->dateTime('M d, Y h:i A', timezone: config('app.timezone', 'Asia/Colombo'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

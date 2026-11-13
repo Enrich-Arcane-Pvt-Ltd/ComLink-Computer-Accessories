@@ -169,7 +169,7 @@ class GrnAnalysisService
             'total_items_count' => count($allDetailedItems),
             'total_quantity' => $totalQuantity,
             'total_amount' => round($totalAmount, 2),
-            'notes' => $params['notes'] ?? null,
+            'notes' => ! empty($params['notes']) ? mb_substr(trim($params['notes']), 0, 500) : null,
             'created_by' => Auth::id(),
             'report_data' => [
                 'scope_label' => $scopeText,

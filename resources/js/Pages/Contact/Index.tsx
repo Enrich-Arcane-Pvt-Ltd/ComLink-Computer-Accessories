@@ -88,6 +88,9 @@ export default function Contact() {
             toast.success(flash.success);
             reset();
         }
+        if (flash?.error) {
+            toast.error(flash.error);
+        }
     }, [flash]);
 
     const handleSubmit = (e: React.FormEvent) => {

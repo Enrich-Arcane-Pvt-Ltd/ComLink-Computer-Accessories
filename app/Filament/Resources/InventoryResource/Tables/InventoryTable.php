@@ -58,7 +58,12 @@ class InventoryTable
                         ?? $record->grnItems->sortByDesc('id')->first()?->grn?->supplier?->name
                         ?? 'Direct Stock'
                     )
-                    ->description(fn (InventoryProduct $record): string => 'Last Added: ' . ($record->grnItems->sortByDesc('id')->first()?->created_at?->format('M d, Y h:i A') ?? 'N/A'))
+                    ->description(function (InventoryProduct $record): string {
+                        $latestItem = $record->grnItems->sortByDesc('id')->first();
+                        $date = $latestItem?->grn?->created_at ?? $latestItem?->created_at;
+
+                        return 'Last Added: ' . ($date ? $date->timezone(config('app.timezone', 'Asia/Colombo'))->format('M d, Y h:i A') : 'N/A');
+                    })
                     ->icon('heroicon-o-truck')
                     ->iconColor('success')
                     ->weight('medium')

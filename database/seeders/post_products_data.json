@@ -34,7 +34,7 @@
             "performance": {
                 "Interface / Connection": "USB 3.2 Gen 1 Type-A (Backwards compatible with USB 2.0)",
                 "Architecture": "High-Reliability 3D NAND Flash Memory",
-                "Thermal Efficiency": "Operating Temperature: 0\u00b0C to 60\u00b0C",
+                "Thermal Efficiency": "Operating Temperature: 0°C to 60°C",
                 "Power Consumption": "Low-power USB bus powered (5V standard)"
             },
             "compatibility": {
@@ -66,7 +66,7 @@
         "main_specs": {
             "Power Capacity": "650 VA / 360 W",
             "Nominal Input Voltage": "220 / 230 / 240 VAC (140 - 290 VAC Range)",
-            "Output Voltage": "230 VAC \u00b1 10% (Simulated Sine Wave)",
+            "Output Voltage": "230 VAC ± 10% (Simulated Sine Wave)",
             "Battery Specification": "12V 7.0Ah / 7.2Ah Sealed Lead-Acid (SLA)",
             "Typical Backup Time": "10 - 20 Minutes (Standard PC Load)",
             "Output Sockets": "Universal Output Sockets with Surge Protection"
@@ -80,7 +80,7 @@
             "performance": {
                 "Interface / Connection": "Standard IEC / Universal Output Sockets + USB Monitoring Port (M700U)",
                 "Architecture": "Line Interactive with Microprocessor Control and Fast AVR Transfer",
-                "Thermal Efficiency": "Silent fanless natural convection cooling, operating temp 0-40\u00b0C",
+                "Thermal Efficiency": "Silent fanless natural convection cooling, operating temp 0-40°C",
                 "Power Consumption": "Over 95% efficiency in normal line mode"
             },
             "compatibility": {
@@ -172,7 +172,7 @@
             "performance": {
                 "Interface / Connection": "USB 3.0 Type-A Connector",
                 "Architecture": "3D TLC NAND Flash Memory",
-                "Thermal Efficiency": "Operating Temperature: 0\u00b0C to 60\u00b0C",
+                "Thermal Efficiency": "Operating Temperature: 0°C to 60°C",
                 "Power Consumption": "Eco-efficient USB bus powered"
             },
             "compatibility": {
@@ -189,7 +189,7 @@
         "product_code": "HIK-NEOLITE-64G-V30",
         "slug": "hiksemi-neo-lite-64gb-micro-sd-card-v30",
         "brand_slug": "hiksemi",
-        "category_slug": "products",
+        "category_slug": "pc-components",
         "sub_category_slug": "memory-cards",
         "sub_category_name": "Memory Cards",
         "image_file": "Neo_Lite_64GB_Micro_SD_Card__V30_-removebg-preview.png",
@@ -218,7 +218,7 @@
             "performance": {
                 "Interface / Connection": "UHS-I Interface (MicroSDXC)",
                 "Architecture": "High-Endurance 3D NAND Flash Memory",
-                "Thermal Efficiency": "Operational range: 0\u00b0C to 70\u00b0C; Storage range: -25\u00b0C to 85\u00b0C",
+                "Thermal Efficiency": "Operational range: 0°C to 70°C; Storage range: -25°C to 85°C",
                 "Power Consumption": "Ultra-low power drain for extended camera and mobile battery life"
             },
             "compatibility": {
@@ -235,7 +235,7 @@
         "product_code": "HIK-NEOLITE-128G-V30",
         "slug": "hiksemi-neo-lite-128gb-micro-sd-card-v30",
         "brand_slug": "hiksemi",
-        "category_slug": "products",
+        "category_slug": "pc-components",
         "sub_category_slug": "memory-cards",
         "sub_category_name": "Memory Cards",
         "image_file": "Neo_Lite_128GB_Micro_SD_Card__V30_-removebg-preview.png",
@@ -264,7 +264,7 @@
             "performance": {
                 "Interface / Connection": "UHS-I Ultra High Speed MicroSDXC",
                 "Architecture": "Optimized 3D TLC Endurance Flash NAND",
-                "Thermal Efficiency": "Designed for heavy continuous surveillance writing up to 70\u00b0C",
+                "Thermal Efficiency": "Designed for heavy continuous surveillance writing up to 70°C",
                 "Power Consumption": "Ultra-low power sleep and write modes"
             },
             "compatibility": {
@@ -281,7 +281,7 @@
         "product_code": "HIK-NEOLITE-64G-SD",
         "slug": "hiksemi-neo-lite-64gb-micro-sd-card",
         "brand_slug": "hiksemi",
-        "category_slug": "products",
+        "category_slug": "pc-components",
         "sub_category_slug": "memory-cards",
         "sub_category_name": "Memory Cards",
         "image_file": "Neo_Lite_64GB_Micro_SD_Card-removebg-preview.png",
@@ -310,7 +310,7 @@
             "performance": {
                 "Interface / Connection": "MicroSDXC UHS-I standard pinout",
                 "Architecture": "3D NAND Flash Memory",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "Low power consumption"
             },
             "compatibility": {
@@ -373,7 +373,7 @@
         "product_code": "HIK-NEOLITE-128G-SD",
         "slug": "hiksemi-neo-lite-128gb-micro-sd-card",
         "brand_slug": "hiksemi",
-        "category_slug": "products",
+        "category_slug": "pc-components",
         "sub_category_slug": "memory-cards",
         "sub_category_name": "Memory Cards",
         "image_file": "Neo_Lite_128GB_Micro_SD_Card-removebg-preview.png",
@@ -402,7 +402,7 @@
             "performance": {
                 "Interface / Connection": "MicroSDXC UHS-I Bus Interface",
                 "Architecture": "Long-life 3D NAND Flash memory cells",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "Ultra-low power draw"
             },
             "compatibility": {
@@ -632,7 +632,7 @@
             "performance": {
                 "Interface / Connection": "Standard SATA 7+15 Pin Data and Power Connector",
                 "Architecture": "Advanced Multi-Channel NAND Controller with TRIM & S.M.A.R.T support",
-                "Thermal Efficiency": "Operating Temperature: 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating Temperature: 0°C to 70°C",
                 "Power Consumption": "Active Read/Write: <1.8W, Idle: <0.3W"
             },
             "compatibility": {
@@ -816,7 +816,7 @@
             "performance": {
                 "Interface / Connection": "PCI Express 3.0 x4 M.2 2280 M-Key",
                 "Architecture": "3D TLC NAND with Smart SLC Caching",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "Active read: 3.7W, Active write: 3.2W, Idle: 0.03W"
             },
             "compatibility": {
@@ -908,7 +908,7 @@
             "performance": {
                 "Interface / Connection": "M.2 PCIe Gen3 x4",
                 "Architecture": "Multi-Channel Flash Controller with Host Memory Buffer",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "Low power consumption <2W"
             },
             "compatibility": {
@@ -970,7 +970,7 @@
         "product_code": "MMG-64GB-SD",
         "slug": "memoryghost-64gb-microsd-card",
         "brand_slug": "memoryghost",
-        "category_slug": "products",
+        "category_slug": "pc-components",
         "sub_category_slug": "memory-cards",
         "sub_category_name": "Memory Cards",
         "image_file": "64GB_Micro_SD_Card-removebg-preview.png",
@@ -998,7 +998,7 @@
             "performance": {
                 "Interface / Connection": "MicroSDXC UHS-I Interface",
                 "Architecture": "Multi-Level Cell 3D NAND",
-                "Thermal Efficiency": "Operational temp: -25\u00b0C to 85\u00b0C",
+                "Thermal Efficiency": "Operational temp: -25°C to 85°C",
                 "Power Consumption": "Low power consumption"
             },
             "compatibility": {
@@ -1026,7 +1026,7 @@
         "condition": "Brand New",
         "warranty_duration": 2,
         "warranty_unit": "Years",
-        "description": "The Samsung 27\" LED Full HD TV Monitor combines vibrant desktop monitor clarity with built-in TV receiver and multimedia capabilities, perfect for compact bedrooms, dorms, and retail display.\n\nKey Highlights:\n- 27-Inch Full HD (1920 x 1080) LED Backlit Display\n- Multi-Input Flexibility: HDMI, AV Video, USB Media Playback, and RF Antenna Tuner\n- Built-in High-Fidelity Stereo Speakers\n- Wide 178\u00b0 viewing angles with Samsung Wide Color Enhancer technology\n- Full Function Remote Control included",
+        "description": "The Samsung 27\" LED Full HD TV Monitor combines vibrant desktop monitor clarity with built-in TV receiver and multimedia capabilities, perfect for compact bedrooms, dorms, and retail display.\n\nKey Highlights:\n- 27-Inch Full HD (1920 x 1080) LED Backlit Display\n- Multi-Input Flexibility: HDMI, AV Video, USB Media Playback, and RF Antenna Tuner\n- Built-in High-Fidelity Stereo Speakers\n- Wide 178° viewing angles with Samsung Wide Color Enhancer technology\n- Full Function Remote Control included",
         "main_specs": {
             "Screen Size": "27 Inch Diagonal",
             "Resolution": "1920 x 1080 Full HD",
@@ -1076,7 +1076,7 @@
         "main_specs": {
             "Storage Capacity": "64 GB",
             "Interface": "USB 2.0 High Speed",
-            "Mechanism": "360\u00b0 Rotating Swivel Metal Clip",
+            "Mechanism": "360° Rotating Swivel Metal Clip",
             "Body Material": "Brushed Steel & Durable Composite",
             "Compatibility": "PCs, Laptops, Mac, Smart TVs, Audio Systems"
         },
@@ -1135,8 +1135,8 @@
             "performance": {
                 "Interface / Connection": "Standard Button Cell Terminal (Positive Top / Negative Bottom)",
                 "Architecture": "Sealed Anti-Leak Casing Technology",
-                "Thermal Efficiency": "Wide Operating Temperature: -20\u00b0C to 60\u00b0C",
-                "Power Consumption": "Ultra-low self-discharge (<1% per year at 20\u00b0C)"
+                "Thermal Efficiency": "Wide Operating Temperature: -20°C to 60°C",
+                "Power Consumption": "Ultra-low self-discharge (<1% per year at 20°C)"
             },
             "compatibility": {
                 "Operating Systems": "Universal Hardware Component (DL2032, ECR2032, BR2032, KCR2032 equivalent)",
@@ -1181,7 +1181,7 @@
             "performance": {
                 "Interface / Connection": "Precision 12mm Button Contacts",
                 "Architecture": "Corrosion-resistant stainless steel shell",
-                "Thermal Efficiency": "Operating Range: -20\u00b0C to 60\u00b0C",
+                "Thermal Efficiency": "Operating Range: -20°C to 60°C",
                 "Power Consumption": "Long duration micro-amp discharge profile"
             },
             "compatibility": {
@@ -1399,7 +1399,7 @@
             "Resolution": "1920 x 1080 (Full HD)",
             "Refresh Rate": "100 Hz",
             "Panel Type": "IPS Grade Widescreen",
-            "Viewing Angles": "178\u00b0 Horizontal / 178\u00b0 Vertical",
+            "Viewing Angles": "178° Horizontal / 178° Vertical",
             "Connectivity": "1x HDMI, 1x VGA, 1x Audio Out"
         },
         "tech_specs": {
@@ -1658,7 +1658,7 @@
         "product_code": "KIN-CANVAS-128G-SD",
         "slug": "kingston-canvas-select-plus-128gb-microsd",
         "brand_slug": "kingston",
-        "category_slug": "products",
+        "category_slug": "pc-components",
         "sub_category_slug": "memory-cards",
         "sub_category_name": "Memory Cards",
         "image_file": "128GB_Micro_SD_Card__Canvas_Select_Plus__kINGSTON-removebg-preview.png",
@@ -1687,7 +1687,7 @@
             "performance": {
                 "Interface / Connection": "UHS-I MicroSDXC Pinout",
                 "Architecture": "High-Endurance 3D NAND Flash Memory",
-                "Thermal Efficiency": "Operating: -25\u00b0C to 85\u00b0C; Storage: -40\u00b0C to 85\u00b0C",
+                "Thermal Efficiency": "Operating: -25°C to 85°C; Storage: -40°C to 85°C",
                 "Power Consumption": "Low battery drain for mobile devices"
             },
             "compatibility": {
@@ -1842,8 +1842,8 @@
         "product_code": "GIG-H610M-S2-DDR4",
         "slug": "gigabyte-h610m-s2-ddr4-motherboard",
         "brand_slug": "gigabyte",
-        "category_slug": "products",
-        "sub_category_slug": "motherboards-products",
+        "category_slug": "pc-components",
+        "sub_category_slug": "motherboards",
         "sub_category_name": "Motherboards",
         "image_file": "H610M S2 DDR4 Motherboard.png",
         "sale_price": 28500,
@@ -1889,8 +1889,8 @@
         "product_code": "GIG-H310M-S2-20",
         "slug": "gigabyte-h310m-s2-20-motherboard",
         "brand_slug": "gigabyte",
-        "category_slug": "products",
-        "sub_category_slug": "motherboards-products",
+        "category_slug": "pc-components",
+        "sub_category_slug": "motherboards",
         "sub_category_name": "Motherboards",
         "image_file": "H310M_S2_2.0_Motherboard-removebg-preview.png",
         "sale_price": 24900,
@@ -1936,8 +1936,8 @@
         "product_code": "GIG-H110M-DS2V-GLD",
         "slug": "gigabyte-ga-h110m-ds2v-gold-motherboard",
         "brand_slug": "gigabyte",
-        "category_slug": "products",
-        "sub_category_slug": "motherboards-products",
+        "category_slug": "pc-components",
+        "sub_category_slug": "motherboards",
         "sub_category_name": "Motherboards",
         "image_file": "H110M-DS2V_Gold_Motherboard-removebg-preview.png",
         "sale_price": 23850,
@@ -2029,8 +2029,8 @@
         "product_code": "GIG-H81M-DS2",
         "slug": "gigabyte-ga-h81m-ds2-motherboard",
         "brand_slug": "gigabyte",
-        "category_slug": "products",
-        "sub_category_slug": "motherboards-products",
+        "category_slug": "pc-components",
+        "sub_category_slug": "motherboards",
         "sub_category_name": "Motherboards",
         "image_file": "H81M_DS2_Motherboard-removebg-preview.png",
         "sale_price": 12950,
@@ -2076,8 +2076,8 @@
         "product_code": "GIG-H410M-S2-V3",
         "slug": "gigabyte-h410m-s2-v3-motherboard",
         "brand_slug": "gigabyte",
-        "category_slug": "products",
-        "sub_category_slug": "motherboards-products",
+        "category_slug": "pc-components",
+        "sub_category_slug": "motherboards",
         "sub_category_name": "Motherboards",
         "image_file": "H410M_S2_V3_Motherboard-removebg-preview.png",
         "sale_price": 25450,
@@ -2300,8 +2300,8 @@
             "performance": {
                 "Interface / Connection": "Standard T2 Faston 6.35mm Male Terminal Lug",
                 "Architecture": "Oxygen Recombination AGM Valve-Regulated Sealed Lead Battery",
-                "Thermal Efficiency": "Operating Temp: Discharge -15\u00b0C to 50\u00b0C, Charge 0\u00b0C to 40\u00b0C",
-                "Power Consumption": "Internal Resistance: Approx. 22 m\u03a9"
+                "Thermal Efficiency": "Operating Temp: Discharge -15°C to 50°C, Charge 0°C to 40°C",
+                "Power Consumption": "Internal Resistance: Approx. 22 mΩ"
             },
             "compatibility": {
                 "Operating Systems": "Universal compatibility with 650VA, 850VA, 1000VA, 1200VA UPS systems",
@@ -2346,7 +2346,7 @@
             "performance": {
                 "Interface / Connection": "M.2 M-Key PCIe 3.0 x4",
                 "Architecture": "High-Efficiency NVMe Multi-Channel Controller",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "<2.2W Active, <0.2W Idle"
             },
             "compatibility": {
@@ -2392,7 +2392,7 @@
             "performance": {
                 "Interface / Connection": "M.2 2280 PCIe NVMe M-Key",
                 "Architecture": "High-Grade 3D NAND with Dynamic SLC Caching",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "<2.5W Active, <0.3W Idle"
             },
             "compatibility": {
@@ -2438,7 +2438,7 @@
             "performance": {
                 "Interface / Connection": "PCI Express 3.0 x4 M.2 2280",
                 "Architecture": "3D TLC Flash NAND with Host Memory Buffer Support",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "Active read/write <3.2W, Idle <0.3W"
             },
             "compatibility": {
@@ -2484,7 +2484,7 @@
             "performance": {
                 "Interface / Connection": "M.2 PCIe 3.0 x4 NVMe",
                 "Architecture": "Multi-Channel High Endurance 3D TLC Flash Controller",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "Peak <3.8W, Sleep <0.1W"
             },
             "compatibility": {
@@ -2576,7 +2576,7 @@
             "performance": {
                 "Interface / Connection": "SATA 6Gb/s Standard Interface",
                 "Architecture": "3D TLC NAND Flash Memory Architecture",
-                "Thermal Efficiency": "Operating temperature 0\u00b0C to 70\u00b0C",
+                "Thermal Efficiency": "Operating temperature 0°C to 70°C",
                 "Power Consumption": "Operating: 1.8W, Idle: 0.3W"
             },
             "compatibility": {

@@ -18,6 +18,11 @@ class PurchaseOrder extends Model
         'supplier_id',
         'status',
         'notes',
+        'created_at',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
     ];
 
     public function supplier(): BelongsTo

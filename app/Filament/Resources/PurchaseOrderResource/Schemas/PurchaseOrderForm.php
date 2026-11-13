@@ -16,7 +16,7 @@ class PurchaseOrderForm
         return [
             // 1. Order Header Info
             Forms\Components\Section::make('Purchase Order Information')
-                ->description('Manage purchase order number, supplier selection, and approval status.')
+                ->description('Manage purchase order number, supplier selection, approval status, and creation date.')
                 ->schema([
                     Forms\Components\TextInput::make('po_number')
                         ->label('Purchase Order No')
@@ -24,7 +24,8 @@ class PurchaseOrderForm
                         ->disabled(fn (string $operation) => $operation === 'edit')
                         ->dehydrated()
                         ->required()
-                        ->helperText('Auto-generated sequence: COM-P-{Year}-000001'),
+                        ->helperText('Auto-generated sequence: COM-P-{Year}-000001')
+                        ->columnSpan(1),
 
                     Forms\Components\Select::make('supplier_id')
                         ->label('Select Supplier')
@@ -32,7 +33,8 @@ class PurchaseOrderForm
                         ->searchable()
                         ->preload()
                         ->reactive()
-                        ->required(),
+                        ->required()
+                        ->columnSpan(1),
 
                     Forms\Components\Select::make('status')
                         ->label('Purchase Order Status')
@@ -43,13 +45,23 @@ class PurchaseOrderForm
                         ])
                         ->default('Planning')
                         ->native(false)
-                        ->required(),
+                        ->required()
+                        ->columnSpan(1),
+
+                    Forms\Components\DateTimePicker::make('created_at')
+                        ->label('Order Created Date & Time')
+                        ->default(now())
+                        ->native(false)
+                        ->seconds(false)
+                        ->dehydrated()
+                        ->helperText('Local date and time when the purchase order is issued.')
+                        ->columnSpan(1),
 
                     Forms\Components\Textarea::make('notes')
                         ->label('Order Notes / Remarks')
                         ->placeholder('Optional delivery instructions or notes for supplier...')
                         ->columnSpanFull(),
-                ])->columns(3),
+                ])->columns(2),
 
             // 2. Order Items
             Forms\Components\Section::make('Order Items')
@@ -139,19 +151,27 @@ class PurchaseOrderForm
 
                             Forms\Components\TextInput::make('product_quantity')
                                 ->label('Quantity')
-                                ->numeric()
-                                ->minValue(1)
+                                ->type('text')
+                                ->inputMode('numeric')
+                                ->rule('integer')
+                                ->rule('min:1')
+                                ->placeholder('1')
                                 ->default(1)
                                 ->required()
+                                ->extraInputAttributes([
+                                    'pattern' => '[0-9]*',
+                                    'autocomplete' => 'off',
+                                ])
                                 ->columnSpan(['sm' => 1, 'md' => 1]),
 
                             Forms\Components\Select::make('product_condition')
                                 ->label('Condition')
                                 ->options([
-                                    'Brandnew' => 'Brandnew',
+                                    'Brand New' => 'Brand New',
                                     'Used' => 'Used',
                                 ])
-                                ->default('Brandnew')
+                                ->default('Brand New')
+                                ->formatStateUsing(fn ($state) => $state === 'Brandnew' ? 'Brand New' : ($state ?? 'Brand New'))
                                 ->native(false)
                                 ->required()
                                 ->columnSpan(['sm' => 1, 'md' => 2]),
@@ -159,10 +179,16 @@ class PurchaseOrderForm
                         ->columns(['sm' => 2, 'md' => 12])
                         ->defaultItems(1)
                         ->collapsible()
-                        ->itemLabel(fn (array $state): ?string => isset($state['product_name']) && ! empty($state['product_name'])
-                                ? "{$state['product_name']}".(! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '')." [{$state['product_condition']}] × {$state['product_quantity']}"
-                                : 'New Item'
-                        )
+                        ->itemLabel(function (array $state): ?string {
+                            if (! isset($state['product_name']) || empty($state['product_name'])) {
+                                return 'New Item';
+                            }
+                            $cond = ($state['product_condition'] ?? '') === 'Brandnew' ? 'Brand New' : ($state['product_condition'] ?? 'Brand New');
+                            $color = ! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '';
+                            $qty = $state['product_quantity'] ?? 1;
+
+                            return "{$state['product_name']}{$color} [{$cond}] × {$qty}";
+                        })
                         ->columnSpanFull(),
                 ]),
         ];

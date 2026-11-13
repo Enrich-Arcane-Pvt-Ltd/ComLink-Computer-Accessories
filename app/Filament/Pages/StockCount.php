@@ -32,8 +32,8 @@ class StockCount extends Page implements HasTable
             ->query(
                 Product::query()
                     ->with(['supplier', 'brand', 'variants', 'grnItems', 'latestGrnItem'])
-                    ->latest('id')
             )
+            ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('row_index')
                     ->label('No')
@@ -58,13 +58,16 @@ class StockCount extends Page implements HasTable
                     ->weight('bold')
                     ->color('primary')
                     ->sortable(query: function (Builder $query, string $direction): Builder {
-                        return $query->orderBy('inventory_stock', $direction);
+                        return $query->orderByRaw("COALESCE(inventory_stock, 0) {$direction}");
                     }),
 
                 Tables\Columns\ViewColumn::make('current_inventory_stock')
                     ->label('Current Inventory Stock')
                     ->view('filament.tables.columns.stock-count-current-stock')
-                    ->alignCenter(),
+                    ->alignCenter()
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        return $query->orderByRaw("COALESCE(quantity, 0) {$direction}");
+                    }),
 
                 Tables\Columns\ViewColumn::make('sold_count')
                     ->label('Sold Count')

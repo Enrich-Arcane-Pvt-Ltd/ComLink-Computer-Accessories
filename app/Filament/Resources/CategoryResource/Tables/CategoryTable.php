@@ -14,7 +14,9 @@ class CategoryTable
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Category Image')
                     ->circular()
-                    ->defaultImageUrl(url('/images/placeholder.png')),
+                    ->state(fn (\App\Models\Category $record): ?string => $record->image_url)
+                    ->defaultImageUrl(asset('images/default-category-image.png'))
+                    ->extraImgAttributes(['onerror' => "this.src='" . asset('images/default-category-image.png') . "';"]),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Category Name')

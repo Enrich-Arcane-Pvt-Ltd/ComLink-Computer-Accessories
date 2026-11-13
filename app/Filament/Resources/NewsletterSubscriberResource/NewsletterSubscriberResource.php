@@ -14,10 +14,13 @@ class NewsletterSubscriberResource extends Resource
 {
     protected static ?string $model = NewsletterSubscriber::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-envelope';
+    protected static ?string $navigationIcon = 'heroicon-o-envelope-open';
 
     protected static ?string $navigationGroup = 'Marketing';
-    protected static bool $shouldRegisterNavigation = false;
+
+    protected static ?string $navigationLabel = 'Newsletter Subscribers';
+
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $pluralLabel = 'Newsletter Subscribers';
 

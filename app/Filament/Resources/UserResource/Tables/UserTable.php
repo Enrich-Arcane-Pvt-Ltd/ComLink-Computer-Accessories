@@ -45,11 +45,34 @@ class UserTable
 
                 Tables\Columns\TextColumn::make('role')
                     ->badge()
-                    ->color(fn (string $state): string => $state === 'admin' ? 'danger' : 'info'),
+                    ->color(fn (string $state): string => match ($state) {
+                        'super-admin' => 'primary',
+                        'admin' => 'danger',
+                        'user' => 'info',
+                        default => 'gray',
+                    }),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('role'),
-                Tables\Filters\SelectFilter::make('status'),
+                Tables\Filters\SelectFilter::make('role')
+                    ->label('Role')
+                    ->options([
+                        'super-admin' => 'Super Admin',
+                        'admin' => 'Admin',
+                        'user' => 'Customer',
+                    ]),
+
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'active' => 'Active',
+                        'blocked' => 'Blocked',
+                    ]),
+
+                Tables\Filters\TernaryFilter::make('is_guest')
+                    ->label('Guest User')
+                    ->placeholder('All Users')
+                    ->trueLabel('Guest Users Only')
+                    ->falseLabel('Registered Users Only'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

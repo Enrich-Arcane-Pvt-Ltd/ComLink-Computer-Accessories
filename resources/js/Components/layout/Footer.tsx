@@ -1,5 +1,5 @@
 import { useTheme } from "@/contexts/ThemeContext";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import {
     ArrowRight,
     Facebook,
@@ -10,17 +10,44 @@ import {
     Twitter,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Footer() {
     const nowDate = new Date().getFullYear();
     const { theme } = useTheme();
     const [email, setEmail] = useState("");
+    const [subscribing, setSubscribing] = useState(false);
+    const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
     const handleSubscribe = (e: React.FormEvent) => {
         e.preventDefault();
-        // TODO: wire to your newsletter endpoint, e.g.
-        // router.post(route("newsletter.subscribe"), { email });
-        setEmail("");
+        if (!email.trim() || subscribing) return;
+
+        setSubscribing(true);
+        setFeedback(null);
+
+        router.post(
+            route("newsletter.subscribe"),
+            { email: email.trim() },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setEmail("");
+                    setSubscribing(false);
+                    const msg = "Thank you for subscribing to our newsletter!";
+                    setFeedback({ type: "success", message: msg });
+                    toast.success(msg);
+                    setTimeout(() => setFeedback(null), 5000);
+                },
+                onError: (errors) => {
+                    setSubscribing(false);
+                    const msg = errors.email || "Failed to subscribe. Please try again.";
+                    setFeedback({ type: "error", message: msg });
+                    toast.error(msg);
+                    setTimeout(() => setFeedback(null), 5000);
+                },
+            },
+        );
     };
 
     const socials = [
@@ -129,19 +156,32 @@ export default function Footer() {
                                 id="footer-newsletter"
                                 type="email"
                                 required
+                                disabled={subscribing}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Enter your email"
-                                className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-primary-fg placeholder:text-primary-fg/40 focus:outline-none"
+                                className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-primary-fg placeholder:text-primary-fg/40 focus:outline-none disabled:opacity-50"
                             />
                             <button
                                 type="submit"
-                                className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-semibold text-black hover:opacity-90 transition-opacity"
+                                disabled={subscribing}
+                                className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-semibold text-black hover:opacity-90 transition-opacity disabled:opacity-50"
                             >
-                                Subscribe
+                                {subscribing ? "Subscribing..." : "Subscribe"}
                                 <ArrowRight className="h-4 w-4" />
                             </button>
                         </div>
+                        {feedback && (
+                            <p
+                                className={`text-xs mt-2 font-medium ${
+                                    feedback.type === "success"
+                                        ? "text-emerald-400"
+                                        : "text-red-400"
+                                }`}
+                            >
+                                {feedback.message}
+                            </p>
+                        )}
                     </form>
                 </div>
 

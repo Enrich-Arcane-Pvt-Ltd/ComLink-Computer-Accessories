@@ -15,32 +15,18 @@ class BrandInfolist
                     ->schema([
                         Infolists\Components\ImageEntry::make('logo')
                             ->label('Logo')
-                            ->disk('public')
-                            ->visibility('public')
                             ->circular()
-                            // View එකෙත් සුදු පාට Background එක ඕන නම්
+                            ->state(fn (\App\Models\Brand $record): ?string => $record->logo_url)
+                            ->defaultImageUrl(fn (\App\Models\Brand $record): string => $record->getInitialsAvatarSvgUrl())
                             ->extraImgAttributes(['style' => 'background-color: white; padding: 2px;']),
 
                         Infolists\Components\TextEntry::make('name')
                             ->label('Brand Name')
                             ->weight('bold'),
 
-                        Infolists\Components\TextEntry::make('url')
-                            ->label('Website')
-                            ->url(fn ($state) => $state)
-                            ->openUrlInNewTab()
-                            ->color('primary'),
-
-                        Infolists\Components\ColorEntry::make('primary_hex')
-                            ->label('Theme Color'),
-
                         Infolists\Components\IconEntry::make('is_visible')
                             ->label('Status')
                             ->boolean(),
-
-                        Infolists\Components\TextEntry::make('description')
-                            ->markdown()
-                            ->columnSpanFull(),
                     ])->columns(2),
             ]);
     }

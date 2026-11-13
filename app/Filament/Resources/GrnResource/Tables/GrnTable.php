@@ -62,7 +62,7 @@ class GrnTable
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created Date & Time')
-                    ->dateTime('M d, Y h:i A')
+                    ->dateTime('M d, Y h:i A', timezone: config('app.timezone', 'Asia/Colombo'))
                     ->sortable(),
             ])
             ->defaultSort('created_at', 'desc')

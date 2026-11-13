@@ -251,6 +251,16 @@ class InventoryProductForm
                                         ->image()
                                         ->directory('products/variants')
                                         ->imageEditor()
+                                        ->maxSize(1024)
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+                                        ->rules(['image', 'max:1024'])
+                                        ->validationMessages([
+                                            'max' => 'The color variant image must not exceed 1MB. Please compress or resize your image before uploading.',
+                                            'uploaded' => 'The color variant image failed to upload. The file size exceeds the allowed limit (maximum 1MB). Please upload a smaller or compressed image.',
+                                            'image' => 'The uploaded file must be a valid image.',
+                                            'mimes' => 'The image must be a JPG, PNG, WebP, or SVG format.',
+                                        ])
+                                        ->helperText('Maximum 1MB (JPG, PNG, WebP).')
                                         ->required(),
                                 ]),
                         ])
@@ -273,6 +283,16 @@ class InventoryProductForm
                         ->directory('products')
                         ->imageEditor()
                         ->panelLayout('grid')
+                        ->maxSize(1024)
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+                        ->rules(['max:1024'])
+                        ->validationMessages([
+                            'max' => 'Each product photo must not exceed 1MB. Please compress or resize your image before uploading.',
+                            'uploaded' => 'One or more product photos failed to upload. The file size exceeds the allowed limit (maximum 1MB). Please upload a smaller or compressed image.',
+                            'image' => 'Each uploaded file must be a valid image.',
+                            'mimes' => 'The photos must be in JPG, PNG, WebP, or SVG format.',
+                        ])
+                        ->helperText('Upload up to 4 photos. Maximum 1MB per photo (JPG, PNG, WebP). Please use compressed web-ready images.')
                         ->columnSpanFull()
                         ->required(fn (Get $get) => ! (bool) $get('has_color_variants')),
                 ]),
@@ -288,7 +308,7 @@ class InventoryProductForm
                                 ->icon('heroicon-m-cpu-chip')
                                 ->schema([
                                     Forms\Components\Group::make()
-                                        ->schema(function (Get $get) {
+                                        ->schema(function (Get $get, ?\Illuminate\Database\Eloquent\Model $record = null) {
                                             $catId = $get('category_id');
                                             $subId = $get('sub_category_id');
 
@@ -314,7 +334,49 @@ class InventoryProductForm
 
                                             $specs = $query->orderBy('sort_order')->orderBy('id')->get();
 
-                                            if ($specs->isEmpty()) {
+                                            $targetCatId = $subId ?: $catId;
+                                            $definedSlugs = [];
+                                            $allSpecs = [];
+
+                                            foreach ($specs as $spec) {
+                                                if (strtolower(trim($spec->title)) === 'brand') {
+                                                    continue;
+                                                }
+
+                                                $slug = Str::slug($spec->title, '_');
+                                                $definedSlugs[$slug] = true;
+                                                $allSpecs[] = (object) [
+                                                    'title' => $spec->title,
+                                                    'slug'  => $slug,
+                                                ];
+                                            }
+
+                                            $product = ($record instanceof \App\Models\InventoryProduct)
+                                                ? $record->storefrontProduct
+                                                : ($record instanceof Product ? $record : null);
+
+                                            if (! $product && $get('product_code')) {
+                                                $product = Product::where('product_code', $get('product_code'))->first();
+                                            }
+
+                                            // Also include any main specifications already saved on this product record
+                                            if ($product && is_array($product->main_specifications)) {
+                                                foreach ($product->main_specifications as $attrTitle => $attrVal) {
+                                                    if ($attrVal === null || trim((string) $attrVal) === '') {
+                                                        continue;
+                                                    }
+                                                    $slug = Str::slug($attrTitle, '_');
+                                                    if (! isset($definedSlugs[$slug])) {
+                                                        $definedSlugs[$slug] = true;
+                                                        $allSpecs[] = (object) [
+                                                            'title' => Str::headline($attrTitle),
+                                                            'slug'  => $slug,
+                                                        ];
+                                                    }
+                                                }
+                                            }
+
+                                            if (empty($allSpecs)) {
                                                 return [
                                                     Forms\Components\Placeholder::make('no_main_specs')
                                                         ->label('Main Specifications Notice')
@@ -323,20 +385,24 @@ class InventoryProductForm
                                             }
 
                                             $components = [];
-                                            $targetCatId = $subId ?: $catId;
 
-                                            foreach ($specs as $spec) {
-                                                if (strtolower(trim($spec->title)) === 'brand') {
-                                                    continue;
-                                                }
-
-                                                $key = Str::slug($spec->title, '_');
+                                            foreach ($allSpecs as $item) {
+                                                $key = $item->slug;
+                                                $title = $item->title;
 
                                                 $previousValues = Product::whereHas('categories', function ($q) use ($targetCatId) {
                                                     $q->where('categories.id', $targetCatId);
                                                 })
                                                     ->get(['id', 'main_specifications'])
-                                                    ->map(fn ($p) => $p->main_specifications[$key] ?? null)
+                                                    ->map(function ($p) use ($key, $title) {
+                                                        if (! is_array($p->main_specifications)) {
+                                                            return null;
+                                                        }
+
+                                                        return $p->main_specifications[$key]
+                                                            ?? $p->main_specifications[$title]
+                                                            ?? null;
+                                                    })
                                                     ->filter(fn ($v) => ! is_null($v) && trim((string) $v) !== '')
                                                     ->map(fn ($v) => trim((string) $v))
                                                     ->unique()
@@ -344,9 +410,36 @@ class InventoryProductForm
                                                     ->all();
 
                                                 $input = Forms\Components\TextInput::make("main_specifications.{$key}")
-                                                    ->label($spec->title)
-                                                    ->placeholder(! empty($previousValues) ? "Select previous or enter new {$spec->title}..." : "Enter {$spec->title}...")
-                                                    ->datalist($previousValues);
+                                                    ->label($title)
+                                                    ->placeholder(! empty($previousValues) ? "Select previous or enter new {$title}..." : "Enter {$title}...")
+                                                    ->datalist($previousValues)
+                                                    ->afterStateHydrated(function (Forms\Components\TextInput $component, $state, ?\Illuminate\Database\Eloquent\Model $record = null) use ($key, $title) {
+                                                        if (blank($state)) {
+                                                            $p = ($record instanceof \App\Models\InventoryProduct)
+                                                                ? $record->storefrontProduct
+                                                                : ($record instanceof Product ? $record : null);
+
+                                                            if ($p && is_array($p->main_specifications)) {
+                                                                $val = $p->main_specifications[$key]
+                                                                    ?? $p->main_specifications[$title]
+                                                                    ?? null;
+
+                                                                if ($val === null) {
+                                                                    $norm = strtolower(preg_replace('/[^a-z0-9]/', '', $title));
+                                                                    foreach ($p->main_specifications as $k => $v) {
+                                                                        if (strtolower(preg_replace('/[^a-z0-9]/', '', (string) $k)) === $norm) {
+                                                                            $val = $v;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                if ($val !== null) {
+                                                                    $component->state($val);
+                                                                }
+                                                            }
+                                                        }
+                                                    });
 
                                                 if (! empty($previousValues)) {
                                                     $preview = implode(', ', array_slice($previousValues, 0, 6));
@@ -361,14 +454,6 @@ class InventoryProductForm
                                                 $components[] = $input;
                                             }
 
-                                            if (empty($components)) {
-                                                return [
-                                                    Forms\Components\Placeholder::make('no_specs_remaining')
-                                                        ->label('Main Specifications Notice')
-                                                        ->content('Brand is configured in General Information. No additional main specification attributes are required for this category.'),
-                                                ];
-                                            }
-
                                             return $components;
                                         })
                                         ->columns(2),
@@ -379,27 +464,27 @@ class InventoryProductForm
                                 ->icon('heroicon-m-wrench-screwdriver')
                                 ->schema([
                                     Forms\Components\Section::make('General Specifications')
-                                        ->schema(fn (Get $get) => self::buildTechSpecsFields($get, 'general', [
+                                        ->schema(fn (Get $get, ?\Illuminate\Database\Eloquent\Model $record = null) => self::buildTechSpecsFields($get, 'general', [
                                             ['title' => 'Model / Series', 'placeholder' => 'e.g. ASUS ROG Zephyrus G16 (2024)'],
                                             ['title' => 'Category Segment', 'placeholder' => 'e.g. Processors, Laptops, Keyboards'],
                                             ['title' => 'Condition', 'placeholder' => 'e.g. 100% Brand New (Original Factory Sealed)'],
-                                        ]))->columns(3),
+                                        ], $record))->columns(3),
 
                                     Forms\Components\Section::make('Technical Performance')
-                                        ->schema(fn (Get $get) => self::buildTechSpecsFields($get, 'performance', [
+                                        ->schema(fn (Get $get, ?\Illuminate\Database\Eloquent\Model $record = null) => self::buildTechSpecsFields($get, 'performance', [
                                             ['title' => 'Interface / Connection', 'placeholder' => 'e.g. High-Speed PCIe Gen 4 / USB 3.2 / AM5'],
                                             ['title' => 'Architecture', 'placeholder' => 'e.g. Optimized Next-Gen Microarchitecture with Low Latency'],
                                             ['title' => 'Thermal Efficiency', 'placeholder' => 'e.g. Advanced cooling profile with heat dissipation fins'],
                                             ['title' => 'Power Consumption', 'placeholder' => 'e.g. Eco-efficient power curve with dynamic voltage scaling'],
-                                        ]))->columns(2),
+                                        ], $record))->columns(2),
 
                                     Forms\Components\Section::make('Compatibility & Standards')
-                                        ->schema(fn (Get $get) => self::buildTechSpecsFields($get, 'compatibility', [
+                                        ->schema(fn (Get $get, ?\Illuminate\Database\Eloquent\Model $record = null) => self::buildTechSpecsFields($get, 'compatibility', [
                                             ['title' => 'Operating Systems', 'placeholder' => 'e.g. Windows 11 / Windows 10 (64-bit), Linux Kernel 5.4+'],
                                             ['title' => 'Certification', 'placeholder' => 'e.g. CE, FCC, RoHS, EnergyStar Certified'],
                                             ['title' => 'Dimensions & Weight', 'placeholder' => 'e.g. Standard Form Factor (~450g packaged)'],
                                             ['title' => 'Included in Box', 'placeholder' => 'e.g. 1x Hardware Unit, Quick Manual, Safety Guide, Warranty Certificate'],
-                                        ]))->columns(2),
+                                        ], $record))->columns(2),
                                 ]),
                         ]),
                 ]),
@@ -435,7 +520,7 @@ class InventoryProductForm
     /**
      * Build dynamic technical specification input fields for a specific technical group.
      */
-    protected static function buildTechSpecsFields(Get $get, string $subSection, array $fallbacks): array
+    protected static function buildTechSpecsFields(Get $get, string $subSection, array $fallbacks, ?\Illuminate\Database\Eloquent\Model $record = null): array
     {
         $catId = $get('category_id');
         $subId = $get('sub_category_id');
@@ -465,12 +550,112 @@ class InventoryProductForm
             ]);
         }
 
+        $product = ($record instanceof \App\Models\InventoryProduct)
+            ? $record->storefrontProduct
+            : ($record instanceof Product ? $record : null);
+
+        if (! $product && $get('product_code')) {
+            $product = Product::where('product_code', $get('product_code'))->first();
+        }
+
+        // Also include any extra technical specifications from the record for this subsection
+        if ($product && is_array($product->technical_specifications)) {
+            $tech = $product->technical_specifications;
+            $subItems = $tech[$subSection] ?? [];
+            if (empty($subItems)) {
+                $sectionTitles = [
+                    'general' => 'General Specifications',
+                    'performance' => 'Technical Performance',
+                    'compatibility' => 'Compatibility & Standards',
+                ];
+                $fullTitle = $sectionTitles[$subSection] ?? null;
+                if ($fullTitle && isset($tech[$fullTitle]) && is_array($tech[$fullTitle])) {
+                    $subItems = $tech[$fullTitle];
+                }
+            }
+
+            if (is_array($subItems)) {
+                $existingSlugs = $specs->map(fn ($s) => Str::slug($s->title, '_'))->all();
+                foreach ($subItems as $itemTitle => $itemVal) {
+                    if ($itemVal === null || trim((string) $itemVal) === '') {
+                        continue;
+                    }
+                    $slug = Str::slug($itemTitle, '_');
+                    if (! in_array($slug, $existingSlugs, true)) {
+                        $existingSlugs[] = $slug;
+                        $specs->push((object) [
+                            'title' => Str::headline($itemTitle),
+                            'placeholder' => "Enter {$itemTitle}...",
+                        ]);
+                    }
+                }
+            }
+        }
+
         $components = [];
         foreach ($specs as $spec) {
             $key = Str::slug($spec->title, '_');
             $components[] = Forms\Components\TextInput::make("technical_specifications.{$key}")
                 ->label($spec->title)
-                ->placeholder($spec->placeholder ?? "Enter {$spec->title}...");
+                ->placeholder($spec->placeholder ?? "Enter {$spec->title}...")
+                ->afterStateHydrated(function (Forms\Components\TextInput $component, $state, ?\Illuminate\Database\Eloquent\Model $record = null) use ($key, $spec, $subSection) {
+                    if (blank($state)) {
+                        $p = ($record instanceof \App\Models\InventoryProduct)
+                            ? $record->storefrontProduct
+                            : ($record instanceof Product ? $record : null);
+
+                        if ($p && is_array($p->technical_specifications)) {
+                            $tech = $p->technical_specifications;
+                            $val = $tech[$key] ?? $tech[$spec->title] ?? null;
+
+                            if ($val === null && isset($tech[$subSection]) && is_array($tech[$subSection])) {
+                                $val = $tech[$subSection][$key] ?? $tech[$subSection][$spec->title] ?? null;
+                                if ($val === null) {
+                                    $norm = strtolower(preg_replace('/[^a-z0-9]/', '', $spec->title));
+                                    foreach ($tech[$subSection] as $k => $v) {
+                                        if (strtolower(preg_replace('/[^a-z0-9]/', '', (string) $k)) === $norm) {
+                                            $val = $v;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if ($val === null) {
+                                $sectionTitles = [
+                                    'general' => 'General Specifications',
+                                    'performance' => 'Technical Performance',
+                                    'compatibility' => 'Compatibility & Standards',
+                                ];
+                                $fullTitle = $sectionTitles[$subSection] ?? null;
+                                if ($fullTitle && isset($tech[$fullTitle]) && is_array($tech[$fullTitle])) {
+                                    $val = $tech[$fullTitle][$key] ?? $tech[$fullTitle][$spec->title] ?? null;
+                                }
+                            }
+
+                            if ($val === null) {
+                                $norm = strtolower(preg_replace('/[^a-z0-9]/', '', $spec->title));
+                                foreach ($tech as $grpOrKey => $grpVal) {
+                                    if (is_array($grpVal)) {
+                                        foreach ($grpVal as $k => $v) {
+                                            if (strtolower(preg_replace('/[^a-z0-9]/', '', (string) $k)) === $norm) {
+                                                $val = $v;
+                                                break 2;
+                                            }
+                                        }
+                                    } elseif (strtolower(preg_replace('/[^a-z0-9]/', '', (string) $grpOrKey)) === $norm) {
+                                        $val = $grpVal;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if ($val !== null) {
+                                $component->state($val);
+                            }
+                        }
+                    }
+                });
         }
 
         return $components;

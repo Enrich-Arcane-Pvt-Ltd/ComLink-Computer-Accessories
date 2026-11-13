@@ -45,4 +45,21 @@ class Address extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the formatted full address string.
+     */
+    public function getFullAddressAttribute(): string
+    {
+        $parts = [
+            $this->address_line_1,
+            $this->address_line_2,
+            $this->city,
+            $this->state,
+            $this->postal_code,
+            $this->country,
+        ];
+
+        return implode(', ', array_filter(array_map('trim', array_filter($parts)), fn ($p) => $p !== ''));
+    }
 }

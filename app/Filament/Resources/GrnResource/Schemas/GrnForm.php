@@ -104,7 +104,7 @@ class GrnForm
                                             'color_name'           => $item->color_name,
                                             'product_code'         => $item->product_code,
                                             'product_name'         => $item->product_name,
-                                            'product_condition'    => $item->product_condition ?: 'Brandnew',
+                                            'product_condition'    => ($item->product_condition === 'Brandnew' || ! $item->product_condition) ? 'Brand New' : $item->product_condition,
                                             'product_quantity'     => (int) ($item->product_quantity ?: 1),
                                             'price_per_unit'       => 0.00,
                                             'total'                => 0.00,
@@ -130,8 +130,11 @@ class GrnForm
                     Forms\Components\DateTimePicker::make('created_at')
                         ->label('Created Date & Time')
                         ->default(now())
-                        ->disabled(fn (string $operation) => $operation === 'edit')
-                        ->dehydrated(),
+                        ->native(false)
+                        ->seconds(false)
+                        ->dehydrated()
+                        ->timezone(config('app.timezone', 'Asia/Colombo'))
+                        ->helperText('Local date and time when the goods are received.'),
                 ])->columns(2),
 
             // 2. Received Items
@@ -225,10 +228,11 @@ class GrnForm
                             Forms\Components\Select::make('product_condition')
                                 ->label('Condition')
                                 ->options([
-                                    'Brandnew' => 'Brandnew',
+                                    'Brand New' => 'Brand New',
                                     'Used' => 'Used',
                                 ])
-                                ->default('Brandnew')
+                                ->default('Brand New')
+                                ->formatStateUsing(fn ($state) => $state === 'Brandnew' ? 'Brand New' : ($state ?? 'Brand New'))
                                 ->native(false)
                                 ->required()
                                 ->columnSpan(['sm' => 1, 'md' => 2]),
@@ -239,17 +243,24 @@ class GrnForm
                                 ->minValue(0)
                                 ->default(0.00)
                                 ->required()
-                                ->reactive()
+                                ->live(onBlur: true)
                                 ->afterStateUpdated(fn (Get $get, Set $set) => self::recalculateRowAndSubtotal($get, $set))
                                 ->columnSpan(['sm' => 1, 'md' => 2]),
 
                             Forms\Components\TextInput::make('product_quantity')
                                 ->label('Quantity')
-                                ->numeric()
-                                ->minValue(1)
+                                ->type('text')
+                                ->inputMode('numeric')
+                                ->rule('integer')
+                                ->rule('min:1')
+                                ->placeholder('1')
                                 ->default(1)
                                 ->required()
-                                ->reactive()
+                                ->live(onBlur: true)
+                                ->extraInputAttributes([
+                                    'pattern' => '[0-9]*',
+                                    'autocomplete' => 'off',
+                                ])
                                 ->afterStateUpdated(fn (Get $get, Set $set) => self::recalculateRowAndSubtotal($get, $set))
                                 ->columnSpan(['sm' => 1, 'md' => 1]),
 
@@ -265,10 +276,17 @@ class GrnForm
                         ->columns(['sm' => 2, 'md' => 15])
                         ->defaultItems(fn () => request()->query('purchase_order_id') ? 0 : 1)
                         ->collapsible()
-                        ->itemLabel(fn (array $state): ?string => isset($state['product_name']) && ! empty($state['product_name'])
-                                ? "{$state['product_name']}".(! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '')." [{$state['product_condition']}] × {$state['product_quantity']} — Rs. ".number_format((float) ($state['total'] ?? 0), 2)
-                                : 'Product Item'
-                        )
+                        ->itemLabel(function (array $state): ?string {
+                            if (! isset($state['product_name']) || empty($state['product_name'])) {
+                                return 'Product Item';
+                            }
+                            $cond = ($state['product_condition'] ?? '') === 'Brandnew' ? 'Brand New' : ($state['product_condition'] ?? 'Brand New');
+                            $color = ! empty($state['color_name']) ? " (🎨 {$state['color_name']})" : '';
+                            $qty = $state['product_quantity'] ?? 1;
+                            $total = number_format((float) ($state['total'] ?? 0), 2);
+
+                            return "{$state['product_name']}{$color} [{$cond}] × {$qty} — Rs. {$total}";
+                        })
                         ->columnSpanFull(),
 
                     // 3. Sub Total Footer
@@ -289,7 +307,8 @@ class GrnForm
     public static function recalculateRowAndSubtotal(Get $get, Set $set): void
     {
         $price = (float) ($get('price_per_unit') ?: 0);
-        $qty = (int) ($get('product_quantity') ?: 1);
+        $rawQty = $get('product_quantity');
+        $qty = (is_numeric($rawQty) && (int) $rawQty > 0) ? (int) $rawQty : 1;
         $rowTotal = round($price * $qty, 2);
         $set('total', $rowTotal);
 
@@ -298,7 +317,8 @@ class GrnForm
         $subTotal = 0;
         foreach ($items as $item) {
             $p = (float) ($item['price_per_unit'] ?? 0);
-            $q = (int) ($item['product_quantity'] ?? 1);
+            $rawItemQty = $item['product_quantity'] ?? 1;
+            $q = (is_numeric($rawItemQty) && (int) $rawItemQty > 0) ? (int) $rawItemQty : 1;
             $subTotal += round($p * $q, 2);
         }
         $set('../../sub_total', round($subTotal, 2));

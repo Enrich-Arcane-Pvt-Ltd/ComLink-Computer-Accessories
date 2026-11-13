@@ -166,9 +166,11 @@ class StockManagementService
                 'stock_code' => $record->stock_code,
                 'grn_number' => $record->grn?->grn_number ?? 'DIRECT-STOCK',
                 'supplier_name' => $record->grn?->supplier?->name ?? $record->inventoryProduct?->supplier?->name ?? 'Direct Stock',
-                'created_at' => $record->created_at,
-                'added_date' => $record->created_at ? $record->created_at->format('M d, Y h:i A') : 'N/A',
-                'condition' => $record->product_condition ?: 'Brandnew',
+                'created_at' => $record->grn?->created_at ?? $record->created_at,
+                'added_date' => ($record->grn?->created_at ?? $record->created_at)
+                    ? ($record->grn?->created_at ?? $record->created_at)->timezone(config('app.timezone', 'Asia/Colombo'))->format('M d, Y h:i A')
+                    : 'N/A',
+                'condition' => ($record->product_condition === 'Brandnew' || ! $record->product_condition) ? 'Brand New' : $record->product_condition,
                 'color_name' => $record->color_name,
                 'quantity' => (int) $record->product_quantity,
                 'remaining_capacity' => (int) $record->product_quantity,

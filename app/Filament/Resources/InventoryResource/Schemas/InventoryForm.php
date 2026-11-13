@@ -46,6 +46,7 @@ class InventoryForm
                         ->label('GRN Unit Cost')
                         ->numeric()
                         ->prefix($currency)
+                        ->formatStateUsing(fn ($state, ?InventoryProduct $record) => $state ?? ($record ? round((float) ($record->latest_grn_price ?? $record->storefrontProduct?->grn_price ?? 0), 2) : null))
                         ->readOnly()
                         ->dehydrated(false),
 
@@ -53,6 +54,7 @@ class InventoryForm
                         ->label('Original Price')
                         ->numeric()
                         ->prefix($currency)
+                        ->formatStateUsing(fn ($state, ?InventoryProduct $record) => $state ?? ($record && (float) ($record->storefrontProduct?->price ?? 0) > 0 ? (float) $record->storefrontProduct->price : null))
                         ->live(onBlur: true)
                         ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
                             $orig = (float) $state;
@@ -73,6 +75,13 @@ class InventoryForm
                         ->label('Discount Percentage')
                         ->numeric()
                         ->suffix('%')
+                        ->formatStateUsing(function ($state, ?InventoryProduct $record) {
+                            if ($state !== null) return $state;
+                            $product = $record?->storefrontProduct;
+                            $orig = (float) ($product?->price ?? 0);
+                            $sale = (float) ($product?->sale_price ?? $orig);
+                            return ($orig > 0 && $sale > 0 && $sale < $orig) ? (int) round((($orig - $sale) / $orig) * 100) : 0;
+                        })
                         ->dehydrated(false)
                         ->live(onBlur: true)
                         ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
@@ -88,6 +97,7 @@ class InventoryForm
                         ->label('Latest Selling Price')
                         ->numeric()
                         ->prefix($currency)
+                        ->formatStateUsing(fn ($state, ?InventoryProduct $record) => $state ?? ($record && (float) ($record->storefrontProduct?->sale_price ?? 0) > 0 ? (float) $record->storefrontProduct->sale_price : ($record && (float) ($record->storefrontProduct?->price ?? 0) > 0 ? (float) $record->storefrontProduct->price : null)))
                         ->live(onBlur: true)
                         ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
                             $orig = (float) $get('price');
@@ -100,33 +110,30 @@ class InventoryForm
 
                     Forms\Components\Toggle::make('is_visible')
                         ->label('Show on Website (Visible to Customers)')
+                        ->formatStateUsing(fn ($state, ?InventoryProduct $record) => $state ?? (bool) ($record?->storefrontProduct?->is_visible ?? false))
                         ->default(true),
 
                     Forms\Components\Toggle::make('is_featured')
                         ->label('Best Seller (Featured)')
+                        ->formatStateUsing(fn ($state, ?InventoryProduct $record) => $state ?? (bool) ($record?->storefrontProduct?->is_featured ?? false))
                         ->default(false),
                 ])->columns(3),
 
             Forms\Components\Section::make('Inventory Product Information')
-                ->description('Product code, name, and warehouse catalog info.')
+                ->description('Master catalog information (Read-only. Managed under Inventory Products).')
                 ->schema([
                     Forms\Components\TextInput::make('product_code')
                         ->label('Product Code')
-                        ->required()
-                        ->disabled(fn (string $operation) => $operation === 'edit')
-                        ->dehydrated()
-                        ->unique(InventoryProduct::class, 'product_code', ignoreRecord: true),
+                        ->disabled(),
 
                     Forms\Components\TextInput::make('product_name')
                         ->label('Product Name')
-                        ->required()
-                        ->maxLength(255),
+                        ->disabled(),
 
                     Forms\Components\Select::make('supplier_id')
                         ->label('Supplier')
                         ->relationship('supplier', 'name')
-                        ->searchable()
-                        ->preload(),
+                        ->disabled(),
 
                     Forms\Components\FileUpload::make('product_image')
                         ->label('Product Image')
@@ -134,8 +141,11 @@ class InventoryForm
                         ->disk('public')
                         ->directory('inventory-products')
                         ->visibility('public')
-                        ->imageEditor(),
-                ])->columns(2),
+                        ->disabled()
+                        ->dehydrated(false),
+                ])
+                ->disabled()
+                ->columns(2),
         ];
     }
 }

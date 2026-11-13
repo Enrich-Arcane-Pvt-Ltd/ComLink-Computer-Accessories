@@ -44,10 +44,10 @@ class EditInventory extends EditRecord
     protected function mutateFormDataBeforeSave(array $data): array
     {
         return [
-            'product_code'  => $data['product_code'],
-            'product_name'  => $data['product_name'],
-            'supplier_id'   => $data['supplier_id'] ?? null,
-            'product_image' => $data['product_image'] ?? $this->record->product_image,
+            'product_code'  => $this->record->product_code,
+            'product_name'  => $this->record->product_name,
+            'supplier_id'   => $this->record->supplier_id,
+            'product_image' => $this->record->product_image,
         ];
     }
 

@@ -16,6 +16,11 @@ class Faq extends Model
         'is_active' => 'boolean',
     ];
 
+    public function setAnswerAttribute($value): void
+    {
+        $this->attributes['answer'] = $value !== null ? trim(html_entity_decode(strip_tags($value))) : null;
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(FaqCategory::class, 'faq_category_id');

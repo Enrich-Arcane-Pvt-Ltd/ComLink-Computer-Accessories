@@ -129,8 +129,10 @@ class ListGrnAnalyzers extends ListRecords
 
                     Forms\Components\Textarea::make('notes')
                         ->label('Observations / Notes (Optional)')
-                        ->rows(2)
-                        ->placeholder('Add any audit remarks or notes for this report...'),
+                        ->rows(3)
+                        ->maxLength(500)
+                        ->placeholder('Add any audit remarks or notes for this report...')
+                        ->helperText('Maximum 500 characters. Provide any audit remarks or observations.'),
                 ])
                 ->action(function (array $data) {
                     $service = app(GrnAnalysisService::class);

@@ -62,8 +62,18 @@ class TestimonialForm
                                 ->default(5),
 
                             Textarea::make('quote')
+                                ->label('Quote / Review')
                                 ->required()
-                                ->rows(5)
+                                ->minLength(10)
+                                ->maxLength(500)
+                                ->rows(4)
+                                ->placeholder("Share the customer's experience or review (e.g., Built my dream gaming rig with ComLink! Fast delivery and great support.)...")
+                                ->helperText('Minimum 10 characters, maximum 500 characters.')
+                                ->validationMessages([
+                                    'required' => 'Please provide the testimonial quote.',
+                                    'min' => 'The quote must be at least 10 characters long.',
+                                    'max' => 'The quote cannot exceed 500 characters.',
+                                ])
                                 ->columnSpanFull(),
                         ])->columns(2),
                 ])->columnSpan(['lg' => 2]),
