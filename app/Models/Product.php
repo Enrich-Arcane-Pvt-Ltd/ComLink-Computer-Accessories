@@ -188,7 +188,6 @@ class Product extends Model
             $updates['grn_price'] = $grn;
             $updates['cost_price'] = $grn;
         }
-        $updates['discount_percentage'] = $disc;
 
         if (! empty($updates)) {
             $this->updateQuietly($updates);
@@ -200,9 +199,6 @@ class Product extends Model
             $invUpdates = [];
             if ($firstVariant->image) {
                 $invUpdates['product_image'] = $firstVariant->image;
-            }
-            if ($grn > 0) {
-                $invUpdates['latest_grn_price'] = $grn;
             }
             if (! empty($invUpdates)) {
                 $inv->updateQuietly($invUpdates);
