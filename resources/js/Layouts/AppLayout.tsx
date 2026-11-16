@@ -8,6 +8,7 @@ import { Head, usePage } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import ScrollTopButton from "../Components/Elements/Buttons/ScrollTopButton";
+import ChatBot from "@/Components/chat/ChatBot";
 import { PageProps } from "../types";
 
 export default function AppLayout({
@@ -82,6 +83,7 @@ export default function AppLayout({
                             <Footer />
                             {/* <FlashAlerts flash={flash} /> */}
                             <ScrollTopButton />
+                            <ChatBot />
                         </div>
                         <Toaster
                             position="bottom-right"
