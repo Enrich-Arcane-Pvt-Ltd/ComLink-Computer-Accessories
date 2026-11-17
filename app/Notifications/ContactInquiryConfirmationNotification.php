@@ -4,11 +4,10 @@ namespace App\Notifications;
 
 use App\Models\ContactInquiry;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ContactInquiryConfirmationNotification extends Notification implements ShouldQueue
+class ContactInquiryConfirmationNotification extends Notification
 {
     use Queueable;
 
