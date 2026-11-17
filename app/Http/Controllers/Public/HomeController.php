@@ -19,18 +19,36 @@ class HomeController extends Controller
     public function index(): Response
     {
 
+        // Pre-fetch visible product associations so counts precisely reflect visible catalog products
+        $productCategoryMap = \Illuminate\Support\Facades\DB::table('category_product')
+            ->join('products', 'products.id', '=', 'category_product.product_id')
+            ->where('products.is_visible', true)
+            ->select('category_product.category_id', 'category_product.product_id')
+            ->get()
+            ->groupBy('category_id');
+
         // 1. Dynamic Categories Data Fetching (Main visible categories ordered by sort_order)
         $categories = Category::main()
             ->visible()
-            ->withCount('products')
+            ->with(['children' => fn ($q) => $q->visible()])
             ->orderBy('sort_order', 'asc')
             ->get()
-            ->map(function ($category) {
+            ->map(function ($category) use ($productCategoryMap) {
+                $childIds = $category->children->pluck('id')->all();
+                $allCategoryIds = array_merge([$category->id], $childIds);
+
+                $allProductIds = collect();
+                foreach ($allCategoryIds as $cid) {
+                    if ($productCategoryMap->has($cid)) {
+                        $allProductIds = $allProductIds->merge($productCategoryMap->get($cid)->pluck('product_id'));
+                    }
+                }
+
                 return [
                     'id' => $category->id,
                     'name' => $category->name ?? 'Unknown Category',
                     'slug' => $category->slug,
-                    'count' => $category->products_count ?? 0,
+                    'count' => $allProductIds->unique()->count(),
                     'image' => $category->image_url ?? url('/images/placeholder.png'),
                 ];
             });

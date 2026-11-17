@@ -150,6 +150,14 @@ class ShopController extends Controller
      */
     public function getCategoryHierarchy()
     {
+        // Pre-fetch visible product associations so counts precisely reflect visible catalog products
+        $productCategoryMap = \Illuminate\Support\Facades\DB::table('category_product')
+            ->join('products', 'products.id', '=', 'category_product.product_id')
+            ->where('products.is_visible', true)
+            ->select('category_product.category_id', 'category_product.product_id')
+            ->get()
+            ->groupBy('category_id');
+
         return Category::main()
             ->visible()
             ->orderBy('sort_order', 'asc')
@@ -157,22 +165,37 @@ class ShopController extends Controller
                 $query->visible()->orderBy('sort_order', 'asc');
             }])
             ->get()
-            ->map(function ($cat) {
+            ->map(function ($cat) use ($productCategoryMap) {
+                $childIds = $cat->children->pluck('id')->all();
+                $allCategoryIds = array_merge([$cat->id], $childIds);
+
+                $allProductIds = collect();
+                foreach ($allCategoryIds as $cid) {
+                    if ($productCategoryMap->has($cid)) {
+                        $allProductIds = $allProductIds->merge($productCategoryMap->get($cid)->pluck('product_id'));
+                    }
+                }
+                $mainCount = $allProductIds->unique()->count();
+
                 return [
                     'id' => $cat->id,
                     'name' => $cat->name,
                     'slug' => $cat->slug,
                     'description' => $cat->description,
                     'image' => $cat->image_url,
-                    'count' => $cat->products()->count(),
-                    'subcategories' => $cat->children->map(function ($child) {
+                    'count' => $mainCount,
+                    'subcategories' => $cat->children->map(function ($child) use ($productCategoryMap) {
+                        $subProductIds = $productCategoryMap->has($child->id)
+                            ? $productCategoryMap->get($child->id)->pluck('product_id')->unique()
+                            : collect();
+
                         return [
                             'id' => $child->id,
                             'name' => $child->name,
                             'slug' => $child->slug,
                             'description' => $child->description,
                             'image' => $child->image_url,
-                            'count' => $child->products()->count(),
+                            'count' => $subProductIds->count(),
                         ];
                     })->values()->all(),
                 ];
