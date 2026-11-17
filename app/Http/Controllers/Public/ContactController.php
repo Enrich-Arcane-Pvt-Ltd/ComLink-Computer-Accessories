@@ -58,7 +58,7 @@ class ContactController extends Controller
                 'status' => 'pending', // Default status
             ]);
             Notification::route('mail', $inquiry->email)
-                ->notify(new ContactInquiryConfirmationNotification($inquiry));
+                ->notifyNow(new ContactInquiryConfirmationNotification($inquiry));
 
             return redirect()->back()->with('success', 'Thank you! Your message has been sent successfully. A confirmation email has been sent to your inbox.');
         } catch (\Exception $e) {

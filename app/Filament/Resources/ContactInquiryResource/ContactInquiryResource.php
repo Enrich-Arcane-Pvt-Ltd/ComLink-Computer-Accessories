@@ -97,23 +97,36 @@ class ContactInquiryResource extends Resource
                     // රිප්ලයි කරලා ඉවර නම් බටන් එක ඩිසේබල් කරන්න පුළුවන්
                     ->disabled(fn (ContactInquiry $record) => $record->status === 'replied')
                     ->action(function (ContactInquiry $record, array $data): void {
+                        try {
+                            // 1. Customer හට ඊමේල් Notification එක ක්ෂණිකව (synchronously) යැවීම
+                            Notification::route('mail', $record->email)
+                                ->notifyNow(new ContactInquiryReplyNotification($record, $data['reply_message']));
 
-                        // 1. Customer හට ඊමේල් Notification එක යැවීම
-                        Notification::route('mail', $record->email)
-                            ->notify(new ContactInquiryReplyNotification($record, $data['reply_message']));
+                            // 2. ඩේටාබේස් එක යාවත්කාලීන කිරීම
+                            $record->update([
+                                'status' => 'replied',
+                                'reply_message' => $data['reply_message'],
+                                'replied_at' => now(),
+                            ]);
 
-                        // 2. ඩේටාබේස් එක යාවත්කාලීන කිරීම
-                        $record->update([
-                            'status' => 'replied',
-                            'reply_message' => $data['reply_message'],
-                            'replied_at' => now(),
-                        ]);
+                            // 3. Success Toast එකක් පෙන්වීම
+                            \Filament\Notifications\Notification::make()
+                                ->title('Reply Sent Successfully')
+                                ->body("Email response delivered to {$record->email}.")
+                                ->success()
+                                ->send();
+                        } catch (\Throwable $e) {
+                            \Illuminate\Support\Facades\Log::error('Contact reply email delivery failed: '.$e->getMessage(), [
+                                'email' => $record->email,
+                                'inquiry_id' => $record->id,
+                            ]);
 
-                        // 3. Success Toast එකක් පෙන්වීම
-                        \Filament\Notifications\Notification::make()
-                            ->title('Reply Sent Successfully')
-                            ->success()
-                            ->send();
+                            \Filament\Notifications\Notification::make()
+                                ->title('Failed to Send Reply Email')
+                                ->body('Email delivery failed: '.$e->getMessage())
+                                ->danger()
+                                ->send();
+                        }
                     }),
             ]);
     }
