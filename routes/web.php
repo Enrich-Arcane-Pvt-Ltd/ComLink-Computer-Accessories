@@ -5,6 +5,7 @@ use App\Http\Controllers\Public\AboutUsController;
 use App\Http\Controllers\Public\BlogController;
 use App\Http\Controllers\Public\BuildPcController;
 use App\Http\Controllers\Public\CartController;
+use App\Http\Controllers\Public\ChatBotController;
 use App\Http\Controllers\Public\CheckoutController;
 use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Public\CustomPagesController;
@@ -34,6 +35,7 @@ Route::get('/category/{category}/{subcategory}', [ShopController::class, 'subcat
 Route::get('/product/{product}', [ShopController::class, 'showProduct'])->name('product.show');
 Route::get('/build-my-pc', [BuildPcController::class, 'index'])->name('build-pc');
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
+Route::post('/api/chat/query', [ChatBotController::class, 'query'])->name('api.chat.query');
 
 // Authenticated Customer Routes (Requires login)
 Route::middleware(['auth'])->group(function () {

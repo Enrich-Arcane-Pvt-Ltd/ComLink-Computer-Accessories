@@ -1,0 +1,338 @@
+[
+    [
+        {
+            "src": "\/images\/bot\/robot\/frames\/row0_frame0.png",
+            "w": 107,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row0_frame1.png",
+            "w": 107,
+            "h": 146
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row0_frame2.png",
+            "w": 109,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row0_frame3.png",
+            "w": 108,
+            "h": 146
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row0_frame4.png",
+            "w": 107,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row0_frame5.png",
+            "w": 106,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row0_frame6.png",
+            "w": 107,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row0_frame7.png",
+            "w": 85,
+            "h": 146
+        }
+    ],
+    [
+        {
+            "src": "\/images\/bot\/robot\/frames\/row1_frame0.png",
+            "w": 88,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row1_frame1.png",
+            "w": 94,
+            "h": 148
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row1_frame2.png",
+            "w": 107,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row1_frame3.png",
+            "w": 104,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row1_frame4.png",
+            "w": 106,
+            "h": 149
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row1_frame5.png",
+            "w": 114,
+            "h": 148
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row1_frame6.png",
+            "w": 98,
+            "h": 150
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row1_frame7.png",
+            "w": 90,
+            "h": 144
+        }
+    ],
+    [
+        {
+            "src": "\/images\/bot\/robot\/frames\/row2_frame0.png",
+            "w": 122,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row2_frame1.png",
+            "w": 127,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row2_frame2.png",
+            "w": 99,
+            "h": 150
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row2_frame3.png",
+            "w": 125,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row2_frame4.png",
+            "w": 115,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row2_frame5.png",
+            "w": 98,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row2_frame6.png",
+            "w": 110,
+            "h": 142
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row2_frame7.png",
+            "w": 112,
+            "h": 148
+        }
+    ],
+    [
+        {
+            "src": "\/images\/bot\/robot\/frames\/row3_frame0.png",
+            "w": 97,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row3_frame1.png",
+            "w": 113,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row3_frame2.png",
+            "w": 101,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row3_frame3.png",
+            "w": 102,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row3_frame4.png",
+            "w": 96,
+            "h": 146
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row3_frame5.png",
+            "w": 115,
+            "h": 146
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row3_frame6.png",
+            "w": 112,
+            "h": 146
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row3_frame7.png",
+            "w": 88,
+            "h": 137
+        }
+    ],
+    [
+        {
+            "src": "\/images\/bot\/robot\/frames\/row4_frame0.png",
+            "w": 101,
+            "h": 143
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row4_frame1.png",
+            "w": 103,
+            "h": 142
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row4_frame2.png",
+            "w": 113,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row4_frame3.png",
+            "w": 127,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row4_frame4.png",
+            "w": 102,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row4_frame5.png",
+            "w": 129,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row4_frame6.png",
+            "w": 99,
+            "h": 143
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row4_frame7.png",
+            "w": 94,
+            "h": 145
+        }
+    ],
+    [
+        {
+            "src": "\/images\/bot\/robot\/frames\/row5_frame0.png",
+            "w": 102,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row5_frame1.png",
+            "w": 115,
+            "h": 142
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row5_frame2.png",
+            "w": 116,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row5_frame3.png",
+            "w": 97,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row5_frame4.png",
+            "w": 110,
+            "h": 143
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row5_frame5.png",
+            "w": 103,
+            "h": 140
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row5_frame6.png",
+            "w": 100,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row5_frame7.png",
+            "w": 84,
+            "h": 143
+        }
+    ],
+    [
+        {
+            "src": "\/images\/bot\/robot\/frames\/row6_frame0.png",
+            "w": 108,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row6_frame1.png",
+            "w": 115,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row6_frame2.png",
+            "w": 112,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row6_frame3.png",
+            "w": 99,
+            "h": 146
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row6_frame4.png",
+            "w": 138,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row6_frame5.png",
+            "w": 134,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row6_frame6.png",
+            "w": 102,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row6_frame7.png",
+            "w": 101,
+            "h": 141
+        }
+    ],
+    [
+        {
+            "src": "\/images\/bot\/robot\/frames\/row7_frame0.png",
+            "w": 100,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row7_frame1.png",
+            "w": 102,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row7_frame2.png",
+            "w": 101,
+            "h": 144
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row7_frame3.png",
+            "w": 101,
+            "h": 147
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row7_frame4.png",
+            "w": 110,
+            "h": 146
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row7_frame5.png",
+            "w": 127,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row7_frame6.png",
+            "w": 104,
+            "h": 145
+        },
+        {
+            "src": "\/images\/bot\/robot\/frames\/row7_frame7.png",
+            "w": 91,
+            "h": 145
+        }
+    ]
+]

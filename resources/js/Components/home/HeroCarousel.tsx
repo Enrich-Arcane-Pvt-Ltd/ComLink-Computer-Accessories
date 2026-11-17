@@ -337,7 +337,7 @@ export function HeroCarousel({
     return (
         <section
             ref={containerRef}
-            className="relative w-full h-[460vh] sm:h-[500vh] bg-[#070b12] text-white"
+            className="relative w-full h-[220vh] sm:h-[250vh] bg-[#070b12] text-white"
         >
             {/* Sticky 100vh Viewport: Pinned on screen while scrubbing */}
             <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between select-none">
