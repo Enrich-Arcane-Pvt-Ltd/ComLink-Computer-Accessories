@@ -107,7 +107,7 @@ export default function Contact() {
 
     return (
         <AppLayout>
-            <Head title="Contact Us | ComLink Computer Accessories" />
+            <Head title="Contact Us" />
 
             <div className="min-h-screen bg-bg text-fg">
                 {/* ------------------------------------------------------------------ */}

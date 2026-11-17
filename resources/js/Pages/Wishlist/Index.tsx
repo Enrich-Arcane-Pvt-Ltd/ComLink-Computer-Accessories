@@ -151,7 +151,7 @@ function WishlistContent() {
         if (navigator.share) {
             navigator
                 .share({
-                    title: "My Wishlist - Vicky Store / ComLink",
+                    title: "My Wishlist",
                     text: `Check out my curated hardware wishlist with ${items.length} items!`,
                     url: window.location.href,
                 })
@@ -164,7 +164,7 @@ function WishlistContent() {
 
     return (
         <>
-            <Head title="My Wishlist - Vicky Store / ComLink" />
+            <Head title="My Wishlist" />
 
             <div className="min-h-screen bg-bg text-fg py-8 sm:py-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

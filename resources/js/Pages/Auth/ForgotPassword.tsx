@@ -17,7 +17,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
     return (
         <AppLayout>
-            <Head title="Forgot Password - ComLink" />
+            <Head title="Forgot Password" />
 
             <div className="min-h-[calc(100vh-80px)] flex bg-bg">
                 {/* ───────── LEFT: Form ───────── */}

@@ -889,7 +889,7 @@ function BuildPcContent({
 
     return (
         <>
-            <Head title="Build My PC | ComLink - Custom PC Builder" />
+            <Head title="Build My PC" />
 
             <div className="min-h-screen bg-bg text-fg pb-20">
                 {/* ---------------- Breadcrumb ---------------- */}

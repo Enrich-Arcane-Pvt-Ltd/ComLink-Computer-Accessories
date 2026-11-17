@@ -980,7 +980,7 @@ export default function About({
 }) {
     return (
         <AppLayout>
-            <Head title="About Us | ComLink" />
+            <Head title="About Us" />
             <AboutHero />
             <WhoWeAre />
             <MissionVision />

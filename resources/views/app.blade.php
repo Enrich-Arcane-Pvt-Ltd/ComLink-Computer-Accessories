@@ -9,10 +9,10 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="WikiStore" />
+    <meta name="apple-mobile-web-app-title" content="ComLink" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <title inertia>{{ config('app.name', 'WikiStore') }}</title>
+    <title inertia>{{ config('app.name', 'ComLink') }}</title>
 
     <!-- Preload Hero Frame 1 for Instant Paint on Refresh -->
     <link rel="preload" as="image" href="/images/hero-frames/frame-0001.jpg" fetchpriority="high">

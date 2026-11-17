@@ -590,12 +590,12 @@ export default function ShopIndex({
     // Page title
     const pageTitle = useMemo(() => {
         if (activeSubCategory && activeCategory) {
-            return `${activeSubCategory.name} - ${activeCategory.name} | WikiStore`;
+            return `${activeSubCategory.name} - ${activeCategory.name}`;
         }
         if (activeCategory) {
-            return `${activeCategory.name} | WikiStore`;
+            return activeCategory.name;
         }
-        return "All Categories & Products | WikiStore";
+        return "Shop";
     }, [activeCategory, activeSubCategory]);
 
     // Active subcategories list

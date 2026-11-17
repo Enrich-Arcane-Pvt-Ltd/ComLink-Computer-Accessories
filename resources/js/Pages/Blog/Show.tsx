@@ -289,7 +289,7 @@ export default function Show({ post, relatedPosts = [], auth }: ShowProps) {
                                 <p className="text-muted text-sm leading-relaxed">
                                     {post.author_intro ??
                                         `Fashion enthusiast and lead
-                                        editor at VICKY STORE. Passionate about
+                                        editor at ComLink. Passionate about
                                         sustainable fashion and helping build
                                         versatile, timeless wardrobes.`}
                                 </p>

@@ -41,7 +41,6 @@ export default function AppLayout({
     return (
         <>
             <Head>
-                <title>{appName}</title>
                 <meta
                     head-key="description"
                     name="description"

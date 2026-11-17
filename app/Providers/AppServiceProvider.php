@@ -64,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
             if ($panel && ($panel->getId() === 'admin')) {
                 Notification::make()
                     ->title('Welcome back, '.$event->user->first_name.'!')
-                    ->body('Have a productive day at Wiki-Store.')
+                    ->body('Have a productive day at ComLink.')
                     ->success()
                     ->send();
             }
