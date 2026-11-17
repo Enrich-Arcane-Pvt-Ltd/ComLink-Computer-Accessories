@@ -94,18 +94,18 @@ const services = [
 // Put each logo file in  public/images/brands/  and match the file name here.
 // Use transparent PNG or SVG. Coloured logos are shown as they are.
 const brands = [
-    { name: "Logitech", logo: "/images/brands/logitech.png" },
-    { name: "Corsair", logo: "/images/brands/corsair.png" },
-    { name: "ASUS", logo: "/images/brands/asus.png" },
-    { name: "MSI", logo: "/images/brands/msi.png" },
-    { name: "Razer", logo: "/images/brands/razer.png" },
-    { name: "HyperX", logo: "/images/brands/hyperx.png" },
-    { name: "Kingston", logo: "/images/brands/kingston.png" },
-    { name: "Samsung", logo: "/images/brands/samsung.png" },
-    { name: "Seagate", logo: "/images/brands/seagate.png" },
-    { name: "TP-Link", logo: "/images/brands/tp-link.png" },
-    { name: "Gigabyte", logo: "/images/brands/gigabyte.png" },
-    { name: "Cooler Master", logo: "/images/brands/cooler-master.png" },
+    { name: "Logitech", logo: "/storage/images/brands/logitech.png" },
+    { name: "Corsair", logo: "/storage/images/brands/corsair.png" },
+    { name: "ASUS", logo: "/storage/images/brands/asus.png" },
+    { name: "MSI", logo: "/storage/images/brands/msi.png" },
+    { name: "Razer", logo: "/storage/images/brands/razer.png" },
+    { name: "HyperX", logo: "/storage/images/brands/hyperx.png" },
+    { name: "Kingston", logo: "/storage/images/brands/kingston.png" },
+    { name: "Samsung", logo: "/storage/images/brands/samsung.png" },
+    { name: "Seagate", logo: "/storage/images/brands/seagate.png" },
+    { name: "TP-Link", logo: "/storage/images/brands/tp-link.png" },
+    { name: "Gigabyte", logo: "/storage/images/brands/gigabyte.png" },
+    { name: "Cooler Master", logo: "/storage/images/brands/cooler-master.png" },
 ];
 
 const reasons = [
@@ -647,57 +647,54 @@ interface BrandItem {
     url?: string | null;
 }
 
-function BrandLogo({ name, logo }: { name: string; logo?: string | null }) {
-    const [failed, setFailed] = useState(false);
-
-    // Normalize logo path: support relative storage paths or absolute URLs
-    const imageSrc = useMemo(() => {
-        if (!logo) return null;
-        if (
-            logo.startsWith("http://") ||
-            logo.startsWith("https://") ||
-            logo.startsWith("/")
-        ) {
-            return logo;
-        }
-        return `/storage/${logo}`;
-    }, [logo]);
-
-    // If a logo file is missing or fails to load, display the brand title neatly
-    if (failed || !imageSrc) {
-        return (
-            <span className="whitespace-nowrap font-display text-sm md:text-base font-bold tracking-[0.15em] text-muted hover:text-fg transition-colors px-3 py-1.5 rounded-lg bg-card border border-border/60 shadow-xs">
-                {name}
-            </span>
-        );
+function resolveBrandLogoSrc(logo?: string | null): string | null {
+    if (!logo || typeof logo !== "string") return null;
+    const clean = logo.trim();
+    if (clean === "" || clean.startsWith("data:image/svg")) {
+        return null;
     }
-
-    return (
-        <img
-            src={imageSrc}
-            alt={name}
-            loading="lazy"
-            draggable={false}
-            onError={() => setFailed(true)}
-            className="h-10 w-auto max-w-[9.5rem] object-contain drop-shadow-xs dark:brightness-105 transition-transform hover:scale-105"
-        />
-    );
+    if (
+        clean.startsWith("http://") ||
+        clean.startsWith("https://") ||
+        clean.startsWith("/")
+    ) {
+        return clean;
+    }
+    return `/storage/${clean}`;
 }
 
 function BrandMarquee({ brands: propBrands = [] }: { brands?: BrandItem[] }) {
-    // If admin has brands in database, use them; otherwise fallback to default brands list
-    const activeBrands =
-        propBrands && propBrands.length > 0 ? propBrands : brands;
+    const [failedBrandNames, setFailedBrandNames] = useState<Set<string>>(new Set());
 
-    if (!activeBrands || activeBrands.length === 0) {
+    // Only brands with valid, non-empty, non-avatar image paths
+    const candidateBrands = useMemo(() => {
+        const source =
+            propBrands && propBrands.length > 0 ? propBrands : brands;
+        return source.filter((b) => resolveBrandLogoSrc(b.logo) !== null);
+    }, [propBrands]);
+
+    // Remove any brands whose image fails to load in browser
+    const validBrands = useMemo(() => {
+        return candidateBrands.filter((b) => !failedBrandNames.has(b.name));
+    }, [candidateBrands, failedBrandNames]);
+
+    if (!validBrands || validBrands.length === 0) {
         return null;
     }
 
+    const handleImageError = (brandName: string) => {
+        setFailedBrandNames((prev) => {
+            const next = new Set(prev);
+            next.add(brandName);
+            return next;
+        });
+    };
+
     // Repeat the list so one half of the track is always wider than the screen
-    const repeatCount = Math.max(1, Math.ceil(12 / activeBrands.length));
+    const repeatCount = Math.max(1, Math.ceil(12 / validBrands.length));
     const row = Array.from(
         { length: repeatCount },
-        () => activeBrands,
+        () => validBrands,
     ).flat();
     const track = [...row, ...row]; // two identical halves = seamless loop
 
@@ -723,25 +720,33 @@ function BrandMarquee({ brands: propBrands = [] }: { brands?: BrandItem[] }) {
                 />
 
                 <Reveal>
-                    <div className="about-marquee relative mx-auto max-w-5xl select-none overflow-hidden py-4">
+                    <div className="about-marquee relative mx-auto max-w-6xl select-none overflow-hidden py-6">
                         {/* Fade edges */}
-                        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-card to-transparent md:w-32" />
-                        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-card to-transparent md:w-32" />
+                        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-card to-transparent md:w-36" />
+                        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-card to-transparent md:w-36" />
 
                         {/* Scrolling track */}
-                        <div className="about-marquee-track flex w-max will-change-transform">
-                            {track.map((brand, i) => (
-                                <div
-                                    key={`${brand.name}-${i}`}
-                                    aria-hidden={i >= row.length}
-                                    className="flex h-16 items-center px-6 md:px-10"
-                                >
-                                    <BrandLogo
-                                        name={brand.name}
-                                        logo={brand.logo}
-                                    />
-                                </div>
-                            ))}
+                        <div className="about-marquee-track flex w-max will-change-transform items-center">
+                            {track.map((brand, i) => {
+                                const src = resolveBrandLogoSrc(brand.logo);
+                                if (!src) return null;
+                                return (
+                                    <div
+                                        key={`${brand.name}-${i}`}
+                                        aria-hidden={i >= row.length}
+                                        className="flex h-20 md:h-24 shrink-0 items-center px-6 md:px-10"
+                                    >
+                                        <img
+                                            src={src}
+                                            alt={brand.name}
+                                            loading="lazy"
+                                            draggable={false}
+                                            onError={() => handleImageError(brand.name)}
+                                            className="h-12 md:h-16 w-auto max-w-[10rem] md:max-w-[13rem] object-contain drop-shadow-sm dark:brightness-105 transition-transform duration-300 hover:scale-110"
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </Reveal>
