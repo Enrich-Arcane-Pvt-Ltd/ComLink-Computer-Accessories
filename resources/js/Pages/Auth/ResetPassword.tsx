@@ -28,7 +28,7 @@ export default function ResetPassword({
 
     return (
         <AppLayout>
-            <Head title="Reset Password - ComLink" />
+            <Head title="Reset Password" />
 
             <div className="min-h-[calc(100vh-80px)] flex bg-bg">
                 {/* ───────── LEFT: Form ───────── */}

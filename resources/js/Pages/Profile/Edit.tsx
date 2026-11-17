@@ -141,7 +141,7 @@ export default function Edit({
 
     return (
         <AppLayout>
-            <Head title="My Profile - Vicky Store / ComLink" />
+            <Head title="My Profile" />
 
             {/* Hidden native file input */}
             <input

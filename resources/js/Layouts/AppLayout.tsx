@@ -26,7 +26,12 @@ export default function AppLayout({
 
     useEffect(() => {
         if (flash?.success) {
-            toast.success(flash.success);
+            const msg = Array.isArray(flash.success) ? flash.success[0] : flash.success;
+            toast.success(msg);
+        }
+        if (flash?.error) {
+            const msg = Array.isArray(flash.error) ? flash.error[0] : flash.error;
+            toast.error(msg);
         }
     }, [flash]);
 
@@ -41,7 +46,6 @@ export default function AppLayout({
     return (
         <>
             <Head>
-                <title>{appName}</title>
                 <meta
                     head-key="description"
                     name="description"
@@ -87,6 +91,8 @@ export default function AppLayout({
                         </div>
                         <Toaster
                             position="bottom-right"
+                            richColors
+                            closeButton
                             toastOptions={{
                                 className: "bg-bg text-fg border-border",
                             }}

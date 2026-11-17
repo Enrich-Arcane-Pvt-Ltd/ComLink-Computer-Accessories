@@ -55,7 +55,7 @@ class RegisteredUserController extends Controller
 
             Auth::login($user);
 
-            return redirect('/')->with('success', 'Your account has been created successfully! Welcome to Wiki Store.');
+            return redirect('/')->with('success', 'Your account has been created successfully! Welcome to ComLink.');
         } catch (\Throwable $e) {
             Log::error('User registration error: ' . $e->getMessage(), [
                 'email' => $request->email,

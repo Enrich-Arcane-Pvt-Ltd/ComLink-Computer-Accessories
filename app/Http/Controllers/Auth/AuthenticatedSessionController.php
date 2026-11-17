@@ -34,6 +34,10 @@ class AuthenticatedSessionController extends Controller
             $request->authenticate();
             $request->session()->regenerate();
 
+            $user = Auth::user();
+            $displayName = $user->first_name ?: ($user->name ?: 'Member');
+            session()->flash('success', "Welcome back, {$displayName}! You have signed in successfully.");
+
             return $this->redirectByRole();
         } catch (ValidationException $e) {
             throw $e;
@@ -60,7 +64,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'You have been logged out successfully. See you again!');
     }
 
     private function redirectByRole(): \Symfony\Component\HttpFoundation\Response

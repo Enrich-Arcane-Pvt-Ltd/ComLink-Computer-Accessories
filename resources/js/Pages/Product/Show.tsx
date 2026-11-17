@@ -426,7 +426,7 @@ function ProductViewContent({
 
     return (
         <>
-            <Head title={`${product.name} - ComLink Computer Shop`} />
+            <Head title={product.name} />
 
             {/* Lightbox Modal */}
             {isLightboxOpen && (

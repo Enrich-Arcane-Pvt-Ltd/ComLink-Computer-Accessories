@@ -68,7 +68,9 @@ Route::get('/testimonials', [TestimonialController::class, 'index'])->name('test
 
 // ContactUs
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact.store');
 
 // Legal Pages
 Route::get('/terms-of-service', [CustomPagesController::class, 'terms'])->name('terms.show');
@@ -77,7 +79,9 @@ Route::get('/shipping-delivery', [CustomPagesController::class, 'shipping'])->na
 Route::get('/return-refund', [CustomPagesController::class, 'refunds'])->name('refunds.show');
 
 // Newsletter
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->name('newsletter.subscribe');
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
+    ->middleware('throttle:6,1')
+    ->name('newsletter.subscribe');
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
