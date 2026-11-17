@@ -193,13 +193,27 @@ function CheckoutContent({ prefill, stripeKey }: CheckoutProps) {
 
         try {
             // 2. Request PaymentIntent from backend
-            const intentRes = await axios.post("/checkout/payment-intent", {
-                amount: finalTotal,
-                email: email.trim(),
-                name: name.trim(),
-            });
-
-            const { clientSecret, paymentIntentId } = intentRes.data;
+            let clientSecret = "";
+            let paymentIntentId = "";
+            try {
+                const intentRes = await axios.post("/checkout/payment-intent", {
+                    amount: finalTotal,
+                    email: email.trim(),
+                    name: name.trim(),
+                });
+                clientSecret = intentRes.data.clientSecret;
+                paymentIntentId = intentRes.data.paymentIntentId;
+            } catch (intentErr: any) {
+                console.error("PaymentIntent Error:", intentErr);
+                const errMsg =
+                    intentErr.response?.data?.error ||
+                    intentErr.response?.data?.message ||
+                    "Could not initialize payment gateway with server. Please try again.";
+                setCardError(errMsg);
+                toast.error(errMsg);
+                setIsProcessing(false);
+                return;
+            }
 
             // 3. Confirm card payment with Stripe
             const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(
@@ -232,39 +246,50 @@ function CheckoutContent({ prefill, stripeKey }: CheckoutProps) {
             }
 
             // 4. Send completed order to backend
-            const orderRes = await axios.post("/checkout/process-order", {
-                customer_name: name.trim(),
-                customer_email: email.trim(),
-                customer_phone: phone.trim(),
-                customer_secondary_phone: secondaryPhone.trim() || null,
-                shipping_address_line_1: addressLine1.trim(),
-                shipping_address_line_2: addressLine2.trim() || null,
-                shipping_city: city.trim(),
-                shipping_state: state.trim() || null,
-                shipping_postal_code: postalCode.trim() || null,
-                shipping_country: country.trim() || "Sri Lanka",
-                items: items.map((i) => ({
-                    productId: i.productId,
-                    variantId: i.variantId,
-                    color: i.color,
-                    name: i.name,
-                    price: i.price,
-                    quantity: i.quantity,
-                    image: i.image,
-                })),
-                subtotal: totalPrice,
-                shipping_fee: shippingFee,
-                discount_amount: 0,
-                total_amount: finalTotal,
-                payment_intent_id: paymentIntent?.id || paymentIntentId,
-            });
+            try {
+                const orderRes = await axios.post("/checkout/process-order", {
+                    customer_name: name.trim(),
+                    customer_email: email.trim(),
+                    customer_phone: phone.trim(),
+                    customer_secondary_phone: secondaryPhone.trim() || null,
+                    shipping_address_line_1: addressLine1.trim(),
+                    shipping_address_line_2: addressLine2.trim() || null,
+                    shipping_city: city.trim(),
+                    shipping_state: state.trim() || null,
+                    shipping_postal_code: postalCode.trim() || null,
+                    shipping_country: country.trim() || "Sri Lanka",
+                    items: items.map((i) => ({
+                        productId: i.productId,
+                        variantId: i.variantId,
+                        color: i.color,
+                        name: i.name,
+                        price: i.price,
+                        quantity: i.quantity,
+                        image: i.image,
+                    })),
+                    subtotal: totalPrice,
+                    shipping_fee: shippingFee,
+                    discount_amount: 0,
+                    total_amount: finalTotal,
+                    payment_intent_id: paymentIntent?.id || paymentIntentId,
+                });
 
-            if (orderRes.data.success) {
-                clearCart();
-                toast.success("Payment successful! Your order has been placed in Processing status.");
-                router.visit("/orders");
-            } else {
-                toast.error("Order recording encountered an issue. Please contact support.");
+                if (orderRes.data.success) {
+                    clearCart();
+                    toast.success("Payment successful! Your order has been placed in Processing status.");
+                    router.visit("/orders");
+                } else {
+                    toast.error("Order recording encountered an issue. Please contact support.");
+                    setIsProcessing(false);
+                }
+            } catch (orderErr: any) {
+                console.error("Order Recording Error:", orderErr);
+                const errMsg =
+                    orderErr.response?.data?.error ||
+                    orderErr.response?.data?.message ||
+                    "Payment was processed, but order recording encountered an error. Please contact support.";
+                setCardError(errMsg);
+                toast.error(errMsg);
                 setIsProcessing(false);
             }
         } catch (err: any) {

@@ -71,7 +71,14 @@ class CheckoutController extends Controller
         // Smallest currency unit for LKR is cents (1 LKR = 100 cents)
         $amountInCents = (int) round($amountInLkr * 100);
 
-        $secretKey = config('services.stripe.secret');
+        $secretKey = (string) (config('services.stripe.secret') ?? '');
+        if (empty($secretKey)) {
+            Log::error('Stripe secret key is missing in config/services.php or .env');
+
+            return response()->json([
+                'error' => 'Payment processor configuration error: STRIPE_SECRET is missing or not set in .env.',
+            ], 500);
+        }
 
         try {
             $response = Http::withoutVerifying()
@@ -142,156 +149,187 @@ class CheckoutController extends Controller
 
         // Optional verify with Stripe if payment_intent_id is provided
         if (! empty($paymentIntentId)) {
-            $secretKey = config('services.stripe.secret');
-            try {
-                $stripeRes = Http::withoutVerifying()
-                    ->withBasicAuth($secretKey, '')
-                    ->get("https://api.stripe.com/v1/payment_intents/{$paymentIntentId}");
+            $secretKey = (string) (config('services.stripe.secret') ?? '');
+            if (! empty($secretKey)) {
+                try {
+                    $stripeRes = Http::withoutVerifying()
+                        ->withBasicAuth($secretKey, '')
+                        ->get("https://api.stripe.com/v1/payment_intents/{$paymentIntentId}");
 
-                if ($stripeRes->successful()) {
-                    $status = $stripeRes->json('status');
-                    if (! in_array($status, ['succeeded', 'processing', 'requires_capture'])) {
-                        Log::warning('Stripe PaymentIntent status not succeeded', ['status' => $status]);
+                    if ($stripeRes->successful()) {
+                        $status = $stripeRes->json('status');
+                        if (! in_array($status, ['succeeded', 'processing', 'requires_capture'])) {
+                            Log::warning('Stripe PaymentIntent status not succeeded', ['status' => $status]);
+                        }
                     }
+                } catch (\Throwable $e) {
+                    Log::warning('Stripe Intent verification notice', ['message' => $e->getMessage()]);
                 }
-            } catch (\Throwable $e) {
-                Log::warning('Stripe Intent verification notice', ['message' => $e->getMessage()]);
             }
         }
 
-        $order = DB::transaction(function () use ($validated, $request, $paymentStatus, $paymentIntentId) {
-            $order = Order::create([
-                'order_number' => Order::generateOrderNumber(),
-                'user_id' => $request->user()?->id,
-                'status' => 'Processing',
-                'customer_name' => $validated['customer_name'],
-                'customer_email' => $validated['customer_email'],
-                'customer_phone' => $validated['customer_phone'],
-                'customer_secondary_phone' => $validated['customer_secondary_phone'] ?? null,
-                'shipping_address_line_1' => $validated['shipping_address_line_1'],
-                'shipping_address_line_2' => $validated['shipping_address_line_2'] ?? null,
-                'shipping_city' => $validated['shipping_city'],
-                'shipping_state' => $validated['shipping_state'] ?? null,
-                'shipping_postal_code' => $validated['shipping_postal_code'] ?? null,
-                'shipping_country' => $validated['shipping_country'] ?? 'Sri Lanka',
-                'subtotal' => $validated['subtotal'],
-                'shipping_fee' => $validated['shipping_fee'] ?? 0.00,
-                'discount_amount' => $validated['discount_amount'] ?? 0.00,
-                'total_amount' => $validated['total_amount'],
-                'payment_method' => 'Stripe Card Payment',
-                'payment_status' => $paymentStatus,
-                'stripe_payment_intent_id' => $paymentIntentId,
-                'courier_name' => 'Pronto Courier Service',
-                'tracking_number' => 'PRN-'.strtoupper(substr(uniqid(), -6)),
+        try {
+            $order = DB::transaction(function () use ($validated, $request, $paymentStatus, $paymentIntentId) {
+                $order = Order::create([
+                    'order_number' => Order::generateOrderNumber(),
+                    'user_id' => $request->user()?->id,
+                    'status' => 'Processing',
+                    'customer_name' => $validated['customer_name'],
+                    'customer_email' => $validated['customer_email'],
+                    'customer_phone' => $validated['customer_phone'],
+                    'customer_secondary_phone' => $validated['customer_secondary_phone'] ?? null,
+                    'shipping_address_line_1' => $validated['shipping_address_line_1'],
+                    'shipping_address_line_2' => $validated['shipping_address_line_2'] ?? null,
+                    'shipping_city' => $validated['shipping_city'],
+                    'shipping_state' => $validated['shipping_state'] ?? null,
+                    'shipping_postal_code' => $validated['shipping_postal_code'] ?? null,
+                    'shipping_country' => $validated['shipping_country'] ?? 'Sri Lanka',
+                    'subtotal' => $validated['subtotal'],
+                    'shipping_fee' => $validated['shipping_fee'] ?? 0.00,
+                    'discount_amount' => $validated['discount_amount'] ?? 0.00,
+                    'total_amount' => $validated['total_amount'],
+                    'payment_method' => 'Stripe Card Payment',
+                    'payment_status' => $paymentStatus,
+                    'stripe_payment_intent_id' => $paymentIntentId,
+                    'courier_name' => 'Pronto Courier Service',
+                    'tracking_number' => 'PRN-'.strtoupper(substr(uniqid(), -6)),
+                ]);
+
+                foreach ($validated['items'] as $item) {
+                    $qty = (int) $item['quantity'];
+                    $price = (float) $item['price'];
+                    $prodId = is_numeric($item['productId'] ?? null)
+                        ? (int) $item['productId']
+                        : (is_numeric($item['product_id'] ?? null)
+                            ? (int) $item['product_id']
+                            : (is_numeric($item['id'] ?? null) ? (int) $item['id'] : null));
+
+                    if (! $prodId && ! empty($item['name'])) {
+                        $prodId = Product::where('name', $item['name'])->value('id');
+                    }
+
+                    // Verify product exists in database to prevent foreign key errors
+                    if ($prodId && ! Product::where('id', $prodId)->exists()) {
+                        $prodId = null;
+                    }
+
+                    $variantId = is_numeric($item['variantId'] ?? null)
+                        ? (int) $item['variantId']
+                        : (is_numeric($item['variant_id'] ?? null) ? (int) $item['variant_id'] : null);
+                    $color = $item['color'] ?? null;
+
+                    // Verify variant exists in database to prevent foreign key errors
+                    if ($variantId && ! \App\Models\ProductVariant::where('id', $variantId)->exists()) {
+                        $variantId = null;
+                    }
+
+                    // 1. Decrement specific color variant stock if applicable
+                    if ($variantId) {
+                        $variant = \App\Models\ProductVariant::lockForUpdate()->find($variantId);
+                        if ($variant) {
+                            $variant->stock = max(0, ((int) $variant->stock) - $qty);
+                            $variant->show_quantity = max(0, ((int) $variant->show_quantity) - $qty);
+                            $variant->save();
+                            if (! $color) {
+                                $color = $variant->color_name;
+                            }
+                            if ($variant->effective_price > 0) {
+                                $price = (float) $variant->effective_price;
+                            }
+                        }
+                    } elseif ($prodId && $color) {
+                        $variant = \App\Models\ProductVariant::where('product_id', $prodId)
+                            ->where(function ($q) use ($color) {
+                                $q->where('color_name', $color)
+                                    ->orWhere('variant_name', 'like', "%{$color}%");
+                            })
+                            ->lockForUpdate()
+                            ->first();
+                        if ($variant) {
+                            $variant->stock = max(0, ((int) $variant->stock) - $qty);
+                            $variant->show_quantity = max(0, ((int) $variant->show_quantity) - $qty);
+                            $variant->save();
+                            $variantId = $variant->id;
+                            if ($variant->effective_price > 0) {
+                                $price = (float) $variant->effective_price;
+                            }
+                        }
+                    }
+
+                    // 2. Decrement available product stock in database
+                    $product = null;
+                    if ($prodId) {
+                        $product = Product::lockForUpdate()->find($prodId);
+                        if ($product) {
+                            $currentStock = (int) ($product->quantity ?? 0);
+                            $product->quantity = max(0, $currentStock - $qty);
+                            $product->save();
+                        }
+                    }
+
+                    $resolvedCategory = null;
+                    if (! empty($product)) {
+                        $resolvedCategory = $product->categories->firstWhere('parent_id', null)?->name
+                            ?: $product->categories->first()?->name;
+                    }
+                    $resolvedCategory = $resolvedCategory ?: ($item['category'] ?? 'Accessories');
+
+                    OrderItem::create([
+                        'order_id' => $order->id,
+                        'product_id' => $prodId,
+                        'variant_id' => $variantId,
+                        'color' => $color,
+                        'product_name' => $item['name'],
+                        'product_image' => $item['image'] ?? '/images/placeholder.png',
+                        'category_name' => $resolvedCategory,
+                        'unit_price' => $price,
+                        'quantity' => $qty,
+                        'total_price' => round($price * $qty, 2),
+                    ]);
+                }
+
+                // Save address to user profile if user has none saved
+                $user = $request->user();
+                if ($user && ! $user->addresses()->exists()) {
+                    $nameParts = preg_split('/\s+/', trim($validated['customer_name']), 2);
+                    $firstName = ! empty($nameParts[0]) ? $nameParts[0] : ($user->first_name ?: 'Valued');
+                    $lastName = ! empty($nameParts[1]) ? $nameParts[1] : ($user->last_name ?: ($firstName ?: 'Customer'));
+
+                    $user->addresses()->create([
+                        'type' => 'shipping',
+                        'is_default' => true,
+                        'first_name' => $firstName,
+                        'last_name' => $lastName,
+                        'address_line_1' => $validated['shipping_address_line_1'],
+                        'address_line_2' => $validated['shipping_address_line_2'] ?? null,
+                        'city' => $validated['shipping_city'],
+                        'state' => $validated['shipping_state'] ?? null,
+                        'postal_code' => $validated['shipping_postal_code'] ?? null,
+                        'country' => $validated['shipping_country'] ?? 'Sri Lanka',
+                        'phone' => $validated['customer_phone'],
+                        'secondary_phone' => $validated['customer_secondary_phone'] ?? null,
+                    ]);
+                }
+
+                return $order;
+            });
+
+            return response()->json([
+                'success' => true,
+                'order_id' => $order->id,
+                'order_number' => $order->order_number,
+                'redirect_url' => route('orders.index'),
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Order Processing Failure', [
+                'error' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
             ]);
 
-            foreach ($validated['items'] as $item) {
-                $qty = (int) $item['quantity'];
-                $price = (float) $item['price'];
-                $prodId = is_numeric($item['productId'] ?? null)
-                    ? (int) $item['productId']
-                    : (is_numeric($item['product_id'] ?? null)
-                        ? (int) $item['product_id']
-                        : (is_numeric($item['id'] ?? null) ? (int) $item['id'] : null));
-
-                if (! $prodId && ! empty($item['name'])) {
-                    $prodId = Product::where('name', $item['name'])->value('id');
-                }
-
-                $variantId = is_numeric($item['variantId'] ?? null)
-                    ? (int) $item['variantId']
-                    : (is_numeric($item['variant_id'] ?? null) ? (int) $item['variant_id'] : null);
-                $color = $item['color'] ?? null;
-
-                // 1. Decrement specific color variant stock if applicable
-                if ($variantId) {
-                    $variant = \App\Models\ProductVariant::lockForUpdate()->find($variantId);
-                    if ($variant) {
-                        $variant->stock = max(0, ((int) $variant->stock) - $qty);
-                        $variant->show_quantity = max(0, ((int) $variant->show_quantity) - $qty);
-                        $variant->save();
-                        if (! $color) {
-                            $color = $variant->color_name;
-                        }
-                        if ($variant->effective_price > 0) {
-                            $price = (float) $variant->effective_price;
-                        }
-                    }
-                } elseif ($prodId && $color) {
-                    $variant = \App\Models\ProductVariant::where('product_id', $prodId)
-                        ->where(function ($q) use ($color) {
-                            $q->where('color_name', $color)
-                                ->orWhere('variant_name', 'like', "%{$color}%");
-                        })
-                        ->lockForUpdate()
-                        ->first();
-                    if ($variant) {
-                        $variant->stock = max(0, ((int) $variant->stock) - $qty);
-                        $variant->show_quantity = max(0, ((int) $variant->show_quantity) - $qty);
-                        $variant->save();
-                        $variantId = $variant->id;
-                        if ($variant->effective_price > 0) {
-                            $price = (float) $variant->effective_price;
-                        }
-                    }
-                }
-
-                // 2. Decrement available product stock in database
-                if ($prodId) {
-                    $product = Product::lockForUpdate()->find($prodId);
-                    if ($product) {
-                        $currentStock = (int) ($product->quantity ?? 0);
-                        $product->quantity = max(0, $currentStock - $qty);
-                        $product->save();
-                    }
-                }
-
-                $resolvedCategory = null;
-                if (!empty($product)) {
-                    $resolvedCategory = $product->categories->firstWhere('parent_id', null)?->name
-                        ?: $product->categories->first()?->name;
-                }
-                $resolvedCategory = $resolvedCategory ?: ($item['category'] ?? 'Accessories');
-
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $prodId,
-                    'variant_id' => $variantId,
-                    'color' => $color,
-                    'product_name' => $item['name'],
-                    'product_image' => $item['image'] ?? '/images/placeholder.png',
-                    'category_name' => $resolvedCategory,
-                    'unit_price' => $price,
-                    'quantity' => $qty,
-                    'total_price' => round($price * $qty, 2),
-                ]);
-            }
-
-            // Save address to user profile if user has none saved
-            $user = $request->user();
-            if ($user && ! $user->addresses()->exists()) {
-                $user->addresses()->create([
-                    'type' => 'shipping',
-                    'is_default' => true,
-                    'address_line_1' => $validated['shipping_address_line_1'],
-                    'address_line_2' => $validated['shipping_address_line_2'] ?? null,
-                    'city' => $validated['shipping_city'],
-                    'state' => $validated['shipping_state'] ?? null,
-                    'postal_code' => $validated['shipping_postal_code'] ?? null,
-                    'country' => $validated['shipping_country'] ?? 'Sri Lanka',
-                    'phone' => $validated['customer_phone'],
-                    'secondary_phone' => $validated['customer_secondary_phone'] ?? null,
-                ]);
-            }
-
-            return $order;
-        });
-
-        return response()->json([
-            'success' => true,
-            'order_id' => $order->id,
-            'order_number' => $order->order_number,
-            'redirect_url' => route('orders.index'),
-        ]);
+            return response()->json([
+                'error' => 'Order creation failed: '.$e->getMessage(),
+            ], 500);
+        }
     }
 }
