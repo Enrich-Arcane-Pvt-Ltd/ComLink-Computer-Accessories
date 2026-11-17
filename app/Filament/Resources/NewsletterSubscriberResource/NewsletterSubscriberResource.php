@@ -24,6 +24,11 @@ class NewsletterSubscriberResource extends Resource
 
     protected static ?string $pluralLabel = 'Newsletter Subscribers';
 
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
     // Form එකක් අවශ්‍ය නැත (Edit/Create නැති නිසා)
     public static function form(Form $form): Form
     {
