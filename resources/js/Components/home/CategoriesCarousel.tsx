@@ -124,18 +124,37 @@ export function CategoriesCarousel({
 
     // Responsive geometric spacing along the curve
     const spacing =
-        viewportWidth < 640 ? 150 : viewportWidth < 1024 ? 205 : 255;
+        viewportWidth < 480
+            ? 135
+            : viewportWidth < 640
+              ? 165
+              : viewportWidth < 1024
+                ? 205
+                : 255;
     const cardWidth =
-        viewportWidth < 640 ? 195 : viewportWidth < 1024 ? 220 : 240;
+        viewportWidth < 480
+            ? 175
+            : viewportWidth < 640
+              ? 195
+              : viewportWidth < 1024
+                ? 220
+                : 240;
     const cardHeight =
-        viewportWidth < 640 ? 285 : viewportWidth < 1024 ? 320 : 350;
+        viewportWidth < 480
+            ? 260
+            : viewportWidth < 640
+              ? 285
+              : viewportWidth < 1024
+                ? 320
+                : 350;
     const curveFactor = viewportWidth < 640 ? 14 : 20;
 
     const dragRatio = Math.max(-1, Math.min(1, dragOffset / spacing));
 
     return (
         <section
-            className="py-16 md:py-24 bg-bg relative overflow-hidden select-none"
+            className="py-16 md:py-24 relative overflow-hidden max-w-full w-full select-none bg-gradient-to-b from-[#eef6ff] via-[#f4f9ff] to-[#edf5ff] dark:from-[#070b12] dark:via-[#0b1018] dark:to-[#070b12] text-slate-800 dark:text-slate-200 transition-colors duration-300"
+            style={{ contain: "paint" }}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => {
                 if (!isDraggingRef.current) {
@@ -145,9 +164,252 @@ export function CategoriesCarousel({
             tabIndex={0}
             onKeyDown={handleKeyDown}
         >
-            {/* Ambient Cyan Background Flares */}
-            <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[360px] bg-cyan-500/10 blur-[140px] rounded-full" />
-            <div className="pointer-events-none absolute left-1/4 top-1/3 w-[300px] h-[200px] bg-blue-600/10 blur-[100px] rounded-full" />
+            {/* ========================================================================= */}
+            {/* 1. CREATIVE ABSTRACT GEOMETRIC & FLUID ART BACKGROUND (Enclosed & Contained) */}
+            {/* ========================================================================= */}
+            <div
+                className="pointer-events-none absolute inset-0 z-0 overflow-hidden w-full h-full select-none"
+                style={{ contain: "paint" }}
+            >
+                {/* A. Ambient Atmospheric Glow Blurs */}
+                <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] max-w-full h-[480px] bg-gradient-to-tr from-cyan-400/20 via-sky-300/25 to-blue-400/15 dark:from-cyan-500/12 dark:via-blue-600/10 dark:to-cyan-400/10 blur-[130px] rounded-full" />
+                <div className="pointer-events-none absolute -top-20 -right-20 w-[460px] max-w-full h-[460px] bg-cyan-400/20 dark:bg-cyan-500/10 blur-[120px] rounded-full" />
+                <div className="pointer-events-none absolute -bottom-24 -left-24 w-[480px] max-w-full h-[480px] bg-blue-500/20 dark:bg-blue-600/10 blur-[130px] rounded-full" />
+
+                {/* B. Dynamic SVG Geometric Graphic Layer (Fluid Waves, Circles, Rings, Hatch) */}
+                <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden w-full h-full flex items-center justify-center">
+                    <svg
+                        className="w-full h-full object-cover"
+                        viewBox="0 0 1440 700"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        preserveAspectRatio="xMidYMid slice"
+                    >
+                    <defs>
+                        {/* Gradients */}
+                        <linearGradient
+                            id="blueOrbGrad"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                        >
+                            <stop offset="0%" stopColor="#2563eb" />
+                            <stop offset="100%" stopColor="#06b6d4" />
+                        </linearGradient>
+
+                        <linearGradient
+                            id="cyanOrbGrad"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                        >
+                            <stop offset="0%" stopColor="#06b6d4" />
+                            <stop offset="100%" stopColor="#38bdf8" />
+                        </linearGradient>
+
+                        <linearGradient
+                            id="fluidWaveGradLight"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="0%"
+                        >
+                            <stop
+                                offset="0%"
+                                stopColor="#38bdf8"
+                                stopOpacity="0.12"
+                            />
+                            <stop
+                                offset="50%"
+                                stopColor="#06b6d4"
+                                stopOpacity="0.15"
+                            />
+                            <stop
+                                offset="100%"
+                                stopColor="#2563eb"
+                                stopOpacity="0.10"
+                            />
+                        </linearGradient>
+
+                        {/* Diagonal Stripe Pattern (Inspired by Image 3) */}
+                        <pattern
+                            id="diagonalStripes"
+                            width="12"
+                            height="12"
+                            patternTransform="rotate(45 0 0)"
+                            patternUnits="userSpaceOnUse"
+                        >
+                            <line
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="12"
+                                stroke="#0891b2"
+                                strokeWidth="2.5"
+                                opacity="0.35"
+                            />
+                        </pattern>
+                    </defs>
+
+                    {/* Fluid Wave 1 (Soft sweeping bottom wave) */}
+                    <path
+                        d="M -50 320 C 220 220 340 460 680 390 C 1020 320 1180 540 1520 420 L 1520 750 L -50 750 Z"
+                        fill="url(#fluidWaveGradLight)"
+                        className="dark:opacity-40"
+                    />
+
+                    {/* Fluid Wave 2 (Top ambient contour curve) */}
+                    <path
+                        d="M -50 -40 C 260 140 420 -60 760 80 C 1100 220 1260 40 1520 120 L 1520 -80 L -50 -80 Z"
+                        fill="currentColor"
+                        opacity="0.04"
+                    />
+
+                    {/* Top-Right Vibrant Solid Sphere (Inspired by Image 2) */}
+                    <circle
+                        cx="1340"
+                        cy="110"
+                        r="115"
+                        fill="url(#blueOrbGrad)"
+                        className="opacity-70 dark:opacity-60"
+                    />
+
+                    {/* Top-Right Hollow Geometric Ring */}
+                    <circle
+                        cx="1240"
+                        cy="150"
+                        r="140"
+                        stroke="#0891b2"
+                        strokeWidth="3.5"
+                        opacity="0.25"
+                    />
+
+                    {/* Bottom-Left Solid Vibrant Cyan Sphere */}
+                    <circle
+                        cx="90"
+                        cy="630"
+                        r="120"
+                        fill="url(#cyanOrbGrad)"
+                        className="opacity-60 dark:opacity-50"
+                    />
+
+                    {/* Center-Left Hollow Geometric Ring */}
+                    <circle
+                        cx="160"
+                        cy="430"
+                        r="110"
+                        stroke="#06b6d4"
+                        strokeWidth="3"
+                        opacity="0.22"
+                    />
+
+                    {/* Concentric Modern Rings (Bottom-Right) */}
+                    <circle
+                        cx="1280"
+                        cy="590"
+                        r="95"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        opacity="0.18"
+                    />
+                    <circle
+                        cx="1280"
+                        cy="590"
+                        r="55"
+                        stroke="#0891b2"
+                        strokeWidth="2"
+                        opacity="0.25"
+                    />
+
+                    {/* Diagonal Pinstripe Hatched Circle (Inspired by Image 3) */}
+                    <circle
+                        cx="980"
+                        cy="95"
+                        r="45"
+                        fill="url(#diagonalStripes)"
+                        className="opacity-70 dark:opacity-60"
+                    />
+
+                    {/* Small Concentrated 4x6 Dot-Matrix Cluster (Upper-Left Accent, Inspired by Image 3) */}
+                    <g
+                        transform="translate(110, 85)"
+                        className="fill-cyan-600 dark:fill-cyan-400 opacity-40 dark:opacity-30"
+                    >
+                        {[0, 1, 2, 3].map((row) =>
+                            [0, 1, 2, 3, 4, 5].map((col) => (
+                                <circle
+                                    key={`${row}-${col}`}
+                                    cx={col * 14}
+                                    cy={row * 14}
+                                    r="2"
+                                />
+                            ))
+                        )}
+                    </g>
+
+                    {/* Modern 45° Diagonal Accent Lines (Inspired by Image 2 & 3) */}
+                    <line
+                        x1="640"
+                        y1="90"
+                        x2="750"
+                        y2="200"
+                        stroke="#0891b2"
+                        strokeWidth="2"
+                        opacity="0.25"
+                    />
+                    <line
+                        x1="1020"
+                        y1="510"
+                        x2="1140"
+                        y2="630"
+                        stroke="#38bdf8"
+                        strokeWidth="2"
+                        opacity="0.25"
+                    />
+                    <line
+                        x1="280"
+                        y1="190"
+                        x2="340"
+                        y2="250"
+                        stroke="#06b6d4"
+                        strokeWidth="1.8"
+                        opacity="0.22"
+                    />
+
+                    {/* Floating Accent Spheres & Beads */}
+                    <circle
+                        cx="680"
+                        cy="370"
+                        r="14"
+                        fill="#0891b2"
+                        className="opacity-80 dark:opacity-90 shadow-lg"
+                    />
+                    <circle
+                        cx="710"
+                        cy="130"
+                        r="8"
+                        fill="#38bdf8"
+                        className="opacity-60"
+                    />
+                    <circle
+                        cx="290"
+                        cy="160"
+                        r="9"
+                        fill="#2563eb"
+                        className="opacity-50"
+                    />
+                    <circle
+                        cx="1210"
+                        cy="350"
+                        r="7"
+                        fill="#06b6d4"
+                        className="opacity-70"
+                    />
+                </svg>
+            </div>
+        </div>
 
             <div className="container relative z-10 mx-auto px-4 md:px-6">
                 {/* Section Header */}
@@ -157,11 +419,11 @@ export function CategoriesCarousel({
                             
                             {subtitle}
                         </span>
-                        <h2 className="font-display text-3xl md:text-5xl font-bold text-fg tracking-tight">
+                        <h2 className="font-display text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">
                             {title}
                         </h2>
                         {description && (
-                            <p className="text-muted mt-2.5 text-sm md:text-base leading-relaxed">
+                            <p className="text-slate-600 dark:text-muted mt-2.5 text-sm md:text-base leading-relaxed">
                                 {description}
                             </p>
                         )}
@@ -170,7 +432,7 @@ export function CategoriesCarousel({
                     
                 </div>
 
-                {/* 3D CAROUSEL STAGE (Generous height so cards and shadows never clip) */}
+                {/* 3D CAROUSEL STAGE (Generous height, no clipping, contain paint, no horizontal scroll) */}
                 <div
                     ref={containerRef}
                     onMouseDown={(e) => {
@@ -185,21 +447,19 @@ export function CategoriesCarousel({
                         handleDragMove(e.touches[0].clientX)
                     }
                     onTouchEnd={handleDragEnd}
-                    className="relative w-full h-[400px] sm:h-[460px] md:h-[500px] flex items-center justify-center overflow-hidden py-6"
+                    className="relative w-full max-w-full h-[410px] sm:h-[460px] md:h-[500px] flex items-center justify-center overflow-hidden py-6"
                     style={{
-                        perspective: "1200px",
-                        perspectiveOrigin: "50% 50%",
                         touchAction: "pan-y",
+                        contain: "paint",
+                        isolation: "isolate",
                     }}
                 >
-                    {/* Subtle edge fade gradients */}
-                    <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-r from-bg via-bg/60 to-transparent z-40" />
-                    <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-l from-bg via-bg/60 to-transparent z-40" />
-
                     {/* Cards Render */}
                     <div
-                        className="relative w-full h-full flex items-center justify-center"
-                        style={{ transformStyle: "preserve-3d" }}
+                        className="relative w-full max-w-full h-full flex items-center justify-center overflow-hidden"
+                        style={{
+                            contain: "paint",
+                        }}
                     >
                         {categories.map((category, index) => {
                             // Circular diff relative to active center index
@@ -211,20 +471,27 @@ export function CategoriesCarousel({
                             const effectiveDiff = diff + dragRatio;
                             const absDiff = Math.abs(effectiveDiff);
 
-                            // Don't render cards that are far around the back
-                            if (absDiff > 3.4) return null;
+                            // Dynamically limit visible cards based on screen width to prevent horizontal overflow
+                            const maxVisibleDiff =
+                                viewportWidth < 480
+                                    ? 1.25
+                                    : viewportWidth < 640
+                                      ? 1.55
+                                      : viewportWidth < 1024
+                                        ? 2.2
+                                        : 3.2;
+                            if (absDiff > maxVisibleDiff) return null;
 
                             // Curve trajectory:
                             // Center card (diff=0) is at the lowest curve point and enlarged (scale=1.08)
                             // Left and Right sides curve upwards (negative translateY) and scale down
-                            // All cards remain completely upright and straight (rotateY=0, rotateZ=0)
+                            // All cards remain completely upright and straight (2D hardware accelerated)
                             const x = effectiveDiff * spacing;
                             const y = -Math.pow(absDiff, 1.55) * curveFactor;
                             const scale = Math.max(
                                 0.72,
                                 1.08 - absDiff * 0.12
                             );
-                            const translateZ = 40 - absDiff * 50;
 
                             // Opacity falloff for distant side cards
                             let opacity = 1;
@@ -261,9 +528,6 @@ export function CategoriesCarousel({
                                         x,
                                         y,
                                         scale,
-                                        rotateY: 0, // Kept completely straight
-                                        rotateZ: 0, // Kept completely straight
-                                        z: translateZ,
                                         opacity,
                                     }}
                                     transition={{
@@ -277,7 +541,6 @@ export function CategoriesCarousel({
                                         width: cardWidth,
                                         height: cardHeight,
                                         zIndex,
-                                        transformStyle: "preserve-3d",
                                         cursor: "pointer",
                                     }}
                                     onClick={(e) => {
@@ -293,14 +556,14 @@ export function CategoriesCarousel({
                                     }}
                                     className="outline-none"
                                 >
-                                    {/* Card Container */}
+                                    {/* Card Container (Clean seamless design, no harsh outer margins or borders) */}
                                     <div
                                         className={cn(
                                             "relative h-full w-full overflow-hidden transition-all duration-300",
-                                            "rounded-t-[999px] rounded-b-[28px] border",
+                                            "rounded-t-[999px] rounded-b-[28px]",
                                             isActive
-                                                ? "border-cyan-400 bg-gradient-to-b from-cyan-500/20 via-[#0d1626] to-[#070c16] shadow-[0_15px_40px_-5px_rgba(6,182,212,0.45)] ring-2 ring-cyan-400/25"
-                                                : "border-border/60 bg-gradient-to-b from-cyan-950/20 via-[#0d1524]/90 to-[#070b14]/90 hover:border-cyan-500/50 shadow-md backdrop-blur-md"
+                                                ? "border-2 border-cyan-400 bg-gradient-to-b from-white via-cyan-50/60 to-white dark:from-cyan-500/20 dark:via-[#0d1626] dark:to-[#070c16] shadow-[0_20px_45px_-8px_rgba(6,182,212,0.38)] dark:shadow-[0_15px_40px_-5px_rgba(6,182,212,0.45)]"
+                                                : "border border-white/60 dark:border-white/5 bg-gradient-to-b from-white/90 via-white/80 to-slate-50/70 dark:from-[#0d1626]/85 dark:via-[#0b1220]/85 dark:to-[#070c16]/85 hover:border-cyan-400/50 shadow-[0_10px_25px_rgba(15,23,42,0.06)] dark:shadow-md backdrop-blur-md"
                                         )}
                                     >
                                         {/* Ambient Glow Spotlight behind image */}
@@ -309,11 +572,11 @@ export function CategoriesCarousel({
                                                 "pointer-events-none absolute left-1/2 top-[34%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-opacity duration-300",
                                                 isActive
                                                     ? "h-48 w-48 bg-cyan-400/25 opacity-90"
-                                                    : "h-36 w-36 bg-cyan-500/15 opacity-40"
+                                                    : "h-36 w-36 bg-cyan-500/12 opacity-30"
                                             )}
                                         />
 
-                                        {/* Product Image Showcase (Clean, no active pill overhead) */}
+                                        {/* Product Image Showcase (mix-blend-multiply eliminates square white image boxes in light mode) */}
                                         <div className="absolute inset-x-0 top-0 bottom-24 flex items-center justify-center px-6 pt-6">
                                             <img
                                                 src={category.image}
@@ -336,10 +599,10 @@ export function CategoriesCarousel({
                                                         "/images/categories/products.png";
                                                 }}
                                                 className={cn(
-                                                    "relative max-h-full w-full object-contain pointer-events-none select-none transition-transform duration-500",
+                                                    "relative max-h-full w-full object-contain pointer-events-none select-none transition-transform duration-500 mix-blend-multiply dark:mix-blend-normal",
                                                     isActive
-                                                        ? "scale-105 drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)]"
-                                                        : "scale-95 opacity-85 drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
+                                                        ? "scale-105 drop-shadow-[0_12px_20px_rgba(15,23,42,0.15)] dark:drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)]"
+                                                        : "scale-95 opacity-90 drop-shadow-[0_8px_12px_rgba(15,23,42,0.08)] dark:drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)]"
                                                 )}
                                             />
                                         </div>
@@ -347,10 +610,10 @@ export function CategoriesCarousel({
                                         {/* Glass Info Bar */}
                                         <div
                                             className={cn(
-                                                "absolute inset-x-3 bottom-3 flex items-center justify-between gap-2 rounded-[20px] border pl-3.5 pr-2 py-2 transition-colors",
+                                                "absolute inset-x-3 bottom-3 flex items-center justify-between gap-2 rounded-[20px] pl-3.5 pr-2 py-2 transition-colors",
                                                 isActive
-                                                    ? "border-cyan-500/50 bg-[#09101d]/90 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
-                                                    : "border-border/60 bg-bg/70 backdrop-blur-md"
+                                                    ? "bg-white/95 dark:bg-[#09101d]/90 border border-cyan-400/40 shadow-sm backdrop-blur-md"
+                                                    : "bg-white/90 dark:bg-[#0d1626]/85 border border-slate-200/60 dark:border-white/5 backdrop-blur-md"
                                             )}
                                         >
                                             <div className="min-w-0">
@@ -358,19 +621,19 @@ export function CategoriesCarousel({
                                                     className={cn(
                                                         "font-display font-bold uppercase tracking-wide text-xs sm:text-[13px] leading-tight line-clamp-2 transition-colors",
                                                         isActive
-                                                            ? "text-cyan-300"
-                                                            : "text-fg group-hover:text-cyan-400"
+                                                            ? "text-cyan-600 dark:text-cyan-300"
+                                                            : "text-slate-800 dark:text-slate-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400"
                                                     )}
                                                 >
                                                     {category.name}
                                                 </h3>
-                                                <p className="mt-0.5 text-[10px] sm:text-[11px] text-muted">
+                                                <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-500 dark:text-muted">
                                                     <span
                                                         className={cn(
                                                             "font-semibold",
                                                             countNum > 0
-                                                                ? "text-cyan-400"
-                                                                : "text-muted"
+                                                                ? "text-cyan-600 dark:text-cyan-400"
+                                                                : "text-slate-400 dark:text-muted"
                                                         )}
                                                     >
                                                         {countNum}
@@ -384,10 +647,10 @@ export function CategoriesCarousel({
                                             {/* Action Arrow Icon */}
                                             <span
                                                 className={cn(
-                                                    "flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-300",
+                                                    "flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300",
                                                     isActive
-                                                        ? "bg-cyan-500 text-white border-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.6)]"
-                                                        : "bg-cyan-500/10 text-cyan-400 border-cyan-500/30"
+                                                        ? "bg-cyan-500 text-white shadow-[0_0_12px_rgba(6,182,212,0.5)]"
+                                                        : "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20"
                                                 )}
                                             >
                                                 <ArrowUpRight className="h-4 w-4" />
@@ -400,7 +663,7 @@ export function CategoriesCarousel({
                     </div>
                 </div>
 
-                {/* SIMPLE BOTTOM NAVIGATION (Clean Left & Right arrow buttons, no dots or heavy background) */}
+                {/* SIMPLE BOTTOM NAVIGATION (Clean Left & Right arrow buttons) */}
                 <div className="mt-6 flex items-center justify-center gap-4 relative z-30">
                     <button
                         type="button"
@@ -409,7 +672,7 @@ export function CategoriesCarousel({
                             prevCategory();
                         }}
                         aria-label="Previous Category"
-                        className="w-11 h-11 rounded-full border border-border/80 hover:border-cyan-500 bg-card/80 hover:bg-cyan-500/10 text-fg hover:text-cyan-400 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
+                        className="w-11 h-11 rounded-full border border-slate-300/80 dark:border-border/80 hover:border-cyan-500 bg-white/90 dark:bg-card/80 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 text-slate-700 dark:text-fg hover:text-cyan-600 dark:hover:text-cyan-400 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-md shadow-slate-200/50 dark:shadow-none"
                     >
                         <ChevronLeft className="w-5 h-5" />
                     </button>
@@ -421,7 +684,7 @@ export function CategoriesCarousel({
                             nextCategory();
                         }}
                         aria-label="Next Category"
-                        className="w-11 h-11 rounded-full border border-border/80 hover:border-cyan-500 bg-card/80 hover:bg-cyan-500/10 text-fg hover:text-cyan-400 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
+                        className="w-11 h-11 rounded-full border border-slate-300/80 dark:border-border/80 hover:border-cyan-500 bg-white/90 dark:bg-card/80 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 text-slate-700 dark:text-fg hover:text-cyan-600 dark:hover:text-cyan-400 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-md shadow-slate-200/50 dark:shadow-none"
                     >
                         <ChevronRight className="w-5 h-5" />
                     </button>

@@ -73,7 +73,7 @@ export default function AppLayout({
                 <CartProvider>
                     <WishlistProvider>
                         <div
-                            className={`min-h-screen flex flex-col bg-bg text-fg transition-colors duration-300 ${className}`}
+                            className={`min-h-screen flex flex-col bg-bg text-fg transition-colors duration-300 w-full max-w-full overflow-x-clip ${className}`}
                         >
                             <div className="sticky top-0 z-40 w-full">
                                 <AnnouncementBar />
