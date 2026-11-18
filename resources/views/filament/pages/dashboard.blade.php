@@ -488,10 +488,19 @@
                     {{-- Product Dropdown --}}
                     <div style="min-width: 180px; max-width: 260px;">
                         <select wire:model.live="profitLossProduct" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none;">
-                            <option value="">All Products ({{ count($plProducts) }})</option>
+                            <option value="">{{ $profitLossScope === 'sold' ? 'All Sold Products' : ($profitLossScope === 'unsold' ? 'All Unsold Products' : 'All Products') }} ({{ count($plProducts) }})</option>
                             @foreach($plProducts as $prodItem)
                                 <option value="{{ $prodItem->id }}">{{ $prodItem->name }} ({{ $prodItem->product_code ?: 'No Code' }})</option>
                             @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Product Sales Scope Dropdown --}}
+                    <div style="min-width: 175px;">
+                        <select wire:model.live="profitLossScope" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none; font-weight: 500;">
+                            <option value="all">All Products (Store-Wide)</option>
+                            <option value="sold">Sold Products Only</option>
+                            <option value="unsold">Unsold Products Only</option>
                         </select>
                     </div>
 
@@ -517,7 +526,7 @@
                     @endif
 
                     {{-- Reset Filter Button --}}
-                    @if($profitLossCategory || $profitLossSubCategory || $profitLossProduct || $profitLossPeriod !== 'all')
+                    @if($profitLossCategory || $profitLossSubCategory || $profitLossProduct || $profitLossPeriod !== 'all' || $profitLossScope !== 'all')
                         <button type="button" wire:click="resetProfitLossFilters" class="cl-btn" style="font-size: 11.5px; padding: 6px 10px; color: var(--cl-muted);" title="Reset back to all products and all time">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 13px; height: 13px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             Reset Filter
@@ -528,7 +537,7 @@
                 {{-- Active Filter Scope Pill --}}
                 <div style="font-size: 12px; color: var(--cl-muted); display: flex; align-items: center; gap: 6px;">
                     <span style="opacity: 0.8;">Active Scope:</span>
-                    <span class="cl-code" style="font-weight: 600; color: var(--cl-brand);">
+                    <span class="cl-code" style="font-weight: 600; color: {{ $profitLossScope === 'sold' ? '#10b981' : ($profitLossScope === 'unsold' ? '#f59e0b' : 'var(--cl-brand)') }}; border-color: {{ $profitLossScope === 'sold' ? 'rgba(16, 185, 129, 0.4)' : 'var(--cl-border)' }};">
                         {{ $profitLossAnalysis['filter_meta']['description'] }}
                     </span>
                 </div>
@@ -618,6 +627,21 @@
                         <span>Products Profit / Loss Breakdown</span>
                         <span class="cl-pill t-slate" style="font-size: 11px;">{{ count($profitLossAnalysis['products']) }} Items</span>
                     </div>
+
+                    {{-- Quick Scope Tabs / Toggle --}}
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <button type="button" wire:click="$set('profitLossScope', 'all')"
+                            class="cl-pill"
+                            style="font-size: 11px; padding: 4px 10px; cursor: pointer; border: 1px solid {{ $profitLossScope === 'all' ? 'var(--cl-brand)' : 'var(--cl-border)' }}; background: {{ $profitLossScope === 'all' ? 'var(--cl-brand)' : 'transparent' }}; color: {{ $profitLossScope === 'all' ? '#fff' : 'var(--cl-muted)' }}; font-weight: 600; border-radius: 6px; transition: all 0.15s ease;">
+                            All Products
+                        </button>
+                        <button type="button" wire:click="$set('profitLossScope', 'sold')"
+                            class="cl-pill"
+                            style="font-size: 11px; padding: 4px 10px; cursor: pointer; border: 1px solid {{ $profitLossScope === 'sold' ? '#10b981' : 'var(--cl-border)' }}; background: {{ $profitLossScope === 'sold' ? '#10b981' : 'transparent' }}; color: {{ $profitLossScope === 'sold' ? '#fff' : 'var(--cl-muted)' }}; font-weight: 600; border-radius: 6px; transition: all 0.15s ease;">
+                            Sold Products Only
+                        </button>
+                    </div>
+
                     <div style="font-size: 12px; color: var(--cl-muted);">
                         Showing products under <b>{{ $profitLossAnalysis['filter_meta']['description'] }}</b>
                     </div>

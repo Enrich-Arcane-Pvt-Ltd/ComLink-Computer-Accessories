@@ -22,6 +22,7 @@ class ProfitLossAnalysisService
      * @param string $period 'all', 'daily', 'weekly', 'monthly', 'annually', 'custom'
      * @param string|null $startDate 'YYYY-MM-DD'
      * @param string|null $endDate 'YYYY-MM-DD'
+     * @param string $scope 'all', 'sold', 'unsold'
      * @return array
      */
     public function calculate(
@@ -30,7 +31,8 @@ class ProfitLossAnalysisService
         ?int $productId = null,
         string $period = 'all',
         ?string $startDate = null,
-        ?string $endDate = null
+        ?string $endDate = null,
+        string $scope = 'all'
     ): array
     {
         // 1. Resolve Time Period Dates
@@ -89,6 +91,11 @@ class ProfitLossAnalysisService
         }
         if ($filteredProduct) {
             $filterLabels[] = 'Product: ' . $filteredProduct->name;
+        }
+        if ($scope === 'sold') {
+            $filterLabels[] = 'Sold Products Only';
+        } elseif ($scope === 'unsold') {
+            $filterLabels[] = 'Unsold Products Only';
         }
         if ($period !== 'all') {
             $filterLabels[] = 'Period: ' . $periodLabel;
@@ -199,6 +206,15 @@ class ProfitLossAnalysisService
             });
 
             $soldQty = (int) $productOrderItems->sum('quantity');
+
+            // Apply Scope Filtering (sold vs unsold vs all)
+            if ($scope === 'sold' && $soldQty <= 0) {
+                continue;
+            }
+            if ($scope === 'unsold' && $soldQty > 0) {
+                continue;
+            }
+
             $income = (float) $productOrderItems->sum('total_price');
 
             $availableQty = max(0, $fullCount - $soldQty);
@@ -293,6 +309,7 @@ class ProfitLossAnalysisService
 
         return [
             'filter_meta' => [
+                'scope' => $scope,
                 'category_id' => $categoryId,
                 'subcategory_id' => $subCategoryId,
                 'product_id' => $productId,

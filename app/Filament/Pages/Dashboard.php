@@ -30,6 +30,8 @@ class Dashboard extends BaseDashboard
 
     public ?int $profitLossProduct = null;
 
+    public string $profitLossScope = 'all';
+
     public string $profitLossPeriod = 'all';
 
     public ?string $profitLossStartDate = null;
@@ -46,6 +48,11 @@ class Dashboard extends BaseDashboard
     }
 
     public function updatedProfitLossSubCategory(): void
+    {
+        $this->profitLossProduct = null;
+    }
+
+    public function updatedProfitLossScope(): void
     {
         $this->profitLossProduct = null;
     }
@@ -70,6 +77,7 @@ class Dashboard extends BaseDashboard
         $this->profitLossCategory = null;
         $this->profitLossSubCategory = null;
         $this->profitLossProduct = null;
+        $this->profitLossScope = 'all';
         $this->profitLossPeriod = 'all';
         $this->profitLossStartDate = null;
         $this->profitLossEndDate = null;
@@ -366,14 +374,15 @@ class Dashboard extends BaseDashboard
             return $product->computed_current_stock;
         })->take(6)->values();
 
-        // Profit & Loss Analysis Section (Interactive with Category, Subcategory, Product, and Time Period)
+        // Profit & Loss Analysis Section (Interactive with Category, Subcategory, Product, Scope, and Time Period)
         $profitLossAnalysis = app(\App\Services\ProfitLossAnalysisService::class)->calculate(
             $this->profitLossCategory ? (int) $this->profitLossCategory : null,
             $this->profitLossSubCategory ? (int) $this->profitLossSubCategory : null,
             $this->profitLossProduct ? (int) $this->profitLossProduct : null,
             $this->profitLossPeriod ?? 'all',
             $this->profitLossStartDate,
-            $this->profitLossEndDate
+            $this->profitLossEndDate,
+            $this->profitLossScope ?? 'all'
         );
 
         $plCategories = Category::whereNull('parent_id')->orderBy('name')->get(['id', 'name']);
@@ -392,12 +401,44 @@ class Dashboard extends BaseDashboard
             $allowedCatIds = array_merge([$this->profitLossCategory], $childCatIds);
             $plProductsQuery->whereHas('categories', fn ($q) => $q->whereIn('categories.id', $allowedCatIds));
         }
+
+        if ($this->profitLossScope === 'sold') {
+            $soldProductIds = OrderItem::whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+                ->pluck('product_id')
+                ->filter()
+                ->unique();
+            $soldProductNames = OrderItem::whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+                ->whereNull('product_id')
+                ->pluck('product_name')
+                ->filter()
+                ->unique();
+
+            $plProductsQuery->where(function ($q) use ($soldProductIds, $soldProductNames) {
+                $q->whereIn('id', $soldProductIds)
+                  ->orWhereIn('name', $soldProductNames);
+            });
+        } elseif ($this->profitLossScope === 'unsold') {
+            $soldProductIds = OrderItem::whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+                ->pluck('product_id')
+                ->filter()
+                ->unique();
+            $soldProductNames = OrderItem::whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
+                ->whereNull('product_id')
+                ->pluck('product_name')
+                ->filter()
+                ->unique();
+
+            $plProductsQuery->whereNotIn('id', $soldProductIds)
+                ->whereNotIn('name', $soldProductNames);
+        }
+
         $plProducts = $plProductsQuery->get(['id', 'name', 'product_code']);
 
         $reportQueryParams = array_filter([
             'category_id' => $this->profitLossCategory,
             'subcategory_id' => $this->profitLossSubCategory,
             'product_id' => $this->profitLossProduct,
+            'scope' => $this->profitLossScope !== 'all' ? $this->profitLossScope : null,
             'period' => $this->profitLossPeriod !== 'all' ? $this->profitLossPeriod : null,
             'start_date' => $this->profitLossStartDate,
             'end_date' => $this->profitLossEndDate,
@@ -466,6 +507,7 @@ class Dashboard extends BaseDashboard
             'plCategories' => $plCategories,
             'plSubCategories' => $plSubCategories,
             'plProducts' => $plProducts,
+            'profitLossScope' => $this->profitLossScope,
             'profitLossPeriod' => $this->profitLossPeriod,
             'profitLossStartDate' => $this->profitLossStartDate,
             'profitLossEndDate' => $this->profitLossEndDate,

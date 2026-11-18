@@ -32,8 +32,9 @@ class ProfitLossReportController extends Controller
         $period = (string) $request->query('period', 'all');
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
+        $scope = (string) $request->query('scope', 'all');
 
-        $reportData = $this->service->calculate($categoryId, $subCategoryId, $productId, $period, $startDate, $endDate);
+        $reportData = $this->service->calculate($categoryId, $subCategoryId, $productId, $period, $startDate, $endDate, $scope);
 
         $pdf = Pdf::loadView('reports.profit-loss-pdf', [
             'data' => $reportData,
@@ -46,7 +47,7 @@ class ProfitLossReportController extends Controller
 
         $safeScope = $reportData['filter_meta']['category_name']
             ? str($reportData['filter_meta']['category_name'])->slug('-')
-            : ($reportData['filter_meta']['product_name'] ? str($reportData['filter_meta']['product_name'])->slug('-') : 'all-products');
+            : ($reportData['filter_meta']['product_name'] ? str($reportData['filter_meta']['product_name'])->slug('-') : ($scope === 'sold' ? 'sold-products' : 'all-products'));
 
         $filename = 'comlink-profit-loss-' . $safeScope . '-' . now()->format('Ymd-His') . '.pdf';
 
@@ -64,8 +65,9 @@ class ProfitLossReportController extends Controller
         $period = (string) $request->query('period', 'all');
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
+        $scope = (string) $request->query('scope', 'all');
 
-        $reportData = $this->service->calculate($categoryId, $subCategoryId, $productId, $period, $startDate, $endDate);
+        $reportData = $this->service->calculate($categoryId, $subCategoryId, $productId, $period, $startDate, $endDate, $scope);
 
         return view('reports.profit-loss-pdf', [
             'data' => $reportData,
