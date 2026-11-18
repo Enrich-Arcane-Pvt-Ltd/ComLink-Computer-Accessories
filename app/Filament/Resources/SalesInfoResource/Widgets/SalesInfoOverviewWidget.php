@@ -133,7 +133,9 @@ class SalesInfoOverviewWidget extends Widget
 
         $orders = $ordersQuery->get();
 
-        $totalRevenue = (float) $orders->sum('total_amount');
+        $grossRevenue = (float) $orders->sum('total_amount');
+        $refundedTotal = (float) $orders->sum('refunded_amount');
+        $totalRevenue = max(0.0, $grossRevenue - $refundedTotal);
         $totalOrders = (int) $orders->count();
         $avgOrderValue = $totalOrders > 0 ? ($totalRevenue / $totalOrders) : 0;
 

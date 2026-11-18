@@ -44,6 +44,11 @@ class Grn extends Model
         return $this->hasMany(GrnItem::class);
     }
 
+    public function supplierReturns(): HasMany
+    {
+        return $this->hasMany(SupplierReturn::class);
+    }
+
     public function getPoReferenceAttribute(): string
     {
         return $this->purchaseOrder?->po_number

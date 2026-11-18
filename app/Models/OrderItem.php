@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OrderItem extends Model
 {
@@ -47,5 +48,22 @@ class OrderItem extends Model
     public function variant(): BelongsTo
     {
         return $this->belongsTo(ProductVariant::class, 'variant_id');
+    }
+
+    public function customerReturnItems(): HasMany
+    {
+        return $this->hasMany(CustomerReturnItem::class);
+    }
+
+    public function getReturnedQuantityAttribute(): int
+    {
+        return (int) $this->customerReturnItems()
+            ->whereHas('customerReturn', fn ($q) => $q->whereIn('status', ['approved', 'pending']))
+            ->sum('quantity');
+    }
+
+    public function getReturnableQuantityAttribute(): int
+    {
+        return max(0, (int) $this->quantity - $this->returned_quantity);
     }
 }

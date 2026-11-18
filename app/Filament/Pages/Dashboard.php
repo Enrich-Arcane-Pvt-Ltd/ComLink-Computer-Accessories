@@ -134,15 +134,23 @@ class Dashboard extends BaseDashboard
 
             $monthlyLabels[] = $label;
 
-            // Monthly stock expense from GRNs
-            $expense = (float) GrnItem::whereBetween('created_at', [$start, $end])
+            // Monthly stock expense from GRNs minus supplier return credits
+            $grossExpense = (float) GrnItem::whereBetween('created_at', [$start, $end])
                 ->sum(DB::raw('product_quantity * price_per_unit'));
+            $supplierCredit = (float) \App\Models\SupplierReturn::where('status', 'credited')
+                ->whereBetween('resolved_at', [$start, $end])
+                ->sum('credit_amount');
+            $expense = max(0.0, $grossExpense - $supplierCredit);
             $monthlyExpenses[] = round($expense, 2);
 
-            // Monthly sales income from paid orders
-            $income = (float) Order::where('payment_status', 'Paid')
+            // Monthly sales income from paid orders minus approved refunds
+            $grossIncome = (float) Order::where('payment_status', 'Paid')
                 ->whereBetween('created_at', [$start, $end])
                 ->sum('total_amount');
+            $refunds = (float) \App\Models\CustomerReturn::where('status', 'approved')
+                ->whereBetween(DB::raw('COALESCE(refunded_at, created_at)'), [$start, $end])
+                ->sum('refund_amount');
+            $income = max(0.0, $grossIncome - $refunds);
             $monthlyIncomes[] = round($income, 2);
             $monthlySales[] = round($income, 2);
         }

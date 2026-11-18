@@ -31,6 +31,8 @@ class Order extends Model
         'total_amount',
         'payment_method',
         'payment_status',
+        'refund_status',
+        'refunded_amount',
         'stripe_payment_intent_id',
         'courier_name',
         'tracking_number',
@@ -42,6 +44,7 @@ class Order extends Model
         'shipping_fee' => 'decimal:2',
         'discount_amount' => 'decimal:2',
         'total_amount' => 'decimal:2',
+        'refunded_amount' => 'decimal:2',
     ];
 
     public function user(): BelongsTo
@@ -52,6 +55,16 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function customerReturns(): HasMany
+    {
+        return $this->hasMany(CustomerReturn::class);
+    }
+
+    public function getNetAmountAttribute(): float
+    {
+        return max(0.0, (float) $this->total_amount - (float) ($this->refunded_amount ?? 0));
     }
 
     /**

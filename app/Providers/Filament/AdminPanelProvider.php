@@ -83,15 +83,17 @@ class AdminPanelProvider extends PanelProvider
                 \App\Filament\Pages\Dashboard::class,
             ])
             ->navigationGroups([
-                'Sales Section',
-                'Catalog Management',
-                'Order Management',
+                'Product Catalog',
+                'Supplier Management',
                 'Inventory Management',
                 'Stock Management',
-                'Supplier Management',
+                'Order Management',
+                'Sales Section',
+                'Refunds & Returns',
                 'User Management',
                 'Marketing',
-                'System Management',
+                'Our Policies',
+                'FAQ Management',
             ])
             ->databaseNotifications()
 

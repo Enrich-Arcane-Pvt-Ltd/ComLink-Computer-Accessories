@@ -73,6 +73,13 @@ class StockCount extends Page implements HasTable
                     ->label('Sold Count')
                     ->view('filament.tables.columns.stock-count-sold')
                     ->alignCenter(),
+
+                Tables\Columns\TextColumn::make('damaged_count')
+                    ->label('Damaged Stock')
+                    ->alignCenter()
+                    ->badge()
+                    ->color(fn ($state) => (int) $state > 0 ? 'danger' : 'gray')
+                    ->formatStateUsing(fn ($record) => number_format((int) $record->damaged_count) . ' units'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('condition')

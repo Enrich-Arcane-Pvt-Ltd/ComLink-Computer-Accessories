@@ -29,6 +29,9 @@ class OrderTable
                 Tables\Columns\TextColumn::make('total_amount')
                     ->label('Total Amount')
                     ->formatStateUsing(fn ($state) => 'Rs. '.number_format((float) $state, 2))
+                    ->description(fn ($record) => (float) ($record->refunded_amount ?? 0) > 0
+                        ? 'Refunded: -Rs. '.number_format((float) $record->refunded_amount, 2).' ('.ucfirst($record->refund_status).')'
+                        : null)
                     ->sortable()
                     ->weight('bold')
                     ->color('info'),
@@ -62,6 +65,12 @@ class OrderTable
                     ]),
             ])
             ->actions([
+                Tables\Actions\Action::make('refund')
+                    ->label('Refund')
+                    ->icon('heroicon-o-receipt-refund')
+                    ->color('warning')
+                    ->visible(fn ($record) => $record->payment_status === 'Paid' && $record->refund_status !== 'full')
+                    ->url(fn ($record) => \App\Filament\Resources\CustomerReturnResource\CustomerReturnResource::getUrl('create') . '?order_id=' . $record->id),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

@@ -559,7 +559,9 @@
                             <i></i><b>{{ number_format($profitLossAnalysis['summary']['products_count']) }}</b> Products Under Scope
                         </span>
                         <span style="font-size: 11px; color: var(--cl-muted);">
-                            @if(!empty($profitLossAnalysis['summary']['is_period_filtered']))
+                            @if(($profitLossAnalysis['summary']['supplier_credit_amount'] ?? 0) > 0)
+                                Credits: -Rs. {{ number_format($profitLossAnalysis['summary']['supplier_credit_amount'], 0) }}
+                            @elseif(!empty($profitLossAnalysis['summary']['is_period_filtered']))
                                 Period Procurement
                             @else
                                 Procurement Cost
@@ -577,13 +579,18 @@
                     <div class="cl-kpi-value" style="color: var(--t);">
                         {{ number_format($profitLossAnalysis['summary']['total_stock_count']) }} <small>units</small>
                     </div>
-                    <div class="cl-kpi-note" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <div class="cl-kpi-note" style="display: flex; gap: 6px; flex-wrap: wrap;">
                         <span class="cl-pill t-green" style="font-size: 11px; padding: 2px 7px;">
                             <i></i><b>{{ number_format($profitLossAnalysis['summary']['available_stock_count']) }}</b> Available
                         </span>
                         <span class="cl-pill t-blue" style="font-size: 11px; padding: 2px 7px;">
                             <i></i><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> Sold
                         </span>
+                        @if(($profitLossAnalysis['summary']['damaged_stock_count'] ?? 0) > 0)
+                            <span class="cl-pill t-red" style="font-size: 11px; padding: 2px 7px;">
+                                <i></i><b>{{ number_format($profitLossAnalysis['summary']['damaged_stock_count']) }}</b> Damaged
+                            </span>
+                        @endif
                     </div>
                 </div>
 
@@ -596,9 +603,13 @@
                     <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['gained_income'], 2) }}">
                         <small>Rs.</small>{{ number_format($profitLossAnalysis['summary']['gained_income'], 2) }}
                     </div>
-                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
                         <span>COGS: <b>Rs. {{ number_format($profitLossAnalysis['summary']['cogs'], 2) }}</b></span>
-                        <span class="t-cyan"><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> units sold</span>
+                        @if(($profitLossAnalysis['summary']['refunded_amount'] ?? 0) > 0)
+                            <span style="color: #f87171; font-size: 11px;">Refunds: -Rs. {{ number_format($profitLossAnalysis['summary']['refunded_amount'], 0) }}</span>
+                        @else
+                            <span class="t-cyan"><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> units sold</span>
+                        @endif
                     </div>
                 </div>
 
@@ -611,11 +622,15 @@
                     <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['net_profit'], 2) }}">
                         {{ $profitLossAnalysis['summary']['is_profitable'] ? '+' : '' }}<small style="color: inherit;">Rs.</small>{{ number_format($profitLossAnalysis['summary']['net_profit'], 2) }}
                     </div>
-                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
                         <span class="cl-pill {{ $profitLossAnalysis['summary']['is_profitable'] ? 't-green' : 't-red' }}">
                             <i></i>{{ $profitLossAnalysis['summary']['is_profitable'] ? 'Profitable' : 'Loss' }}
                         </span>
-                        <span><b>{{ $profitLossAnalysis['summary']['profit_margin'] }}%</b> margin</span>
+                        @if(($profitLossAnalysis['summary']['damaged_loss'] ?? 0) > 0)
+                            <span style="color: #f87171; font-size: 11px;">Dmg Loss: Rs. {{ number_format($profitLossAnalysis['summary']['damaged_loss'], 0) }}</span>
+                        @else
+                            <span><b>{{ $profitLossAnalysis['summary']['profit_margin'] }}%</b> margin</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -698,13 +713,18 @@
                                     <td class="cl-c">
                                         <div style="display: inline-flex; flex-direction: column; gap: 2px; align-items: center;">
                                             <div style="font-size: 11px; font-weight: 600;">{{ $item['total_stock'] }} Total</div>
-                                            <div style="display: flex; gap: 3px;">
+                                            <div style="display: flex; gap: 3px; flex-wrap: wrap; justify-content: center;">
                                                 <span class="cl-pill {{ $item['available_stock'] <= 5 ? 't-red' : 't-green' }}" style="font-size: 9.5px; padding: 1px 5px;">
                                                     {{ $item['available_stock'] }} Avail
                                                 </span>
                                                 <span class="cl-pill t-blue" style="font-size: 9.5px; padding: 1px 5px;">
                                                     {{ $item['sold_stock'] }} Sold
                                                 </span>
+                                                @if(($item['damaged_stock'] ?? 0) > 0)
+                                                    <span class="cl-pill t-red" style="font-size: 9.5px; padding: 1px 5px;" title="Damaged in store">
+                                                        {{ $item['damaged_stock'] }} Dmg
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
