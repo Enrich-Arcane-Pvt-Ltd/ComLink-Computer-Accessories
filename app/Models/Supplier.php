@@ -39,6 +39,11 @@ class Supplier extends Model
         return $this->hasMany(Grn::class);
     }
 
+    public function supplierReturns(): HasMany
+    {
+        return $this->hasMany(SupplierReturn::class);
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

@@ -488,10 +488,19 @@
                     {{-- Product Dropdown --}}
                     <div style="min-width: 180px; max-width: 260px;">
                         <select wire:model.live="profitLossProduct" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none;">
-                            <option value="">All Products ({{ count($plProducts) }})</option>
+                            <option value="">{{ $profitLossScope === 'sold' ? 'All Sold Products' : ($profitLossScope === 'unsold' ? 'All Unsold Products' : 'All Products') }} ({{ count($plProducts) }})</option>
                             @foreach($plProducts as $prodItem)
                                 <option value="{{ $prodItem->id }}">{{ $prodItem->name }} ({{ $prodItem->product_code ?: 'No Code' }})</option>
                             @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Product Sales Scope Dropdown --}}
+                    <div style="min-width: 175px;">
+                        <select wire:model.live="profitLossScope" style="width: 100%; font-size: 12.5px; border-radius: 8px; border: 1px solid var(--cl-border); background: var(--cl-card); color: var(--cl-text); padding: 6px 10px; outline: none; font-weight: 500;">
+                            <option value="all">All Products (Store-Wide)</option>
+                            <option value="sold">Sold Products Only</option>
+                            <option value="unsold">Unsold Products Only</option>
                         </select>
                     </div>
 
@@ -517,7 +526,7 @@
                     @endif
 
                     {{-- Reset Filter Button --}}
-                    @if($profitLossCategory || $profitLossSubCategory || $profitLossProduct || $profitLossPeriod !== 'all')
+                    @if($profitLossCategory || $profitLossSubCategory || $profitLossProduct || $profitLossPeriod !== 'all' || $profitLossScope !== 'all')
                         <button type="button" wire:click="resetProfitLossFilters" class="cl-btn" style="font-size: 11.5px; padding: 6px 10px; color: var(--cl-muted);" title="Reset back to all products and all time">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 13px; height: 13px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             Reset Filter
@@ -528,7 +537,7 @@
                 {{-- Active Filter Scope Pill --}}
                 <div style="font-size: 12px; color: var(--cl-muted); display: flex; align-items: center; gap: 6px;">
                     <span style="opacity: 0.8;">Active Scope:</span>
-                    <span class="cl-code" style="font-weight: 600; color: var(--cl-brand);">
+                    <span class="cl-code" style="font-weight: 600; color: {{ $profitLossScope === 'sold' ? '#10b981' : ($profitLossScope === 'unsold' ? '#f59e0b' : 'var(--cl-brand)') }}; border-color: {{ $profitLossScope === 'sold' ? 'rgba(16, 185, 129, 0.4)' : 'var(--cl-border)' }};">
                         {{ $profitLossAnalysis['filter_meta']['description'] }}
                     </span>
                 </div>
@@ -550,7 +559,9 @@
                             <i></i><b>{{ number_format($profitLossAnalysis['summary']['products_count']) }}</b> Products Under Scope
                         </span>
                         <span style="font-size: 11px; color: var(--cl-muted);">
-                            @if(!empty($profitLossAnalysis['summary']['is_period_filtered']))
+                            @if(($profitLossAnalysis['summary']['supplier_credit_amount'] ?? 0) > 0)
+                                Credits: -Rs. {{ number_format($profitLossAnalysis['summary']['supplier_credit_amount'], 0) }}
+                            @elseif(!empty($profitLossAnalysis['summary']['is_period_filtered']))
                                 Period Procurement
                             @else
                                 Procurement Cost
@@ -568,13 +579,18 @@
                     <div class="cl-kpi-value" style="color: var(--t);">
                         {{ number_format($profitLossAnalysis['summary']['total_stock_count']) }} <small>units</small>
                     </div>
-                    <div class="cl-kpi-note" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <div class="cl-kpi-note" style="display: flex; gap: 6px; flex-wrap: wrap;">
                         <span class="cl-pill t-green" style="font-size: 11px; padding: 2px 7px;">
                             <i></i><b>{{ number_format($profitLossAnalysis['summary']['available_stock_count']) }}</b> Available
                         </span>
                         <span class="cl-pill t-blue" style="font-size: 11px; padding: 2px 7px;">
                             <i></i><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> Sold
                         </span>
+                        @if(($profitLossAnalysis['summary']['damaged_stock_count'] ?? 0) > 0)
+                            <span class="cl-pill t-red" style="font-size: 11px; padding: 2px 7px;">
+                                <i></i><b>{{ number_format($profitLossAnalysis['summary']['damaged_stock_count']) }}</b> Damaged
+                            </span>
+                        @endif
                     </div>
                 </div>
 
@@ -587,9 +603,13 @@
                     <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['gained_income'], 2) }}">
                         <small>Rs.</small>{{ number_format($profitLossAnalysis['summary']['gained_income'], 2) }}
                     </div>
-                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
                         <span>COGS: <b>Rs. {{ number_format($profitLossAnalysis['summary']['cogs'], 2) }}</b></span>
-                        <span class="t-cyan"><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> units sold</span>
+                        @if(($profitLossAnalysis['summary']['refunded_amount'] ?? 0) > 0)
+                            <span style="color: #f87171; font-size: 11px;">Refunds: -Rs. {{ number_format($profitLossAnalysis['summary']['refunded_amount'], 0) }}</span>
+                        @else
+                            <span class="t-cyan"><b>{{ number_format($profitLossAnalysis['summary']['sold_stock_count']) }}</b> units sold</span>
+                        @endif
                     </div>
                 </div>
 
@@ -602,11 +622,15 @@
                     <div class="cl-kpi-value" style="color: var(--t);" title="Rs. {{ number_format($profitLossAnalysis['summary']['net_profit'], 2) }}">
                         {{ $profitLossAnalysis['summary']['is_profitable'] ? '+' : '' }}<small style="color: inherit;">Rs.</small>{{ number_format($profitLossAnalysis['summary']['net_profit'], 2) }}
                     </div>
-                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="cl-kpi-note" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
                         <span class="cl-pill {{ $profitLossAnalysis['summary']['is_profitable'] ? 't-green' : 't-red' }}">
                             <i></i>{{ $profitLossAnalysis['summary']['is_profitable'] ? 'Profitable' : 'Loss' }}
                         </span>
-                        <span><b>{{ $profitLossAnalysis['summary']['profit_margin'] }}%</b> margin</span>
+                        @if(($profitLossAnalysis['summary']['damaged_loss'] ?? 0) > 0)
+                            <span style="color: #f87171; font-size: 11px;">Dmg Loss: Rs. {{ number_format($profitLossAnalysis['summary']['damaged_loss'], 0) }}</span>
+                        @else
+                            <span><b>{{ $profitLossAnalysis['summary']['profit_margin'] }}%</b> margin</span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -618,6 +642,21 @@
                         <span>Products Profit / Loss Breakdown</span>
                         <span class="cl-pill t-slate" style="font-size: 11px;">{{ count($profitLossAnalysis['products']) }} Items</span>
                     </div>
+
+                    {{-- Quick Scope Tabs / Toggle --}}
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <button type="button" wire:click="$set('profitLossScope', 'all')"
+                            class="cl-pill"
+                            style="font-size: 11px; padding: 4px 10px; cursor: pointer; border: 1px solid {{ $profitLossScope === 'all' ? 'var(--cl-brand)' : 'var(--cl-border)' }}; background: {{ $profitLossScope === 'all' ? 'var(--cl-brand)' : 'transparent' }}; color: {{ $profitLossScope === 'all' ? '#fff' : 'var(--cl-muted)' }}; font-weight: 600; border-radius: 6px; transition: all 0.15s ease;">
+                            All Products
+                        </button>
+                        <button type="button" wire:click="$set('profitLossScope', 'sold')"
+                            class="cl-pill"
+                            style="font-size: 11px; padding: 4px 10px; cursor: pointer; border: 1px solid {{ $profitLossScope === 'sold' ? '#10b981' : 'var(--cl-border)' }}; background: {{ $profitLossScope === 'sold' ? '#10b981' : 'transparent' }}; color: {{ $profitLossScope === 'sold' ? '#fff' : 'var(--cl-muted)' }}; font-weight: 600; border-radius: 6px; transition: all 0.15s ease;">
+                            Sold Products Only
+                        </button>
+                    </div>
+
                     <div style="font-size: 12px; color: var(--cl-muted);">
                         Showing products under <b>{{ $profitLossAnalysis['filter_meta']['description'] }}</b>
                     </div>
@@ -674,13 +713,18 @@
                                     <td class="cl-c">
                                         <div style="display: inline-flex; flex-direction: column; gap: 2px; align-items: center;">
                                             <div style="font-size: 11px; font-weight: 600;">{{ $item['total_stock'] }} Total</div>
-                                            <div style="display: flex; gap: 3px;">
+                                            <div style="display: flex; gap: 3px; flex-wrap: wrap; justify-content: center;">
                                                 <span class="cl-pill {{ $item['available_stock'] <= 5 ? 't-red' : 't-green' }}" style="font-size: 9.5px; padding: 1px 5px;">
                                                     {{ $item['available_stock'] }} Avail
                                                 </span>
                                                 <span class="cl-pill t-blue" style="font-size: 9.5px; padding: 1px 5px;">
                                                     {{ $item['sold_stock'] }} Sold
                                                 </span>
+                                                @if(($item['damaged_stock'] ?? 0) > 0)
+                                                    <span class="cl-pill t-red" style="font-size: 9.5px; padding: 1px 5px;" title="Damaged in store">
+                                                        {{ $item['damaged_stock'] }} Dmg
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>

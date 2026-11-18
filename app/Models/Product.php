@@ -133,6 +133,16 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function customerReturnItems(): HasMany
+    {
+        return $this->hasMany(CustomerReturnItem::class);
+    }
+
+    public function supplierReturnItems(): HasMany
+    {
+        return $this->hasMany(SupplierReturnItem::class);
+    }
+
     public function hasColorVariants(): bool
     {
         if ($this->type === 'variable') {
@@ -262,11 +272,90 @@ class Product extends Model
     }
 
     /**
-     * Current physical remaining inventory stock (Full Count - Sold Count).
+     * Approved customer returned quantity (total).
+     */
+    public function getReturnedCountAttribute(): int
+    {
+        return (int) CustomerReturnItem::where(function ($q) {
+            $q->where('product_id', $this->id);
+            if ($this->product_code) {
+                $q->orWhere('product_name', $this->name);
+            }
+        })
+            ->whereHas('customerReturn', fn ($q) => $q->where('status', 'approved'))
+            ->sum('quantity');
+    }
+
+    /**
+     * Net sold quantity (Gross Paid Sold - Approved Customer Returns).
+     */
+    public function getNetSoldCountAttribute(): int
+    {
+        return max(0, $this->sold_count - $this->returned_count);
+    }
+
+    /**
+     * Good-condition returns restocked back to sellable inventory.
+     */
+    public function getGoodReturnedCountAttribute(): int
+    {
+        return (int) CustomerReturnItem::where(function ($q) {
+            $q->where('product_id', $this->id);
+            if ($this->product_code) {
+                $q->orWhere('product_name', $this->name);
+            }
+        })
+            ->where('condition', 'good')
+            ->whereHas('customerReturn', fn ($q) => $q->where('status', 'approved'))
+            ->sum('quantity');
+    }
+
+    /**
+     * Replacements received from supplier for damaged items (restored to sellable inventory).
+     */
+    public function getSupplierReplacedCountAttribute(): int
+    {
+        return (int) SupplierReturnItem::where('product_id', $this->id)
+            ->whereHas('supplierReturn', fn ($q) => $q->where('status', 'replaced'))
+            ->sum('quantity');
+    }
+
+    /**
+     * Currently damaged units sitting in store (not yet dispatched/resolved with supplier or scrapped).
+     */
+    public function getDamagedCountAttribute(): int
+    {
+        $totalDamaged = (int) CustomerReturnItem::where(function ($q) {
+            $q->where('product_id', $this->id);
+            if ($this->product_code) {
+                $q->orWhere('product_name', $this->name);
+            }
+        })
+            ->where('condition', 'damaged')
+            ->where('resolution_status', '!=', 'scrapped')
+            ->whereHas('customerReturn', fn ($q) => $q->where('status', 'approved'))
+            ->sum('quantity');
+
+        $sentToSupplier = (int) SupplierReturnItem::where('product_id', $this->id)
+            ->whereHas('supplierReturn', fn ($q) => $q->where('status', '!=', 'rejected'))
+            ->sum('quantity');
+
+        return max(0, $totalDamaged - $sentToSupplier);
+    }
+
+    /**
+     * Current physical remaining sellable inventory stock.
+     * Damaged returns do NOT restore sellable stock; only good returns and supplier replacements do.
      */
     public function getCurrentInventoryStockAttribute(): int
     {
-        return max(0, $this->inventory_full_count - $this->sold_count);
+        return max(
+            0,
+            $this->inventory_full_count
+            - $this->sold_count
+            + $this->good_returned_count
+            + $this->supplier_replaced_count
+        );
     }
 
     public function getAvailableStockAttribute(): int
@@ -275,15 +364,14 @@ class Product extends Model
     }
 
     /**
-     * Sync database quantity columns with true physical inventory minus sold count.
+     * Sync database quantity columns with true sellable physical inventory.
      */
     public static function syncAllProductAvailableQuantities(): void
     {
         try {
             foreach (static::all() as $product) {
                 $stock = $product->inventory_full_count;
-                $sold = $product->sold_count;
-                $avail = max(0, $stock - $sold);
+                $avail = $product->current_inventory_stock;
 
                 $product->updateQuietly([
                     'inventory_stock' => $stock,
@@ -297,7 +385,15 @@ class Product extends Model
                         $vSold = (int) OrderItem::where('variant_id', $variant->id)
                             ->whereHas('order', fn ($q) => $q->where('payment_status', 'Paid'))
                             ->sum('quantity');
-                        $vAvail = max(0, $vStock - $vSold);
+                        $vGoodRet = (int) CustomerReturnItem::where('variant_id', $variant->id)
+                            ->where('condition', 'good')
+                            ->whereHas('customerReturn', fn ($q) => $q->where('status', 'approved'))
+                            ->sum('quantity');
+                        $vReplaced = (int) SupplierReturnItem::where('variant_id', $variant->id)
+                            ->whereHas('supplierReturn', fn ($q) => $q->where('status', 'replaced'))
+                            ->sum('quantity');
+
+                        $vAvail = max(0, $vStock - $vSold + $vGoodRet + $vReplaced);
 
                         $variant->updateQuietly([
                             'stock' => $vAvail,

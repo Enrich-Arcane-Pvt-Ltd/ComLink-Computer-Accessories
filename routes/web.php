@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout/process-order', [CheckoutController::class, 'processOrder'])->name('checkout.process-order');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}/receipt', [OrderController::class, 'downloadReceipt'])->name('orders.receipt');
+    Route::post('/orders/{order}/refund-request', [OrderController::class, 'submitRefundRequest'])->name('orders.refund-request');
 });
 
 // Blogs

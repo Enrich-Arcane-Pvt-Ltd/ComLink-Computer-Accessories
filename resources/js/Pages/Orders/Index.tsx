@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
+import axios from "axios";
 import AppLayout from "@/Layouts/AppLayout";
 import { formatPrice } from "@/utils/currency";
 import {
@@ -17,6 +18,13 @@ import {
     ArrowRight,
     Tag,
     Download,
+    RotateCcw,
+    AlertTriangle,
+    Upload,
+    Landmark,
+    Image as ImageIcon,
+    XCircle,
+    Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -29,8 +37,30 @@ export interface OrderItem {
     image: string;
     category: string;
     quantity: number;
+    returnableQuantity?: number;
     unitPrice: number;
     totalPrice: number;
+}
+
+export interface RefundRequestData {
+    id: number;
+    returnNumber: string;
+    status: "pending" | "approved" | "rejected";
+    refundAmount: number;
+    reason: string;
+    rejectionReason?: string | null;
+    bankName?: string | null;
+    bankBranch?: string | null;
+    accountNumber?: string | null;
+    accountName?: string | null;
+    createdAt: string;
+    refundedAt?: string | null;
+    items: {
+        productName: string;
+        quantity: number;
+        refundSubtotal: number;
+        condition: string;
+    }[];
 }
 
 export interface OrderData {
@@ -42,6 +72,10 @@ export interface OrderData {
     estimatedDelivery: string;
     paymentMethod: string;
     paymentStatus: string;
+    refundStatus?: "none" | "partial" | "full";
+    refundedAmount?: number;
+    canRequestRefund?: boolean;
+    refundRequests?: RefundRequestData[];
     subtotal: number;
     shippingFee: number;
     discount: number;
@@ -82,6 +116,196 @@ export default function OrdersIndex({ orders = [] }: OrdersPageProps) {
 function OrdersContent({ orders }: OrdersPageProps) {
     const [activeTab, setActiveTab] = useState<string>("All");
     const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(null);
+
+    // Refund Request Modal State
+    const [refundOrder, setRefundOrder] = useState<OrderData | null>(null);
+    const [refundQuantities, setRefundQuantities] = useState<Record<number, number>>({});
+    const [refundReason, setRefundReason] = useState<string>("Damaged / Defective Product");
+    const [refundNotes, setRefundNotes] = useState<string>("");
+    const [bankName, setBankName] = useState<string>("");
+    const [bankBranch, setBankBranch] = useState<string>("");
+    const [accountNumber, setAccountNumber] = useState<string>("");
+    const [accountName, setAccountName] = useState<string>("");
+    const [paymentReceiptFile, setPaymentReceiptFile] = useState<File | null>(null);
+    const [paymentReceiptPreview, setPaymentReceiptPreview] = useState<string | null>(null);
+    const [evidenceImageFile, setEvidenceImageFile] = useState<File | null>(null);
+    const [evidenceImagePreview, setEvidenceImagePreview] = useState<string | null>(null);
+    const [refundErrors, setRefundErrors] = useState<Record<string, string>>({});
+    const [isSubmittingRefund, setIsSubmittingRefund] = useState<boolean>(false);
+
+    const openRefundModal = (order: OrderData) => {
+        const initialQty: Record<number, number> = {};
+        order.items.forEach((item) => {
+            const retQty = item.returnableQuantity ?? item.quantity;
+            if (retQty > 0) {
+                initialQty[item.id] = retQty;
+            }
+        });
+        setRefundOrder(order);
+        setRefundQuantities(initialQty);
+        setRefundReason("Damaged / Defective Product");
+        setRefundNotes("");
+        setBankName("");
+        setBankBranch("");
+        setAccountNumber("");
+        setAccountName("");
+        setPaymentReceiptFile(null);
+        setPaymentReceiptPreview(null);
+        setEvidenceImageFile(null);
+        setEvidenceImagePreview(null);
+        setRefundErrors({});
+    };
+
+    const closeRefundModal = () => {
+        if (isSubmittingRefund) return;
+        setRefundOrder(null);
+    };
+
+    const handleImageSelect = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        type: "payment_receipt" | "evidence_image"
+    ) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const maxBytes = 1024 * 1024; // 1 MB strict limit
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+        if (!allowedTypes.includes(file.type)) {
+            const msg = "Only JPG, PNG, or WEBP image files are allowed.";
+            setRefundErrors((prev) => ({ ...prev, [type]: msg }));
+            toast.error(msg);
+            e.target.value = "";
+            return;
+        }
+
+        if (file.size > maxBytes) {
+            const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+            const msg = `Image size (${sizeMb} MB) exceeds the 1 MB limit. Please upload an image under 1 MB.`;
+            setRefundErrors((prev) => ({ ...prev, [type]: msg }));
+            toast.error(msg);
+            e.target.value = "";
+            return;
+        }
+
+        setRefundErrors((prev) => {
+            const copy = { ...prev };
+            delete copy[type];
+            return copy;
+        });
+
+        const previewUrl = URL.createObjectURL(file);
+        if (type === "payment_receipt") {
+            setPaymentReceiptFile(file);
+            setPaymentReceiptPreview(previewUrl);
+        } else {
+            setEvidenceImageFile(file);
+            setEvidenceImagePreview(previewUrl);
+        }
+    };
+
+    const calculatedRefundTotal = useMemo(() => {
+        if (!refundOrder) return 0;
+        return refundOrder.items.reduce((sum, item) => {
+            const qty = refundQuantities[item.id] ?? 0;
+            return sum + qty * item.unitPrice;
+        }, 0);
+    }, [refundOrder, refundQuantities]);
+
+    const handleSubmitRefund = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!refundOrder || isSubmittingRefund) return;
+
+        const errors: Record<string, string> = {};
+        const selectedItems = refundOrder.items
+            .map((item) => ({
+                order_item_id: item.id,
+                quantity: refundQuantities[item.id] ?? 0,
+            }))
+            .filter((row) => row.quantity > 0);
+
+        if (selectedItems.length === 0) {
+            errors.items = "Please select at least one item with quantity greater than 0.";
+        }
+        if (!refundReason.trim()) errors.reason = "Please specify a return reason.";
+        if (!bankName.trim()) errors.bank_name = "Bank name is required.";
+        if (!bankBranch.trim()) errors.bank_branch = "Bank branch is required.";
+        if (!accountNumber.trim()) errors.account_number = "Account number is required.";
+        if (!accountName.trim()) errors.account_name = "Account holder name is required.";
+        if (!paymentReceiptFile) errors.payment_receipt = "Payment receipt image (< 1 MB) is required.";
+        if (!evidenceImageFile) errors.evidence_image = "Evidence image for return (< 1 MB) is required.";
+
+        if (Object.keys(errors).length > 0) {
+            setRefundErrors(errors);
+            toast.error("Please fill all required fields and upload both images under 1 MB.");
+            return;
+        }
+
+        const formData = new FormData();
+        selectedItems.forEach((item, idx) => {
+            formData.append(`items[${idx}][order_item_id]`, String(item.order_item_id));
+            formData.append(`items[${idx}][quantity]`, String(item.quantity));
+        });
+        formData.append("reason", refundReason.trim());
+        formData.append("notes", refundNotes.trim());
+        formData.append("bank_name", bankName.trim());
+        formData.append("bank_branch", bankBranch.trim());
+        formData.append("account_number", accountNumber.trim());
+        formData.append("account_name", accountName.trim());
+        if (paymentReceiptFile) formData.append("payment_receipt", paymentReceiptFile);
+        if (evidenceImageFile) formData.append("evidence_image", evidenceImageFile);
+
+        setIsSubmittingRefund(true);
+        setRefundErrors({});
+
+        try {
+            const res = await axios.post(`/orders/${refundOrder.id}/refund-request`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            toast.success(res.data?.message || "Refund request submitted and pending review.");
+            setRefundOrder(null);
+            router.reload({ only: ["orders"] });
+        } catch (err: any) {
+            const serverErrors = err?.response?.data?.errors;
+            const message = err?.response?.data?.message || "Failed to submit refund request. Please check your inputs.";
+            if (serverErrors) {
+                const flat: Record<string, string> = {};
+                Object.keys(serverErrors).forEach((key) => {
+                    flat[key] = Array.isArray(serverErrors[key]) ? serverErrors[key][0] : serverErrors[key];
+                });
+                setRefundErrors(flat);
+            }
+            toast.error(message);
+        } finally {
+            setIsSubmittingRefund(false);
+        }
+    };
+
+    const getRefundStatusBadge = (status: "pending" | "approved" | "rejected") => {
+        switch (status) {
+            case "pending":
+                return (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-500 border border-amber-500/30">
+                        <Clock className="w-3 h-3" />
+                        Refund Pending
+                    </span>
+                );
+            case "approved":
+                return (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
+                        <CheckCircle2 className="w-3 h-3" />
+                        Refund Approved
+                    </span>
+                );
+            case "rejected":
+                return (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-rose-500/15 text-rose-500 border border-rose-500/30">
+                        <XCircle className="w-3 h-3" />
+                        Refund Rejected
+                    </span>
+                );
+        }
+    };
 
     // Filter orders based on active tab
     const filteredOrders = useMemo(() => {
@@ -251,9 +475,33 @@ function OrdersContent({ orders }: OrdersPageProps) {
                                                 <span className="font-medium text-fg/90">{order.createdAt}</span>
                                             </div>
 
-                                            {/* Status Badge */}
-                                            {getStatusBadge(order.status)}
+                                            {/* Status Badges */}
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                {order.refundRequests && order.refundRequests.length > 0 && (
+                                                    getRefundStatusBadge(order.refundRequests[0].status)
+                                                )}
+                                                {getStatusBadge(order.status)}
+                                            </div>
                                         </div>
+
+                                        {/* Rejected Refund Notice Banner */}
+                                        {order.refundRequests && order.refundRequests.some((r) => r.status === "rejected") && (
+                                            <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-2.5 text-xs text-rose-400">
+                                                <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-rose-500" />
+                                                <div>
+                                                    <span className="font-bold text-rose-500 block">
+                                                        Refund Request Rejected
+                                                    </span>
+                                                    <span>
+                                                        For more information, please call us at{" "}
+                                                        <a href="tel:+94771234567" className="underline font-bold text-fg hover:text-accent">
+                                                            +94 77 123 4567
+                                                        </a>
+                                                        .
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )}
 
                                         {/* Main Content Row: Image + Details + Total & Action */}
                                         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
@@ -302,15 +550,28 @@ function OrdersContent({ orders }: OrdersPageProps) {
                                                     </span>
                                                 </div>
 
-                                                {/* Action: View My Order button */}
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setSelectedOrder(order)}
-                                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-accent-fg font-bold text-xs uppercase tracking-wider hover:opacity-95 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap"
-                                                >
-                                                    <Eye className="w-4 h-4" />
-                                                    <span>View My Order</span>
-                                                </button>
+                                                <div className="flex flex-wrap items-center gap-2.5">
+                                                    {order.canRequestRefund && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => openRefundModal(order)}
+                                                            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-500 font-bold text-xs uppercase tracking-wider hover:bg-amber-500/25 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                                                        >
+                                                            <RotateCcw className="w-4 h-4" />
+                                                            <span>Refund</span>
+                                                        </button>
+                                                    )}
+
+                                                    {/* Action: View My Order button */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setSelectedOrder(order)}
+                                                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-accent-fg font-bold text-xs uppercase tracking-wider hover:opacity-95 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                                                    >
+                                                        <Eye className="w-4 h-4" />
+                                                        <span>View My Order</span>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -469,10 +730,65 @@ function OrdersContent({ orders }: OrdersPageProps) {
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Refund Requests Status History */}
+                                    {selectedOrder.refundRequests && selectedOrder.refundRequests.length > 0 && (
+                                        <div className="space-y-3 pt-2 border-t border-border">
+                                            <h4 className="text-xs font-bold uppercase tracking-wider text-muted">
+                                                Refund & Return Requests
+                                            </h4>
+                                            {selectedOrder.refundRequests.map((req) => (
+                                                <div
+                                                    key={req.id}
+                                                    className="p-4 rounded-xl bg-bg/60 border border-border space-y-2.5 text-xs"
+                                                >
+                                                    <div className="flex flex-wrap items-center justify-between gap-2">
+                                                        <span className="font-bold text-fg">
+                                                            {req.returnNumber} — {formatPrice(req.refundAmount)}
+                                                        </span>
+                                                        {getRefundStatusBadge(req.status)}
+                                                    </div>
+                                                    <div className="text-muted">
+                                                        Reason: <span className="text-fg">{req.reason}</span>
+                                                    </div>
+                                                    {req.bankName && (
+                                                        <div className="text-muted">
+                                                            Bank: <span className="text-fg">{req.bankName} ({req.bankBranch})</span> — Acc: <span className="text-fg font-mono">{req.accountNumber}</span> ({req.accountName})
+                                                        </div>
+                                                    )}
+                                                    {req.status === "rejected" && (
+                                                        <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400">
+                                                            <strong className="text-rose-500 block">
+                                                                For more information, please call us at +94 77 123 4567
+                                                            </strong>
+                                                            {req.rejectionReason && (
+                                                                <span className="block mt-1">Note: {req.rejectionReason}</span>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Modal Footer */}
-                                <div className="p-4 bg-muted/10 border-t border-border flex items-center justify-end">
+                                <div className="p-4 bg-muted/10 border-t border-border flex flex-wrap items-center justify-between gap-3">
+                                    {selectedOrder.canRequestRefund ? (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const ord = selectedOrder;
+                                                setSelectedOrder(null);
+                                                openRefundModal(ord);
+                                            }}
+                                            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-500 font-bold text-xs uppercase tracking-wider hover:bg-amber-500/25 transition-colors cursor-pointer"
+                                        >
+                                            <RotateCcw className="w-4 h-4" />
+                                            <span>Request Refund</span>
+                                        </button>
+                                    ) : <div />}
+
                                     <a
                                         href={`/orders/${selectedOrder.id}/receipt`}
                                         target="_blank"
@@ -488,6 +804,310 @@ function OrdersContent({ orders }: OrdersPageProps) {
                                         <span>Download Receipt</span>
                                     </a>
                                 </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Customer Refund Request Modal */}
+                    {refundOrder && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+                            <div
+                                className="fixed inset-0 bg-black/75 backdrop-blur-xs"
+                                onClick={closeRefundModal}
+                            />
+
+                            <div className="relative w-full max-w-2xl bg-card border border-border rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[92vh]">
+                                {/* Header */}
+                                <div className="p-5 sm:p-6 bg-gradient-to-r from-card to-amber-500/5 border-b border-border flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-500 border border-amber-500/30 flex items-center justify-center">
+                                            <RotateCcw className="w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-display font-black text-lg text-fg">
+                                                Request Refund — #{refundOrder.orderNumber}
+                                            </h3>
+                                            <p className="text-xs text-muted">
+                                                Submit your return details, bank info, and proof images (each under 1 MB).
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={closeRefundModal}
+                                        className="w-8 h-8 rounded-full bg-bg border border-border flex items-center justify-center text-muted hover:text-fg cursor-pointer"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+
+                                {/* Form Body */}
+                                <form onSubmit={handleSubmitRefund} className="overflow-y-auto flex-1 p-5 sm:p-6 space-y-6">
+                                    {/* 1. Select Items to Return */}
+                                    <div className="space-y-3">
+                                        <h4 className="text-xs font-bold uppercase tracking-wider text-muted">
+                                            1. Select Items & Quantities to Return
+                                        </h4>
+                                        {refundErrors.items && (
+                                            <p className="text-xs text-rose-500 font-medium">{refundErrors.items}</p>
+                                        )}
+                                        <div className="space-y-2.5">
+                                            {refundOrder.items
+                                                .filter((it) => (it.returnableQuantity ?? it.quantity) > 0)
+                                                .map((item) => {
+                                                    const maxQty = item.returnableQuantity ?? item.quantity;
+                                                    const currentQty = refundQuantities[item.id] ?? 0;
+
+                                                    return (
+                                                        <div
+                                                            key={item.id}
+                                                            className="flex items-center justify-between gap-3 p-3 rounded-xl bg-bg/60 border border-border"
+                                                        >
+                                                            <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                                <img
+                                                                    src={item.image || "/images/placeholder.png"}
+                                                                    alt={item.name}
+                                                                    className="w-11 h-11 rounded-lg object-contain bg-card border border-border p-1 shrink-0"
+                                                                />
+                                                                <div className="min-w-0">
+                                                                    <p className="text-xs font-bold text-fg truncate">
+                                                                        {item.name}
+                                                                    </p>
+                                                                    <p className="text-[11px] text-muted">
+                                                                        {formatPrice(item.unitPrice)} each (Max: {maxQty})
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center gap-2 shrink-0">
+                                                                <label className="text-[11px] text-muted font-medium">Qty:</label>
+                                                                <input
+                                                                    type="number"
+                                                                    min={0}
+                                                                    max={maxQty}
+                                                                    value={currentQty}
+                                                                    onChange={(e) => {
+                                                                        const val = Math.max(0, Math.min(maxQty, parseInt(e.target.value || "0", 10)));
+                                                                        setRefundQuantities((prev) => ({ ...prev, [item.id]: val }));
+                                                                    }}
+                                                                    className="w-16 px-2.5 py-1.5 rounded-lg bg-card border border-border text-fg text-xs font-bold text-center focus:outline-none focus:border-accent"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                        </div>
+                                        <div className="flex justify-between items-center p-3 rounded-xl bg-accent/10 border border-accent/25 text-xs">
+                                            <span className="font-bold text-fg">Estimated Refund Amount:</span>
+                                            <span className="font-display font-black text-base text-accent">
+                                                {formatPrice(calculatedRefundTotal)}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* 2. Reason & Notes */}
+                                    <div className="space-y-3">
+                                        <h4 className="text-xs font-bold uppercase tracking-wider text-muted">
+                                            2. Return Reason
+                                        </h4>
+                                        <div>
+                                            <select
+                                                value={refundReason}
+                                                onChange={(e) => setRefundReason(e.target.value)}
+                                                className="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-border text-fg text-xs font-medium focus:outline-none focus:border-accent"
+                                            >
+                                                <option value="Damaged / Defective Product">Damaged / Defective Product</option>
+                                                <option value="Dead on Arrival (Not Working)">Dead on Arrival (Not Working)</option>
+                                                <option value="Wrong Item Received">Wrong Item Received</option>
+                                                <option value="Missing Parts / Accessories">Missing Parts / Accessories</option>
+                                                <option value="Other Issue">Other Issue</option>
+                                            </select>
+                                            {refundErrors.reason && (
+                                                <p className="text-xs text-rose-500 mt-1">{refundErrors.reason}</p>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <textarea
+                                                rows={2}
+                                                value={refundNotes}
+                                                onChange={(e) => setRefundNotes(e.target.value)}
+                                                placeholder="Describe the issue briefly (optional)..."
+                                                className="w-full px-3.5 py-2.5 rounded-xl bg-bg border border-border text-fg text-xs focus:outline-none focus:border-accent"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* 3. Refund Bank Details */}
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2">
+                                            <Landmark className="w-4 h-4 text-accent" />
+                                            <h4 className="text-xs font-bold uppercase tracking-wider text-muted">
+                                                3. Refund Bank Details
+                                            </h4>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <div>
+                                                <label className="block text-[11px] font-bold text-muted mb-1">
+                                                    Bank Name *
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    required
+                                                    value={bankName}
+                                                    onChange={(e) => setBankName(e.target.value)}
+                                                    placeholder="e.g. Commercial Bank"
+                                                    className="w-full px-3.5 py-2 rounded-xl bg-bg border border-border text-fg text-xs focus:outline-none focus:border-accent"
+                                                />
+                                                {refundErrors.bank_name && (
+                                                    <p className="text-[11px] text-rose-500 mt-1">{refundErrors.bank_name}</p>
+                                                )}
+                                            </div>
+                                            <div>
+                                                <label className="block text-[11px] font-bold text-muted mb-1">
+                                                    Branch *
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    required
+                                                    value={bankBranch}
+                                                    onChange={(e) => setBankBranch(e.target.value)}
+                                                    placeholder="e.g. Colombo 03"
+                                                    className="w-full px-3.5 py-2 rounded-xl bg-bg border border-border text-fg text-xs focus:outline-none focus:border-accent"
+                                                />
+                                                {refundErrors.bank_branch && (
+                                                    <p className="text-[11px] text-rose-500 mt-1">{refundErrors.bank_branch}</p>
+                                                )}
+                                            </div>
+                                            <div>
+                                                <label className="block text-[11px] font-bold text-muted mb-1">
+                                                    Account Number *
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    required
+                                                    value={accountNumber}
+                                                    onChange={(e) => setAccountNumber(e.target.value)}
+                                                    placeholder="e.g. 8001234567"
+                                                    className="w-full px-3.5 py-2 rounded-xl bg-bg border border-border text-fg text-xs focus:outline-none focus:border-accent"
+                                                />
+                                                {refundErrors.account_number && (
+                                                    <p className="text-[11px] text-rose-500 mt-1">{refundErrors.account_number}</p>
+                                                )}
+                                            </div>
+                                            <div>
+                                                <label className="block text-[11px] font-bold text-muted mb-1">
+                                                    Account Holder Name *
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    required
+                                                    value={accountName}
+                                                    onChange={(e) => setAccountName(e.target.value)}
+                                                    placeholder="e.g. K. Perera"
+                                                    className="w-full px-3.5 py-2 rounded-xl bg-bg border border-border text-fg text-xs focus:outline-none focus:border-accent"
+                                                />
+                                                {refundErrors.account_name && (
+                                                    <p className="text-[11px] text-rose-500 mt-1">{refundErrors.account_name}</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* 4. Required Attachments (< 1 MB each) */}
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2">
+                                            <ImageIcon className="w-4 h-4 text-accent" />
+                                            <h4 className="text-xs font-bold uppercase tracking-wider text-muted">
+                                                4. Required Attachments (Max 1 MB each — JPG, PNG, WEBP)
+                                            </h4>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            {/* Payment Receipt */}
+                                            <div className="p-3.5 rounded-xl bg-bg border border-dashed border-border space-y-2">
+                                                <label className="block text-xs font-bold text-fg">
+                                                    1. Payment Receipt *
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    accept="image/jpeg,image/png,image/webp"
+                                                    onChange={(e) => handleImageSelect(e, "payment_receipt")}
+                                                    className="block w-full text-[11px] text-muted file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-accent/15 file:text-accent hover:file:bg-accent/25 cursor-pointer"
+                                                />
+                                                {paymentReceiptPreview && (
+                                                    <div className="mt-2 flex items-center gap-2">
+                                                        <img
+                                                            src={paymentReceiptPreview}
+                                                            alt="Receipt Preview"
+                                                            className="w-12 h-12 rounded-lg object-cover border border-border"
+                                                        />
+                                                        <span className="text-[11px] text-emerald-500 font-medium truncate">
+                                                            {paymentReceiptFile?.name} ({Math.round((paymentReceiptFile?.size || 0) / 1024)} KB)
+                                                        </span>
+                                                    </div>
+                                                )}
+                                                {refundErrors.payment_receipt && (
+                                                    <p className="text-[11px] text-rose-500 font-medium">{refundErrors.payment_receipt}</p>
+                                                )}
+                                            </div>
+
+                                            {/* Evidence Image */}
+                                            <div className="p-3.5 rounded-xl bg-bg border border-dashed border-border space-y-2">
+                                                <label className="block text-xs font-bold text-fg">
+                                                    2. Evidence Image for Return *
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    accept="image/jpeg,image/png,image/webp"
+                                                    onChange={(e) => handleImageSelect(e, "evidence_image")}
+                                                    className="block w-full text-[11px] text-muted file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-accent/15 file:text-accent hover:file:bg-accent/25 cursor-pointer"
+                                                />
+                                                {evidenceImagePreview && (
+                                                    <div className="mt-2 flex items-center gap-2">
+                                                        <img
+                                                            src={evidenceImagePreview}
+                                                            alt="Evidence Preview"
+                                                            className="w-12 h-12 rounded-lg object-cover border border-border"
+                                                        />
+                                                        <span className="text-[11px] text-emerald-500 font-medium truncate">
+                                                            {evidenceImageFile?.name} ({Math.round((evidenceImageFile?.size || 0) / 1024)} KB)
+                                                        </span>
+                                                    </div>
+                                                )}
+                                                {refundErrors.evidence_image && (
+                                                    <p className="text-[11px] text-rose-500 font-medium">{refundErrors.evidence_image}</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Footer Submit */}
+                                    <div className="pt-4 border-t border-border flex items-center justify-end gap-3">
+                                        <button
+                                            type="button"
+                                            onClick={closeRefundModal}
+                                            disabled={isSubmittingRefund}
+                                            className="px-4 py-2.5 rounded-xl border border-border text-xs font-bold text-muted hover:text-fg cursor-pointer"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmittingRefund}
+                                            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-accent-fg font-bold text-xs uppercase tracking-wider shadow-md hover:opacity-95 disabled:opacity-50 cursor-pointer"
+                                        >
+                                            {isSubmittingRefund ? (
+                                                <>
+                                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                                    <span>Submitting...</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Upload className="w-4 h-4" />
+                                                    <span>Submit Refund Request</span>
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     )}
