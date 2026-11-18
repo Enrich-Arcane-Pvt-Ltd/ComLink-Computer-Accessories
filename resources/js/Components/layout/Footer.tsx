@@ -9,8 +9,31 @@ import {
     Phone,
     Twitter,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+
+// Seamless 400px-period sine wave path spanning -400 to 1600 (2000px wide for smooth translation)
+function buildWavePath(baseY: number, amp: number, phaseShift = 0): string {
+    const startX = -400 + phaseShift;
+    const period = 400;
+    const half = period / 2;
+    let d = `M ${startX} ${baseY}`;
+    for (let x = startX; x < 1600; x += period) {
+        const x1 = x + half * 0.4;
+        const x2 = x + half * 0.6;
+        const xm = x + half;
+        const x3 = xm + half * 0.4;
+        const x4 = xm + half * 0.6;
+        const xe = x + period;
+        d += ` C ${x1} ${baseY - amp}, ${x2} ${baseY - amp}, ${xm} ${baseY}`;
+        d += ` C ${x3} ${baseY + amp}, ${x4} ${baseY + amp}, ${xe} ${baseY}`;
+    }
+    d += ` L 2000 320 L -400 320 Z`;
+    return d;
+}
+
+const WAVE_BACK_PATH = buildWavePath(162, 18, 0);
+const WAVE_FRONT_PATH = buildWavePath(172, 15, 140);
 
 export default function Footer() {
     const nowDate = new Date().getFullYear();
@@ -18,6 +41,61 @@ export default function Footer() {
     const [email, setEmail] = useState("");
     const [subscribing, setSubscribing] = useState(false);
     const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
+    const [isWaveHovered, setIsWaveHovered] = useState(false);
+    const waveBackRef = useRef<SVGPathElement | null>(null);
+    const waveFrontRef = useRef<SVGPathElement | null>(null);
+    const waveStateRef = useRef({
+        x1: 0,
+        x2: 0,
+        yOffset: 0,
+        speed1: 0.9,
+        speed2: -0.55,
+        hovered: false,
+        mouseBias: 0,
+    });
+
+    useEffect(() => {
+        waveStateRef.current.hovered = isWaveHovered;
+    }, [isWaveHovered]);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+        if (reducedMotion) return;
+
+        let rafId = 0;
+        const animate = () => {
+            const st = waveStateRef.current;
+            const targetSpeed1 = st.hovered ? 2.4 + st.mouseBias * 1.8 : 0.9;
+            const targetSpeed2 = st.hovered ? -1.8 + st.mouseBias * 1.2 : -0.55;
+            const targetY = st.hovered ? -18 : 0;
+
+            st.speed1 += (targetSpeed1 - st.speed1) * 0.06;
+            st.speed2 += (targetSpeed2 - st.speed2) * 0.06;
+            st.yOffset += (targetY - st.yOffset) * 0.08;
+
+            st.x1 = (st.x1 + st.speed1 + 400) % 400;
+            st.x2 = (st.x2 + st.speed2 + 400) % 400;
+
+            if (waveFrontRef.current) {
+                waveFrontRef.current.setAttribute(
+                    "transform",
+                    `translate(${st.x1.toFixed(2)}, ${st.yOffset.toFixed(2)})`
+                );
+            }
+            if (waveBackRef.current) {
+                waveBackRef.current.setAttribute(
+                    "transform",
+                    `translate(${st.x2.toFixed(2)}, ${(st.yOffset * 0.85).toFixed(2)})`
+                );
+            }
+
+            rafId = window.requestAnimationFrame(animate);
+        };
+
+        rafId = window.requestAnimationFrame(animate);
+        return () => window.cancelAnimationFrame(rafId);
+    }, []);
 
     const handleSubscribe = (e: React.FormEvent) => {
         e.preventDefault();
@@ -295,21 +373,75 @@ export default function Footer() {
             </div>
 
             {/* Watermark + bottom bar */}
-            <div className="relative min-h-[110px] sm:min-h-[130px]">
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none select-none text-center font-display font-extrabold leading-none tracking-tight text-white/[0.06] text-[22vw] lg:text-[17rem] -mb-[0.08em]"
-                    style={{
-                        WebkitMaskImage:
-                            "linear-gradient(to bottom, black 35%, transparent 95%)",
-                        maskImage:
-                            "linear-gradient(to bottom, black 35%, transparent 95%)",
-                    }}
-                >
-                    ComLink
+            <div
+                className="relative min-h-[110px] sm:min-h-[130px] overflow-hidden"
+                onMouseEnter={() => setIsWaveHovered(true)}
+                onMouseLeave={() => {
+                    setIsWaveHovered(false);
+                    waveStateRef.current.mouseBias = 0;
+                }}
+                onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    if (rect.width > 0) {
+                        const normalized = (e.clientX - rect.left) / rect.width;
+                        waveStateRef.current.mouseBias = (normalized - 0.5) * 2;
+                    }
+                }}
+            >
+                <div className="relative select-none pointer-events-none flex justify-center w-full -mb-2 sm:-mb-3">
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 1200 240"
+                        preserveAspectRatio="xMidYMax meet"
+                        className="w-full max-w-[1380px] h-auto block"
+                    >
+                        <defs>
+                            <mask id="comlink-watermark-mask">
+                                <text
+                                    x="600"
+                                    y="218"
+                                    textAnchor="middle"
+                                    fill="white"
+                                    className="font-display font-extrabold tracking-tight"
+                                    style={{ fontSize: "245px" }}
+                                >
+                                    ComLink
+                                </text>
+                            </mask>
+                            <linearGradient id="comlink-wave-grad-back" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#0284c7" stopOpacity="0.28" />
+                                <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.42" />
+                                <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.28" />
+                            </linearGradient>
+                            <linearGradient id="comlink-wave-grad-front" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.45" />
+                                <stop offset="50%" stopColor="#22d3ee" stopOpacity="0.62" />
+                                <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.45" />
+                            </linearGradient>
+                        </defs>
+
+                        <g mask="url(#comlink-watermark-mask)">
+                            {/* Subtle watermark base */}
+                            <rect width="1200" height="240" fill="rgba(255, 255, 255, 0.06)" />
+
+                            {/* Back flowing wave */}
+                            <path
+                                ref={waveBackRef}
+                                d={WAVE_BACK_PATH}
+                                fill="url(#comlink-wave-grad-back)"
+                            />
+
+                            {/* Front flowing wave */}
+                            <path
+                                ref={waveFrontRef}
+                                d={WAVE_FRONT_PATH}
+                                fill="url(#comlink-wave-grad-front)"
+                            />
+                        </g>
+                    </svg>
                 </div>
 
-                <div className="absolute inset-x-0 bottom-8 sm:bottom-10">
+                <div className="absolute inset-x-0 bottom-8 sm:bottom-10 z-10">
                     <div className="container mx-auto px-4 md:px-6 flex flex-col items-center gap-1.5 text-center">
                         <p className="text-sm text-primary-fg/60">
                             Copyright &copy; {nowDate}
