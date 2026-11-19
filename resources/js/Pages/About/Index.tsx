@@ -3,7 +3,6 @@ import { cn } from "@/utils/cn";
 import { Head, Link } from "@inertiajs/react";
 import {
     ArrowRight,
-    Check,
     Cpu,
     Eye,
     Gamepad2,
@@ -12,9 +11,12 @@ import {
     Linkedin,
     Mail,
     MapPin,
+    MessagesSquare,
     Phone,
     Printer,
+    ShieldCheck,
     Target,
+    Users,
     Wrench,
 } from "lucide-react";
 import {
@@ -446,13 +448,59 @@ function TeamCard({ member }: { member: (typeof team)[number] }) {
 
 function WhoWeAre() {
     const points = [
-        "Genuine products with proper warranty",
-        "Honest, no-pressure advice",
-        "Gamers, creators, students and businesses served",
+        {
+            icon: ShieldCheck,
+            title: "Genuine products",
+            text: "Proper warranty on everything we sell.",
+        },
+        {
+            icon: MessagesSquare,
+            title: "Honest advice",
+            text: "No-pressure recommendations that fit your budget.",
+        },
+        {
+            icon: Users,
+            title: "Built for everyone",
+            text: "Gamers, creators, students and businesses served.",
+        },
+    ];
+
+    const stats = [
+        { value: "2020", label: "Since" },
+        { value: "2", label: "Branches" },
+        { value: "12+", label: "Brands" },
     ];
 
     return (
-        <section className="relative overflow-hidden bg-bg py-16 md:py-24">
+        <section className="relative overflow-hidden bg-bg py-20 md:py-28">
+            {/* Ambient background video layer */}
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 overflow-hidden"
+            >
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="h-full w-full object-cover object-center opacity-85 dark:opacity-75 contrast-105 saturate-110"
+                >
+                    <source src="/videos/about_video.mp4" type="video/mp4" />
+                </video>
+                {/* Gentle top & bottom edge fade into page background while keeping middle vibrant */}
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        background:
+                            "linear-gradient(to bottom, var(--bg, #ffffff) 0%, transparent 22%, transparent 80%, var(--bg, #ffffff) 100%)",
+                    }}
+                />
+                {/* Subtle readability tint behind top heading only */}
+                <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-bg/70 via-bg/30 to-transparent" />
+            </div>
+
+            {/* Subtle accent glows */}
             <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -left-32 top-10 h-80 w-80 rounded-full bg-accent/10 blur-3xl"
@@ -461,48 +509,113 @@ function WhoWeAre() {
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-24 bottom-20 h-96 w-96 rounded-full bg-primary-400/10 blur-3xl"
             />
-            <div className="container relative mx-auto px-4 md:px-6">
+
+            <div className="container relative z-10 mx-auto px-4 md:px-6">
                 <SectionHeader
                     label="Who we are"
                     title="Tech people, for tech people"
                 />
 
-                <div className="mb-20 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-                    <Reveal className="space-y-4 text-sm leading-relaxed text-muted md:text-base">
-                        <p>
-                            <strong className="text-fg">ComLink</strong> started
-                            with a simple idea: everyone deserves reliable tech
-                            without confusing choices or inflated prices. What
-                            began as a small accessories counter has grown into
-                            a trusted computer store for gamers, creators,
-                            students and businesses.
-                        </p>
-                        <p>
-                            Today we stock laptops, PC components, peripherals
-                            and gaming gear from brands we trust, and we back
-                            every sale with a genuine warranty and honest
-                            advice. Our name says it all: we{" "}
-                            <strong className="text-fg">connect</strong> people
-                            with the right technology, and with a team that
-                            cares about getting it right.
-                        </p>
+                <div className="mb-4 grid items-stretch gap-6 lg:grid-cols-[1.15fr_1fr] lg:gap-8">
+                    {/* LEFT: story card */}
+                    <Reveal className="h-full">
+                        <div className="relative h-full overflow-hidden rounded-3xl border border-white/15 bg-primary-950/70 p-7 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-10">
+                            {/* corner brackets */}
+                            <span
+                                aria-hidden="true"
+                                className="absolute left-4 top-4 h-6 w-6 border-l-2 border-t-2 border-accent-400"
+                            />
+                            <span
+                                aria-hidden="true"
+                                className="absolute bottom-4 right-4 h-6 w-6 border-b-2 border-r-2 border-accent-400"
+                            />
+                            {/* glow */}
+                            <div
+                                aria-hidden="true"
+                                className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent-400/20 blur-3xl"
+                            />
+
+                            <div className="relative">
+                                <span className="mb-5 inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent-300">
+                                    Our story
+                                </span>
+
+                                <p className="mb-4 text-xl font-semibold leading-snug text-white md:text-2xl">
+                                    Everyone deserves reliable tech{" "}
+                                    <span className="text-accent-300">
+                                        without confusing choices or inflated
+                                        prices.
+                                    </span>
+                                </p>
+
+                                <p className="mb-4 text-sm leading-relaxed text-white/70 md:text-base">
+                                    <strong className="text-white">ComLink</strong>{" "}
+                                    began as a small accessories counter and has
+                                    grown into a trusted computer store for
+                                    gamers, creators, students and businesses.
+                                </p>
+                                <p className="text-sm leading-relaxed text-white/70 md:text-base">
+                                    Today we stock laptops, PC components,
+                                    peripherals and gaming gear from brands we
+                                    trust, backed by a genuine warranty and
+                                    honest advice. We{" "}
+                                    <strong className="text-white">connect</strong>{" "}
+                                    people with the right technology, and with a
+                                    team that cares about getting it right.
+                                </p>
+
+                                {/* stats */}
+                                <div className="mt-8 grid grid-cols-3 gap-3 border-t border-white/10 pt-6">
+                                    {stats.map((s) => (
+                                        <div key={s.label}>
+                                            <p className="font-display text-3xl font-bold text-accent-300 md:text-4xl">
+                                                {s.value}
+                                            </p>
+                                            <p className="text-xs uppercase tracking-widest text-white/50">
+                                                {s.label}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </Reveal>
 
-                    <Reveal delay={150}>
-                        <SpotlightCard className="p-8">
-                            <p className="mb-5 font-display text-2xl font-bold text-fg">
+                    {/* RIGHT: connecting your tech */}
+                    <Reveal delay={150} className="h-full">
+                        <SpotlightCard
+                            dark
+                            className="flex flex-col justify-center rounded-3xl border-white/15 bg-primary-950/70 p-7 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-10"
+                        >
+                            <p className="mb-1 text-xs font-semibold uppercase tracking-[0.3em] text-accent-300">
+                                Our promise
+                            </p>
+                            <p className="mb-8 font-display text-3xl font-bold text-white">
                                 Connecting your tech
                             </p>
-                            <ul className="space-y-3">
-                                {points.map((point) => (
+
+                            <ul className="relative space-y-7">
+                                {/* connector line */}
+                                <span
+                                    aria-hidden="true"
+                                    className="absolute bottom-5 left-5 top-5 w-px -translate-x-1/2 bg-gradient-to-b from-accent-400/70 via-accent-400/30 to-transparent"
+                                />
+                                {points.map(({ icon: Icon, title, text }) => (
                                     <li
-                                        key={point}
-                                        className="flex items-start gap-3 text-sm text-fg"
+                                        key={title}
+                                        className="group/item relative flex items-start gap-4"
                                     >
-                                        <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent text-accent-fg">
-                                            <Check className="h-3 w-3" />
+                                        <span className="relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-accent-400/40 bg-primary-950 text-accent-300 transition-all duration-300 group-hover/item:bg-accent-400 group-hover/item:text-primary-950 group-hover/item:shadow-[0_0_20px_rgba(34,211,238,0.5)]">
+                                            <Icon className="h-5 w-5" />
                                         </span>
-                                        {point}
+                                        <div>
+                                            <h4 className="text-base font-semibold text-white">
+                                                {title}
+                                            </h4>
+                                            <p className="text-sm text-white/65">
+                                                {text}
+                                            </p>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
@@ -591,21 +704,115 @@ function MissionVision() {
 }
 
 /* ========================================================================== */
-/*  4. What we do                                                             */
+/*  4. What we do (3 blended background videos)                               */
 /* ========================================================================== */
+
+const bgVideos = [
+    { key: "left", src: "/videos/left.mp4" },
+    { key: "center", src: "/videos/center.mp4" },
+    { key: "right", src: "/videos/right.mp4" },
+];
+
+/**
+ * How many background videos fit the current screen.
+ *   < 768px   -> 1 (center)
+ *   768-1023  -> 2 (left + center)
+ *   >= 1024   -> 3 (left + center + right)
+ * Starts at 1 so phones never download the extra videos.
+ */
+function useBgVideoCount() {
+    const [count, setCount] = useState(1);
+
+    useEffect(() => {
+        const lg = window.matchMedia("(min-width: 1024px)");
+        const md = window.matchMedia("(min-width: 768px)");
+        const update = () => setCount(lg.matches ? 3 : md.matches ? 2 : 1);
+        update();
+        lg.addEventListener("change", update);
+        md.addEventListener("change", update);
+        return () => {
+            lg.removeEventListener("change", update);
+            md.removeEventListener("change", update);
+        };
+    }, []);
+
+    return count;
+}
+
+/** Full-width video strip. Neighbouring videos overlap and cross-fade, so there is no visible seam. */
+function VideoBackdrop() {
+    const count = useBgVideoCount();
+
+    // Which videos to show: [left, center, right]
+    const shown =
+        count === 3
+            ? [bgVideos[0], bgVideos[1], bgVideos[2]]
+            : count === 2
+              ? [bgVideos[0], bgVideos[1]]
+              : [bgVideos[1]];
+
+    const n = shown.length;
+    const OVERLAP = 6; // % of section width that neighbours overlap (increase for a softer blend)
+    const itemWidth = (100 + (n - 1) * OVERLAP) / n; // % of section width per video
+    const fade = n > 1 ? (OVERLAP / itemWidth) * 100 : 0; // fade size as % of one video
+
+    return (
+        <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 flex overflow-hidden bg-primary-950"
+        >
+            {shown.map((video, i) => {
+                const first = i === 0;
+                const last = i === n - 1;
+                const mask =
+                    n === 1
+                        ? undefined
+                        : `linear-gradient(to right, ${first ? "black" : "transparent"} 0%, black ${
+                              first ? 0 : fade
+                          }%, black ${last ? 100 : 100 - fade}%, ${last ? "black" : "transparent"} 100%)`;
+
+                return (
+                    <div
+                        key={video.key}
+                        className="relative h-full min-w-0"
+                        style={{
+                            flex: "1 1 0%",
+                            marginLeft: i > 0 ? `-${OVERLAP}%` : 0,
+                            maskImage: mask,
+                            WebkitMaskImage: mask,
+                        }}
+                    >
+                        <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            preload="auto"
+                            className="h-full w-full object-cover object-center opacity-80 motion-reduce:hidden"
+                        >
+                            <source src={video.src} type="video/mp4" />
+                        </video>
+                    </div>
+                );
+            })}
+
+            {/* Readability tint over the whole strip */}
+            <div className="absolute inset-0 bg-primary-950/55" />
+            {/* Fade into the sections above and below */}
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-primary-950 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-primary-950/80 to-transparent" />
+        </div>
+    );
+}
 
 function WhatWeDo() {
     return (
-        <section
-            className="bg-bg py-16 md:py-24"
-            style={{
-                backgroundImage:
-                    "radial-gradient(rgba(100,116,139,0.22) 1px, transparent 1px)",
-                backgroundSize: "22px 22px",
-            }}
-        >
-            <div className="container mx-auto px-4 md:px-6">
+        <section className="relative overflow-hidden bg-primary-950 py-16 md:py-24">
+            <VideoBackdrop />
+
+            <div className="container relative z-10 mx-auto px-4 md:px-6">
                 <SectionHeader
+                    dark
                     label="What we do"
                     title="Everything for your setup"
                     subtitle="From a single cable to a full custom build, we cover the whole range."
@@ -615,14 +822,17 @@ function WhatWeDo() {
                         const Icon = service.icon;
                         return (
                             <Reveal key={service.title} delay={(i % 3) * 100}>
-                                <SpotlightCard>
-                                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/15 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-accent-fg">
+                                <SpotlightCard
+                                    dark
+                                    className="bg-primary-950/60 backdrop-blur-md"
+                                >
+                                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent-400/15 text-accent-300 transition-colors duration-300 group-hover:bg-accent-400 group-hover:text-primary-950">
                                         <Icon className="h-6 w-6" />
                                     </div>
-                                    <h3 className="mb-2 text-lg font-semibold text-fg">
+                                    <h3 className="mb-2 text-lg font-semibold text-white">
                                         {service.title}
                                     </h3>
-                                    <p className="text-sm leading-relaxed text-muted">
+                                    <p className="text-sm leading-relaxed text-white/70">
                                         {service.text}
                                     </p>
                                 </SpotlightCard>
@@ -992,7 +1202,7 @@ export default function About({
             <WhatWeDo />
             <BrandMarquee brands={brands} />
             <WhyChooseUs />
-            <Journey />
+            {/* <Journey /> */}
             <ConnectCTA />
         </AppLayout>
     );
