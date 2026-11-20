@@ -126,6 +126,10 @@ Route::prefix('admin/reports-export')->name('admin.reports.')->group(function ()
     Route::get('/{type}/print', [\App\Http\Controllers\Admin\ReportCenterController::class, 'printView'])->name('print');
 });
 
+// Admin Product Controller Excel Export Route
+Route::get('/admin/product-controller/export', [\App\Http\Controllers\Admin\ProductControllerExportController::class, 'export'])
+    ->name('admin.product-controller.export');
+
 // Fallback Route (placed after all routes)
 Route::fallback(function () {
     return Inertia::render('Error/Index', [

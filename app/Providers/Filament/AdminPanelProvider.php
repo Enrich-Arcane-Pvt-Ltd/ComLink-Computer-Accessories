@@ -84,6 +84,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 'Product Catalog',
+                'Product Controller',
                 'Supplier Management',
                 'Inventory Management',
                 'Stock Management',
