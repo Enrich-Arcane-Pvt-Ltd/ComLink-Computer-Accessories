@@ -91,6 +91,7 @@ class AdminPanelProvider extends PanelProvider
                 'Sales Section',
                 'Refunds & Returns',
                 'User Management',
+                'Reports',
                 'Marketing',
                 'Our Policies',
                 'FAQ Management',

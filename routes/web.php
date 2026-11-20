@@ -120,6 +120,12 @@ Route::prefix('admin/profit-loss-report')->name('admin.profit-loss.')->group(fun
     Route::get('/print', [\App\Http\Controllers\Admin\ProfitLossReportController::class, 'printView'])->name('print');
 });
 
+// Unified Admin Reports Center Export Routes (PDF & Print)
+Route::prefix('admin/reports-export')->name('admin.reports.')->group(function () {
+    Route::get('/{type}/pdf', [\App\Http\Controllers\Admin\ReportCenterController::class, 'downloadPdf'])->name('pdf');
+    Route::get('/{type}/print', [\App\Http\Controllers\Admin\ReportCenterController::class, 'printView'])->name('print');
+});
+
 // Fallback Route (placed after all routes)
 Route::fallback(function () {
     return Inertia::render('Error/Index', [
