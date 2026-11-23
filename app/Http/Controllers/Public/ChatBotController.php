@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\ChatbotLog;
 use App\Models\Order;
+use App\Models\PolicyPage;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\RateLimiter;
 
 class ChatBotController extends Controller
 {
@@ -20,6 +25,7 @@ class ChatBotController extends Controller
         $message = trim((string) $request->input('message', ''));
         $cart = $request->input('cart', []);
         $wishlist = $request->input('wishlist', []);
+        $history = is_array($request->input('history')) ? $request->input('history') : [];
         $user = Auth::user();
         $userName = $user ? (explode(' ', trim($user->name))[0] ?: 'User') : 'User';
 
@@ -30,15 +36,27 @@ class ChatBotController extends Controller
             ]);
         }
 
-        $lower = strtolower($message);
+        $lower = $this->normalizeQuery(strtolower($message));
 
-        // 1. ORDERS WORKFLOW
-        if ($this->matches($lower, ['my order', 'track order', 'order status', 'where is my order', 'orders', 'my purchase', 'bought', 'ord-'])) {
+        // 0. ACCOUNT, REGISTER, LOGIN & PASSWORD RESET WORKFLOW (English & Singlish)
+        if ($this->matches($lower, [
+            'register', 'sign up', 'signup', 'create account', 'new account',
+            'login', 'log in', 'log ven', 'logven', 'sign in', 'signin',
+            'forgot password', 'reset password', 'password', 'how to join',
+        ])) {
+            return $this->handleAccountGuideWorkflow($user, $userName, $lower);
+        }
+
+        // 1. ORDERS WORKFLOW (English & Singlish)
+        if ($this->matches($lower, [
+            'my order', 'track order', 'order status', 'where is my order', 'orders',
+            'my purchase', 'bought', 'ord-', 'mage order', 'order eka', 'order koheda',
+        ])) {
             return $this->handleOrdersWorkflow($user, $userName, $lower);
         }
 
         // 2. CART WORKFLOW
-        if ($this->matches($lower, ['my cart', 'in my cart', 'shopping cart', 'cart total', 'what is in my cart', 'checkout', 'bag', 'basket'])) {
+        if ($this->matches($lower, ['my cart', 'in my cart', 'shopping cart', 'cart total', 'what is in my cart', 'checkout', 'bag', 'basket', 'cart eka'])) {
             return $this->handleCartWorkflow($userName, $cart);
         }
 
@@ -48,12 +66,12 @@ class ChatBotController extends Controller
         }
 
         // 4. CATEGORIES & SUBCATEGORIES WORKFLOW
-        if ($this->matches($lower, ['category', 'categories', 'subcategor', 'what do you sell', 'what products do you have', 'product range', 'items available'])) {
+        if ($this->matches($lower, ['category', 'categories', 'subcategor', 'what do you sell', 'what products do you have', 'product range', 'items available', 'monawada thiyenne', 'monada thiyenne'])) {
             return $this->handleCategoriesWorkflow($userName);
         }
 
         // 5. NEW ARRIVALS WORKFLOW
-        if ($this->matches($lower, ['new arrival', 'newest', 'latest product', 'new stock', 'just arrived', 'recent items'])) {
+        if ($this->matches($lower, ['new arrival', 'newest', 'latest product', 'new stock', 'just arrived', 'recent items', 'aluth stock', 'aluth item'])) {
             return $this->handleNewArrivalsWorkflow($userName);
         }
 
@@ -67,23 +85,31 @@ class ChatBotController extends Controller
             return $this->handleUpgradeWorkflow($userName, $lower);
         }
 
-        // 8. SHIPPING & DELIVERY POLICY WORKFLOW
-        if ($this->matches($lower, ['shipping', 'delivery', 'deliver', 'courier', 'dispatch', 'islandwide', 'ship to', 'how long to deliver', 'shipping fee', 'cash on delivery', 'cod'])) {
+        // 8. SHIPPING & DELIVERY POLICY WORKFLOW (English & Singlish)
+        if ($this->matches($lower, [
+            'shipping', 'delivery', 'deliver', 'courier', 'dispatch', 'islandwide',
+            'ship to', 'how long to deliver', 'shipping fee', 'cash on delivery', 'cod',
+            'deliver karan', 'gennanna', 'dawas kiyak', 'kochchara kal',
+        ])) {
             return $this->handleShippingWorkflow($userName);
         }
 
-        // 9. RETURNS, REFUNDS & CANCELLATIONS POLICY WORKFLOW
-        if ($this->matches($lower, ['return', 'refund', 'cancel', 'exchange', 'damaged on arrival', 'broken', 'money back', 'return policy'])) {
+        // 9. RETURNS, REFUNDS & CANCELLATIONS POLICY WORKFLOW (English & Singlish)
+        if ($this->matches($lower, ['return', 'refund', 'cancel', 'exchange', 'damaged on arrival', 'broken', 'money back', 'return policy', 'maru karanna', 'salli ganna'])) {
             return $this->handleRefundsWorkflow($userName);
         }
 
-        // 10. WARRANTY & GUARANTEE WORKFLOW
-        if ($this->matches($lower, ['warranty', 'guarantee', 'agent warranty', 'rma', 'repair', 'broken component', 'defect'])) {
+        // 10. WARRANTY & GUARANTEE WORKFLOW (English & Singlish)
+        if ($this->matches($lower, ['warranty', 'guarantee', 'agent warranty', 'rma', 'repair', 'broken component', 'defect', 'warenti'])) {
             return $this->handleWarrantyWorkflow($userName);
         }
 
-        // 11. STORE LOCATIONS, HOURS & CONTACT WORKFLOW
-        if ($this->matches($lower, ['location', 'address', 'store', 'shop location', 'where are you', 'opening hours', 'open time', 'close time', 'contact', 'phone', 'whatsapp', 'call', 'email', 'colombo', 'kandy'])) {
+        // 11. STORE LOCATIONS, HOURS & CONTACT WORKFLOW (English & Singlish)
+        if ($this->matches($lower, [
+            'location', 'address', 'store', 'shop location', 'where are you', 'opening hours',
+            'open time', 'close time', 'contact', 'phone', 'whatsapp', 'call', 'email',
+            'colombo', 'kandy', 'koheda shop', 'shop eka koheda', 'katha karanna', 'number eka',
+        ])) {
             return $this->handleContactWorkflow($userName);
         }
 
@@ -93,8 +119,14 @@ class ChatBotController extends Controller
         }
 
         // 13. CUSTOM PC BUILDER WORKFLOW
-        if ($this->matches($lower, ['build pc', 'build my pc', 'custom pc', 'pc builder', 'rig', 'gaming setup build'])) {
+        if ($this->matches($lower, ['build pc', 'build my pc', 'custom pc', 'pc builder', 'rig', 'gaming setup build', 'pc ekak hadanna'])) {
             return $this->handleBuildPcWorkflow($userName, $user);
+        }
+
+        // 13B. BUDGET-BASED PRODUCT RECOMMENDATIONS (e.g. "laptop under 250000", "5000 ta adu mouse")
+        $budgetResult = $this->handleBudgetSearchWorkflow($userName, $lower);
+        if ($budgetResult) {
+            return $budgetResult;
         }
 
         // 14. SPECIFIC PRODUCT SEARCH / INQUIRY (Dynamic database search for parts, brands, or names)
@@ -103,8 +135,8 @@ class ChatBotController extends Controller
             return $searchResult;
         }
 
-        // 15. GREETING & DEFAULT FRIENDLY ASSISTANCE
-        if ($this->matches($lower, ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'ayubowan', 'machan'])) {
+        // 15. GREETING & DEFAULT FRIENDLY ASSISTANCE (word boundaries prevent "hi" matching inside "thiyena")
+        if (preg_match('/\b(hello|hi|hey|good morning|good afternoon|good evening|ayubowan|machan|kohomada)\b/i', $lower)) {
             return response()->json([
                 'reply' => "Hello {$userName}! 😊 Welcome to ComLink! I'm your AI shopping companion. I can help you check order statuses, search products in stock, suggest PC/Laptop upgrades, or provide store info. What can I do for you today?",
                 'anim' => 'action',
@@ -119,21 +151,60 @@ class ChatBotController extends Controller
             ]);
         }
 
-        // Fallback with friendly guided options
-        return response()->json([
-            'reply' => "I'm right here with you, {$userName}! 😊 You can ask me about:\n• Checking product stock and prices (e.g. 'Do you have RTX 4060 or 16GB RAM?')\n• PC & Laptop upgrade suggestions\n• Your orders & cart status\n• Islandwide delivery & warranty policies\n\nOr connect with our human specialists on WhatsApp!",
+        // 16. GOOGLE GEMINI AI FALLBACK (Grounded with Live ComLink DB Context, Cache, RateLimiter & Multi-turn History)
+        $rateLimitKey = 'chatbot_ai:' . ($user?->id ?? ($request->ip() ?? 'guest'));
+        $aiResult = $this->askGeminiWithStoreContext($message, $lower, $history, $rateLimitKey);
+
+        if (! empty($aiResult['reply'])) {
+            $this->logChatbotInteraction($user, $userName, $message, 'gemini_ai', $aiResult['reply'], $request->ip());
+
+            return response()->json([
+                'reply' => $aiResult['reply'],
+                'anim' => 'success',
+                'chips' => [
+                    ['label' => '🖥️ Explore Categories', 'query' => 'categories'],
+                    ['label' => '⚡ New Arrivals', 'query' => 'new arrivals'],
+                    ['label' => '🚚 Delivery Info', 'query' => 'delivery'],
+                    ['label' => '🛡️ Warranty Policy', 'query' => 'warranty'],
+                ],
+            ]);
+        }
+
+        // 17. FINAL FALLBACK (429 / Rate-Limited / Unmatched) WITH RELAXED DB SUGGESTIONS & IN-SITE CONTACT
+        $suggestedProducts = $this->findRelaxedMatchingProducts($lower);
+        $isRateLimited = ! empty($aiResult['rate_limited']);
+
+        if ($isRateLimited) {
+            $fallbackReply = "I'm receiving a lot of AI requests right now, {$userName}! ⏳ Please wait a minute before asking another custom question.\n\n"
+                . ($suggestedProducts ? "Meanwhile, here are some products from our store that might match what you're looking for:" : "In the meantime, you can explore our categories, browse the Shop, or reach us via our Contact page.");
+            $logType = 'rate_limited';
+        } else {
+            $fallbackReply = "I'm right here with you, {$userName}! 😊 "
+                . ($suggestedProducts ? "Here are some matching products I found in our store:\n" : "You can ask me about:\n• Checking product stock and prices (e.g. 'Do you have RTX 4060 or laptop under 250000?')\n• PC & Laptop upgrade suggestions\n• Registering, logging in & tracking your orders\n• Islandwide delivery & warranty policies");
+            $logType = 'fallback';
+        }
+
+        $this->logChatbotInteraction($user, $userName, $message, $logType, $fallbackReply, $request->ip());
+
+        $responsePayload = [
+            'reply' => $fallbackReply,
             'anim' => 'thinking',
-            'action' => [
-                'label' => '💬 Chat on WhatsApp',
-                'link' => 'https://wa.me/94771234567',
-            ],
+            'action' => $suggestedProducts
+                ? ['label' => '🛒 Browse Full Shop', 'link' => '/shop']
+                : ['label' => '📞 Contact Support', 'link' => '/contact'],
             'chips' => [
                 ['label' => '🖥️ Explore Categories', 'query' => 'categories'],
                 ['label' => '🚚 Delivery Timeline', 'query' => 'delivery'],
                 ['label' => '🛡️ Warranty Policy', 'query' => 'warranty'],
                 ['label' => '📍 Store Locations', 'query' => 'locations and hours'],
             ],
-        ]);
+        ];
+
+        if (! empty($suggestedProducts)) {
+            $responsePayload['products'] = $suggestedProducts;
+        }
+
+        return response()->json($responsePayload);
     }
 
     /**
@@ -525,22 +596,24 @@ class ChatBotController extends Controller
      */
     private function handleProductSearchWorkflow(string $userName, string $lower, string $original): ?JsonResponse
     {
-        // Strip common conversational words
+        // Strip common conversational words (English & Singlish)
         $clean = str_replace([
-            'do you have', 'is there', 'can i get', 'price of', 'how much is',
+            'do you have', 'is there', 'can i get', 'price of', 'how much is', 'how much',
             'check if', 'in stock', 'available', 'tell me about', 'details of',
             'please', 'show me', 'search for', 'looking for', 'specifications of', 'specs of',
-            'tell me', 'find', 'got', 'sell'
-        ], '', $lower);
-        
-        // Strip punctuation (? , . ! etc.)
-        $clean = trim(preg_replace('/[^\p{L}\p{N}\s-]/u', '', $clean));
+            'tell me', 'find', 'got', 'sell', 'price', 'cost', 'rate',
+            'monawada', 'monada', 'mona d', 'monad', 'thiyena', 'tiyena', 'thiyenne', 'tiyenne',
+            'ekak', 'eka', 'wage', 'gana',
+        ], ' ', $lower);
+
+        // Strip punctuation (? , . ! etc.) and collapse extra whitespace
+        $clean = trim(preg_replace('/\s+/', ' ', preg_replace('/[^\p{L}\p{N}\s-]/u', ' ', $clean)));
 
         if (strlen($clean) < 2) {
             return null;
         }
 
-        // Search in products or categories
+        // Search in products or categories, prioritizing exact product name matches over description mentions
         $products = Product::where('is_visible', true)
             ->where(function ($q) use ($clean) {
                 $q->where('name', 'LIKE', "%{$clean}%")
@@ -553,6 +626,7 @@ class ChatBotController extends Controller
                       $cq->where('name', 'LIKE', "%{$clean}%");
                   });
             })
+            ->orderByRaw('CASE WHEN name LIKE ? THEN 0 ELSE 1 END', ["%{$clean}%"])
             ->take(3)
             ->get();
 
@@ -761,5 +835,414 @@ class ChatBotController extends Controller
                 ['label' => '🎮 Gaming Gear', 'query' => 'gaming gear'],
             ],
         ]);
+    }
+
+    /**
+     * Guide user on how to Register, Log In, or Reset Password (supports English & Singlish)
+     */
+    private function handleAccountGuideWorkflow($user, string $userName, string $lower): JsonResponse
+    {
+        if ($user) {
+            return response()->json([
+                'reply' => "You are already logged in as **{$userName}**! ✅\n\nYou can view your orders, update your profile/password, or start shopping right away.",
+                'anim' => 'success',
+                'action' => [
+                    'label' => '👤 Go to My Profile',
+                    'link' => '/profile',
+                ],
+                'chips' => [
+                    ['label' => '📦 My Orders', 'query' => 'my order'],
+                    ['label' => '🛒 My Cart', 'query' => 'my cart'],
+                    ['label' => '🖥️ Build My PC', 'query' => 'build pc'],
+                ],
+            ]);
+        }
+
+        if ($this->matches($lower, ['forgot password', 'reset password', 'password'])) {
+            $reply = "Forgot your password? No worries! 🔐 Here is how to reset it:\n\n";
+            $reply .= "1️⃣ Click **\"Go to Forgot Password\"** below (or click **Forgot Password?** on the Login page).\n";
+            $reply .= "2️⃣ Enter your registered **Email Address** and click **Send Reset Link**.\n";
+            $reply .= "3️⃣ Open the email in your inbox and click the reset link to set a new password.";
+
+            return response()->json([
+                'reply' => $reply,
+                'anim' => 'action',
+                'action' => [
+                    'label' => '🔄 Go to Forgot Password',
+                    'link' => '/forgot-password',
+                ],
+                'chips' => [
+                    ['label' => '🔑 How to Log In', 'query' => 'how to login'],
+                    ['label' => '📝 How to Register', 'query' => 'how to register'],
+                ],
+            ]);
+        }
+
+        $isLoginOnly = $this->matches($lower, ['login', 'log in', 'sign in', 'signin', 'log ven', 'logven'])
+            && ! $this->matches($lower, ['register', 'sign up', 'signup', 'create account', 'new account']);
+
+        if ($isLoginOnly) {
+            $reply = "Here is how to **Log In** to ComLink: 🔑\n\n";
+            $reply .= "1️⃣ Click the **Sign In / Account** icon at the top-right corner of the website (or click the button below).\n";
+            $reply .= "2️⃣ Enter your registered **Email Address** and **Password**.\n";
+            $reply .= "3️⃣ Click **Sign In** — you can now track orders, save wishlist items, and checkout!\n\n";
+            $reply .= "*(New to ComLink? Create an account first using Register!)*";
+
+            return response()->json([
+                'reply' => $reply,
+                'anim' => 'success',
+                'action' => [
+                    'label' => '🔑 Go to Login Page',
+                    'link' => '/login',
+                ],
+                'chips' => [
+                    ['label' => '📝 How to Register', 'query' => 'how to register'],
+                    ['label' => '🔄 Forgot Password', 'query' => 'forgot password'],
+                ],
+            ]);
+        }
+
+        $reply = "Sure! Here is a quick step-by-step guide to **Register & Log In** to ComLink: 😊\n\n";
+        $reply .= "**📝 Step 1: Register (Create Account)**\n";
+        $reply .= "1️⃣ Click **\"Go to Register Page\"** below (or click **Account → Register** at the top-right).\n";
+        $reply .= "2️⃣ Enter your **Full Name**, **Email Address**, and a **Password** (confirm password).\n";
+        $reply .= "3️⃣ Click **Create Account** — your account will be created and logged in automatically!\n\n";
+        $reply .= "**🔑 Step 2: Log In Next Time**\n";
+        $reply .= "• Click **Sign In** at the top-right, enter your **Email & Password**, and you're in!\n";
+        $reply .= "• If you ever forget your password, just use **Forgot Password?** on the login page.";
+
+        return response()->json([
+            'reply' => $reply,
+            'anim' => 'success',
+            'action' => [
+                'label' => '📝 Go to Register Page',
+                'link' => '/register',
+            ],
+            'chips' => [
+                ['label' => '🔑 Go to Login Guide', 'query' => 'how to login'],
+                ['label' => '🔄 Forgot Password', 'query' => 'forgot password'],
+                ['label' => '🖥️ Build My PC', 'query' => 'build pc'],
+            ],
+        ]);
+    }
+
+    /**
+     * Normalize common tech typos and Singlish phrases before intent matching.
+     */
+    private function normalizeQuery(string $text): string
+    {
+        $replacements = [
+            'keybord' => 'keyboard',
+            'key board' => 'keyboard',
+            'moniter' => 'monitor',
+            'moniters' => 'monitors',
+            'grafic' => 'graphic',
+            'grphics' => 'graphics',
+            'lap top' => 'laptop',
+            'lptop' => 'laptop',
+            'proccesor' => 'processor',
+            'procesor' => 'processor',
+            'mothrboard' => 'motherboard',
+            'mause' => 'mouse',
+            'mous' => 'mouse',
+            'headfone' => 'headphone',
+            'headfones' => 'headphones',
+            'spekar' => 'speaker',
+            'camra' => 'camera',
+            'kiyada' => 'price',
+            'kiyatada' => 'price',
+            'keeyada' => 'price',
+            'gana kohomada' => 'price',
+            'thiyenawada' => 'available',
+            'thiyeda' => 'available',
+            'thiyenvd' => 'available',
+        ];
+
+        foreach ($replacements as $typo => $fix) {
+            $text = preg_replace('/\b' . preg_quote($typo, '/') . '\b/u', $fix, $text);
+        }
+
+        return $text;
+    }
+
+    /**
+     * Handle budget-based product queries (e.g. "laptop under 250000", "5000 ta adu mouse").
+     */
+    private function handleBudgetSearchWorkflow(string $userName, string $lower): ?JsonResponse
+    {
+        $hasBudgetCue = $this->matches($lower, [
+            'under ', 'below ', 'less than', 'within ', 'budget', 'around ', 'max ',
+            'ta adu', 'walata adu', 'ata adu', 'ta wada adu', 'athara',
+        ]);
+
+        if (! $hasBudgetCue) {
+            return null;
+        }
+
+        // Extract budget amount (supports "250,000", "250000", "250k")
+        if (! preg_match('/(\d[\d,]*\.?\d*)\s*(k)?/i', $lower, $m)) {
+            return null;
+        }
+
+        $num = (float) str_replace(',', '', $m[1]);
+        if (! empty($m[2])) {
+            $num *= 1000;
+        }
+
+        if ($num < 100) {
+            return null;
+        }
+
+        $maxBudget = $this->matches($lower, ['around ']) ? $num * 1.15 : $num;
+
+        // Detect optional item keyword
+        $itemKeywords = ['laptop', 'mouse', 'keyboard', 'monitor', 'ssd', 'ram', 'graphic', 'gpu', 'processor', 'headset', 'speaker', 'camera', 'cctv', 'router', 'ups', 'chair', 'bag'];
+        $matchedKeyword = null;
+        foreach ($itemKeywords as $kw) {
+            if (str_contains($lower, $kw)) {
+                $matchedKeyword = $kw;
+                break;
+            }
+        }
+
+        $priceSql = 'CASE WHEN sale_price IS NOT NULL AND sale_price > 0 THEN sale_price ELSE price END';
+        $query = Product::where('is_visible', true)
+            ->whereRaw("({$priceSql}) > 0")
+            ->whereRaw("({$priceSql}) <= ?", [$maxBudget]);
+
+        if ($matchedKeyword) {
+            $query->where(function ($q) use ($matchedKeyword) {
+                $q->where('name', 'like', "%{$matchedKeyword}%")
+                    ->orWhereHas('categories', fn ($cq) => $cq->where('name', 'like', "%{$matchedKeyword}%"));
+            });
+        }
+
+        $products = $query->orderByRaw("({$priceSql}) DESC")->take(5)->get();
+
+        if ($products->isEmpty()) {
+            return response()->json([
+                'reply' => "Sorry {$userName}, I couldn't find any" . ($matchedKeyword ? " **{$matchedKeyword}**" : '') . ' products under **Rs. ' . number_format($maxBudget, 0) . "** right now. Try increasing your budget or browse our Shop!",
+                'anim' => 'thinking',
+                'action' => [
+                    'label' => '🛒 Browse Shop',
+                    'link' => '/shop',
+                ],
+            ]);
+        }
+
+        $cards = $products->map(function (Product $p) {
+            $effPrice = ($p->sale_price !== null && (float) $p->sale_price > 0) ? (float) $p->sale_price : (float) $p->price;
+            $img = (is_array($p->images) && ! empty($p->images)) ? $p->images[0] : '/images/placeholder.png';
+
+            return [
+                'id' => $p->id,
+                'name' => $p->name,
+                'slug' => $p->slug,
+                'price' => 'Rs. ' . number_format($effPrice, 2),
+                'image' => $img,
+                'stock' => (int) ($p->current_inventory_stock ?? $p->quantity ?? 0),
+            ];
+        })->values()->all();
+
+        $label = $matchedKeyword ? "**{$matchedKeyword}** options" : 'products';
+
+        return response()->json([
+            'reply' => "Here are the best {$label} under **Rs. " . number_format($maxBudget, 0) . "** for you, {$userName}! 💡",
+            'anim' => 'success',
+            'products' => $cards,
+            'action' => [
+                'label' => '🛒 View More in Shop',
+                'link' => '/shop?max_price=' . (int) $maxBudget,
+            ],
+        ]);
+    }
+
+    /**
+     * Call Google Gemini AI (Free Tier) grounded with live ComLink database context, caching, rate limiting & 429 cooldown.
+     *
+     * @return array{reply: ?string, rate_limited: bool}
+     */
+    private function askGeminiWithStoreContext(string $message, string $lower, array $history, string $rateLimitKey): array
+    {
+        $apiKey = (string) config('services.gemini.api_key');
+        if (empty($apiKey)) {
+            return ['reply' => null, 'rate_limited' => false];
+        }
+
+        // Cache repeated questions (4 hours) to preserve Free Tier quota
+        $lastTurn = ! empty($history) ? (string) (end($history)['text'] ?? '') : '';
+        $cacheKey = 'chatbot_ai_resp:' . md5($lower . '|' . count($history) . '|' . $lastTurn);
+        $cachedReply = Cache::get($cacheKey);
+        if (is_string($cachedReply) && $cachedReply !== '') {
+            return ['reply' => $cachedReply, 'rate_limited' => false];
+        }
+
+        // Respect global 429 circuit-breaker cooldown (60s) & per-user/IP rate limit (5 AI calls/min)
+        if (Cache::get('chatbot_gemini_429_cooldown') || RateLimiter::tooManyAttempts($rateLimitKey, 5)) {
+            return ['reply' => null, 'rate_limited' => true];
+        }
+
+        RateLimiter::hit($rateLimitKey, 60);
+        $model = (string) config('services.gemini.model', 'gemini-3.5-flash-lite');
+
+        try {
+            // 1. Gather relevant live products from DB to ground Gemini (top 8 matching items, no personal data sent)
+            $words = $this->extractSearchKeywords($lower);
+
+            $productContextLines = [];
+            if ($words->isNotEmpty()) {
+                $dbProducts = Product::where('is_visible', true)
+                    ->where(function ($q) use ($words) {
+                        foreach ($words as $w) {
+                            $q->orWhere('name', 'like', "%{$w}%");
+                        }
+                    })
+                    ->take(8)
+                    ->get(['name', 'price', 'sale_price', 'quantity', 'condition']);
+
+                foreach ($dbProducts as $p) {
+                    $eff = ($p->sale_price !== null && (float) $p->sale_price > 0) ? (float) $p->sale_price : (float) $p->price;
+                    $stock = (int) ($p->quantity ?? 0);
+                    $productContextLines[] = "- {$p->name} | Price: Rs. " . number_format($eff, 2) . " | Stock: {$stock} | Condition: {$p->condition}";
+                }
+            }
+
+            $categories = Cache::remember('chatbot_visible_categories', 3600, function () {
+                return Category::whereNull('parent_id')->where('is_visible', true)->pluck('name')->join(', ');
+            });
+            $shippingNote = PolicyPage::where('slug', 'shipping-delivery')->value('title') ?? 'Islandwide Delivery (2-4 business days)';
+
+            $systemPrompt = "You are ComLink AI, the friendly shopping assistant for ComLink Computer Accessories (Sri Lanka).\n"
+                . "Store Info: Website sells Laptops, PC Components, Peripherals, Gaming Gear, Networking & CCTV Cameras. Currency is LKR (Rs.).\n"
+                . "Store Categories: {$categories}\n"
+                . "Contact: info@comlink.lk | Phone: +94 77 123 4567 | Delivery: {$shippingNote} (1-2 days Colombo, 2-4 days Islandwide).\n"
+                . "Relevant Live Products in Database:\n"
+                . (! empty($productContextLines) ? implode("\n", $productContextLines) : "(No exact keyword product matches found in DB — give general helpful guidance without inventing specific prices or stock numbers.)") . "\n\n"
+                . "Rules:\n"
+                . "- Reply concisely (2-5 short sentences), friendly, and helpful.\n"
+                . "- If the user wrote in Singlish, you may reply in clear friendly English or light Singlish.\n"
+                . "- NEVER invent product prices or stock counts that are not listed above.";
+
+            $contents = [];
+            foreach (array_slice($history, -5) as $turn) {
+                $role = ($turn['sender'] ?? 'user') === 'bot' ? 'model' : 'user';
+                $text = trim((string) ($turn['text'] ?? ''));
+                if ($text !== '') {
+                    $contents[] = [
+                        'role' => $role,
+                        'parts' => [['text' => $text]],
+                    ];
+                }
+            }
+            $contents[] = [
+                'role' => 'user',
+                'parts' => [['text' => $message]],
+            ];
+
+            $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}";
+            $http = Http::timeout(12);
+            if (app()->isLocal() && ! ini_get('curl.cainfo') && ! ini_get('openssl.cafile')) {
+                $http = $http->withoutVerifying();
+            }
+
+            $response = $http->post($url, [
+                'systemInstruction' => [
+                    'parts' => [['text' => $systemPrompt]],
+                ],
+                'contents' => $contents,
+                'generationConfig' => [
+                    'maxOutputTokens' => 300,
+                ],
+            ]);
+
+            if ($response->status() === 429) {
+                Cache::put('chatbot_gemini_429_cooldown', true, 60);
+
+                return ['reply' => null, 'rate_limited' => true];
+            }
+
+            if ($response->successful()) {
+                $text = data_get($response->json(), 'candidates.0.content.parts.0.text');
+                if (is_string($text) && trim($text) !== '') {
+                    $cleanText = trim($text);
+                    Cache::put($cacheKey, $cleanText, now()->addHours(4));
+
+                    return ['reply' => $cleanText, 'rate_limited' => false];
+                }
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        return ['reply' => null, 'rate_limited' => false];
+    }
+
+    /**
+     * Extract meaningful keywords from a normalized query for DB product matching.
+     */
+    private function extractSearchKeywords(string $lower)
+    {
+        $stopWords = ['the', 'and', 'for', 'you', 'have', 'what', 'can', 'this', 'that', 'with', 'oka', 'eka', 'mata', 'oyata', 'kohomada', 'thiyenawada', 'available', 'price', 'want', 'need', 'how', 'much'];
+
+        return collect(preg_split('/\s+/', preg_replace('/[^a-z0-9\s]/', ' ', $lower)))
+            ->filter(fn ($w) => strlen($w) >= 3 && ! in_array($w, $stopWords))
+            ->take(5);
+    }
+
+    /**
+     * Relaxed DB product lookup for graceful fallback when AI is unavailable or rate-limited.
+     */
+    private function findRelaxedMatchingProducts(string $lower): array
+    {
+        $words = $this->extractSearchKeywords($lower);
+        if ($words->isEmpty()) {
+            return [];
+        }
+
+        $products = Product::where('is_visible', true)
+            ->where(function ($q) use ($words) {
+                foreach ($words as $w) {
+                    $q->orWhere('name', 'like', "%{$w}%");
+                }
+            })
+            ->take(4)
+            ->get();
+
+        if ($products->isEmpty()) {
+            return [];
+        }
+
+        return $products->map(function (Product $p) {
+            $effPrice = ($p->sale_price !== null && (float) $p->sale_price > 0) ? (float) $p->sale_price : (float) $p->price;
+            $img = (is_array($p->images) && ! empty($p->images)) ? $p->images[0] : '/images/placeholder.png';
+
+            return [
+                'id' => $p->id,
+                'name' => $p->name,
+                'slug' => $p->slug,
+                'price' => 'Rs. ' . number_format($effPrice, 2),
+                'image' => $img,
+                'stock' => (int) ($p->current_inventory_stock ?? $p->quantity ?? 0),
+            ];
+        })->values()->all();
+    }
+
+    /**
+     * Log AI-handled or unmatched queries for admin review & continuous improvement.
+     */
+    private function logChatbotInteraction($user, string $userName, string $message, string $type, string $reply, ?string $ip): void
+    {
+        try {
+            ChatbotLog::create([
+                'user_id' => $user?->id,
+                'user_name' => $userName,
+                'message' => mb_substr($message, 0, 1000),
+                'resolution_type' => $type,
+                'bot_reply' => mb_substr($reply, 0, 2000),
+                'ip_address' => $ip,
+            ]);
+        } catch (\Throwable) {
+            // Never interrupt chat response if logging fails
+        }
     }
 }
