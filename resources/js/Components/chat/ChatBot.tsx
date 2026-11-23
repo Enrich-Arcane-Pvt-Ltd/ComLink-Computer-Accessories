@@ -42,6 +42,10 @@ const ROW_MAP: Record<RobotAnimationState, number> = {
 const getFrameSrc = (row: number, frame: number) =>
     `/images/bot/robot/frames/row${row}_frame${frame}.webp`;
 
+// Persistent module-level cache so browser never garbage-collects decoded sprite frames
+const PRELOADED_FRAMES: HTMLImageElement[] = [];
+let framesPreloaded = false;
+
 // Resolve product image path
 const resolveProductImage = (img?: string | null) => {
     if (!img) return "/images/products/sample-keyboard.jpg";
@@ -238,32 +242,60 @@ export default function ChatBot() {
         });
     }, [userName]);
 
-    // 1. Preload all 64 frames for buttery-smooth 60fps animations
+    // 1. Preload & decode all 64 frames once and retain references
     useEffect(() => {
-        if (typeof window === "undefined") return;
+        if (typeof window === "undefined" || framesPreloaded) return;
+        framesPreloaded = true;
         for (let r = 0; r < 8; r++) {
             for (let c = 0; c < 8; c++) {
                 const img = new Image();
+                img.decoding = "async";
                 img.src = getFrameSrc(r, c);
+                img.decode?.().catch(() => {});
+                PRELOADED_FRAMES.push(img);
             }
         }
     }, []);
 
-    // 2. Continuous frame ticker (every 110ms changes to the next frame in the current row)
+    // 2. Continuous frame ticker using requestAnimationFrame (never drifts or stalls)
     useEffect(() => {
-        const timer = setInterval(() => {
-            setFrameIndex((prev) => (prev + 1) % 8);
-        }, 110);
-        return () => clearInterval(timer);
+        if (typeof window === "undefined") return;
+        let rafId = 0;
+        let lastTick = performance.now();
+        const FRAME_INTERVAL_MS = 110;
+
+        const tick = (now: number) => {
+            if (now - lastTick >= FRAME_INTERVAL_MS) {
+                lastTick = now - ((now - lastTick) % FRAME_INTERVAL_MS);
+                setFrameIndex((prev) => (prev + 1) % 8);
+            }
+            rafId = window.requestAnimationFrame(tick);
+        };
+
+        rafId = window.requestAnimationFrame(tick);
+        return () => window.cancelAnimationFrame(rafId);
     }, []);
 
-    // 3. Spontaneous natural movement flow (when idle, periodically scan, hover or perform a gesture)
-    useEffect(() => {
-        if (animState !== "idle" || isDragging || isTyping) return;
+    // 3. Spontaneous natural movement flow (properly tracked timers + tab visibility recovery)
+    const revertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-        // Random interval between 6.5s and 9.5s
-        const randomDelay = Math.random() * 3000 + 6500;
-        const timeout = setTimeout(() => {
+    useEffect(() => {
+        if (isDragging || isTyping) return;
+
+        // If stuck in a transient state without a revert timer, schedule recovery back to idle
+        if (animState !== "idle") {
+            if (revertTimerRef.current) clearTimeout(revertTimerRef.current);
+            revertTimerRef.current = setTimeout(() => {
+                setAnimState("idle");
+            }, 2200);
+            return () => {
+                if (revertTimerRef.current) clearTimeout(revertTimerRef.current);
+            };
+        }
+
+        // Random interval between 3.5s and 5.5s for lively natural gestures
+        const randomDelay = Math.random() * 2000 + 3500;
+        const scheduleTimer = setTimeout(() => {
             const spontaneousMoves: RobotAnimationState[] = [
                 "scan",
                 "hover",
@@ -275,15 +307,22 @@ export default function ChatBot() {
                     Math.floor(Math.random() * spontaneousMoves.length)
                 ];
             setAnimState(nextMove);
-
-            // Flow back to idle after completing 1.8 seconds (approx 2 full 8-frame cycles)
-            setTimeout(() => {
-                setAnimState("idle");
-            }, 1800);
         }, randomDelay);
 
-        return () => clearTimeout(timeout);
+        return () => clearTimeout(scheduleTimer);
     }, [animState, isDragging, isTyping]);
+
+    // Resume cleanly if user switches browser tabs and returns
+    useEffect(() => {
+        if (typeof document === "undefined") return;
+        const onVisibility = () => {
+            if (!document.hidden && !isDraggingRef.current) {
+                setAnimState("idle");
+            }
+        };
+        document.addEventListener("visibilitychange", onVisibility);
+        return () => document.removeEventListener("visibilitychange", onVisibility);
+    }, []);
 
     // Scroll to bottom when messages update
     useEffect(() => {
@@ -347,11 +386,19 @@ export default function ChatBot() {
             : {};
         const wishlistPayload = wishlistContext ? wishlistContext.items : [];
 
+        const historyPayload = messages
+            .slice(-5)
+            .map((m) => ({
+                sender: m.sender,
+                text: m.text.slice(0, 400),
+            }));
+
         try {
             const response = await axios.post("/api/chat/query", {
                 message: query,
                 cart: cartPayload,
                 wishlist: wishlistPayload,
+                history: historyPayload,
             });
 
             const data = response.data;
@@ -502,22 +549,28 @@ export default function ChatBot() {
                 style={{ touchAction: "none" }}
             >
                 {/* Robot Sprite Avatar Character */}
+                <style>{`
+                    @keyframes comlink-robot-float {
+                        0%, 100% { transform: translateY(0px); }
+                        50% { transform: translateY(-8px); }
+                    }
+                    .comlink-robot-bob {
+                        animation: comlink-robot-float 2.8s ease-in-out infinite;
+                    }
+                `}</style>
                 <motion.div
                     onHoverStart={() => setIsHovered(true)}
                     onHoverEnd={() => setIsHovered(false)}
                     animate={{
-                        y: isDragging ? 0 : [0, -8, 0],
                         scale: isDragging ? 1.12 : isHovered ? 1.08 : 1,
                     }}
                     transition={{
-                        y: {
-                            repeat: Infinity,
-                            duration: 2.8,
-                            ease: "easeInOut",
-                        },
                         scale: { duration: 0.2 },
                     }}
-                    className="relative transform-gpu select-none transition-all"
+                    className={cn(
+                        "relative transform-gpu select-none transition-all",
+                        !isDragging && "comlink-robot-bob"
+                    )}
                     title="Click to chat! (Drag me anywhere with cursor)"
                 >
                     {/* Glowing Thruster / Aura underneath */}
