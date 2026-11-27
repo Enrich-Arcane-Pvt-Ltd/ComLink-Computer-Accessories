@@ -325,14 +325,8 @@ function ProductViewContent({
         setQuantity((q) => (q > 1 ? q - 1 : 1));
     };
 
-    // Add to cart action
+    // Add to cart action (supports both Guests and Logged-in Users)
     const handleAddToCart = () => {
-        if (!auth?.user) {
-            toast.error("Please login or register to add items to your cart.");
-            router.visit("/login");
-            return;
-        }
-
         if (!currentInStock) {
             toast.error("This item is currently out of stock.");
             return;
@@ -346,6 +340,7 @@ function ProductViewContent({
             price: currentLatestPrice,
             image: (selectedVariant?.image) || imagesList[0],
             quantity: quantity,
+            maxQuantity: currentStockCount > 0 ? currentStockCount : undefined,
         });
 
         setIsAddedToCart(true);

@@ -8,6 +8,7 @@ export interface CartItem {
   price: number;
   image: string;
   quantity: number;
+  maxQuantity?: number;
   size?: string;
   color?: string;
 }
@@ -16,6 +17,7 @@ interface CartContextType {
   addToCart: (item: Omit<CartItem, 'id'>) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
+  syncStockLimits: (stocks: Record<string, number>) => void;
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
@@ -40,15 +42,40 @@ export function CartProvider({ children }: {children: React.ReactNode;}) {
       );
       if (existingItemIndex > -1) {
         const updated = [...prev];
-        updated[existingItemIndex].quantity += newItem.quantity;
+        const existing = updated[existingItemIndex];
+        const effectiveMax = newItem.maxQuantity ?? existing.maxQuantity;
+        const desiredQty = existing.quantity + newItem.quantity;
+
+        if (effectiveMax !== undefined && effectiveMax > 0 && desiredQty > effectiveMax) {
+          updated[existingItemIndex] = {
+            ...existing,
+            quantity: effectiveMax,
+            maxQuantity: effectiveMax,
+          };
+          toast.warning(`Maximum available stock for ${newItem.name} is ${effectiveMax} units.`);
+          return updated;
+        }
+
+        updated[existingItemIndex] = {
+          ...existing,
+          quantity: desiredQty,
+          ...(effectiveMax !== undefined ? { maxQuantity: effectiveMax } : {}),
+        };
         toast.success(`Updated quantity for ${newItem.name}`);
         return updated;
       }
+
+      const initialQty =
+        newItem.maxQuantity !== undefined && newItem.maxQuantity > 0
+          ? Math.min(newItem.quantity, newItem.maxQuantity)
+          : newItem.quantity;
+
       toast.success(`Added ${newItem.name} to cart`);
       return [
       ...prev,
       {
         ...newItem,
+        quantity: initialQty,
         id: Math.random().toString(36).substr(2, 9)
       }];
 
@@ -61,14 +88,27 @@ export function CartProvider({ children }: {children: React.ReactNode;}) {
   const updateQuantity = (id: string, quantity: number) => {
     if (quantity < 1) return;
     setItems((prev) =>
-    prev.map((item) =>
-    item.id === id ?
-    {
-      ...item,
-      quantity
-    } :
-    item
-    )
+    prev.map((item) => {
+      if (item.id !== id) return item;
+      if (item.maxQuantity !== undefined && item.maxQuantity > 0 && quantity > item.maxQuantity) {
+        toast.warning(`Only ${item.maxQuantity} units available in stock.`);
+        return { ...item, quantity: item.maxQuantity };
+      }
+      return { ...item, quantity };
+    })
+    );
+  };
+  const syncStockLimits = (stocks: Record<string, number>) => {
+    setItems((prev) =>
+      prev.map((item) => {
+        if (stocks[item.id] === undefined) return item;
+        const maxStock = stocks[item.id];
+        return {
+          ...item,
+          maxQuantity: maxStock,
+          quantity: maxStock > 0 ? Math.min(item.quantity, maxStock) : item.quantity,
+        };
+      })
     );
   };
   const clearCart = () => {
@@ -86,6 +126,7 @@ export function CartProvider({ children }: {children: React.ReactNode;}) {
         addToCart,
         removeFromCart,
         updateQuantity,
+        syncStockLimits,
         clearCart,
         totalItems,
         totalPrice

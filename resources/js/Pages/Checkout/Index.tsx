@@ -276,8 +276,8 @@ function CheckoutContent({ prefill, stripeKey }: CheckoutProps) {
 
                 if (orderRes.data.success) {
                     clearCart();
-                    toast.success("Payment successful! Your order has been placed in Processing status.");
-                    router.visit("/orders");
+                    toast.success("Payment successful! Order confirmation & tracking details sent to your email.");
+                    router.visit(orderRes.data.redirect_url || "/orders");
                 } else {
                     toast.error("Order recording encountered an issue. Please contact support.");
                     setIsProcessing(false);
@@ -351,6 +351,12 @@ function CheckoutContent({ prefill, stripeKey }: CheckoutProps) {
                             <p className="text-xs text-muted mt-1">
                                 Complete your customer details and payment to finalize your official hardware order.
                             </p>
+                            {!prefill?.email && (
+                                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-accent/10 border border-accent/25 text-accent text-xs font-medium">
+                                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                                    <span>Fast Guest Checkout — No account required! Your order tracking, PDF receipt & refund link will be emailed to you.</span>
+                                </div>
+                            )}
                         </div>
                     </div>
 

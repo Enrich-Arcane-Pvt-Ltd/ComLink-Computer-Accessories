@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Mail\OrderStatusUpdatedMail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
@@ -14,7 +16,10 @@ class Order extends Model
     protected $fillable = [
         'order_number',
         'user_id',
+        'is_guest',
+        'guest_token',
         'status',
+        'delivered_at',
         'customer_name',
         'customer_email',
         'customer_phone',
@@ -40,12 +45,82 @@ class Order extends Model
     ];
 
     protected $casts = [
+        'is_guest' => 'boolean',
+        'delivered_at' => 'datetime',
         'subtotal' => 'decimal:2',
         'shipping_fee' => 'decimal:2',
         'discount_amount' => 'decimal:2',
         'total_amount' => 'decimal:2',
         'refunded_amount' => 'decimal:2',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (Order $order): void {
+            if ($order->isDirty('status') && $order->status === 'Delivered' && empty($order->delivered_at)) {
+                $order->delivered_at = now();
+            }
+        });
+
+        static::updated(function (Order $order): void {
+            if ($order->wasChanged('status') && ! empty($order->customer_email)) {
+                $previousStatus = (string) ($order->getOriginal('status') ?? 'Processing');
+                $newStatus = (string) $order->status;
+
+                try {
+                    Mail::to($order->customer_email)->send(new OrderStatusUpdatedMail($order, $previousStatus, $newStatus));
+                } catch (\Throwable $e) {
+                    report($e);
+                }
+            }
+        });
+    }
+
+    public function getOrderAccessUrlAttribute(): string
+    {
+        if ($this->is_guest && ! empty($this->guest_token)) {
+            return route('guest.orders.show', ['token' => $this->guest_token]);
+        }
+
+        return route('orders.index');
+    }
+
+    public function getReceiptUrl(bool $preview = false): string
+    {
+        $params = $preview ? ['preview' => 1] : [];
+
+        if ($this->is_guest && ! empty($this->guest_token)) {
+            return route('guest.orders.receipt', array_merge(['token' => $this->guest_token], $params));
+        }
+
+        return route('orders.receipt', array_merge(['order' => $this->id], $params));
+    }
+
+    public function getRefundDeadlineAttribute(): ?\Illuminate\Support\Carbon
+    {
+        if ($this->status !== 'Delivered') {
+            return null;
+        }
+
+        $deliveredAt = $this->delivered_at ?? $this->updated_at;
+
+        return $deliveredAt ? $deliveredAt->copy()->addDays(7) : null;
+    }
+
+    public function isWithinRefundWindow(): bool
+    {
+        $deadline = $this->refund_deadline;
+
+        return $deadline !== null && now()->lessThanOrEqualTo($deadline);
+    }
+
+    public function canAcceptRefundRequest(): bool
+    {
+        return $this->payment_status === 'Paid'
+            && ($this->refund_status ?? 'none') !== 'full'
+            && $this->isWithinRefundWindow()
+            && $this->items->contains(fn ($item) => $item->returnable_quantity > 0);
+    }
 
     public function user(): BelongsTo
     {

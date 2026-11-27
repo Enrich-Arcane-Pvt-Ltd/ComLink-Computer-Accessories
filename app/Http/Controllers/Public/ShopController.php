@@ -488,6 +488,7 @@ class ShopController extends Controller
                 'latestPrice' => $p->sale_price !== null ? (float) $p->sale_price : (float) $p->price,
                 'discountPercent' => ($p->sale_price && $p->price > 0) ? max(0, round((($p->price - $p->sale_price) / $p->price) * 100)) : 0,
                 'inStock' => ($p->quantity ?? 0) > 0,
+                'stockCount' => (int) ($p->quantity ?? 0),
                 'condition' => $p->condition ?? 'Brand New',
                 'brand' => $p->brand?->name ?? 'Generic',
                 'rating' => 4.8,

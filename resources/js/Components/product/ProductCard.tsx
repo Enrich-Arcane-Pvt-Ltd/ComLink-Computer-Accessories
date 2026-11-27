@@ -273,13 +273,14 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
         e.preventDefault();
         e.stopPropagation();
 
-        if (!auth?.user) {
-            toast.error("Please login or register to add items to your cart.");
-            router.visit("/login");
-            return;
-        }
-
         if (!normalized.inStock) return;
+
+        const rawStock =
+            typeof product.stockCount === "number"
+                ? product.stockCount
+                : typeof product.quantity === "number"
+                  ? product.quantity
+                  : undefined;
 
         addToCart({
             productId: String(normalized.id),
@@ -287,6 +288,7 @@ export function ProductCard({ product = sampleProduct }: ProductCardProps) {
             price: latestPrice,
             image: normalized.image,
             quantity: 1,
+            maxQuantity: rawStock,
         });
 
         setIsAdded(true);

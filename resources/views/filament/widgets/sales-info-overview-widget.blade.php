@@ -588,6 +588,14 @@
                 <div class="sow-period-nav">
                     <button
                         type="button"
+                        wire:click="setPeriod('all_time')"
+                        class="sow-btn-period {{ $period === 'all_time' ? 'active' : '' }}"
+                    >
+                        <span>🌐 All Time</span>
+                    </button>
+
+                    <button
+                        type="button"
                         wire:click="setPeriod('daily')"
                         class="sow-btn-period {{ $period === 'daily' ? 'active' : '' }}"
                     >

@@ -22,6 +22,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'User Management';
 
+    protected static ?int $navigationSort = 1;
+
     // 1. Form Configuration
     public static function form(Form $form): Form
     {
@@ -59,7 +61,7 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()->where('is_guest', false);
 
         if (Auth::id() !== 1) {
             $query->where('id', '!=', 1);

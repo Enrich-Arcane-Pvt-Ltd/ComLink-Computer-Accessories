@@ -378,7 +378,7 @@
         </div>
 
         {{-- ============ 3. Analytics Charts (3 in one row) ============ --}}
-        <div class="cl-row cl-row--charts">
+        <div class="cl-row cl-row--charts" wire:ignore>
             {{-- Chart 1: Monthly sales trend --}}
             <div class="cl-card cl-panel">
                 <div class="cl-panel-head">
@@ -1428,6 +1428,17 @@
             if (!window.__clListeners) {
                 window.__clListeners = true;
                 document.addEventListener('livewire:navigated', function () { window.__clBoot && window.__clBoot(); });
+                document.addEventListener('livewire:initialized', function () {
+                    if (window.Livewire && typeof window.Livewire.hook === 'function') {
+                        window.Livewire.hook('commit', function ({ succeed }) {
+                            succeed(function () {
+                                requestAnimationFrame(function () {
+                                    window.__clBoot && window.__clBoot();
+                                });
+                            });
+                        });
+                    }
+                });
                 new MutationObserver(function () { window.__clDraw && window.__clDraw(); })
                     .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
             }

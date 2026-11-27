@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Head, Link } from "@inertiajs/react";
+import axios from "axios";
 import AppLayout from "@/Layouts/AppLayout";
 import { useCart } from "@/contexts/CartContext";
 import { formatPrice } from "@/utils/currency";
@@ -28,8 +29,29 @@ export default function CartIndex() {
 }
 
 function CartContent() {
-    const { items, updateQuantity, removeFromCart, clearCart, totalItems, totalPrice } =
+    const { items, updateQuantity, removeFromCart, syncStockLimits, clearCart, totalItems, totalPrice } =
         useCart();
+
+    useEffect(() => {
+        if (items.length === 0) return;
+
+        axios
+            .post("/api/cart/stock-check", {
+                items: items.map((i) => ({
+                    id: i.id,
+                    productId: i.productId,
+                    variantId: i.variantId,
+                })),
+            })
+            .then((res) => {
+                if (res.data?.stocks) {
+                    syncStockLimits(res.data.stocks);
+                }
+            })
+            .catch(() => {
+                // Keep existing cart limits if check fails
+            });
+    }, [items.length]);
     const [couponCode, setCouponCode] = useState("");
     const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
     const [discountAmount, setDiscountAmount] = useState(0);
@@ -189,34 +211,56 @@ function CartContent() {
                                                     </div>
 
                                                     {/* Quantity Control (Col 2) */}
-                                                    <div className="md:col-span-2 flex items-center md:justify-center justify-between pt-2 md:pt-0 border-t md:border-t-0 border-border/40">
-                                                        <span className="text-xs text-muted md:hidden font-medium">Quantity:</span>
-                                                        <div className="inline-flex items-center rounded-lg border border-border bg-bg p-1 shadow-xs">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() =>
-                                                                    updateQuantity(item.id, Math.max(1, item.quantity - 1))
-                                                                }
-                                                                disabled={item.quantity <= 1}
-                                                                className="h-7 w-7 flex items-center justify-center rounded text-muted hover:text-fg hover:bg-muted/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                                                                aria-label="Decrease quantity"
-                                                            >
-                                                                <Minus className="w-3.5 h-3.5" />
-                                                            </button>
-                                                            <span className="w-9 text-center text-xs font-bold text-fg">
-                                                                {item.quantity}
-                                                            </span>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() =>
-                                                                    updateQuantity(item.id, item.quantity + 1)
-                                                                }
-                                                                className="h-7 w-7 flex items-center justify-center rounded text-muted hover:text-fg hover:bg-muted/20 transition-colors"
-                                                                aria-label="Increase quantity"
-                                                            >
-                                                                <Plus className="w-3.5 h-3.5" />
-                                                            </button>
+                                                    <div className="md:col-span-2 flex flex-col items-end md:items-center justify-center gap-1 pt-2 md:pt-0 border-t md:border-t-0 border-border/40">
+                                                        <div className="w-full md:w-auto flex items-center justify-between md:justify-center">
+                                                            <span className="text-xs text-muted md:hidden font-medium">Quantity:</span>
+                                                            <div className="inline-flex items-center rounded-lg border border-border bg-bg p-1 shadow-xs">
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() =>
+                                                                        updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                                                                    }
+                                                                    disabled={item.quantity <= 1}
+                                                                    className="h-7 w-7 flex items-center justify-center rounded text-muted hover:text-fg hover:bg-muted/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                                                    aria-label="Decrease quantity"
+                                                                >
+                                                                    <Minus className="w-3.5 h-3.5" />
+                                                                </button>
+                                                                <span className="w-9 text-center text-xs font-bold text-fg">
+                                                                    {item.quantity}
+                                                                </span>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        if (
+                                                                            item.maxQuantity !== undefined &&
+                                                                            item.maxQuantity > 0 &&
+                                                                            item.quantity >= item.maxQuantity
+                                                                        ) {
+                                                                            toast.warning(
+                                                                                `Maximum available stock is ${item.maxQuantity} units.`
+                                                                            );
+                                                                            return;
+                                                                        }
+                                                                        updateQuantity(item.id, item.quantity + 1);
+                                                                    }}
+                                                                    disabled={
+                                                                        item.maxQuantity !== undefined &&
+                                                                        item.maxQuantity > 0 &&
+                                                                        item.quantity >= item.maxQuantity
+                                                                    }
+                                                                    className="h-7 w-7 flex items-center justify-center rounded text-muted hover:text-fg hover:bg-muted/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                                                    aria-label="Increase quantity"
+                                                                >
+                                                                    <Plus className="w-3.5 h-3.5" />
+                                                                </button>
+                                                            </div>
                                                         </div>
+                                                        {item.maxQuantity !== undefined && item.maxQuantity > 0 && (
+                                                            <span className="text-[10px] text-muted">
+                                                                Max available: {item.maxQuantity}
+                                                            </span>
+                                                        )}
                                                     </div>
 
                                                     {/* Line Total (Col 2) */}
