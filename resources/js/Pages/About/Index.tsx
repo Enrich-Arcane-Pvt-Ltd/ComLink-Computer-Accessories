@@ -283,6 +283,171 @@ function TechBackdrop() {
     );
 }
 
+/** Animated glowing-grid background: blue grid that lights up, travelling light pulses and twinkling intersections */
+function GridGlowBackdrop() {
+    const CELL = 70; // grid cell size in px (all lines below snap to multiples of this)
+
+    // Horizontal pulses: grid row, direction, duration (s), delay (s), length (px)
+    const hRuns = [
+        { row: 1, rtl: false, dur: 7, delay: 0, len: 240 },
+        { row: 3, rtl: true, dur: 9, delay: 1.2, len: 180 },
+        { row: 5, rtl: false, dur: 8, delay: 2.6, len: 280 },
+        { row: 7, rtl: true, dur: 10, delay: 0.7, len: 200 },
+    ];
+    // Vertical pulses: grid column, direction, duration (s), delay (s), length (px)
+    const vRuns = [
+        { col: 2, up: false, dur: 8, delay: 0.5, len: 180 },
+        { col: 5, up: true, dur: 10, delay: 2, len: 220 },
+        { col: 8, up: false, dur: 7, delay: 3, len: 200 },
+        { col: 11, up: true, dur: 9, delay: 0, len: 240 },
+        { col: 14, up: false, dur: 11, delay: 1.6, len: 190 },
+        { col: 17, up: true, dur: 8, delay: 2.8, len: 210 },
+    ];
+    // Glowing grid intersections (col, row)
+    const nodes = [
+        { col: 2, row: 1, delay: 0 },
+        { col: 5, row: 3, delay: 0.7 },
+        { col: 8, row: 5, delay: 1.4 },
+        { col: 11, row: 3, delay: 2.1 },
+        { col: 14, row: 1, delay: 0.4 },
+        { col: 17, row: 5, delay: 1.8 },
+        { col: 5, row: 7, delay: 2.6 },
+        { col: 14, row: 7, delay: 1.1 },
+    ];
+
+    const gridImage = (alpha: number) =>
+        `linear-gradient(rgba(56,189,248,${alpha}) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,${alpha}) 1px, transparent 1px)`;
+
+    return (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+            <style>{`
+                @keyframes gg-run-x     { from { transform: translateX(-120%); } to { transform: translateX(110vw); } }
+                @keyframes gg-run-x-rev { from { transform: translateX(110vw); }  to { transform: translateX(-120%); } }
+                @keyframes gg-run-y     { from { transform: translateY(-120%); } to { transform: translateY(110vh); } }
+                @keyframes gg-run-y-rev { from { transform: translateY(110vh); }  to { transform: translateY(-120%); } }
+                @keyframes gg-node {
+                    0%, 100% { opacity: .2; transform: translate(-50%, -50%) scale(1); }
+                    50%      { opacity: 1;  transform: translate(-50%, -50%) scale(2); }
+                }
+                @keyframes gg-spot {
+                    0%   { -webkit-mask-position: -40% 50%; mask-position: -40% 50%; }
+                    100% { -webkit-mask-position: 140% 50%; mask-position: 140% 50%; }
+                }
+                @keyframes gg-breathe {
+                    0%, 100% { opacity: .5;  transform: translate(-50%, -50%) scale(1); }
+                    50%      { opacity: .85; transform: translate(-50%, -50%) scale(1.12); }
+                }
+                @keyframes gg-pulse-grid {
+                    0%, 100% { opacity: .6; }
+                    50%      { opacity: 1; }
+                }
+                .gg-spot { animation: gg-spot 10s ease-in-out infinite alternate; }
+                .gg-breathe { animation: gg-breathe 6s ease-in-out infinite; }
+                .gg-pulse-grid { animation: gg-pulse-grid 5s ease-in-out infinite; }
+                @media (prefers-reduced-motion: reduce) {
+                    .gg-spot, .gg-breathe, .gg-pulse-grid { animation: none; }
+                    .gg-run { animation: none !important; opacity: 0 !important; }
+                    .gg-node { animation: none !important; opacity: .6 !important; }
+                }
+            `}</style>
+
+            {/* Centre glow (the bright middle of the reference) */}
+            <div
+                className="gg-breathe absolute left-1/2 top-1/2 h-[460px] w-[820px] rounded-full blur-3xl"
+                style={{
+                    background:
+                        "radial-gradient(circle, rgba(37,99,235,0.55) 0%, rgba(6,182,212,0.25) 45%, transparent 72%)",
+                }}
+            />
+
+            {/* Base grid: dim lines, brightest in the middle, fading to the edges */}
+            <div
+                className="gg-pulse-grid absolute inset-0"
+                style={{
+                    backgroundImage: gridImage(0.22),
+                    backgroundSize: `${CELL}px ${CELL}px`,
+                    maskImage: "radial-gradient(ellipse at center, black 15%, transparent 75%)",
+                    WebkitMaskImage: "radial-gradient(ellipse at center, black 15%, transparent 75%)",
+                }}
+            />
+
+            {/* Bright grid revealed by a soft spotlight that drifts left to right */}
+            <div
+                className="gg-spot absolute inset-0"
+                style={{
+                    backgroundImage: gridImage(0.85),
+                    backgroundSize: `${CELL}px ${CELL}px`,
+                    maskImage: "radial-gradient(circle at center, black 0%, transparent 62%)",
+                    WebkitMaskImage: "radial-gradient(circle at center, black 0%, transparent 62%)",
+                    maskSize: "46% 190%",
+                    WebkitMaskSize: "46% 190%",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskRepeat: "no-repeat",
+                    maskPosition: "-40% 50%",
+                    WebkitMaskPosition: "-40% 50%",
+                }}
+            />
+
+            {/* Light pulses running along the horizontal grid lines */}
+            {hRuns.map((l, i) => (
+                <div
+                    key={`h-${i}`}
+                    className="gg-run absolute left-0 h-[2px] rounded-full"
+                    style={{
+                        top: l.row * CELL - 0.5,
+                        width: l.len,
+                        background: l.rtl
+                            ? "linear-gradient(270deg, transparent, rgba(34,211,238,0.95), #fff)"
+                            : "linear-gradient(90deg, transparent, rgba(34,211,238,0.95), #fff)",
+                        boxShadow: "0 0 14px rgba(34,211,238,0.85)",
+                        animation: `${l.rtl ? "gg-run-x-rev" : "gg-run-x"} ${l.dur}s linear ${l.delay}s infinite`,
+                    }}
+                />
+            ))}
+
+            {/* Light pulses running along the vertical grid lines */}
+            {vRuns.map((l, i) => (
+                <div
+                    key={`v-${i}`}
+                    className="gg-run absolute top-0 w-[2px] rounded-full"
+                    style={{
+                        left: l.col * CELL - 0.5,
+                        height: l.len,
+                        background: l.up
+                            ? "linear-gradient(0deg, transparent, rgba(59,130,246,0.95), #fff)"
+                            : "linear-gradient(180deg, transparent, rgba(59,130,246,0.95), #fff)",
+                        boxShadow: "0 0 14px rgba(59,130,246,0.85)",
+                        animation: `${l.up ? "gg-run-y-rev" : "gg-run-y"} ${l.dur}s linear ${l.delay}s infinite`,
+                    }}
+                />
+            ))}
+
+            {/* Twinkling intersections */}
+            {nodes.map((n, i) => (
+                <span
+                    key={`n-${i}`}
+                    className="gg-node absolute h-1.5 w-1.5 rounded-full bg-accent-300"
+                    style={{
+                        left: n.col * CELL,
+                        top: n.row * CELL,
+                        boxShadow: "0 0 12px 3px rgba(34,211,238,0.9)",
+                        animation: `gg-node 3.4s ease-in-out ${n.delay}s infinite`,
+                    }}
+                />
+            ))}
+
+            {/* Edge vignette (dark corners) + soft centre dim so the text stays readable */}
+            <div
+                className="absolute inset-0"
+                style={{
+                    background:
+                        "radial-gradient(ellipse at center, rgba(2,6,23,0.45) 0%, transparent 55%), radial-gradient(ellipse at center, transparent 55%, rgba(2,6,23,0.7) 100%)",
+                }}
+            />
+        </div>
+    );
+}
+
 /** Card with a cyan spotlight that follows the cursor (light or dark look) */
 function SpotlightCard({
     children,
@@ -331,6 +496,129 @@ const getInitials = (name: string) =>
         .join("")
         .toUpperCase();
 
+/** Hero background: back-wall grid + perspective floor grid (no corner dots), with a moving floor and light pulses */
+function PerspectiveGridBackdrop() {
+    const WALL = 44; // wall cell size (px)
+    const FLOOR = 40; // floor cell size (px, in the tilted plane)
+
+    // Light pulses that run toward the viewer along floor lines: column index, duration (s), delay (s)
+    const pulses = [
+        { col: 26, dur: 5, delay: 0 },
+        { col: 31, dur: 6.5, delay: 1.6 },
+        { col: 35, dur: 5.5, delay: 3.1 },
+        { col: 38, dur: 7, delay: 0.8 },
+        { col: 42, dur: 6, delay: 2.4 },
+        { col: 47, dur: 5.2, delay: 4 },
+        { col: 51, dur: 6.8, delay: 1.1 },
+    ];
+
+    const line = (rgb: string, alpha: number) =>
+        `linear-gradient(rgba(${rgb},${alpha}) 1px, transparent 1px), linear-gradient(90deg, rgba(${rgb},${alpha}) 1px, transparent 1px)`;
+
+    return (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+            <style>{`
+                @keyframes hg-floor { from { background-position: 0 0; } to { background-position: 0 ${FLOOR}px; } }
+                @keyframes hg-pulse {
+                    0%   { transform: translateY(-100%); opacity: 0; }
+                    15%  { opacity: 1; }
+                    100% { transform: translateY(360px); opacity: 1; }
+                }
+                @keyframes hg-wall { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+                @keyframes hg-glow { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+                .hg-floor { animation: hg-floor 2.6s linear infinite; }
+                .hg-pulse { animation-name: hg-pulse; animation-timing-function: ease-in; animation-iteration-count: infinite; }
+                .hg-wall { animation: hg-wall 6s ease-in-out infinite; }
+                .hg-glow { animation: hg-glow 5s ease-in-out infinite; }
+                @media (prefers-reduced-motion: reduce) {
+                    .hg-floor, .hg-wall, .hg-glow { animation: none; }
+                    .hg-pulse { animation: none; opacity: 0; }
+                }
+            `}</style>
+
+            {/* Back wall grid (flat, dim, fades towards the top) */}
+            <div
+                className="hg-wall absolute inset-0"
+                style={{
+                    backgroundImage: line("56,189,248", 0.2),
+                    backgroundSize: `${WALL}px ${WALL}px`,
+                    maskImage: "linear-gradient(to bottom, transparent 0%, black 40%, black 100%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 40%, black 100%)",
+                }}
+            />
+
+            {/* Perspective floor */}
+            <div
+                className="absolute inset-x-0 bottom-0 h-[48%] overflow-hidden bg-primary-950"
+                style={{
+                    perspective: "480px",
+                    perspectiveOrigin: "50% 0%",
+                    maskImage: "linear-gradient(to bottom, transparent 0%, black 30%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 30%)",
+                }}
+            >
+                <div
+                    className="hg-floor absolute left-1/2 top-0"
+                    style={{
+                        width: 3000,
+                        height: 320,
+                        marginLeft: -1500,
+                        transformOrigin: "50% 0%",
+                        transform: "rotateX(65deg)",
+                        backgroundImage: line("59,130,246", 0.7),
+                        backgroundSize: `${FLOOR}px ${FLOOR}px`,
+                    }}
+                >
+                    {pulses.map((p, i) => (
+                        <span
+                            key={i}
+                            className="hg-pulse absolute top-0 block w-[2px] rounded-full"
+                            style={{
+                                left: p.col * FLOOR - 0.5,
+                                height: 90,
+                                background:
+                                    "linear-gradient(180deg, transparent, rgba(34,211,238,0.95), #fff)",
+                                boxShadow: "0 0 14px 2px rgba(34,211,238,0.8)",
+                                animationDuration: `${p.dur}s`,
+                                animationDelay: `${p.delay}s`,
+                            }}
+                        />
+                    ))}
+                </div>
+            </div>
+
+            {/* Horizon glow line */}
+            <div
+                className="hg-glow absolute inset-x-0 h-px"
+                style={{
+                    bottom: "48%",
+                    background:
+                        "linear-gradient(90deg, transparent, rgba(34,211,238,0.7), transparent)",
+                    boxShadow: "0 0 24px 6px rgba(34,211,238,0.35)",
+                }}
+            />
+
+            {/* Blue glow rising from the bottom edge */}
+            <div
+                className="absolute inset-0"
+                style={{
+                    background:
+                        "linear-gradient(to top, rgba(37,99,235,0.5) 0%, rgba(37,99,235,0.12) 22%, transparent 45%)",
+                }}
+            />
+
+            {/* Dark vignette: dark corners + dim centre so the heading stays readable */}
+            <div
+                className="absolute inset-0"
+                style={{
+                    background:
+                        "radial-gradient(ellipse at center, rgba(2,6,23,0.55) 0%, transparent 60%), radial-gradient(ellipse at center, transparent 55%, rgba(2,6,23,0.65) 100%)",
+                }}
+            />
+        </div>
+    );
+}
+
 /* ========================================================================== */
 /*  1. Hero                                                                   */
 /* ========================================================================== */
@@ -338,27 +626,7 @@ const getInitials = (name: string) =>
 function AboutHero() {
     return (
         <section className="relative overflow-hidden bg-primary-950 px-4 py-20 text-center md:py-28">
-            <div
-                aria-hidden="true"
-                className="absolute inset-0"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(rgba(34,211,238,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.07) 1px, transparent 1px)",
-                    backgroundSize: "44px 44px",
-                    maskImage:
-                        "radial-gradient(ellipse at center, black 25%, transparent 75%)",
-                    WebkitMaskImage:
-                        "radial-gradient(ellipse at center, black 25%, transparent 75%)",
-                }}
-            />
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute left-1/2 top-1/2 h-[360px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-3xl"
-                style={{
-                    background:
-                        "radial-gradient(circle, rgba(6,182,212,0.65) 0%, transparent 70%)",
-                }}
-            />
+            <PerspectiveGridBackdrop />
 
             <div className="relative mx-auto max-w-3xl">
                 <nav
@@ -447,6 +715,8 @@ function TeamCard({ member }: { member: (typeof team)[number] }) {
 }
 
 function WhoWeAre() {
+    const [videoReady, setVideoReady] = useState(false);
+
     const points = [
         {
             icon: ShieldCheck,
@@ -472,32 +742,41 @@ function WhoWeAre() {
     ];
 
     return (
-        <section className="relative overflow-hidden bg-bg py-20 md:py-28">
+        <section className="relative overflow-hidden bg-primary-950 py-20 md:py-28">
+            <Head>
+                <link
+                    rel="preload"
+                    as="video"
+                    href="/videos/about_video.mp4"
+                    type="video/mp4"
+                />
+            </Head>
+
             {/* Ambient background video layer */}
             <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 overflow-hidden"
+                className="pointer-events-none absolute inset-0 overflow-hidden bg-gradient-to-br from-primary-950 via-primary-900/50 to-primary-950"
             >
                 <video
                     autoPlay
                     loop
                     muted
                     playsInline
-                    preload="metadata"
-                    className="h-full w-full object-cover object-center opacity-85 dark:opacity-75 contrast-105 saturate-110"
+                    preload="auto"
+                    onLoadedData={() => setVideoReady(true)}
+                    onCanPlay={() => setVideoReady(true)}
+                    className={cn(
+                        "h-full w-full object-cover object-center contrast-105 saturate-110 transition-opacity duration-700",
+                        videoReady ? "opacity-65" : "opacity-0",
+                    )}
                 >
                     <source src="/videos/about_video.mp4" type="video/mp4" />
                 </video>
-                {/* Gentle top & bottom edge fade into page background while keeping middle vibrant */}
-                <div
-                    className="absolute inset-0"
-                    style={{
-                        background:
-                            "linear-gradient(to bottom, var(--bg, #ffffff) 0%, transparent 22%, transparent 80%, var(--bg, #ffffff) 100%)",
-                    }}
-                />
-                {/* Subtle readability tint behind top heading only */}
-                <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-bg/70 via-bg/30 to-transparent" />
+                {/* Cinematic dark wash for crisp readability in both light & dark themes */}
+                <div className="absolute inset-0 bg-primary-950/45" />
+                {/* Smooth dark top & bottom edge fades (no white fog in light mode) */}
+                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-primary-950/90 via-primary-950/40 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-primary-950/90 via-primary-950/40 to-transparent" />
             </div>
 
             {/* Subtle accent glows */}
@@ -512,6 +791,7 @@ function WhoWeAre() {
 
             <div className="container relative z-10 mx-auto px-4 md:px-6">
                 <SectionHeader
+                    dark
                     label="Who we are"
                     title="Tech people, for tech people"
                 />
@@ -1123,7 +1403,7 @@ function Journey() {
 }
 
 /* ========================================================================== */
-/*  8. Let's connect (dark band)                                              */
+/*  8. Let's connect (dark band, animated glowing-grid background)                 */
 /* ========================================================================== */
 
 function ConnectCTA() {
@@ -1135,7 +1415,7 @@ function ConnectCTA() {
 
     return (
         <section className="relative overflow-hidden bg-primary-950 px-4 py-20 text-center text-white md:px-6 md:py-28">
-            <TechBackdrop />
+            <GridGlowBackdrop />
             <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-accent-400/25 blur-3xl"
