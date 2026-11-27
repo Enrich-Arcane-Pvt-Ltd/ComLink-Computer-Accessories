@@ -75,6 +75,7 @@ export interface OrderData {
     refundStatus?: "none" | "partial" | "full";
     refundedAmount?: number;
     canRequestRefund?: boolean;
+    refundDeadline?: string | null;
     refundRequests?: RefundRequestData[];
     subtotal: number;
     shippingFee: number;
@@ -95,6 +96,7 @@ export interface OrderData {
 
 interface OrdersPageProps {
     orders: OrderData[];
+    guestToken?: string | null;
 }
 
 const TABS: { key: string; label: string; icon?: any }[] = [
@@ -105,17 +107,19 @@ const TABS: { key: string; label: string; icon?: any }[] = [
     { key: "Delivered", label: "Delivered", icon: CheckCircle2 },
 ];
 
-export default function OrdersIndex({ orders = [] }: OrdersPageProps) {
+export default function OrdersIndex({ orders = [], guestToken = null }: OrdersPageProps) {
     return (
         <AppLayout>
-            <OrdersContent orders={orders} />
+            <OrdersContent orders={orders} guestToken={guestToken} />
         </AppLayout>
     );
 }
 
-function OrdersContent({ orders }: OrdersPageProps) {
+function OrdersContent({ orders, guestToken = null }: OrdersPageProps) {
     const [activeTab, setActiveTab] = useState<string>("All");
-    const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(null);
+    const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(
+        guestToken && orders.length === 1 ? orders[0] : null
+    );
 
     // Refund Request Modal State
     const [refundOrder, setRefundOrder] = useState<OrderData | null>(null);
@@ -259,7 +263,11 @@ function OrdersContent({ orders }: OrdersPageProps) {
         setRefundErrors({});
 
         try {
-            const res = await axios.post(`/orders/${refundOrder.id}/refund-request`, formData, {
+            const refundUrl = guestToken
+                ? `/guest/orders/${guestToken}/refund-request`
+                : `/orders/${refundOrder.id}/refund-request`;
+
+            const res = await axios.post(refundUrl, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             toast.success(res.data?.message || "Refund request submitted and pending review.");
@@ -775,34 +783,60 @@ function OrdersContent({ orders }: OrdersPageProps) {
                                 {/* Modal Footer */}
                                 <div className="p-4 bg-muted/10 border-t border-border flex flex-wrap items-center justify-between gap-3">
                                     {selectedOrder.canRequestRefund ? (
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                const ord = selectedOrder;
-                                                setSelectedOrder(null);
-                                                openRefundModal(ord);
-                                            }}
-                                            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-500 font-bold text-xs uppercase tracking-wider hover:bg-amber-500/25 transition-colors cursor-pointer"
-                                        >
-                                            <RotateCcw className="w-4 h-4" />
-                                            <span>Request Refund</span>
-                                        </button>
+                                        <div className="flex flex-col gap-1">
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    const ord = selectedOrder;
+                                                    setSelectedOrder(null);
+                                                    openRefundModal(ord);
+                                                }}
+                                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-500 font-bold text-xs uppercase tracking-wider hover:bg-amber-500/25 transition-colors cursor-pointer self-start"
+                                            >
+                                                <RotateCcw className="w-4 h-4" />
+                                                <span>Request Refund</span>
+                                            </button>
+                                            {selectedOrder.refundDeadline && (
+                                                <span className="text-[11px] text-muted">
+                                                    7-day return window until {selectedOrder.refundDeadline}
+                                                </span>
+                                            )}
+                                        </div>
                                     ) : <div />}
 
-                                    <a
-                                        href={`/orders/${selectedOrder.id}/receipt`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        onClick={() => {
-                                            toast.success(
-                                                `Downloading receipt for Order #${selectedOrder.orderNumber}...`,
-                                            );
-                                        }}
-                                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-accent-fg font-bold text-xs uppercase tracking-wider shadow-sm hover:opacity-90 transition-opacity cursor-pointer"
-                                    >
-                                        <Download className="w-4 h-4" />
-                                        <span>Download Receipt</span>
-                                    </a>
+                                    <div className="flex flex-wrap items-center gap-2.5">
+                                        <a
+                                            href={
+                                                guestToken
+                                                    ? `/guest/orders/${guestToken}/receipt?preview=1`
+                                                    : `/orders/${selectedOrder.id}/receipt?preview=1`
+                                            }
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-card border border-border text-fg font-bold text-xs uppercase tracking-wider hover:border-accent hover:text-accent transition-colors cursor-pointer"
+                                        >
+                                            <Eye className="w-4 h-4" />
+                                            <span>View Receipt</span>
+                                        </a>
+                                        <a
+                                            href={
+                                                guestToken
+                                                    ? `/guest/orders/${guestToken}/receipt`
+                                                    : `/orders/${selectedOrder.id}/receipt`
+                                            }
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={() => {
+                                                toast.success(
+                                                    `Downloading receipt for Order #${selectedOrder.orderNumber}...`,
+                                                );
+                                            }}
+                                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-accent-fg font-bold text-xs uppercase tracking-wider shadow-sm hover:opacity-90 transition-opacity cursor-pointer"
+                                        >
+                                            <Download className="w-4 h-4" />
+                                            <span>Download Receipt</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

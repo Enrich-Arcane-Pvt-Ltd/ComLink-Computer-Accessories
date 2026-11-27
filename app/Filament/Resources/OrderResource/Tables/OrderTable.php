@@ -18,12 +18,13 @@ class OrderTable
                     ->view('filament.tables.columns.order-info')
                     ->searchable(query: fn ($query, $search) => $query->where('order_number', 'like', "%{$search}%")),
 
-                // 2nd column: User Name
+                // 2nd column: User Name + Guest/Registered indicator
                 Tables\Columns\TextColumn::make('customer_name')
-                    ->label('User Name')
-                    ->searchable()
+                    ->label('Customer')
+                    ->searchable(['customer_name', 'customer_email'])
                     ->sortable()
-                    ->weight('medium'),
+                    ->weight('medium')
+                    ->description(fn (Order $record) => ($record->is_guest || ! $record->user_id ? 'Guest • ' : 'Registered • ') . ($record->customer_email ?? '')),
 
                 // 3rd column: Total Amount
                 Tables\Columns\TextColumn::make('total_amount')
@@ -63,6 +64,11 @@ class OrderTable
                         'Shipping' => 'Shipping',
                         'Delivered' => 'Delivered',
                     ]),
+                Tables\Filters\TernaryFilter::make('is_guest')
+                    ->label('Customer Type')
+                    ->placeholder('All Customers')
+                    ->trueLabel('Guest Checkout Orders')
+                    ->falseLabel('Registered Customers'),
             ])
             ->actions([
                 Tables\Actions\Action::make('refund')

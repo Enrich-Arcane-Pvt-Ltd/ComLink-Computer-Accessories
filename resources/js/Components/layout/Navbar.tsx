@@ -524,35 +524,28 @@ export default function Navbar() {
                             </AnimatePresence>
                         </div>
 
-                        {/* Cart Dropdown */}
+                        {/* Cart Dropdown (Available for both Guests and Logged-in Users) */}
                         <div
                             className="relative"
                             onMouseEnter={() => {
-                                if (user) openMenu("cart");
+                                openMenu("cart");
                             }}
                             onMouseLeave={scheduleClose}
                         >
                             <Link
                                 href="/cart"
-                                onClick={(e) => {
-                                    if (!user) {
-                                        e.preventDefault();
-                                        toast.info("Please login or register to access your shopping cart.");
-                                        router.visit("/login");
-                                    }
-                                }}
                                 className="p-1 text-fg hover:text-accent transition-colors relative block cursor-pointer"
                                 aria-label="Cart"
                             >
                                 <ShoppingBag className="h-5 w-5" />
-                                {user && totalItems > 0 && (
+                                {totalItems > 0 && (
                                     <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-fg">
                                         {totalItems}
                                     </span>
                                 )}
                             </Link>
                             <AnimatePresence>
-                                {user && openDropdown === "cart" && (
+                                {openDropdown === "cart" && (
                                     <MiniDropdown
                                         title="Shopping Cart"
                                         emptyLabel="Your cart is empty"

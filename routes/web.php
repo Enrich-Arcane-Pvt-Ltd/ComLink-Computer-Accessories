@@ -37,12 +37,20 @@ Route::get('/build-my-pc', [BuildPcController::class, 'index'])->name('build-pc'
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
 Route::post('/api/chat/query', [ChatBotController::class, 'query'])->name('api.chat.query');
 
+// Public Cart & Fast Guest Checkout Routes
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/api/cart/stock-check', [CartController::class, 'stockCheck'])->name('api.cart.stock-check');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout/payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.payment-intent');
+Route::post('/checkout/process-order', [CheckoutController::class, 'processOrder'])->name('checkout.process-order');
+
+// Guest Order Management (Tokenized private access sent via email)
+Route::get('/guest/orders/{token}', [OrderController::class, 'showGuestOrder'])->name('guest.orders.show');
+Route::get('/guest/orders/{token}/receipt', [OrderController::class, 'downloadGuestReceipt'])->name('guest.orders.receipt');
+Route::post('/guest/orders/{token}/refund-request', [OrderController::class, 'submitGuestRefundRequest'])->name('guest.orders.refund-request');
+
 // Authenticated Customer Routes (Requires login)
 Route::middleware(['auth'])->group(function () {
-    Route::get('/cart', [CartController::class, 'index'])->name('cart');
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-    Route::post('/checkout/payment-intent', [CheckoutController::class, 'createPaymentIntent'])->name('checkout.payment-intent');
-    Route::post('/checkout/process-order', [CheckoutController::class, 'processOrder'])->name('checkout.process-order');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}/receipt', [OrderController::class, 'downloadReceipt'])->name('orders.receipt');
     Route::post('/orders/{order}/refund-request', [OrderController::class, 'submitRefundRequest'])->name('orders.refund-request');

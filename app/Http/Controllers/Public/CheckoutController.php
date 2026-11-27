@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderPlacedMail;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -170,9 +175,35 @@ class CheckoutController extends Controller
 
         try {
             $order = DB::transaction(function () use ($validated, $request, $paymentStatus, $paymentIntentId) {
+                $authUser = $request->user();
+                $isGuest = $authUser === null;
+                $nameParts = preg_split('/\s+/', trim($validated['customer_name']), 2);
+                $firstName = ! empty($nameParts[0]) ? $nameParts[0] : 'Guest';
+                $lastName = ! empty($nameParts[1]) ? $nameParts[1] : 'Customer';
+
+                $customerUser = $authUser;
+                if (! $customerUser) {
+                    $customerUser = User::where('email', $validated['customer_email'])->first();
+                    if (! $customerUser) {
+                        $customerUser = User::create([
+                            'first_name' => $firstName,
+                            'last_name' => $lastName,
+                            'email' => $validated['customer_email'],
+                            'phone' => $validated['customer_phone'],
+                            'secondary_phone' => $validated['customer_secondary_phone'] ?? null,
+                            'password' => Hash::make(Str::random(32)),
+                            'role' => 'user',
+                            'status' => 'active',
+                            'is_guest' => true,
+                        ]);
+                    }
+                }
+
                 $order = Order::create([
                     'order_number' => Order::generateOrderNumber(),
-                    'user_id' => $request->user()?->id,
+                    'user_id' => $customerUser->id,
+                    'is_guest' => $isGuest,
+                    'guest_token' => $isGuest ? Str::random(48) : null,
                     'status' => 'Processing',
                     'customer_name' => $validated['customer_name'],
                     'customer_email' => $validated['customer_email'],
@@ -288,18 +319,16 @@ class CheckoutController extends Controller
                     ]);
                 }
 
-                // Save address to user profile if user has none saved
-                $user = $request->user();
-                if ($user && ! $user->addresses()->exists()) {
-                    $nameParts = preg_split('/\s+/', trim($validated['customer_name']), 2);
-                    $firstName = ! empty($nameParts[0]) ? $nameParts[0] : ($user->first_name ?: 'Valued');
-                    $lastName = ! empty($nameParts[1]) ? $nameParts[1] : ($user->last_name ?: ($firstName ?: 'Customer'));
+                // Save address to customer profile (logged-in or guest) if they have none saved
+                if ($customerUser && ! $customerUser->addresses()->exists()) {
+                    $addrFirstName = ! empty($nameParts[0]) ? $nameParts[0] : ($customerUser->first_name ?: 'Valued');
+                    $addrLastName = ! empty($nameParts[1]) ? $nameParts[1] : ($customerUser->last_name ?: ($addrFirstName ?: 'Customer'));
 
-                    $user->addresses()->create([
+                    $customerUser->addresses()->create([
                         'type' => 'shipping',
                         'is_default' => true,
-                        'first_name' => $firstName,
-                        'last_name' => $lastName,
+                        'first_name' => $addrFirstName,
+                        'last_name' => $addrLastName,
                         'address_line_1' => $validated['shipping_address_line_1'],
                         'address_line_2' => $validated['shipping_address_line_2'] ?? null,
                         'city' => $validated['shipping_city'],
@@ -314,11 +343,24 @@ class CheckoutController extends Controller
                 return $order;
             });
 
+            // Send order confirmation email with View My Order, Receipt & Tracking links
+            if (! empty($order->customer_email)) {
+                try {
+                    Mail::to($order->customer_email)->send(new OrderPlacedMail($order));
+                } catch (\Throwable $mailErr) {
+                    Log::warning('Order confirmation email failed to send', [
+                        'order_id' => $order->id,
+                        'error' => $mailErr->getMessage(),
+                    ]);
+                }
+            }
+
             return response()->json([
                 'success' => true,
                 'order_id' => $order->id,
                 'order_number' => $order->order_number,
-                'redirect_url' => route('orders.index'),
+                'is_guest' => (bool) $order->is_guest,
+                'redirect_url' => $order->order_access_url,
             ]);
         } catch (\Throwable $e) {
             Log::error('Order Processing Failure', [

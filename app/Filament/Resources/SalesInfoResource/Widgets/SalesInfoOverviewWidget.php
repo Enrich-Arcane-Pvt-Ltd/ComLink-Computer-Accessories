@@ -13,7 +13,7 @@ class SalesInfoOverviewWidget extends Widget
 
     protected int | string | array $columnSpan = 'full';
 
-    public string $period = 'monthly'; // 'daily', 'weekly', 'monthly', 'annually', 'custom'
+    public string $period = 'all_time'; // 'all_time', 'daily', 'weekly', 'monthly', 'annually', 'custom'
 
     public ?string $startDate = null;
 
@@ -23,16 +23,21 @@ class SalesInfoOverviewWidget extends Widget
 
     public function mount(): void
     {
-        // Default to current month
-        $this->startDate = now()->startOfMonth()->format('Y-m-d');
-        $this->endDate = now()->format('Y-m-d');
+        // Default to All Time
+        $this->period = 'all_time';
+        $this->startDate = null;
+        $this->endDate = null;
     }
 
     public function setPeriod(string $period): void
     {
         $this->period = $period;
 
-        if ($period === 'daily') {
+        if ($period === 'all_time') {
+            $this->startDate = null;
+            $this->endDate = null;
+            $this->showCustomPicker = false;
+        } elseif ($period === 'daily') {
             $this->startDate = now()->format('Y-m-d');
             $this->endDate = now()->format('Y-m-d');
             $this->showCustomPicker = false;
@@ -90,7 +95,13 @@ class SalesInfoOverviewWidget extends Widget
     {
         $now = now();
 
-        if ($this->period === 'daily') {
+        if ($this->period === 'all_time') {
+            $firstOrderDate = Order::where('payment_status', 'Paid')->min('created_at');
+            $from = $firstOrderDate ? Carbon::parse($firstOrderDate)->startOfDay() : $now->copy()->startOfMonth()->startOfDay();
+            $to = $now->copy()->endOfDay();
+            $periodLabel = 'All Time' . ($firstOrderDate ? ' (' . $from->format('M d, Y') . ' – ' . $to->format('M d, Y') . ')' : '');
+            $daysCount = max(1, (int) round($from->diffInDays($to)) + 1);
+        } elseif ($this->period === 'daily') {
             $from = $now->copy()->startOfDay();
             $to = $now->copy()->endOfDay();
             $periodLabel = 'Today (' . $now->format('M d, Y') . ')';
